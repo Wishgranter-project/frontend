@@ -1,0 +1,19 @@
+name: player-frontend
+recipe: lamp
+config:
+  php: '8.1'
+  webroot: ./web/
+services:
+  node:
+    type: node
+    globals:
+      gulp-cli: latest
+tooling:
+  node:
+    service: node
+  npm:
+    service: node
+  yarn:
+    service: node
+  gulp:
+    service: node

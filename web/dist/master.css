@@ -1,0 +1,1217 @@
+@charset "UTF-8";
+body {
+  margin: 0px;
+  font-family: "Roboto", "Arial";
+  font-size: 16px;
+  line-height: 1.5;
+  color: #212529;
+}
+
+/*------------------------------------------*/
+.simple * {
+  pointer-events: inherit;
+  vertical-align: top;
+  direction: inherit;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 0px;
+  border: none;
+  margin: 0px auto 0px auto;
+  outline: none;
+  font-size: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  color: inherit;
+  text-align: inherit;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+/*************************************
+#*** BLOCKS
+#************************************/
+.simple hr {
+  height: 1px;
+  border-top: solid 1px #919191;
+  margin: 20px auto;
+}
+
+.simple {
+  /*************************************
+  #*** TABLE
+  #************************************/
+  /*------------------------------------------*/
+  /*------------------------------------------*/
+}
+.simple table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0px auto 20px auto;
+  caption-side: top;
+}
+.simple table caption {
+  padding: 10px;
+  text-align: center;
+  color: #333;
+  background-color: #C5D3F6;
+}
+.simple table td, .simple table th {
+  padding: 10px;
+  border: none;
+  vertical-align: middle;
+}
+.simple table th {
+  border-color: #303f9f;
+  font-weight: normal;
+  color: #ffffff;
+  background-color: #303F9F;
+}
+.simple table thead th {
+  border-color: #3F51B5;
+  background-color: #3F51B5;
+}
+.simple table td {
+  border-color: #DFDEE3;
+}
+.simple table th:first-child,
+.simple table td:first-child {
+  border-left-style: solid;
+  border-left-width: 1px;
+}
+.simple table th:last-child,
+.simple table td:last-child {
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+.simple table tr:last-child td {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+.simple .horizontaly-borded td {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+.simple .horizontaly-borded th:first-child,
+.simple .horizontaly-borded td:first-child {
+  border-left-style: solid;
+  border-left-width: 1px;
+}
+.simple .horizontaly-borded th:last-child,
+.simple .horizontaly-borded td:last-child {
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+.simple .verticaly-borded td, .simple .verticaly-borded th {
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+.simple .verticaly-borded tr:last-child td {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+.simple .horizontaly-striped tr:nth-child(2n+0) td {
+  background-color: #F8F7FF;
+}
+.simple .verticaly-striped td:nth-child(2n+0) {
+  background-color: #F8F7FF;
+}
+.simple .highlights tr:hover td {
+  background-color: #EDECFE;
+}
+
+math.div in sass label[for] {
+  cursor: pointer;
+}
+
+/*************************************
+#*** INPUTS
+#************************************/
+/*************************************
+#*** DIMENSIONS
+#************************************/
+.simple .input-group-text, .simple .checkbox .label, .simple textarea,
+.simple select,
+.simple input[type=text],
+.simple input[type=password],
+.simple input[type=url],
+.simple input[type=email],
+.simple input[type=tel],
+.simple input[type=date],
+.simple input[type=datetime-local],
+.simple input[type=month],
+.simple input[type=week],
+.simple input[type=time],
+.simple input[type=number],
+.simple input[type=search],
+.simple input[type=file],
+.simple input[type=color], .simple button,
+.simple input[type=submit],
+.simple input[type=button],
+.simple input[type=reset],
+.simple .btn {
+  display: inline-block;
+  height: 46px;
+  padding: 10px;
+  border: solid 1px transparent;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.simple .small.input-group-text, .simple .checkbox .small.label, .simple textarea.small,
+.simple select.small,
+.simple input.small[type=text],
+.simple input.small[type=password],
+.simple input.small[type=url],
+.simple input.small[type=email],
+.simple input.small[type=tel],
+.simple input.small[type=date],
+.simple input.small[type=datetime-local],
+.simple input.small[type=month],
+.simple input.small[type=week],
+.simple input.small[type=time],
+.simple input.small[type=number],
+.simple input.small[type=search],
+.simple input.small[type=file],
+.simple input.small[type=color], .simple button.small,
+.simple input.small[type=submit],
+.simple input.small[type=button],
+.simple input.small[type=reset],
+.simple .small.btn {
+  padding: 5px 10px;
+  height: 36px;
+}
+
+/*************************************
+#*** Input text, select, textarea
+#************************************/
+.simple textarea,
+.simple select,
+.simple input[type=text],
+.simple input[type=password],
+.simple input[type=url],
+.simple input[type=email],
+.simple input[type=tel],
+.simple input[type=date],
+.simple input[type=datetime-local],
+.simple input[type=month],
+.simple input[type=week],
+.simple input[type=time],
+.simple input[type=number],
+.simple input[type=search],
+.simple input[type=file],
+.simple input[type=color] {
+  border: solid 1px #919191;
+  border-radius: 3px;
+  color: #555;
+  background-color: #fff;
+}
+
+.simple textarea::-webkit-input-placeholder,
+.simple select::-webkit-input-placeholder,
+.simple input[type=text]::-webkit-input-placeholder,
+.simple input[type=password]::-webkit-input-placeholder,
+.simple input[type=url]::-webkit-input-placeholder,
+.simple input[type=email]::-webkit-input-placeholder,
+.simple input[type=tel]::-webkit-input-placeholder,
+.simple input[type=date]::-webkit-input-placeholder,
+.simple input[type=datetime-local]::-webkit-input-placeholder,
+.simple input[type=month]::-webkit-input-placeholder,
+.simple input[type=week]::-webkit-input-placeholder,
+.simple input[type=time]::-webkit-input-placeholder,
+.simple input[type=number]::-webkit-input-placeholder,
+.simple input[type=search]::-webkit-input-placeholder,
+.simple input[type=file]::-webkit-input-placeholder,
+.simple input[type=color]::-webkit-input-placeholder {
+  color: #8d8f8a;
+}
+
+.simple textarea[disabled],
+.simple select[disabled],
+.simple input[disabled][type=text],
+.simple input[disabled][type=password],
+.simple input[disabled][type=url],
+.simple input[disabled][type=email],
+.simple input[disabled][type=tel],
+.simple input[disabled][type=date],
+.simple input[disabled][type=datetime-local],
+.simple input[disabled][type=month],
+.simple input[disabled][type=week],
+.simple input[disabled][type=time],
+.simple input[disabled][type=number],
+.simple input[disabled][type=search],
+.simple input[disabled][type=file],
+.simple input[disabled][type=color] {
+  cursor: not-allowed;
+  border: solid 1px #b9bcb5;
+  color: #7a7a79;
+  background-color: #f4f4f2;
+}
+
+.simple input[type=radio]:focus,
+.simple input[type=checkbox]:focus, .simple textarea:focus,
+.simple select:focus,
+.simple input[type=text]:focus,
+.simple input[type=password]:focus,
+.simple input[type=url]:focus,
+.simple input[type=email]:focus,
+.simple input[type=tel]:focus,
+.simple input[type=date]:focus,
+.simple input[type=datetime-local]:focus,
+.simple input[type=month]:focus,
+.simple input[type=week]:focus,
+.simple input[type=time]:focus,
+.simple input[type=number]:focus,
+.simple input[type=search]:focus,
+.simple input[type=file]:focus,
+.simple input[type=color]:focus {
+  border: solid 1px #51a7e8;
+  box-shadow: 0 0 5px rgba(81, 167, 232, 0.5);
+}
+
+/*************************************
+#*** BUTTONS
+#************************************/
+.simple button,
+.simple input[type=submit],
+.simple input[type=button],
+.simple input[type=reset],
+.simple .btn {
+  height: auto;
+  min-height: 46px;
+}
+
+.simple button.small,
+.simple input.small[type=submit],
+.simple input.small[type=button],
+.simple input.small[type=reset],
+.simple .small.btn {
+  height: auto;
+  min-height: 36px;
+}
+
+.simple button,
+.simple input[type=submit],
+.simple input[type=button],
+.simple input[type=reset],
+.simple .btn {
+  min-width: 46px;
+  cursor: pointer;
+  border: solid 1px #a7a7a7;
+  border-radius: 3px;
+  text-align: center;
+  justify-content: center;
+  /* flex-inline buttons will treat text just as an element*/
+  color: #2e3436;
+  background-color: #eaeaea;
+}
+
+.simple button:active,
+.simple input[type=submit]:active,
+.simple input[type=button]:active,
+.simple input[type=reset]:active,
+.simple .btn:active,
+.simple button.active,
+.simple input.active[type=submit],
+.simple input.active[type=button],
+.simple input.active[type=reset],
+.simple .active.btn {
+  background-color: #dbdbdb;
+}
+
+.simple button:hover,
+.simple input[type=submit]:hover,
+.simple input[type=button]:hover,
+.simple input[type=reset]:hover,
+.simple .btn:hover {
+  text-decoration: none;
+  color: #2e3436;
+}
+
+.simple button[disabled],
+.simple input[disabled][type=submit],
+.simple input[disabled][type=button],
+.simple input[disabled][type=reset],
+.simple [disabled].btn {
+  cursor: not-allowed;
+  border-color: #b9bcb5;
+  color: #909394;
+  background-color: #f2f2f2;
+}
+
+/*-----------*/
+.simple button.btn-main,
+.simple input.btn-main[type=submit],
+.simple input.btn-main[type=button],
+.simple input.btn-main[type=reset],
+.simple .btn-main.btn {
+  border-color: #1c5288;
+  color: #fff;
+  background-color: #4a90d9;
+}
+
+.simple button.btn-main:hover,
+.simple input.btn-main[type=submit]:hover,
+.simple input.btn-main[type=button]:hover,
+.simple input.btn-main[type=reset]:hover,
+.simple .btn-main.btn:hover {
+  color: #fff;
+}
+
+.simple button.btn-main:active,
+.simple input.btn-main[type=submit]:active,
+.simple input.btn-main[type=button]:active,
+.simple input.btn-main[type=reset]:active,
+.simple .btn-main.btn:active {
+  background-color: #3b81ca;
+}
+
+/*-----------*/
+.simple button.btn-danger,
+.simple input.btn-danger[type=submit],
+.simple input.btn-danger[type=button],
+.simple input.btn-danger[type=reset],
+.simple .btn-danger.btn {
+  border-color: #910f0f;
+  color: #fff;
+  background-color: #ee2222;
+}
+
+.simple button.btn-danger:hover,
+.simple input.btn-danger[type=submit]:hover,
+.simple input.btn-danger[type=button]:hover,
+.simple input.btn-danger[type=reset]:hover,
+.simple .btn-danger.btn:hover {
+  color: #fff;
+}
+
+.simple button.btn-danger:active,
+.simple input.btn-danger[type=submit]:active,
+.simple input.btn-danger[type=button]:active,
+.simple input.btn-danger[type=reset]:active,
+.simple .btn-danger.btn:active {
+  background-color: #df1313;
+}
+
+/*-----------*/
+.simple button.btn-positive,
+.simple input.btn-positive[type=submit],
+.simple input.btn-positive[type=button],
+.simple input.btn-positive[type=reset],
+.simple .btn-positive.btn {
+  border-color: #376c04;
+  color: #fff;
+  background-color: #4e9a06;
+}
+
+.simple button.btn-positive:hover,
+.simple input.btn-positive[type=submit]:hover,
+.simple input.btn-positive[type=button]:hover,
+.simple input.btn-positive[type=reset]:hover,
+.simple .btn-positive.btn:hover {
+  color: #fff;
+}
+
+.simple button.btn-positive:active,
+.simple input.btn-positive[type=submit]:active,
+.simple input.btn-positive[type=button]:active,
+.simple input.btn-positive[type=reset]:active,
+.simple .btn-positive.btn:active {
+  background-color: #408102;
+}
+
+.simple {
+  /*************************************
+  #*** Selectors: Input text
+  #************************************/
+  /*************************************
+  #*** Selectors: Input buttons
+  #************************************/
+  /*************************************
+  #*** Selectors: SELECT
+  #************************************/
+  /*************************************
+  #*** COLOR
+  #************************************/
+  /*************************************
+  #*** CHECKS AND RADIOS BUTTONS
+  #************************************/
+  /* radio */
+  /*************************************
+  #*** Selectors: INPUT FILE
+  #************************************/
+  /*input[type=file] {
+      appearance: textfield;
+      -webkit-appearance: textfield;
+      -moz-appearance: textfield;
+      cursor: pointer;
+  }
+
+  input[type=file]::file-selector-button, 
+  input[type=file]::-webkit-file-upload-button {
+
+  }*/
+  /*************************************
+  #*** Selectors: PROGRESS BAR
+  #************************************/
+  /*************************************
+  #*** Selectors: FIELDSET
+  #************************************/
+}
+.simple textarea {
+  height: auto;
+  min-height: 142px;
+}
+.simple .btn {
+  text-decoration: none;
+}
+.simple select[multiple] {
+  height: auto;
+}
+.simple select[multiple] option {
+  padding: 5px;
+}
+.simple input[type=color] {
+  padding: 2px 5px;
+}
+.simple input[type=radio],
+.simple input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  width: 1.5em;
+  /* line height */
+  height: 1.5em;
+  /* line height */
+  border: solid 1px #a1a1a1;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 23px;
+  content: "";
+  color: #2e3436;
+  background-color: #e4e4e4;
+}
+.simple input[type=checkbox]:checked:after {
+  content: "✔";
+}
+.simple input[type=radio] {
+  border-radius: 50px;
+}
+.simple input[type=radio]:checked {
+  background: radial-gradient(#2e3436 0%, #2e3436 25%, #e4e4e4 30%);
+}
+.simple .checkbox {
+  display: inline-block;
+  position: relative;
+}
+.simple .checkbox input {
+  position: absolute;
+  z-index: 3;
+  left: 11px;
+  top: 11px;
+  height: 24px;
+}
+.simple .checkbox .label {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  padding-left: 45px;
+  border-color: #b9bcb5;
+  border-radius: 3px;
+  background-color: #f2f2f2;
+}
+.simple .checkbox input:checked + .label {
+  color: #fff;
+  background-color: #3465a4;
+}
+.simple progress::-webkit-progress-bar {
+  -webkit-appearance: none;
+  border-radius: 3px;
+  background-color: #dbdbdb;
+  box-shadow: inset 1px 1px #919191, inset -1px -1px #919191;
+}
+.simple progress::-webkit-progress-value {
+  border-radius: 3px;
+  background-color: #4a90d9;
+  box-shadow: inset 1px 1px #1c5288, inset -1px -1px #1c5288;
+}
+.simple fieldset {
+  padding: 20px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  border: solid 1px #a7a7a7;
+}
+.simple fieldset legend {
+  padding: 0px 20px;
+  margin: 0px auto 0px 0px;
+}
+
+.simple ol,
+.simple ul {
+  padding-left: 25px;
+  margin-bottom: 20px;
+}
+.simple ol ol,
+.simple ol ul,
+.simple ul ul,
+.simple ul ol {
+  margin-bottom: 0px;
+}
+.simple li + li {
+  margin-top: 2px;
+}
+
+.simple {
+  /*************************************
+  #*** HEADERS
+  #************************************/
+  /*************************************
+  #*** BLOCKS OF TEXT
+  #************************************/
+  /*************************************
+  #*** INLINE TEXT
+  #************************************/
+  /*************************************
+  #*** LINK
+  #************************************/
+}
+.simple h1, .simple h2, .simple h3, .simple h4, .simple h5, .simple h6 {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.simple h1 {
+  font-size: 2em;
+  line-height: 1.5;
+}
+.simple h2 {
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+.simple h3 {
+  font-size: 1.25em;
+  line-height: 1.5;
+}
+.simple h4 {
+  font-size: 1em;
+  line-height: 1.5;
+}
+.simple h5 {
+  font-size: 0.875em;
+  line-height: 1.5;
+}
+.simple h6 {
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+.simple blockquote {
+  padding: 10px 20px;
+  border-left: solid 3px grey;
+  margin-bottom: 20px;
+}
+.simple blockquote cite {
+  display: block;
+  font-style: italic;
+  font-size: 0.8em;
+  line-height: 1.5;
+}
+.simple p {
+  margin-bottom: 20px;
+}
+.simple strong, .simple b {
+  font-weight: bold;
+}
+.simple em, .simple i {
+  font-style: italic;
+}
+.simple abbr[title] {
+  cursor: help;
+}
+.simple code,
+.simple samp,
+.simple pre {
+  font-family: "Source Code Pro", "Courier";
+  /* monospace */
+}
+.simple code {
+  display: inline-block;
+  vertical-align: baseline;
+  padding: 0.125em 5px;
+  font-size: 0.75em;
+  line-height: 1em;
+  background-color: #e7e7e7;
+}
+.simple var {
+  font-style: italic;
+}
+.simple sup, .simple sub {
+  font-size: 0.75em;
+  line-height: 1em;
+}
+.simple sup {
+  vertical-align: top;
+}
+.simple sub {
+  vertical-align: bottom;
+}
+.simple small {
+  vertical-align: baseline;
+  font-size: 0.75em;
+  line-height: 1.5;
+}
+.simple a {
+  cursor: pointer;
+  text-decoration: none;
+}
+.simple a:link {
+  color: #0366d6;
+}
+.simple a:visited {
+  color: darkmagenta;
+}
+.simple a:hover {
+  text-decoration: underline;
+}
+.simple a:active {
+  color: red;
+}
+
+.simple {
+  /*************************************
+  #*** flex
+  #************************************/
+}
+.simple .flex, .simple .tabs, .simple .button-group, .simple .input-group, .simple .flexy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+.simple .flexy {
+  justify-content: space-between;
+}
+.simple .flexy > * {
+  margin: 0px;
+}
+
+.simple {
+  /*************************************
+  #*** GRID
+  #************************************/
+}
+.simple .grid, .simple .horizontal .form-group,
+.simple .form-group.horizontal {
+  display: grid;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  grid-template-columns: repeat(12, 1fr);
+}
+.simple .grid > *, .simple .horizontal .form-group > *,
+.simple .form-group.horizontal > * {
+  min-width: 0px;
+  width: 100%;
+  grid-column: auto/span 12;
+  margin: 0px;
+}
+.simple .grid .col-1, .simple .horizontal .form-group .col-1,
+.simple .form-group.horizontal .col-1 {
+  grid-column: auto/span 1;
+}
+.simple .grid .col-2, .simple .horizontal .form-group .col-2,
+.simple .form-group.horizontal .col-2 {
+  grid-column: auto/span 2;
+}
+.simple .grid .col-3, .simple .horizontal .form-group .col-3,
+.simple .form-group.horizontal .col-3 {
+  grid-column: auto/span 3;
+}
+.simple .grid .col-4, .simple .horizontal .form-group .col-4,
+.simple .form-group.horizontal .col-4 {
+  grid-column: auto/span 4;
+}
+.simple .grid .col-5, .simple .horizontal .form-group .col-5,
+.simple .form-group.horizontal .col-5 {
+  grid-column: auto/span 5;
+}
+.simple .grid .col-6, .simple .horizontal .form-group .col-6,
+.simple .form-group.horizontal .col-6 {
+  grid-column: auto/span 6;
+}
+.simple .grid .col-7, .simple .horizontal .form-group .col-7,
+.simple .form-group.horizontal .col-7 {
+  grid-column: auto/span 7;
+}
+.simple .grid .col-8, .simple .horizontal .form-group .col-8,
+.simple .form-group.horizontal .col-8 {
+  grid-column: auto/span 8;
+}
+.simple .grid .col-9, .simple .horizontal .form-group .col-9,
+.simple .form-group.horizontal .col-9 {
+  grid-column: auto/span 9;
+}
+.simple .grid .col-10, .simple .horizontal .form-group .col-10,
+.simple .form-group.horizontal .col-10 {
+  grid-column: auto/span 10;
+}
+.simple .grid .col-11, .simple .horizontal .form-group .col-11,
+.simple .form-group.horizontal .col-11 {
+  grid-column: auto/span 11;
+}
+.simple .grid .col-12, .simple .horizontal .form-group .col-12,
+.simple .form-group.horizontal .col-12 {
+  grid-column: auto/span 12;
+}
+@media screen and (min-width: 769px) {
+  .simple .grid .col-sm-1, .simple .horizontal .form-group .col-sm-1,
+.simple .form-group.horizontal .col-sm-1 {
+    grid-column: auto/span 1;
+  }
+  .simple .grid .col-sm-2, .simple .horizontal .form-group .col-sm-2,
+.simple .form-group.horizontal .col-sm-2 {
+    grid-column: auto/span 2;
+  }
+  .simple .grid .col-sm-3, .simple .horizontal .form-group .col-sm-3,
+.simple .form-group.horizontal .col-sm-3 {
+    grid-column: auto/span 3;
+  }
+  .simple .grid .col-sm-4, .simple .horizontal .form-group .col-sm-4,
+.simple .form-group.horizontal .col-sm-4 {
+    grid-column: auto/span 4;
+  }
+  .simple .grid .col-sm-5, .simple .horizontal .form-group .col-sm-5,
+.simple .form-group.horizontal .col-sm-5 {
+    grid-column: auto/span 5;
+  }
+  .simple .grid .col-sm-6, .simple .horizontal .form-group .col-sm-6,
+.simple .form-group.horizontal .col-sm-6 {
+    grid-column: auto/span 6;
+  }
+  .simple .grid .col-sm-7, .simple .horizontal .form-group .col-sm-7,
+.simple .form-group.horizontal .col-sm-7 {
+    grid-column: auto/span 7;
+  }
+  .simple .grid .col-sm-8, .simple .horizontal .form-group .col-sm-8,
+.simple .form-group.horizontal .col-sm-8 {
+    grid-column: auto/span 8;
+  }
+  .simple .grid .col-sm-9, .simple .horizontal .form-group .col-sm-9,
+.simple .form-group.horizontal .col-sm-9 {
+    grid-column: auto/span 9;
+  }
+  .simple .grid .col-sm-10, .simple .horizontal .form-group .col-sm-10,
+.simple .form-group.horizontal .col-sm-10 {
+    grid-column: auto/span 10;
+  }
+  .simple .grid .col-sm-11, .simple .horizontal .form-group .col-sm-11,
+.simple .form-group.horizontal .col-sm-11 {
+    grid-column: auto/span 11;
+  }
+  .simple .grid .col-sm-12, .simple .horizontal .form-group .col-sm-12,
+.simple .form-group.horizontal .col-sm-12 {
+    grid-column: auto/span 12;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .simple .grid .col-md-1, .simple .horizontal .form-group .col-md-1,
+.simple .form-group.horizontal .col-md-1 {
+    grid-column: auto/span 1;
+  }
+  .simple .grid .col-md-2, .simple .horizontal .form-group .col-md-2,
+.simple .form-group.horizontal .col-md-2 {
+    grid-column: auto/span 2;
+  }
+  .simple .grid .col-md-3, .simple .horizontal .form-group .col-md-3,
+.simple .form-group.horizontal .col-md-3 {
+    grid-column: auto/span 3;
+  }
+  .simple .grid .col-md-4, .simple .horizontal .form-group .col-md-4,
+.simple .form-group.horizontal .col-md-4 {
+    grid-column: auto/span 4;
+  }
+  .simple .grid .col-md-5, .simple .horizontal .form-group .col-md-5,
+.simple .form-group.horizontal .col-md-5 {
+    grid-column: auto/span 5;
+  }
+  .simple .grid .col-md-6, .simple .horizontal .form-group .col-md-6,
+.simple .form-group.horizontal .col-md-6 {
+    grid-column: auto/span 6;
+  }
+  .simple .grid .col-md-7, .simple .horizontal .form-group .col-md-7,
+.simple .form-group.horizontal .col-md-7 {
+    grid-column: auto/span 7;
+  }
+  .simple .grid .col-md-8, .simple .horizontal .form-group .col-md-8,
+.simple .form-group.horizontal .col-md-8 {
+    grid-column: auto/span 8;
+  }
+  .simple .grid .col-md-9, .simple .horizontal .form-group .col-md-9,
+.simple .form-group.horizontal .col-md-9 {
+    grid-column: auto/span 9;
+  }
+  .simple .grid .col-md-10, .simple .horizontal .form-group .col-md-10,
+.simple .form-group.horizontal .col-md-10 {
+    grid-column: auto/span 10;
+  }
+  .simple .grid .col-md-11, .simple .horizontal .form-group .col-md-11,
+.simple .form-group.horizontal .col-md-11 {
+    grid-column: auto/span 11;
+  }
+  .simple .grid .col-md-12, .simple .horizontal .form-group .col-md-12,
+.simple .form-group.horizontal .col-md-12 {
+    grid-column: auto/span 12;
+  }
+}
+@media screen and (min-width: 1216px) {
+  .simple .grid .col-lg-1, .simple .horizontal .form-group .col-lg-1,
+.simple .form-group.horizontal .col-lg-1 {
+    grid-column: auto/span 1;
+  }
+  .simple .grid .col-lg-2, .simple .horizontal .form-group .col-lg-2,
+.simple .form-group.horizontal .col-lg-2 {
+    grid-column: auto/span 2;
+  }
+  .simple .grid .col-lg-3, .simple .horizontal .form-group .col-lg-3,
+.simple .form-group.horizontal .col-lg-3 {
+    grid-column: auto/span 3;
+  }
+  .simple .grid .col-lg-4, .simple .horizontal .form-group .col-lg-4,
+.simple .form-group.horizontal .col-lg-4 {
+    grid-column: auto/span 4;
+  }
+  .simple .grid .col-lg-5, .simple .horizontal .form-group .col-lg-5,
+.simple .form-group.horizontal .col-lg-5 {
+    grid-column: auto/span 5;
+  }
+  .simple .grid .col-lg-6, .simple .horizontal .form-group .col-lg-6,
+.simple .form-group.horizontal .col-lg-6 {
+    grid-column: auto/span 6;
+  }
+  .simple .grid .col-lg-7, .simple .horizontal .form-group .col-lg-7,
+.simple .form-group.horizontal .col-lg-7 {
+    grid-column: auto/span 7;
+  }
+  .simple .grid .col-lg-8, .simple .horizontal .form-group .col-lg-8,
+.simple .form-group.horizontal .col-lg-8 {
+    grid-column: auto/span 8;
+  }
+  .simple .grid .col-lg-9, .simple .horizontal .form-group .col-lg-9,
+.simple .form-group.horizontal .col-lg-9 {
+    grid-column: auto/span 9;
+  }
+  .simple .grid .col-lg-10, .simple .horizontal .form-group .col-lg-10,
+.simple .form-group.horizontal .col-lg-10 {
+    grid-column: auto/span 10;
+  }
+  .simple .grid .col-lg-11, .simple .horizontal .form-group .col-lg-11,
+.simple .form-group.horizontal .col-lg-11 {
+    grid-column: auto/span 11;
+  }
+  .simple .grid .col-lg-12, .simple .horizontal .form-group .col-lg-12,
+.simple .form-group.horizontal .col-lg-12 {
+    grid-column: auto/span 12;
+  }
+}
+@media screen and (min-width: 1408px) {
+  .simple .grid .col-xl-1, .simple .horizontal .form-group .col-xl-1,
+.simple .form-group.horizontal .col-xl-1 {
+    grid-column: auto/span 1;
+  }
+  .simple .grid .col-xl-2, .simple .horizontal .form-group .col-xl-2,
+.simple .form-group.horizontal .col-xl-2 {
+    grid-column: auto/span 2;
+  }
+  .simple .grid .col-xl-3, .simple .horizontal .form-group .col-xl-3,
+.simple .form-group.horizontal .col-xl-3 {
+    grid-column: auto/span 3;
+  }
+  .simple .grid .col-xl-4, .simple .horizontal .form-group .col-xl-4,
+.simple .form-group.horizontal .col-xl-4 {
+    grid-column: auto/span 4;
+  }
+  .simple .grid .col-xl-5, .simple .horizontal .form-group .col-xl-5,
+.simple .form-group.horizontal .col-xl-5 {
+    grid-column: auto/span 5;
+  }
+  .simple .grid .col-xl-6, .simple .horizontal .form-group .col-xl-6,
+.simple .form-group.horizontal .col-xl-6 {
+    grid-column: auto/span 6;
+  }
+  .simple .grid .col-xl-7, .simple .horizontal .form-group .col-xl-7,
+.simple .form-group.horizontal .col-xl-7 {
+    grid-column: auto/span 7;
+  }
+  .simple .grid .col-xl-8, .simple .horizontal .form-group .col-xl-8,
+.simple .form-group.horizontal .col-xl-8 {
+    grid-column: auto/span 8;
+  }
+  .simple .grid .col-xl-9, .simple .horizontal .form-group .col-xl-9,
+.simple .form-group.horizontal .col-xl-9 {
+    grid-column: auto/span 9;
+  }
+  .simple .grid .col-xl-10, .simple .horizontal .form-group .col-xl-10,
+.simple .form-group.horizontal .col-xl-10 {
+    grid-column: auto/span 10;
+  }
+  .simple .grid .col-xl-11, .simple .horizontal .form-group .col-xl-11,
+.simple .form-group.horizontal .col-xl-11 {
+    grid-column: auto/span 11;
+  }
+  .simple .grid .col-xl-12, .simple .horizontal .form-group .col-xl-12,
+.simple .form-group.horizontal .col-xl-12 {
+    grid-column: auto/span 12;
+  }
+}
+
+.column {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.intangible {
+  pointer-events: none;
+}
+
+.text-in-columns {
+  column-count: 3;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
+  column-gap: 40px;
+  -moz-column-gap: 40px;
+  -webkit-column-gap: 40px;
+  column-rule: solid 1px #9a9999;
+  -moz-column-rule: solid 1px #9a9999;
+  -webkit-column-rule: solid 1px #9a9999;
+  text-align: justify;
+}
+
+/*************************************
+#*** OVERLAY
+#************************************/
+.overlay, .modal {
+  pointer-events: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.overlay.close, .close.modal {
+  display: none;
+}
+
+/*************************************
+#*** MODAL
+#************************************/
+.modal {
+  display: flex;
+  pointer-events: auto;
+  overflow-y: auto;
+}
+
+.modal.closed {
+  display: none;
+}
+
+.modal .modal-dialog {
+  transform: translate(0, 0);
+  pointer-events: auto;
+  padding: 20px 0px;
+  margin: auto;
+}
+
+.modal .modal-content {
+  width: 500px;
+  max-width: calc(100vw - 40px);
+  border: solid 1px #919191;
+  border-radius: 3px;
+  background: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal .modal-header,
+.modal .modal-body,
+.modal .modal-footer {
+  padding: 10px 20px;
+}
+
+.modal .modal-header {
+  border-radius: 3px 3px 0px 0px;
+}
+
+.modal * + .modal-body,
+.modal * + .modal-footer {
+  border-top: solid 1px #919191;
+}
+
+.modal-body:last-child,
+.modal-footer:last-child {
+  border-radius: 0px 0px 3px 30px;
+}
+
+/*************************************
+#*** INPUT GROUP
+#************************************/
+.simple .input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  border: 1px solid #919191;
+  text-align: center;
+  background-color: #e9ecef;
+}
+.simple .input-group-text input[type=checkbox],
+.simple .input-group-text input[type=radio] {
+  width: 1.5em;
+  height: 1.5em;
+}
+.simple .input-group .main {
+  flex-grow: 1;
+}
+.simple .input-group > input,
+.simple .input-group > textarea,
+.simple .input-group > select,
+.simple .input-group > button,
+.simple .input-group > .btn,
+.simple .input-group > .input-group-text {
+  height: auto;
+  border-radius: 0px;
+  margin-left: -1px;
+}
+.simple .input-group > input:first-child,
+.simple .input-group > textarea:first-child,
+.simple .input-group > select:first-child,
+.simple .input-group > button:first-child,
+.simple .input-group > .btn:first-child,
+.simple .input-group > .input-group-text:first-child {
+  border-radius: 3px 0px 0px 3px;
+  margin-left: 0px;
+}
+.simple .input-group > input:last-child,
+.simple .input-group > textarea:last-child,
+.simple .input-group > select:last-child,
+.simple .input-group > button:last-child,
+.simple .input-group > .btn:last-child,
+.simple .input-group > .input-group-text:last-child {
+  border-radius: 0px 3px 3px 0px;
+}
+
+/*************************************
+#*** FORM GROUP
+#************************************/
+.simple .button-group {
+  display: inline-flex;
+  width: auto;
+}
+.simple .button-group > input,
+.simple .button-group > button,
+.simple .button-group > .btn {
+  height: auto;
+  border-radius: 0px;
+  margin-left: -1px;
+}
+.simple .button-group > input:first-child,
+.simple .button-group > button:first-child,
+.simple .button-group > .btn:first-child {
+  border-radius: 3px 0px 0px 3px;
+  margin-left: 0px;
+}
+.simple .button-group > input:last-child,
+.simple .button-group > button:last-child,
+.simple .button-group > .btn:last-child {
+  border-radius: 0px 3px 3px 0px;
+}
+
+/*************************************
+#*** FORM GROUP
+#************************************/
+.simple .form-group {
+  margin-bottom: 20px;
+}
+.simple .form-group > label {
+  display: block;
+}
+.simple .form-group > * {
+  align-self: center;
+  min-width: 0px;
+}
+.simple .form-group > input:not([type=checkbox]):not([type=radio]),
+.simple .form-group > select,
+.simple .form-group > textarea,
+.simple .form-group > button {
+  min-width: 0px;
+  width: 100%;
+}
+.simple .form-group > div:not(.input-group) > input:not([type=checkbox]):not([type=radio]),
+.simple .form-group > div:not(.input-group) > textarea,
+.simple .form-group > div:not(.input-group) > select,
+.simple .form-group > div:not(.input-group) > button {
+  width: 100%;
+}
+
+/*************************************
+#*** HORIZONTAL FORMS
+#************************************/
+.simple .horizontal .form-group,
+.simple .form-group.horizontal {
+  grid-row-gap: 0px;
+}
+
+/*************************************
+#*** VERTICAL FORMS
+#************************************/
+.simple .tabs {
+  z-index: 10;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+.simple .tab {
+  display: block;
+  border-radius: 5px 5px 0px 0px;
+  border: solid 1px #919191;
+  margin: 0px 5px 0px 0px;
+  background-color: #eee;
+}
+.simple .tab a {
+  display: block;
+  padding: 10px 20px;
+}
+.simple .tab.active {
+  background-color: white;
+  border-bottom: white;
+}
+.simple .panel {
+  display: none;
+  z-index: 9;
+  padding: 20px;
+  border: solid 1px #919191;
+  margin-top: -1px;
+  background-color: white;
+}
+.simple .panel.active {
+  display: block;
+}
+
+/*# sourceMappingURL=master.css.map */
