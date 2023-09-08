@@ -14,7 +14,7 @@ URLSearchParams.prototype.isEmpty = function() { return this.toString().length =
 
 //----------------------------------------
 
-const api = new Api('http://player-backend.lndo.site');
+const api = new Api('http://player-backend.lndo.site:8000');
 const app = App.instantiate(api);
 window.api = api;
 

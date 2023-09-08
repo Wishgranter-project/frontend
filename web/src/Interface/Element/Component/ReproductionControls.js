@@ -22,9 +22,13 @@ class ReproductionControls extends CustomElement
         //     ? await this.api.collection.item.source.list(item.uuid)
         //     : await this.api.discover.source.search({title: item.title, artist: item.artist});
 
-        var r = await this.api.discover.sources({title: item.title, artist: item.artist});
+        var r = await this.api.discover.resources({title: item.title, artist: item.artist});
 
-        this.setUpPlayer(r.data[0].id);
+        if (r.data[0]) {
+            this.setUpPlayer(r.data[0]);
+        } else {
+            alert('Nothing found');
+        }
     }
 
     playPause() 
@@ -49,10 +53,10 @@ class ReproductionControls extends CustomElement
         this.controls.pauseVideo();
     }
 
-    setUpPlayer(videoId) 
+    setUpPlayer(resource) 
     {
         this.destroyPlayer();
-        this.controls = this.createPlayer(videoId);
+        this.controls = this.createPlayer(resource);
     }
 
     destroyPlayer() 
@@ -60,8 +64,10 @@ class ReproductionControls extends CustomElement
         this.$refs.playerFrame.clear()
     }
 
-    createPlayer(videoId) 
+    createPlayer(resource) 
     {
+        var videoId = resource.id.split(':')[1];
+
         var embedId = 'youtube-' + videoId;
         var embed = this.create('div', {id: embedId});
         this.$refs.playerFrame.append(embed);

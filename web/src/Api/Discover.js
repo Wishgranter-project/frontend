@@ -11,9 +11,9 @@ class Discover extends Base
         this.artists  = new DiscoverArtists(httpClient);
     }
 
-    sources(params) 
+    resources(params) 
     {
-        return this.apiCall('get', '/api/v1/discover/sources', null, params);
+        return this.apiCall('get', '/api/v1/discover/resources', null, params);
     }
 }
 
