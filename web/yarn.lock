@@ -1726,6 +1726,10 @@ ms@2.0.0:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
   integrity sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==
 
+"multimedia-player-interface@git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.1":
+  version "3.1.0"
+  resolved "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#7c0a277763daf1a19c11b60fc66cae1050942a6b"
+
 mute-stdout@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mute-stdout/-/mute-stdout-1.0.1.tgz#acb0300eb4de23a7ddeec014e3e96044b3472331"
@@ -2809,3 +2813,9 @@ yargs@^7.1.0:
     which-module "^1.0.0"
     y18n "^3.2.1"
     yargs-parser "^5.0.1"
+
+"youtube-wrapper@git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git":
+  version "3.0.0"
+  resolved "git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git#304b4aabcc6d00cda302aba833e154c471b81e84"
+  dependencies:
+    multimedia-player-interface "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.1"

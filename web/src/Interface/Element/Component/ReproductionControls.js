@@ -1,4 +1,7 @@
 import CustomElement from '../CustomElement';
+import { PlayerYouTube } from 'youtube-wrapper';
+
+customElements.define('youtube-player', PlayerYouTube);
 
 class ReproductionControls extends CustomElement 
 {
@@ -9,19 +12,15 @@ class ReproductionControls extends CustomElement
         this.api = api;
     }
 
-    connectedCallback() 
+    render() 
     {
         this.$refs.playButton = this.createAndAttach('button', {class: 'button-play'}, this.create('span', {class: 'fa fa-play'}));
-        this.$refs.playButton.addEventListener('click', this.playPause.bind(this));
+        this.$refs.playButton.addEventListener('click', this.toggle.bind(this));
         this.$refs.playerFrame = this.createAndAttach('div', {class: 'player-frame'});
     }
 
     async select(item) 
     {
-        // var r = item.uuid 
-        //     ? await this.api.collection.item.source.list(item.uuid)
-        //     : await this.api.discover.source.search({title: item.title, artist: item.artist});
-
         var r = await this.api.discover.resources({title: item.title, artist: item.artist});
 
         if (r.data[0]) {
@@ -31,32 +30,30 @@ class ReproductionControls extends CustomElement
         }
     }
 
-    playPause() 
+    toggle() 
     {
-        this.isPaused()
-            ? this.play()
-            : this.pause();
+        this.controls.toggle();
     }
 
     isPaused() 
     {
-        return this.controls.getPlayerState() == 2;
+        return this.controls.isPaused;
     }
 
     play() 
     {
-        this.controls.playVideo();
+        this.controls.play();
     }
 
     pause() 
     {
-        this.controls.pauseVideo();
+        this.controls.pause();
     }
 
     setUpPlayer(resource) 
     {
         this.destroyPlayer();
-        this.controls = this.createPlayer(resource);
+        window.controls = this.controls = this.createPlayer(resource);
     }
 
     destroyPlayer() 
@@ -68,23 +65,16 @@ class ReproductionControls extends CustomElement
     {
         var videoId = resource.id.split(':')[1];
 
-        var embedId = 'youtube-' + videoId;
-        var embed = this.create('div', {id: embedId});
-        this.$refs.playerFrame.append(embed);
-        
-        return new YT.Player(embedId, {
-            height: '390',
-            width: '640',
-            videoId: videoId,
-            playerVars: {
-              playsinline: 1,
-              autoplay: 1
-            }/*,
-            events: {
-              'onReady': onPlayerReady,
-              'onStateChange': onPlayerStateChange
-            }*/
-        });
+        var player = document.createElement('youtube-player');
+        player.videoId = videoId;
+        player.width = 390;
+
+        player.appendTo(this.$refs.playerFrame).then(() => 
+        {
+            player.setVolume(15);
+        })
+
+        return player;
     }
 
 }

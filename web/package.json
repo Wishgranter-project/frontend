@@ -13,7 +13,8 @@
         "gulp-rename": "^2.0.0",
         "http": "https://github.com/adinan-cenci/http",
         "webpack-stream": "^7.0.0",
-        "y2be-player": "^3.5.4"
+        "y2be-player": "^3.5.4",
+        "youtube-wrapper": "git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git"
     },
     "devDependencies": {
         "webpack": "^5.69.1"
