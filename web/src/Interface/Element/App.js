@@ -20,6 +20,8 @@ import ViewDiscover     from './View/DiscoverArtists';
 import ViewNotFound     from './View/NotFound';
 import Router           from '../Routing/Router.js';
 
+import ShowRunner       from './ShowRunner';
+
 class App extends CustomElement
 {
     static elementName = 'the-app';
@@ -28,6 +30,7 @@ class App extends CustomElement
     {
         this.api    = api;
         this.router = this.setUpRouter(api);
+        this.showRunner = new ShowRunner(this, api);
     }
 
     render() 
@@ -43,11 +46,6 @@ class App extends CustomElement
 
         this.router.setStage(this.$refs.stage);
         this.router.listenToChanges();
-
-        this.addEventListener('item-selected', (evt) => 
-        {
-            this.$refs.controls.select(evt.detail);
-        });
 
         this.addEventListener('playlist-updated', () =>
         {

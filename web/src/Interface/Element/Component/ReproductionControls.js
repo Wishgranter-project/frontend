@@ -14,69 +14,73 @@ class ReproductionControls extends CustomElement
 
     render() 
     {
+        this.$refs.timer = this.createAndAttach('span', {class: 'timer'});
         this.$refs.playButton = this.createAndAttach('button', {class: 'button-play'}, this.create('span', {class: 'fa fa-play'}));
         this.$refs.playButton.addEventListener('click', this.toggle.bind(this));
-        this.$refs.playerFrame = this.createAndAttach('div', {class: 'player-frame'});
+        this.$refs.progress = this.createAndAttach('progress', {max: '100'});
+        this.$refs.playerFrame = this.createAndAttach('div', {class: 'player-frame intangible'});
+
+        this.addEventListener('player:timeupdate', this.updateTimeDisplay.bind(this));
     }
 
-    async select(item) 
+    playResource(resource) 
     {
-        var r = await this.api.discover.resources({title: item.title, artist: item.artist});
-
-        if (r.data[0]) {
-            this.setUpPlayer(r.data[0]);
-        } else {
-            alert('Nothing found');
+        if (this.player) {
+            this.destroyPlayer(this.player);
         }
+
+        window.player = this.player = this.createPlayer(resource);
+        this.attachPlayer(this.player);
     }
 
-    toggle() 
+    attachPlayer(player) 
     {
-        this.controls.toggle();
+        player.appendTo(this.$refs.playerFrame).then(() => 
+        {
+            player.setVolume(15);
+            player.play();
+        });
     }
 
-    isPaused() 
-    {
-        return this.controls.isPaused;
-    }
-
-    play() 
-    {
-        this.controls.play();
-    }
-
-    pause() 
-    {
-        this.controls.pause();
-    }
-
-    setUpPlayer(resource) 
-    {
-        this.destroyPlayer();
-        window.controls = this.controls = this.createPlayer(resource);
-    }
-
-    destroyPlayer() 
-    {
-        this.$refs.playerFrame.clear()
+    destroyPlayer(player) 
+    {        
+        player.pause();
+        player.remove();
     }
 
     createPlayer(resource) 
     {
-        var videoId = resource.id.split(':')[1];
+        switch (resource.vendor) {
+            case 'youtube':
+                return this.createPlayerYouTube(resource);
+                break;
+        }
+    }
 
-        var player = document.createElement('youtube-player');
+    createPlayerYouTube(resource) 
+    {
+        var videoId    = resource.id.split(':')[1];
+        var player     = document.createElement('youtube-player');
         player.videoId = videoId;
-        player.width = 390;
-
-        player.appendTo(this.$refs.playerFrame).then(() => 
-        {
-            player.setVolume(15);
-        })
+        player.width   = 390;
 
         return player;
     }
 
+    //--------
+
+    toggle() 
+    {
+        if (this.player) {
+            this.player.toggle();
+        }
+    }
+
+    updateTimeDisplay() 
+    {
+        this.$refs.timer.innerHTML = this.player.currentTimeFormatted;
+        this.$refs.progress.value  = this.player.currentTimePercentage;
+    }
 }
 
 ReproductionControls.register();

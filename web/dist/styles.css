@@ -83,9 +83,38 @@ body {
 }
 
 .app-footer {
+    font-size: 0px;
+    line-height: 0px;
+
     border-top: solid 1px #3a3a3a;
     background-color: #303030;
 }
+
+    reproduction-controls {
+        display: block;
+    }
+
+        reproduction-controls .timer {
+            font-size: 16px;
+            line-height: 16px;
+        }
+
+        reproduction-controls progress {
+            width: 100%;
+            height: 16px;;
+        }
+
+
+        .player-frame {
+            opacity: 0.25;
+            height: 0px;
+        }
+
+            .player-frame iframe {
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+            }
 
 /*--------------------------------------------*/
 
@@ -123,21 +152,6 @@ body {
     }
 
 /*--------------------------------------------*/
-
-reproduction-controls {
-    display: block;
-}
-
-.player-frame {
-    height: 0px;
-}
-
-    .player-frame iframe {
-        position: absolute;
-        right: 0px;
-        bottom: 0px;
-    }
-
 
 .simple .view-nav {
     width: 100%;

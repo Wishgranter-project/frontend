@@ -66,7 +66,9 @@ class PlaylistItem extends CustomElement
         {
             this.dispatchEvent(new CustomEvent('item-selected', {
                 bubbles: true,
-                detail: this.item
+                detail: {
+                    item: this.item
+                }
             }));
         });
     }
