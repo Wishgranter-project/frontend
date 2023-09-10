@@ -1,7 +1,9 @@
 import CustomElement from '../CustomElement';
 import { PlayerYouTube } from 'youtube-wrapper';
+import { PlayerAudio } from 'html-multimedia-wrapper';
 
-customElements.define('youtube-player', PlayerYouTube);
+customElements.define('player-youtube', PlayerYouTube);
+customElements.define('player-audio', PlayerAudio);
 
 class ReproductionControls extends CustomElement 
 {
@@ -54,15 +56,26 @@ class ReproductionControls extends CustomElement
             case 'youtube':
                 return this.createPlayerYouTube(resource);
                 break;
+            case 'slider_kz':
+                return this.createPlayerSliderKz(resource);
+                break;
         }
     }
 
     createPlayerYouTube(resource) 
     {
         var videoId    = resource.id.split(':')[1];
-        var player     = document.createElement('youtube-player');
+        var player     = document.createElement('player-youtube');
         player.videoId = videoId;
         player.width   = 390;
+
+        return player;
+    }
+
+    createPlayerSliderKz(resource) 
+    {
+        var player = document.createElement('player-audio');
+        player.src = resource.source;
 
         return player;
     }
