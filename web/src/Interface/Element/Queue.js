@@ -4,6 +4,7 @@ class Queue
     constructor(items = []) 
     {
         this.list = items;
+        this.context = null;
     }
 
     enqueue(item) 
@@ -18,12 +19,36 @@ class Queue
         var last = this.list[0] || null;
         this.list = this.list.slice(1);
 
+        if (this.list.length == 1) {
+            this.fetchMore();
+        }
+
         return last;
     }
 
-    peek() 
+    get theOneInFront() 
     {
         return this.list[0] || null;
+    }
+
+    setContext(context) 
+    {
+        this.clear();
+        this.enqueueMultiple(context.initialBatch);
+        this.context = context;
+    }
+
+    fetchMore() 
+    {
+        this.context.fetchMore(this).then( (response) => 
+        {
+            this.enqueueMultiple(response.data)
+        });
+    }
+
+    clear() 
+    {
+        this.list = [];
     }
 
     //-------------------

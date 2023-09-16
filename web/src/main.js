@@ -15,12 +15,12 @@ URLSearchParams.prototype.isEmpty = function() { return this.toString().length =
 //----------------------------------------
 
 const api = new Api('http://player-backend.lndo.site:8080');
-const app = App.instantiate(api);
+window.app = App.instantiate(api);
 window.api = api;
 
 //----------------------------------------
 
 document.addEventListener('DOMContentLoaded', () =>
 {
-    document.body.append(app);
+    document.body.append(window.app);
 });

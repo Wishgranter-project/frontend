@@ -3,6 +3,7 @@ import PlaylistItem from '../Component/PlaylistItem';
 import SearchHeader from '../Component/SearchHeader';
 import Pagination from '../Component/Pagination';
 import Events from '../../../Helper/Events';
+import QueueContextPlaylist from '../QueueContextPlaylist';
 
 class Playlist extends ViewElement 
 {
@@ -20,6 +21,8 @@ class Playlist extends ViewElement
 
         Events.enableBottomReached(this);
         this.addEventListener('scroll-bottom-reached', this.bottomReached.bind(this));
+
+        this.addEventListener('item-selected', this.onItemSelected.bind(this));
     }
 
     bottomReached(evt) 
@@ -65,7 +68,29 @@ class Playlist extends ViewElement
     renderNewItem() 
     {
         this.createAndAttach('a', {href: '#playlist:' + this.request.attributes.playlistId + '/create-item' }, 'New Item')
-    }    
+    }
+
+    onItemSelected(evt) 
+    {
+        var initialBatch = [];
+        for (var item of this.querySelectorAll(PlaylistItem.elementName)) {
+            initialBatch.push(item.item);
+        }
+
+        for (var key in initialBatch) {
+            if (initialBatch[key] == evt.detail.item) {
+                initialBatch = initialBatch.slice(key);
+                break;
+            }
+        }
+
+        evt.detail.context = new QueueContextPlaylist(
+            initialBatch,
+            this.api, 
+            this.request.attributes.playlistId, 
+            this.request.queryParams
+        );
+    }
 }
 
 Playlist.register();
