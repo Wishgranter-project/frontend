@@ -31,8 +31,8 @@ class DiscoverReleases extends ViewElement
         for (var rl of response.data) {
             grid.createAndAttach('a', {href: `#discover:release:${rl.id}`, class: 'col-6 col-sm-4 col-md-3 col-lg-2'}, [
                 this.create('span', {class: 'card'}, [
-                    ( rl.thumb ? this.create('img', {src: rl.thumb}) : null ),
-                    this.create('h4', null, [rl.name])
+                    ( rl.thumbnail ? this.create('img', {src: rl.thumbnail}) : null ),
+                    this.create('h4', null, [rl.title])
                 ])
             ]);
         }

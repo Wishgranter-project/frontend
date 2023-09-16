@@ -17,7 +17,7 @@ class Release extends ViewElement
 
     renderHeader(response) 
     {
-        this.createAndAttach('h1', null, [response.data.artist.name, ' ', response.data.title]);
+        this.createAndAttach('h1', null, [response.data.artist, ' ', response.data.title]);
         //var header = ViewHeader.instantiate(this.api, this.request, 'fuck');
         //this.append(header);
     }
@@ -25,7 +25,7 @@ class Release extends ViewElement
     async renderTracks(response) 
     {
         for (var t of response.data.tracks) {
-            this.append(PlaylistItem.instantiate({ title: t, artist: response.data.artist.name }))
+            this.append(PlaylistItem.instantiate({ title: t, artist: response.data.artist }))
         }
     }
 

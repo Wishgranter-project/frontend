@@ -12,16 +12,22 @@ class ReproductionControls extends CustomElement
     __construct(api) 
     {
         this.api = api;
+        this.volume = 15;
     }
 
     render() 
     {
-        this.$refs.timer = this.createAndAttach('span', {class: 'timer'});
+        this.$refs.timer = this.createAndAttach('span', {class: 'reproduction-controls__timer'});
         this.$refs.playButton = this.createAndAttach('button', {class: 'button-play'}, this.create('span', {class: 'fa fa-play'}));
-        this.$refs.playButton.addEventListener('click', this.toggle.bind(this));
-        this.$refs.progress = this.createAndAttach('progress', {max: '100'});
+        this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
+        this.$refs.progress = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
         this.$refs.playerFrame = this.createAndAttach('div', {class: 'player-frame intangible'});
 
+        this.$refs.volumeControl.value = this.volume;
+
+        this.$refs.progress.addEventListener('click', this.seek.bind(this));
+        this.$refs.playButton.addEventListener('click', this.toggle.bind(this));
+        this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
         this.addEventListener('player:timeupdate', this.updateTimeDisplay.bind(this));
     }
 
@@ -41,6 +47,7 @@ class ReproductionControls extends CustomElement
         {
             player.setVolume(15);
             player.play();
+            player.setVolume(this.volume);
         });
     }
 
@@ -64,7 +71,7 @@ class ReproductionControls extends CustomElement
 
     createPlayerYouTube(resource) 
     {
-        var videoId    = resource.id.split(':')[1];
+        var videoId    = resource.id.split('@')[0];
         var player     = document.createElement('player-youtube');
         player.videoId = videoId;
         player.width   = 390;
@@ -93,6 +100,28 @@ class ReproductionControls extends CustomElement
     {
         this.$refs.timer.innerHTML = this.player.currentTimeFormatted;
         this.$refs.progress.value  = this.player.currentTimePercentage;
+    }
+
+    dialVolume(evt) 
+    {
+        if (this.player) {
+            this.volume = evt.target.value;
+            this.player.setVolume(this.volume);
+        }
+    }
+
+    seek(evt) 
+    {
+        if (!this.player) {
+            return;
+        }
+
+        var x, width, perc;
+        x     = evt.clientX - this.$refs.progress.offsetLeft;
+        width = this.$refs.progress.offsetWidth;
+        perc  = Math.ceil((x / width) * 100)+'%';
+
+        this.player.seek(perc);
     }
 }
 

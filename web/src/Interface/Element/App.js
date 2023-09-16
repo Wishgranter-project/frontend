@@ -84,7 +84,7 @@ class App extends CustomElement
         {
             return ViewReleases.instantiate(request, api);
         })
-        .addRouter(/discover:release:(?<releaseId>[\d]+)/, function(request) 
+        .addRouter(/discover:release:(?<releaseId>.+)/, function(request) 
         {
             return ViewRelease.instantiate(request, api);
         })

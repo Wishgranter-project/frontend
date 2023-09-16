@@ -36,7 +36,7 @@ class DiscoverArtists extends ViewElement
         for (var ar of response.data) {
             grid.createAndAttach('a', {href: `#discover:releases?artist=${ar.name}`, class: 'col-6 col-sm-4 col-md-3 col-lg-2'}, [
                 this.create('span', {class: 'card'}, [
-                    (ar.thumb ? this.create('img', {src: ar.thumb}) : null),
+                    (ar.thumbnail ? this.create('img', {src: ar.thumbnail}) : null),
                     this.create('h4', null, [ar.name])
                 ])
             ]);
