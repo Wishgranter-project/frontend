@@ -33,6 +33,14 @@ class Pagination extends CustomElement
             this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, ['prev']);
         }
 
+        if (this.response.meta.pages > 2) {
+            for (var p = 1; p < this.response.meta.pages; p++) {
+                queryParams = this.request.queryParams.without('page');
+                queryParams.set('page', p);
+                this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, [p]);
+            }
+        }
+
         if (this.response.meta.pages > this.response.meta.page) {
             queryParams = this.request.queryParams.without('page');
             queryParams.set('page', this.response.meta.page + 1);

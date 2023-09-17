@@ -17,11 +17,11 @@ class ReproductionControls extends CustomElement
 
     render() 
     {
-        this.$refs.timer = this.createAndAttach('span', {class: 'reproduction-controls__timer'});
-        this.$refs.playButton = this.createAndAttach('button', {class: 'button-play'}, this.create('span', {class: 'fa fa-play'}));
+        this.$refs.timer         = this.createAndAttach('span', {class: 'reproduction-controls__timer'});
+        this.$refs.playButton    = this.createAndAttach('button', {class: 'button-play'}, this.create('span', {class: 'fa fa-play'}));
         this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
-        this.$refs.progress = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
-        this.$refs.playerFrame = this.createAndAttach('div', {class: 'player-frame intangible'});
+        this.$refs.progress      = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
+        this.$refs.playerFrame   = this.createAndAttach('div', {class: 'player-frame intangible'});
 
         this.$refs.volumeControl.value = this.volume;
 
