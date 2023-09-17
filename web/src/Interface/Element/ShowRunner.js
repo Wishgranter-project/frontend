@@ -14,15 +14,19 @@ class ShowRunner
 
     onItemSelected(evt) 
     {
+        console.log('Show runner: New item selected');
         this.findResourcesForMusicalItem(evt.detail.item).then( (response) =>
         {
             if (!response.data[0]) {
-                alert('Nothing found to play');
+                alert('Show runner: Nothing found to play');
                 return;
             }
      
             if (evt.detail.context) {
                 this.queue.setContext(evt.detail.context);
+                if (this.queue.length <= 1) {
+                    this.queue.fetchMore();
+                }
             }
 
             this.app.$refs.controls.playResource(response.data[0]);
@@ -33,6 +37,11 @@ class ShowRunner
     {
         this.queue.dequeue();
 
+        if (!this.queue.theOneInFront) {
+            return;
+        }
+
+        console.log('Show runner: moving the queue');
         this.findResourcesForMusicalItem(this.queue.theOneInFront).then( (response) =>
         {
             if (response.data) {
@@ -43,6 +52,8 @@ class ShowRunner
 
     async findResourcesForMusicalItem(item) 
     {
+        console.log('Show runner: searching for source to play');
+
         var params = {}
 
         if (item.title) {
@@ -50,9 +61,9 @@ class ShowRunner
         }
 
         // Give preference for soundtracks.
-        if (item.soundtrack) {
+        if (item.soundtrack && item.soundtrack.length) {
             params.soundtrack = item.soundtrack;
-        } else if (item.artist) {
+        } else if (item.artist && item.artist.length) {
             params.artist = item.artist;
         }
 

@@ -21,13 +21,12 @@ class Playlist extends ViewElement
 
         Events.enableBottomReached(this);
         this.addEventListener('scroll-bottom-reached', this.bottomReached.bind(this));
-
         this.addEventListener('item-selected', this.onItemSelected.bind(this));
     }
 
     bottomReached(evt) 
     {
-        console.log('end of the line');
+        console.log('Bottom of the page reached');
     }
 
     fetch() 
@@ -87,8 +86,8 @@ class Playlist extends ViewElement
         evt.detail.context = new QueueContextPlaylist(
             initialBatch,
             this.api, 
-            this.request.attributes.playlistId, 
-            this.request.queryParams
+            this.request.queryParams, 
+            this.request.attributes.playlistId
         );
     }
 }

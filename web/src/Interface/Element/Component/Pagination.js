@@ -17,6 +17,10 @@ class Pagination extends CustomElement
         this.classList.add('view-nav');
         var queryParams;
 
+        if (!this.response.meta || !this.response.meta.pages) {
+            return;
+        }
+
         if (this.response.meta.pages > 1) {
             queryParams = this.request.queryParams.without('page');
             queryParams.set('page', 1);
@@ -35,7 +39,7 @@ class Pagination extends CustomElement
             this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, ['next']);
         }
 
-        if (this.response.meta.pages > 1) {
+        if (this.response.meta.pages > this.response.meta.page) {
             queryParams = this.request.queryParams.without('page');
             queryParams.set('page', this.response.meta.pages);
             this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-last'}, ['last']);

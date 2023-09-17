@@ -1,25 +1,16 @@
+import QueueContextSearch from './QueueContextSearch';
 
-class QueueContextPlaylist 
+class QueueContextPlaylist extends QueueContextSearch 
 {
-    constructor(initialBatch, api, playlistId, queryParams) 
+    constructor(initialBatch, api, queryParams, playlistId) 
     {
-        this.initialBatch = initialBatch;
-        this.api = api;
+        super(initialBatch, api, queryParams);
         this.playlistId = playlistId;
-        this.queryParams = queryParams;
     }
 
-    fetchMore(queue) 
+    request(queue) 
     {
-        this.progress();
         return this.api.collection.playlists.get(this.playlistId).getItems(this.queryParams);
-    }
-
-    progress() 
-    {
-        var page = parseInt(this.queryParams.get('page') || 1);
-        page += 1;
-        this.queryParams.set('page', page);
     }
 }
 

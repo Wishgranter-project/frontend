@@ -3,7 +3,7 @@ class Queue
 {
     constructor(items = []) 
     {
-        this.list = items;
+        this.items = items;
         this.context = null;
     }
 
@@ -16,51 +16,72 @@ class Queue
 
     dequeue() 
     {
-        var last = this.list[0] || null;
-        this.list = this.list.slice(1);
+        var last = this.items[0] || null;
+        this.items = this.items.slice(1);
 
-        if (this.list.length == 1) {
+        if (this.items.length <= 1) {
             this.fetchMore();
         }
 
         return last;
     }
 
+    get length() 
+    {
+        return this.items.length;
+    }
+
     get theOneInFront() 
     {
-        return this.list[0] || null;
+        if (this.items[0]) {
+            return this.items[0];
+        }
+        
+        console.log('Queue: end reached');
+        return null;
     }
 
-    setContext(context) 
+    setContext(queueContext) 
     {
+        this.context = queueContext;
+        console.log('Queue: context set');
         this.clear();
-        this.enqueueMultiple(context.initialBatch);
-        this.context = context;
+        this.enqueue(queueContext.initialBatch);
     }
 
-    fetchMore() 
+    async fetchMore() 
     {
-        this.context.fetchMore(this).then( (response) => 
+        console.log('Queue: Searching for more content')
+        return this.context.fetchMore(this).then( (response) => 
         {
-            this.enqueueMultiple(response.data)
+            if (response.data && response.data.length) {
+                this.enqueue(response.data);
+            } else {
+                console.log('Queue: nothig more to add to the queue');
+            }
+
+            return response;
         });
     }
 
     clear() 
     {
-        this.list = [];
+        console.log('Queue: emptied');
+        this.items = [];
     }
 
     //-------------------
 
     enqueueMultiple(items) 
     {
-        this.list = [...this.list, ...items];
+        this.items = [...this.items, ...items];
+        console.log('Queue: multiple items added');
     }
 
     enqueueSingle(item) 
     {
-        this.list.push(item);
+        this.items.push(item);
+        console.log('Queue: single item added');
     }
 }
 

@@ -28,16 +28,29 @@ class ReproductionControls extends CustomElement
         this.$refs.progress.addEventListener('click', this.seek.bind(this));
         this.$refs.playButton.addEventListener('click', this.toggle.bind(this));
         this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
-        this.addEventListener('player:timeupdate', this.updateTimeDisplay.bind(this));
+        this.addEventListener('player:timeupdate', this.onTimeUpdate.bind(this));
+
+        this.addEventListener('player:ended', () => 
+        {
+            console.log('Reproduction: ended')
+        });
+
+        this.addEventListener('player:pause', () => 
+        {
+            console.log('Reproduction: paused')
+        });
     }
 
     playResource(resource) 
     {
+        console.log('Reproduction: booting player');
+
         if (this.player) {
             this.destroyPlayer(this.player);
         }
 
-        window.player = this.player = this.createPlayer(resource);
+        window.player = 
+        this.player = this.createPlayer(resource);
         this.attachPlayer(this.player);
     }
 
@@ -48,6 +61,7 @@ class ReproductionControls extends CustomElement
             player.setVolume(15);
             player.play();
             player.setVolume(this.volume);
+            console.log('Reproduction: reproducing audio');
         });
     }
 
@@ -96,7 +110,7 @@ class ReproductionControls extends CustomElement
         }
     }
 
-    updateTimeDisplay() 
+    onTimeUpdate() 
     {
         this.$refs.timer.innerHTML = this.player.currentTimeFormatted;
         this.$refs.progress.value  = this.player.currentTimePercentage;
