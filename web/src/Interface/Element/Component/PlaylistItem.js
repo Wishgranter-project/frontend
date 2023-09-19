@@ -51,6 +51,10 @@ class PlaylistItem extends CustomElement
             ]);
         }
 
+        this.$refs.addButton = this.$refs.action.createAndAttach('a', { title: 'Add'}, 
+            this.createAndAttach('span', {class: 'fa fa-plus'})
+        );
+
         if (this.item.uuid) {
             this.$refs.editButton = this.$refs.action.createAndAttach('a', {href: `#item:${this.item.uuid}/edit`, title: 'Edit'}, 
                 this.createAndAttach('span', {class: 'fa fa-pencil'})
@@ -59,12 +63,16 @@ class PlaylistItem extends CustomElement
 
         this.$refs.title.addEventListener('click', () => 
         {
-            this.dispatchEvent(new CustomEvent('item-selected', {
-                bubbles: true,
-                detail: {
-                    item: this.item
-                }
-            }));
+            this.fireEvent('item-selected', {
+                item: this.item
+            });
+        });
+
+        this.$refs.addButton.addEventListener('click', () => 
+        {
+            this.fireEvent('item-to-add', {
+                item: this.item
+            });
         });
     }
 }

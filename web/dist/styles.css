@@ -261,6 +261,11 @@ body {
     background: #242424;
 }
 
+    .card img {
+        width: 100%;
+        margin: 0px 0px 10px 0px;
+    }
+
 
 .simple .grid.releases {
     padding: 10px;
@@ -289,4 +294,10 @@ body {
 
 .messages ul.warnings {
     background-color: orange;
+}
+
+/*--------------------------------------------*/
+
+.modal .modal-content {
+    background-color: #505050;
 }

@@ -22,6 +22,8 @@ import Router           from '../Routing/Router.js';
 
 import ShowRunner       from './ShowRunner';
 
+import ModalAddToPlaylist from './Component/ModalAddToPlaylist';
+
 class App extends CustomElement
 {
     static elementName = 'the-app';
@@ -50,6 +52,12 @@ class App extends CustomElement
         this.addEventListener('playlist-updated', () =>
         {
             this.$refs.navMenu.render();
+        });
+
+        this.addEventListener('item-to-add', (evt) => 
+        {
+            var modal = ModalAddToPlaylist.instantiate(this.api);
+            this.append(modal);
         });
 
         this.classList.add('app');
