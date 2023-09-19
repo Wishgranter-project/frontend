@@ -88,31 +88,60 @@ body {
 }
 
 .app-footer {
-    font-size: 0px;
-    line-height: 0px;
-
     border-top: solid 1px #3a3a3a;
     background-color: #303030;
 }
 
-    ..reproduction-controls {
-        display: block;
+    .reproduction-controls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px;
     }
 
+        .reproduction-controls__label {
+            width: auto;
+            margin: 0px;
+            text-align: left;
+        }
+
+            .reproduction-controls__title {
+                font-size: 20px;
+                line-height: 1.5;
+            }
+
+            .reproduction-controls__artists {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
         .reproduction-controls__timer {
+            margin: auto 10px auto auto;
+            width: 50px;
             font-size: 16px;
             line-height: 16px;
         }
 
+        .reproduction-controls__buttons {
+            width: auto;
+            margin: 0px;
+        }
+
         .reproduction-controls__volume {
             width: 250px;
+            margin: auto 0px auto auto;
         }
 
         .reproduction-controls__progress {
-            width: 100%;
+            width: calc(100% + 20px);
             height: 10px;
+            margin: 0px -10px -10px -10px;
         }
 
+        .reproduction-controls__progress::-webkit-progress-value {
+            transition: width 1s;
+            transition-timing-function: linear;
+        }
 
         .player-frame {
             opacity: 0.25;

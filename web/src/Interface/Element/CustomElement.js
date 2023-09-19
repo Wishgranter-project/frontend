@@ -55,6 +55,21 @@ class CustomElement extends HTMLElement
         return el;
     }
 
+    fireEvent(eventName, detail = null, bubbles = true)
+    {
+        var options = {
+            bubbles
+        };
+
+        if (detail != null) {
+            options.detail = detail;
+        }
+
+        var event = new CustomEvent(eventName, options);
+
+        return this.dispatchEvent(event);
+    }
+
     constructor() {
         super();
         this.$refs = {};

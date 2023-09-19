@@ -10,6 +10,7 @@ class ShowRunner
 
         this.app.addEventListener('item-selected', this.onItemSelected.bind(this));
         this.app.addEventListener('player:ended', this.onPlayerEnded.bind(this));
+        this.app.addEventListener('controls:forward', this.jumpTheQueue.bind(this));
     }
 
     onItemSelected(evt) 
@@ -29,7 +30,7 @@ class ShowRunner
                 }
             }
 
-            this.app.$refs.controls.playResource(response.data[0]);
+            this.app.playThis(evt.detail.item, response.data[0]);
         });
     }
 
@@ -45,8 +46,31 @@ class ShowRunner
         this.findResourcesForMusicalItem(this.queue.theOneInFront).then( (response) =>
         {
             if (response.data) {
-                this.app.$refs.controls.playResource(response.data[0]);
+                this.app.playThis(this.queue.theOneInFront, response.data[0]);
             }
+        });
+    }
+
+    jumpTheQueue(evt) 
+    {
+        this.queue.dequeue();
+
+        if (!this.queue.theOneInFront) {
+            return;
+        }
+
+        this.findResourcesForMusicalItem(this.queue.theOneInFront).then( (response) =>
+        {
+            if (!response.data[0]) {
+                alert('Show runner: Nothing found to play');
+                return;
+            }
+
+            if (this.queue.length <= 1) {
+                this.queue.fetchMore();
+            }
+
+            this.app.playThis(this.queue.theOneInFront, response.data[0]);
         });
     }
 

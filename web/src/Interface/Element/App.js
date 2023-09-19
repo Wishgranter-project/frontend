@@ -55,6 +55,13 @@ class App extends CustomElement
         this.classList.add('app');
     }
 
+    playThis(item, resource) 
+    {
+        this.$refs.controls.destroy().remove();
+        this.$refs.controls = ReproductionControls.instantiate(this.api, item, resource);
+        this.$refs.footer.append(this.$refs.controls);
+    }
+
     setUpRouter(api) 
     {
         var router = new Router();
