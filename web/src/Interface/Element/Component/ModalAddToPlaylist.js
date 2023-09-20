@@ -13,6 +13,7 @@ class ModalAddToPlaylist extends Modal
     render() 
     {
         super.render();
+        this.$refs.header.innerHTML = 'Add to playlist';
 
         this.api.collection.playlists.list().then((response) => 
         {
@@ -31,8 +32,17 @@ class ModalAddToPlaylist extends Modal
 
     onPlaylistChoosen(evt) 
     {
-        var playlistId = evt.target.getAttribute('data-playlist');
-        console.log(playlistId);
+        var playlist = evt.target.getAttribute('data-playlist');
+
+        var promise = this.item.uuid
+            ? this.api.collection.playlistItems.create({ playlist, uuid: this.item.uuid })
+            : this.api.collection.playlistItems.create({ playlist, title: this.item.title, artist: this.item.artist });
+
+        promise.then( () =>
+        {
+            alert('Item added!!');
+            this.remove();
+        });
     }
 
 }

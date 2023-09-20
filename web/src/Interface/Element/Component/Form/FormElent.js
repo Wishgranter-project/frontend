@@ -1,5 +1,6 @@
 import CustomElement from '../../CustomElement';
 import TextField from './TextField';
+import TextArea from './TextArea';
 import MultipleTextField from './MultipleTextField';
 
 class FormElent extends CustomElement 
@@ -8,7 +9,18 @@ class FormElent extends CustomElement
 
     render() 
     {
-        this.$refs.form = this.createAndAttach('form', {class: 'horizontal', method: 'post', enctype: 'multipart/form-data'});
+        this.$refs.form = this.createAndAttach('form', {class: 'vertical', method: 'post', enctype: 'multipart/form-data'});
+    }
+
+    setValue(name, value) 
+    {
+        if (!this.$refs[name]) {
+            console.error('No input named ' + name)
+        }
+
+        this.$refs[name].setValue(value);
+
+        return this;
     }
 
     getForm() 
@@ -26,18 +38,23 @@ class FormElent extends CustomElement
         return this.$refs[name] = this.$refs.form.attach(TextField.instantiate(name, label, value, placeholder));
     }
 
+    addTextArea(name, label, value, placeholder = '') 
+    {
+        return this.$refs[name] = this.$refs.form.attach(TextArea.instantiate(name, label, value, placeholder));
+    }
+
     addMultiTextField(name, label, value, placeholder = '', addButton = 'Add +') 
     {
         return this.$refs[name] = this.$refs.form.attach(MultipleTextField.instantiate(name, label, value, placeholder, addButton));
     }
 
-    addSubmitButton(name, label) 
+    addSubmitButton(name = 'submit', label = 'Submit') 
     {
         return this.$refs[name] = this.$refs.form.createAndAttach('div', {class: 'form-group'}, [
             this.create('input', {type: 'submit', name, value: label, class: 'col-12 btn-main'})
         ]);
     }
-    
+
 }
 
 FormElent.register();

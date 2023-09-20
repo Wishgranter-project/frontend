@@ -40,7 +40,12 @@ class NavMenu extends CustomElement
                 }
             }
 
-            this.$refs.playlists.append(this.createGenericNavItem('#playlist/create', 'Create playlist', 'fa-plus-circle'));
+            this.$refs.playlists.append(this.$refs.createPlaylist = this.createGenericNavItem(null, 'Create playlist', 'fa-plus-circle'));
+            this.$refs.createPlaylist.addEventListener('click', () =>
+            {
+                this.fireEvent('add-playlist');
+            });
+
         });
     }
 
@@ -63,10 +68,16 @@ class NavMenu extends CustomElement
 
     addPlaylistNavItem(playlistId, playlistTitle) 
     {
+        var edit;
         this.$refs.playlists.createAndAttach('div', {class: 'app-nav__item'}, [
             this.create('a', {href: `#playlist:${playlistId}`, class: 'ellipsis'}, playlistTitle),
-            this.create('a', {href: `#playlist:${playlistId}/edit`, class: 'editing'}, this.create('span', {class: 'fa fa-pencil'}))
+            edit = this.create('a', { class: 'editing'}, this.create('span', {class: 'fa fa-pencil'}))
         ]);
+
+        edit.addEventListener('click', () => 
+        {
+            this.fireEvent('edit-playlist', { playlistId });
+        });
     }
 
     addGenericNavItem(href, label, icon = null) 
@@ -80,9 +91,11 @@ class NavMenu extends CustomElement
     {
         var item, a;
 
-        item = this.createAndAttach('div', {class: 'app-nav__item'},
-            a = this.create('a', { href })
-        );
+        item = this.createAndAttach('div', {class: 'app-nav__item'});
+
+        a = href != null 
+            ? item.createAndAttach('a', { href }) 
+            : item.createAndAttach('a');
 
         if (icon) {
             a.createAndAttach('span', {class: 'fa ' + icon})

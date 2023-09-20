@@ -304,8 +304,7 @@ math.div in sass label[for] {
   border: solid 1px #a7a7a7;
   border-radius: 3px;
   text-align: center;
-  justify-content: center;
-  /* flex-inline buttons will treat text just as an element*/
+  justify-content: center; /* flex-inline buttons will treat text just as an element*/
   color: #2e3436;
   background-color: #eaeaea;
 }
@@ -484,10 +483,8 @@ math.div in sass label[for] {
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
-  width: 1.5em;
-  /* line height */
-  height: 1.5em;
-  /* line height */
+  width: 1.5em; /* line height */
+  height: 1.5em; /* line height */
   border: solid 1px #a1a1a1;
   border-radius: 3px;
   text-align: center;
@@ -539,6 +536,8 @@ math.div in sass label[for] {
   border-radius: 3px;
   background-color: #4a90d9;
   box-shadow: inset 1px 1px #1c5288, inset -1px -1px #1c5288;
+  transition: width 1s;
+  transition-timing-function: linear;
 }
 .simple fieldset {
   padding: 20px;
@@ -634,8 +633,7 @@ math.div in sass label[for] {
 .simple code,
 .simple samp,
 .simple pre {
-  font-family: "Source Code Pro", "Courier";
-  /* monospace */
+  font-family: "Source Code Pro", "Courier"; /* monospace */
 }
 .simple code {
   display: inline-block;
@@ -685,7 +683,7 @@ math.div in sass label[for] {
   #*** flex
   #************************************/
 }
-.simple .flex, .simple .tabs, .simple .button-group, .simple .input-group, .simple .flexy {
+.simple .flex, .simple .tabs, .simple .button-group, .simple .input-group.input-group-vertical, .simple .input-group.input-group-horizontal, .simple .flexy {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
@@ -767,201 +765,201 @@ math.div in sass label[for] {
 }
 @media screen and (min-width: 769px) {
   .simple .grid .col-sm-1, .simple .horizontal .form-group .col-sm-1,
-.simple .form-group.horizontal .col-sm-1 {
+  .simple .form-group.horizontal .col-sm-1 {
     grid-column: auto/span 1;
   }
   .simple .grid .col-sm-2, .simple .horizontal .form-group .col-sm-2,
-.simple .form-group.horizontal .col-sm-2 {
+  .simple .form-group.horizontal .col-sm-2 {
     grid-column: auto/span 2;
   }
   .simple .grid .col-sm-3, .simple .horizontal .form-group .col-sm-3,
-.simple .form-group.horizontal .col-sm-3 {
+  .simple .form-group.horizontal .col-sm-3 {
     grid-column: auto/span 3;
   }
   .simple .grid .col-sm-4, .simple .horizontal .form-group .col-sm-4,
-.simple .form-group.horizontal .col-sm-4 {
+  .simple .form-group.horizontal .col-sm-4 {
     grid-column: auto/span 4;
   }
   .simple .grid .col-sm-5, .simple .horizontal .form-group .col-sm-5,
-.simple .form-group.horizontal .col-sm-5 {
+  .simple .form-group.horizontal .col-sm-5 {
     grid-column: auto/span 5;
   }
   .simple .grid .col-sm-6, .simple .horizontal .form-group .col-sm-6,
-.simple .form-group.horizontal .col-sm-6 {
+  .simple .form-group.horizontal .col-sm-6 {
     grid-column: auto/span 6;
   }
   .simple .grid .col-sm-7, .simple .horizontal .form-group .col-sm-7,
-.simple .form-group.horizontal .col-sm-7 {
+  .simple .form-group.horizontal .col-sm-7 {
     grid-column: auto/span 7;
   }
   .simple .grid .col-sm-8, .simple .horizontal .form-group .col-sm-8,
-.simple .form-group.horizontal .col-sm-8 {
+  .simple .form-group.horizontal .col-sm-8 {
     grid-column: auto/span 8;
   }
   .simple .grid .col-sm-9, .simple .horizontal .form-group .col-sm-9,
-.simple .form-group.horizontal .col-sm-9 {
+  .simple .form-group.horizontal .col-sm-9 {
     grid-column: auto/span 9;
   }
   .simple .grid .col-sm-10, .simple .horizontal .form-group .col-sm-10,
-.simple .form-group.horizontal .col-sm-10 {
+  .simple .form-group.horizontal .col-sm-10 {
     grid-column: auto/span 10;
   }
   .simple .grid .col-sm-11, .simple .horizontal .form-group .col-sm-11,
-.simple .form-group.horizontal .col-sm-11 {
+  .simple .form-group.horizontal .col-sm-11 {
     grid-column: auto/span 11;
   }
   .simple .grid .col-sm-12, .simple .horizontal .form-group .col-sm-12,
-.simple .form-group.horizontal .col-sm-12 {
+  .simple .form-group.horizontal .col-sm-12 {
     grid-column: auto/span 12;
   }
 }
 @media screen and (min-width: 1024px) {
   .simple .grid .col-md-1, .simple .horizontal .form-group .col-md-1,
-.simple .form-group.horizontal .col-md-1 {
+  .simple .form-group.horizontal .col-md-1 {
     grid-column: auto/span 1;
   }
   .simple .grid .col-md-2, .simple .horizontal .form-group .col-md-2,
-.simple .form-group.horizontal .col-md-2 {
+  .simple .form-group.horizontal .col-md-2 {
     grid-column: auto/span 2;
   }
   .simple .grid .col-md-3, .simple .horizontal .form-group .col-md-3,
-.simple .form-group.horizontal .col-md-3 {
+  .simple .form-group.horizontal .col-md-3 {
     grid-column: auto/span 3;
   }
   .simple .grid .col-md-4, .simple .horizontal .form-group .col-md-4,
-.simple .form-group.horizontal .col-md-4 {
+  .simple .form-group.horizontal .col-md-4 {
     grid-column: auto/span 4;
   }
   .simple .grid .col-md-5, .simple .horizontal .form-group .col-md-5,
-.simple .form-group.horizontal .col-md-5 {
+  .simple .form-group.horizontal .col-md-5 {
     grid-column: auto/span 5;
   }
   .simple .grid .col-md-6, .simple .horizontal .form-group .col-md-6,
-.simple .form-group.horizontal .col-md-6 {
+  .simple .form-group.horizontal .col-md-6 {
     grid-column: auto/span 6;
   }
   .simple .grid .col-md-7, .simple .horizontal .form-group .col-md-7,
-.simple .form-group.horizontal .col-md-7 {
+  .simple .form-group.horizontal .col-md-7 {
     grid-column: auto/span 7;
   }
   .simple .grid .col-md-8, .simple .horizontal .form-group .col-md-8,
-.simple .form-group.horizontal .col-md-8 {
+  .simple .form-group.horizontal .col-md-8 {
     grid-column: auto/span 8;
   }
   .simple .grid .col-md-9, .simple .horizontal .form-group .col-md-9,
-.simple .form-group.horizontal .col-md-9 {
+  .simple .form-group.horizontal .col-md-9 {
     grid-column: auto/span 9;
   }
   .simple .grid .col-md-10, .simple .horizontal .form-group .col-md-10,
-.simple .form-group.horizontal .col-md-10 {
+  .simple .form-group.horizontal .col-md-10 {
     grid-column: auto/span 10;
   }
   .simple .grid .col-md-11, .simple .horizontal .form-group .col-md-11,
-.simple .form-group.horizontal .col-md-11 {
+  .simple .form-group.horizontal .col-md-11 {
     grid-column: auto/span 11;
   }
   .simple .grid .col-md-12, .simple .horizontal .form-group .col-md-12,
-.simple .form-group.horizontal .col-md-12 {
+  .simple .form-group.horizontal .col-md-12 {
     grid-column: auto/span 12;
   }
 }
 @media screen and (min-width: 1216px) {
   .simple .grid .col-lg-1, .simple .horizontal .form-group .col-lg-1,
-.simple .form-group.horizontal .col-lg-1 {
+  .simple .form-group.horizontal .col-lg-1 {
     grid-column: auto/span 1;
   }
   .simple .grid .col-lg-2, .simple .horizontal .form-group .col-lg-2,
-.simple .form-group.horizontal .col-lg-2 {
+  .simple .form-group.horizontal .col-lg-2 {
     grid-column: auto/span 2;
   }
   .simple .grid .col-lg-3, .simple .horizontal .form-group .col-lg-3,
-.simple .form-group.horizontal .col-lg-3 {
+  .simple .form-group.horizontal .col-lg-3 {
     grid-column: auto/span 3;
   }
   .simple .grid .col-lg-4, .simple .horizontal .form-group .col-lg-4,
-.simple .form-group.horizontal .col-lg-4 {
+  .simple .form-group.horizontal .col-lg-4 {
     grid-column: auto/span 4;
   }
   .simple .grid .col-lg-5, .simple .horizontal .form-group .col-lg-5,
-.simple .form-group.horizontal .col-lg-5 {
+  .simple .form-group.horizontal .col-lg-5 {
     grid-column: auto/span 5;
   }
   .simple .grid .col-lg-6, .simple .horizontal .form-group .col-lg-6,
-.simple .form-group.horizontal .col-lg-6 {
+  .simple .form-group.horizontal .col-lg-6 {
     grid-column: auto/span 6;
   }
   .simple .grid .col-lg-7, .simple .horizontal .form-group .col-lg-7,
-.simple .form-group.horizontal .col-lg-7 {
+  .simple .form-group.horizontal .col-lg-7 {
     grid-column: auto/span 7;
   }
   .simple .grid .col-lg-8, .simple .horizontal .form-group .col-lg-8,
-.simple .form-group.horizontal .col-lg-8 {
+  .simple .form-group.horizontal .col-lg-8 {
     grid-column: auto/span 8;
   }
   .simple .grid .col-lg-9, .simple .horizontal .form-group .col-lg-9,
-.simple .form-group.horizontal .col-lg-9 {
+  .simple .form-group.horizontal .col-lg-9 {
     grid-column: auto/span 9;
   }
   .simple .grid .col-lg-10, .simple .horizontal .form-group .col-lg-10,
-.simple .form-group.horizontal .col-lg-10 {
+  .simple .form-group.horizontal .col-lg-10 {
     grid-column: auto/span 10;
   }
   .simple .grid .col-lg-11, .simple .horizontal .form-group .col-lg-11,
-.simple .form-group.horizontal .col-lg-11 {
+  .simple .form-group.horizontal .col-lg-11 {
     grid-column: auto/span 11;
   }
   .simple .grid .col-lg-12, .simple .horizontal .form-group .col-lg-12,
-.simple .form-group.horizontal .col-lg-12 {
+  .simple .form-group.horizontal .col-lg-12 {
     grid-column: auto/span 12;
   }
 }
 @media screen and (min-width: 1408px) {
   .simple .grid .col-xl-1, .simple .horizontal .form-group .col-xl-1,
-.simple .form-group.horizontal .col-xl-1 {
+  .simple .form-group.horizontal .col-xl-1 {
     grid-column: auto/span 1;
   }
   .simple .grid .col-xl-2, .simple .horizontal .form-group .col-xl-2,
-.simple .form-group.horizontal .col-xl-2 {
+  .simple .form-group.horizontal .col-xl-2 {
     grid-column: auto/span 2;
   }
   .simple .grid .col-xl-3, .simple .horizontal .form-group .col-xl-3,
-.simple .form-group.horizontal .col-xl-3 {
+  .simple .form-group.horizontal .col-xl-3 {
     grid-column: auto/span 3;
   }
   .simple .grid .col-xl-4, .simple .horizontal .form-group .col-xl-4,
-.simple .form-group.horizontal .col-xl-4 {
+  .simple .form-group.horizontal .col-xl-4 {
     grid-column: auto/span 4;
   }
   .simple .grid .col-xl-5, .simple .horizontal .form-group .col-xl-5,
-.simple .form-group.horizontal .col-xl-5 {
+  .simple .form-group.horizontal .col-xl-5 {
     grid-column: auto/span 5;
   }
   .simple .grid .col-xl-6, .simple .horizontal .form-group .col-xl-6,
-.simple .form-group.horizontal .col-xl-6 {
+  .simple .form-group.horizontal .col-xl-6 {
     grid-column: auto/span 6;
   }
   .simple .grid .col-xl-7, .simple .horizontal .form-group .col-xl-7,
-.simple .form-group.horizontal .col-xl-7 {
+  .simple .form-group.horizontal .col-xl-7 {
     grid-column: auto/span 7;
   }
   .simple .grid .col-xl-8, .simple .horizontal .form-group .col-xl-8,
-.simple .form-group.horizontal .col-xl-8 {
+  .simple .form-group.horizontal .col-xl-8 {
     grid-column: auto/span 8;
   }
   .simple .grid .col-xl-9, .simple .horizontal .form-group .col-xl-9,
-.simple .form-group.horizontal .col-xl-9 {
+  .simple .form-group.horizontal .col-xl-9 {
     grid-column: auto/span 9;
   }
   .simple .grid .col-xl-10, .simple .horizontal .form-group .col-xl-10,
-.simple .form-group.horizontal .col-xl-10 {
+  .simple .form-group.horizontal .col-xl-10 {
     grid-column: auto/span 10;
   }
   .simple .grid .col-xl-11, .simple .horizontal .form-group .col-xl-11,
-.simple .form-group.horizontal .col-xl-11 {
+  .simple .form-group.horizontal .col-xl-11 {
     grid-column: auto/span 11;
   }
   .simple .grid .col-xl-12, .simple .horizontal .form-group .col-xl-12,
-.simple .form-group.horizontal .col-xl-12 {
+  .simple .form-group.horizontal .col-xl-12 {
     grid-column: auto/span 12;
   }
 }
@@ -1086,35 +1084,82 @@ math.div in sass label[for] {
   width: 1.5em;
   height: 1.5em;
 }
-.simple .input-group .main {
+.simple .input-group.input-group-horizontal .main {
   flex-grow: 1;
 }
-.simple .input-group > input,
-.simple .input-group > textarea,
-.simple .input-group > select,
-.simple .input-group > button,
-.simple .input-group > .btn,
-.simple .input-group > .input-group-text {
+.simple .input-group.input-group-horizontal > input,
+.simple .input-group.input-group-horizontal > textarea,
+.simple .input-group.input-group-horizontal > select,
+.simple .input-group.input-group-horizontal > button,
+.simple .input-group.input-group-horizontal > .btn,
+.simple .input-group.input-group-horizontal > .input-group-text {
   height: auto;
   border-radius: 0px;
   margin-left: -1px;
 }
-.simple .input-group > input:first-child,
-.simple .input-group > textarea:first-child,
-.simple .input-group > select:first-child,
-.simple .input-group > button:first-child,
-.simple .input-group > .btn:first-child,
-.simple .input-group > .input-group-text:first-child {
+.simple .input-group.input-group-horizontal > input:first-child,
+.simple .input-group.input-group-horizontal > textarea:first-child,
+.simple .input-group.input-group-horizontal > select:first-child,
+.simple .input-group.input-group-horizontal > button:first-child,
+.simple .input-group.input-group-horizontal > .btn:first-child,
+.simple .input-group.input-group-horizontal > .input-group-text:first-child {
   border-radius: 3px 0px 0px 3px;
   margin-left: 0px;
 }
-.simple .input-group > input:last-child,
-.simple .input-group > textarea:last-child,
-.simple .input-group > select:last-child,
-.simple .input-group > button:last-child,
-.simple .input-group > .btn:last-child,
-.simple .input-group > .input-group-text:last-child {
+.simple .input-group.input-group-horizontal > input:last-child,
+.simple .input-group.input-group-horizontal > textarea:last-child,
+.simple .input-group.input-group-horizontal > select:last-child,
+.simple .input-group.input-group-horizontal > button:last-child,
+.simple .input-group.input-group-horizontal > .btn:last-child,
+.simple .input-group.input-group-horizontal > .input-group-text:last-child {
   border-radius: 0px 3px 3px 0px;
+}
+.simple .input-group.input-group-vertical {
+  flex-direction: column;
+}
+.simple .input-group.input-group-vertical > input,
+.simple .input-group.input-group-vertical > textarea,
+.simple .input-group.input-group-vertical > select,
+.simple .input-group.input-group-vertical > button,
+.simple .input-group.input-group-vertical > .btn,
+.simple .input-group.input-group-vertical > .input-group-text,
+.simple .input-group.input-group-vertical > .input-group {
+  width: 100%;
+  border-radius: 0px;
+  margin-left: 0px;
+  margin-bottom: -1px;
+}
+.simple .input-group.input-group-vertical > input:first-child,
+.simple .input-group.input-group-vertical > textarea:first-child,
+.simple .input-group.input-group-vertical > select:first-child,
+.simple .input-group.input-group-vertical > button:first-child,
+.simple .input-group.input-group-vertical > .btn:first-child,
+.simple .input-group.input-group-vertical > .input-group-text:first-child {
+  border-radius: 3px 3px 0px 0px;
+}
+.simple .input-group.input-group-vertical > input:last-child,
+.simple .input-group.input-group-vertical > textarea:last-child,
+.simple .input-group.input-group-vertical > select:last-child,
+.simple .input-group.input-group-vertical > button:last-child,
+.simple .input-group.input-group-vertical > .btn:last-child,
+.simple .input-group.input-group-vertical > .input-group-text:last-child {
+  border-radius: 0px 0px 3px 3px;
+}
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > input:first-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > textarea:first-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > select:first-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > button:first-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > .btn:first-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > .input-group-text:first-child {
+  border-radius: 3px 0px 0px 0px;
+}
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > input:last-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > textarea:last-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > select:last-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > button:last-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > .btn:last-child,
+.simple .input-group.input-group-vertical > .input-group.input-group-horizontal > .input-group-text:last-child {
+  border-radius: 0px 3px 0px 0px;
 }
 
 /*************************************
@@ -1213,5 +1258,3 @@ math.div in sass label[for] {
 .simple .panel.active {
   display: block;
 }
-
-/*# sourceMappingURL=master.css.map */

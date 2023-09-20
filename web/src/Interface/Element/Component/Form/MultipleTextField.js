@@ -18,8 +18,8 @@ class MultipleTextField extends CustomElement
         this.classList.add('form-group');
         this.createAndAttach('span', {class: 'label col-sm-2'}, this.label);
         this.createAndAttach('div', {class: 'col-sm-10'}, [
-            this.$refs.body = this.create('div', {class: 'grid'}),
-            this.$refs.plusButton = this.create('a', {}, this.addButton)
+            this.$refs.body = this.create('div', {class: 'input-group input-group-vertical'}),
+            this.$refs.plusButton = this.create('small', {}, this.addButton)
         ]);
 
         this.$refs.plusButton.addEventListener('click', this.addBlank.bind(this));

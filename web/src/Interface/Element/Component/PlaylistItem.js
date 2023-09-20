@@ -56,9 +56,13 @@ class PlaylistItem extends CustomElement
         );
 
         if (this.item.uuid) {
-            this.$refs.editButton = this.$refs.action.createAndAttach('a', {href: `#item:${this.item.uuid}/edit`, title: 'Edit'}, 
+            this.$refs.editButton = this.$refs.action.createAndAttach('a', { title: 'Edit'}, 
                 this.createAndAttach('span', {class: 'fa fa-pencil'})
             );
+            this.$refs.editButton.addEventListener('click', () => 
+            {
+                this.fireEvent('edit-item', {uuid: this.item.uuid})
+            });
         }
 
         this.$refs.title.addEventListener('click', () => 

@@ -138,11 +138,6 @@ body {
             margin: 0px -10px -10px -10px;
         }
 
-        .reproduction-controls__progress::-webkit-progress-value {
-            transition: width 1s;
-            transition-timing-function: linear;
-        }
-
         .player-frame {
             opacity: 0.25;
             height: 0px;
@@ -300,4 +295,10 @@ body {
 
 .modal .modal-content {
     background-color: #505050;
+}
+
+/*--------------------------------------------*/
+
+.simple .form-group {
+    display: block;
 }

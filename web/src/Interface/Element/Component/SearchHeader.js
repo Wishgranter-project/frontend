@@ -17,7 +17,7 @@ class SearchHeader extends CustomElement
     {
         this.classList.add('search-header');
         this.createAndAttach('h1', null, this.title);
-        this.$refs.form = this.createAndAttach('form', {class: 'search-header__form input-group'});
+        this.$refs.form = this.createAndAttach('form', {class: 'search-header__form input-group input-group-horizontal'});
 
         var input;
         for (var field of this.fields) {

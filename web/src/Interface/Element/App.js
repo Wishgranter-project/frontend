@@ -4,12 +4,6 @@ import ReproductionControls from './Component/ReproductionControls';
 import ViewWelcome      from './View/Welcome';
 
 import ViewPlaylist     from './View/Playlist';
-import ViewEditPlaylist from './View/PlaylistEdit';
-import ViewAddPlaylist  from './View/PlaylistAdd';
-
-
-import ViewEditItem     from './View/ItemEdit';
-import ViewAddItem      from './View/ItemAdd';
 
 import ViewReleases     from './View/DiscoverReleases';
 
@@ -23,6 +17,10 @@ import Router           from '../Routing/Router.js';
 import ShowRunner       from './ShowRunner';
 
 import ModalAddToPlaylist from './Component/ModalAddToPlaylist';
+import ModalItemAdd from './Component/ModalItemAdd';
+import ModalItemEdit from './Component/ModalItemEdit';
+import ModalPlaylistAdd from './Component/ModalPlaylistAdd';
+import ModalPlaylistEdit from './Component/ModalPlaylistEdit';
 
 class App extends CustomElement
 {
@@ -30,8 +28,8 @@ class App extends CustomElement
 
     __construct(api) 
     {
-        this.api    = api;
-        this.router = this.setUpRouter(api);
+        this.api        = api;
+        this.router     = this.setUpRouter(api);
         this.showRunner = new ShowRunner(this, api);
     }
 
@@ -56,9 +54,33 @@ class App extends CustomElement
 
         this.addEventListener('item-to-add', (evt) => 
         {
-            var modal = ModalAddToPlaylist.instantiate(this.api);
+            var modal = ModalAddToPlaylist.instantiate(this.api, evt.detail.item);
             this.append(modal);
         });
+
+        this.addEventListener('add-item', (evt) => 
+        {
+            var modal = ModalItemAdd.instantiate(this.api, evt.detail.playlist);
+            this.append(modal);
+        });
+
+        this.addEventListener('edit-item', (evt) => 
+        {
+            var modal = ModalItemEdit.instantiate(this.api, evt.detail.uuid);
+            this.append(modal);
+        });
+
+        this.addEventListener('add-playlist', (evt) => 
+        {
+            var modal = ModalPlaylistAdd.instantiate(this.api);
+            this.append(modal);
+        });
+
+        this.addEventListener('edit-playlist', (evt) => 
+        {
+            var modal = ModalPlaylistEdit.instantiate(this.api, evt.detail.playlistId);
+            this.append(modal);
+        }); 
 
         this.classList.add('app');
     }
@@ -106,14 +128,6 @@ class App extends CustomElement
         .addRouter(/playlist\/create/, function(request) 
         {
             return ViewAddPlaylist.instantiate(request, api);
-        })
-        .addRouter(/item:(?<itemUuid>[\w\d\-]+)\/edit/, function(request) 
-        {
-            return ViewEditItem.instantiate(request, api);
-        })
-        .addRouter(/playlist:(?<playlistId>[\w\d\-]+)\/create-item/, function(request) 
-        {
-            return ViewAddItem.instantiate(request, api);
         })
         .notFoundCallback = function(route, request) 
         {

@@ -66,7 +66,11 @@ class Playlist extends ViewElement
 
     renderNewItem() 
     {
-        this.createAndAttach('a', {href: '#playlist:' + this.request.attributes.playlistId + '/create-item' }, 'New Item')
+        // this.createAndAttach('a', {href: '#playlist:' + this.request.attributes.playlistId + '/create-item' }, 'New Item')
+        this.createAndAttach('a', null, 'New Item').addEventListener('click', () => 
+        {
+            this.fireEvent('add-item', { playlist: this.request.attributes.playlistId });
+        });
     }
 
     onItemSelected(evt) 

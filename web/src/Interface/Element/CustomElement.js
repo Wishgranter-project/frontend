@@ -13,6 +13,9 @@ class CustomElement extends HTMLElement
 
     }
 
+    /**
+     * This method must not receive parameters.
+     */
     render() 
     {
         this.innerHTML = 'inner html';
@@ -23,11 +26,25 @@ class CustomElement extends HTMLElement
         
     }
 
-    connectedCallback() 
+    refresh() 
+    {
+        this.clear();
+        this.renderLifeCycle();
+    }
+
+    renderLifeCycle() 
     {
         this.beforeRender();
         this.render();
         this.afterRender();
+    }
+
+    connectedCallback() 
+    {
+        if (!this.attached) {
+            this.attached = true;
+            this.renderLifeCycle();
+        }
     }
 
     static elementName = 'base-element';
@@ -73,6 +90,7 @@ class CustomElement extends HTMLElement
     constructor() {
         super();
         this.$refs = {};
+        this.attached = false;
     }
 }
 

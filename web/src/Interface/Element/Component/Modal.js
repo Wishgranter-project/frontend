@@ -11,18 +11,23 @@ class Modal extends CustomElement
 
     render() 
     {
+        this.subRenderModal();
+    }
+
+    subRenderModal() 
+    {
         this.classList.add('modal');
         this.createAndAttach('div', {class: 'modal-dialog'}, [
             this.create('div', {class: 'modal-content'}, [
                 this.$refs.header = this.create('div', {class: 'modal-header'}, ['header']),
-                this.$refs.body   = this.create('div', {class: 'modal-body'}, ['body']),
+                this.$refs.body   = this.create('div', {class: 'modal-body'}),
                 this.$refs.footer = this.create('div', {class: 'modal-footer'}, [
-                    this.$refs.cancel = this.create('button', {class: 'btn-danger'}, 'Cancel')
+                    this.$refs.closeButton = this.create('button', {class: 'btn-danger'}, 'Close')
                 ])
             ])
         ]);
 
-        this.$refs.cancel.addEventListener('click', () => 
+        this.$refs.closeButton.addEventListener('click', () => 
         {
             this.remove();
         })
