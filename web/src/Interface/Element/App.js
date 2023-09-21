@@ -54,7 +54,7 @@ class App extends CustomElement
 
         this.addEventListener('item-to-add', (evt) => 
         {
-            var modal = ModalAddToPlaylist.instantiate(this.api, evt.detail.item);
+            var modal = ModalAddToPlaylist.instantiate(this.api, evt.detail.items);
             this.append(modal);
         });
 

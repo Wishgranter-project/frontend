@@ -4,10 +4,10 @@ class ModalAddToPlaylist extends Modal
 {
     static elementName = 'modal-window-add-to-playlist';
 
-    __construct(api, item) 
+    __construct(api, items) 
     {
         super.__construct(api);
-        this.item = item;
+        this.items = items;
     }
 
     render() 
@@ -23,8 +23,9 @@ class ModalAddToPlaylist extends Modal
 
             this.$refs.body.clear();
 
+            this.$refs.buttonGroup = this.$refs.body.createAndAttach('div', {class: 'input-group input-group-vertical'});
             for (var playlist of response.data) {
-                this.$refs.body.createAndAttach('div', { 'data-playlist': playlist.id }, playlist.title)
+                this.$refs.buttonGroup.createAndAttach('button', { 'data-playlist': playlist.id }, playlist.title)
                   .addEventListener('click', this.onPlaylistChoosen.bind(this));
             }
         });
@@ -33,12 +34,17 @@ class ModalAddToPlaylist extends Modal
     onPlaylistChoosen(evt) 
     {
         var playlist = evt.target.getAttribute('data-playlist');
+        var promise;
+        var promises = [];
 
-        var promise = this.item.uuid
-            ? this.api.collection.playlistItems.create({ playlist, uuid: this.item.uuid })
-            : this.api.collection.playlistItems.create({ playlist, title: this.item.title, artist: this.item.artist });
+        for (var item of this.items) {
+            promise = item.uuid
+                ? this.api.collection.playlistItems.create({ playlist, uuid: item.uuid })
+                : this.api.collection.playlistItems.create({ playlist, title: item.title, artist: item.artist });
+            promises.push(promise);
+        }
 
-        promise.then( () =>
+        Promise.all(promises).then( () =>
         {
             alert('Item added!!');
             this.remove();

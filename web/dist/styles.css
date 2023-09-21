@@ -302,3 +302,23 @@ body {
 .simple .form-group {
     display: block;
 }
+
+/*--------------------------------------------*/
+
+.release-view {}
+
+    .release-view-header {
+        display: flex;
+        padding: 10px;
+    }
+
+        .release-view-header img {
+            width: 90px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .release-view-label h1, 
+        .release-view-label h3 {
+            margin: 0px;;
+        }

@@ -75,7 +75,7 @@ class PlaylistItem extends CustomElement
         this.$refs.addButton.addEventListener('click', () => 
         {
             this.fireEvent('item-to-add', {
-                item: this.item
+                items: [ this.item ]
             });
         });
     }
