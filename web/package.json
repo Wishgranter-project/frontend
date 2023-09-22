@@ -11,11 +11,11 @@
     "dependencies": {
         "gulp": "^4.0.2",
         "gulp-rename": "^2.0.0",
-        "html-multimedia-wrapper": "git+ssh://git@github.com:adinan-cenci/js-html-multimedia-wrapper.git",
+        "html-multimedia-wrapper": "git+ssh://git@github.com:adinan-cenci/js-html-multimedia-wrapper.git#3.1",
         "http": "https://github.com/adinan-cenci/http",
         "webpack-stream": "^7.0.0",
         "y2be-player": "^3.5.4",
-        "youtube-wrapper": "git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git"
+        "youtube-wrapper": "git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git#3.1"
     },
     "devDependencies": {
         "webpack": "^5.69.1"

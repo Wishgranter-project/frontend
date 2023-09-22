@@ -1265,6 +1265,12 @@ hosted-git-info@^2.1.4:
   dependencies:
     multimedia-player-interface "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.1"
 
+"html-multimedia-wrapper@git+ssh://git@github.com:adinan-cenci/js-html-multimedia-wrapper.git#3.1":
+  version "3.1.0"
+  resolved "git+ssh://git@github.com:adinan-cenci/js-html-multimedia-wrapper.git#7474d0bd08baedeb7589b6a7145d8ca9d5539823"
+  dependencies:
+    multimedia-player-interface "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.2"
+
 "http@https://github.com/adinan-cenci/http":
   version "2.0.0"
   resolved "https://github.com/adinan-cenci/http#bc59edc103f4a7a321441d871ae5ae3e580cf3b7"
@@ -1735,6 +1741,10 @@ ms@2.0.0:
 "multimedia-player-interface@git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.1":
   version "3.1.0"
   resolved "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#7c0a277763daf1a19c11b60fc66cae1050942a6b"
+
+"multimedia-player-interface@git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.2":
+  version "3.2.0"
+  resolved "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#a8eabde5ab2ecc4da8a1279523b8e6bedb815237"
 
 mute-stdout@^1.0.0:
   version "1.0.1"
@@ -2825,3 +2835,9 @@ yargs@^7.1.0:
   resolved "git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git#304b4aabcc6d00cda302aba833e154c471b81e84"
   dependencies:
     multimedia-player-interface "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.1"
+
+"youtube-wrapper@git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git#3.1":
+  version "3.1.0"
+  resolved "git+ssh://git@github.com:adinan-cenci/js-youtube-wrapper.git#048906e72ab3a215f4f4e844b2487b6aa6ce8019"
+  dependencies:
+    multimedia-player-interface "git+ssh://git@github.com:adinan-cenci/js-multimedia-player-interface.git#3.2"
