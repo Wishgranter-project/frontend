@@ -1,10 +1,11 @@
 
-class Queue 
+class Queue extends Array 
 {
-    constructor(items = []) 
+    constructor(...args) 
     {
-        this.items = items;
+        super(...args);
         this.context = null;
+        this.fetchingPromise = null;
     }
 
     enqueue(item) 
@@ -16,25 +17,15 @@ class Queue
 
     dequeue() 
     {
-        var last = this.items[0] || null;
-        this.items = this.items.slice(1);
-
-        if (this.items.length <= 1) {
-            this.fetchMore();
-        }
-
+        var last = this[0] || null;
+        this.splice(0, 1);
         return last;
-    }
-
-    get length() 
-    {
-        return this.items.length;
     }
 
     get theOneInFront() 
     {
-        if (this.items[0]) {
-            return this.items[0];
+        if (this[0]) {
+            return this[0];
         }
         
         console.log('Queue: end reached');
@@ -52,8 +43,15 @@ class Queue
     async fetchMore() 
     {
         console.log('Queue: Searching for more content')
-        return this.context.fetchMore(this).then( (response) => 
+
+        if (this.fetchingPromise) {
+            return this.fetchingPromise;
+        }
+
+        return this.fetchingPromise = this.context.fetchMore(this).then( (response) => 
         {
+            this.fetchingPromise = null;
+
             if (response.data && response.data.length) {
                 this.enqueue(response.data);
             } else {
@@ -67,20 +65,20 @@ class Queue
     clear() 
     {
         console.log('Queue: emptied');
-        this.items = [];
+        this.splice(0, this.length);
     }
 
     //-------------------
 
     enqueueMultiple(items) 
     {
-        this.items = [...this.items, ...items];
+        this.push(...items);
         console.log('Queue: multiple items added');
     }
 
     enqueueSingle(item) 
     {
-        this.items.push(item);
+        this.push(item);
         console.log('Queue: single item added');
     }
 }

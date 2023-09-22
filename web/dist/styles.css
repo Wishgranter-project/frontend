@@ -132,6 +132,10 @@ body {
             margin: auto 0px auto auto;
         }
 
+        .reproduction-controls__button-queue {
+            margin: 0px 0px 0px 10px;
+        }
+
         .reproduction-controls__progress {
             width: calc(100% + 20px);
             height: 10px;
@@ -323,3 +327,34 @@ body {
         .release-view-label h3 {
             margin: 0px;;
         }
+
+/*--------------------------------------------*/
+
+.queue-display {
+    display: block;
+    width: 0px;
+    height: 100%;
+}
+
+    .queue-display__drawer {
+        width: 0px;
+        height: 100%;
+        margin: 0px;
+        overflow: hidden;
+        transition-property: width margin;
+        transition-duration: 0.5s;
+    }
+
+        .queue-display__content {
+            width: 200px;
+            height: 100%;
+            overflow: auto;
+            overflow-x: visible;
+            overflow-y: auto;
+            background-color: #303030;
+        }
+
+.queue-display.open .queue-display__drawer {
+    width: 200px;
+    margin: 0px 0px 0px -200px;
+}

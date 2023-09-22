@@ -39,11 +39,17 @@ class ReproductionControls extends CustomElement
         ]);
 
         this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
+        this.$refs.buttonQueue   = this.createAndAttach('button', {class: 'reproduction-controls__button-queue', title: 'Queue'}, this.create('span', {class: 'fa fa-list'}));
         this.$refs.progress      = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
         this.$refs.playerFrame   = this.createAndAttach('div', {class: 'player-frame intangible'});
 
         this.$refs.volumeControl.value = this.settings.getInt('volume', 15);
         this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
+
+        this.$refs.buttonQueue.addEventListener('click', () =>
+        {
+            this.fireEvent('summon-queue');
+        });
 
         if (! this.resource) {
             return;
@@ -76,7 +82,7 @@ class ReproductionControls extends CustomElement
         this.$refs.buttonNext.addEventListener('click', () => 
         {
             this.fireEvent('controls:forward');
-        })
+        });
 
         this.playResource();
     }

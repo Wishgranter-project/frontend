@@ -8,15 +8,15 @@ class QueueContextSearch extends QueueContextBase
         this.queryParams = queryParams;
     }
 
-    async request(queue) 
-    {
-        return this.api.collection.playlistItems.search(this.queryParams);
-    }
-
     progress() 
     {
         var page = parseInt(this.queryParams.get('page') || 1) + 1;
         this.queryParams.set('page', page);
+    }
+
+    async request(queue) 
+    {
+        return this.api.collection.playlistItems.search(this.queryParams);
     }
 }
 

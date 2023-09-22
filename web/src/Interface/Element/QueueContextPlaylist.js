@@ -8,7 +8,7 @@ class QueueContextPlaylist extends QueueContextSearch
         this.playlistId = playlistId;
     }
 
-    request(queue) 
+    async request(queue) 
     {
         return this.api.collection.playlists.get(this.playlistId).getItems(this.queryParams);
     }

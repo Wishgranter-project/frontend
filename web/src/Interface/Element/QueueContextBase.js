@@ -11,10 +11,18 @@ class QueueContextBase
      */
     constructor(initialBatch, api) 
     {
-        this.noMore = false;
-
         this.initialBatch = initialBatch;
         this.api = api;
+        this.noMore = false;
+    }
+
+    /**
+     * make whatever calculations may be needed to reach in
+     * preparation to fetch more items.
+     */
+    progress() 
+    {
+        // this.page += 1;
     }
 
     /**
@@ -42,15 +50,6 @@ class QueueContextBase
 
             return response;
         });
-    }
-
-    /**
-     * make whatever calculations may be needed to reach in
-     * preparation to fetch more items.
-     */
-    progress() 
-    {
-        // this.page += 1;
     }
 
     /**

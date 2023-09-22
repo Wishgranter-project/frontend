@@ -16,6 +16,8 @@ import Router           from '../Routing/Router.js';
 
 import ShowRunner       from './ShowRunner';
 
+import QueueDisplay     from './QueueDisplay';
+
 import ModalAddToPlaylist from './Component/ModalAddToPlaylist';
 import ModalItemAdd from './Component/ModalItemAdd';
 import ModalItemEdit from './Component/ModalItemEdit';
@@ -35,9 +37,12 @@ class App extends CustomElement
 
     render() 
     {
+        this.classList.add('app');
+
         this.$refs.middle = this.createAndAttach('div', {class: 'app-middle'}, [
             this.$refs.navMenu = NavMenu.instantiate(this.api),
-            this.$refs.stage = this.create('div', {class: 'app-stage', id: 'stage'})
+            this.$refs.stage = this.create('div', {class: 'app-stage', id: 'stage'}),
+            this.$refs.queueDisplay = QueueDisplay.instantiate()
         ]);
 
         this.$refs.footer = this.createAndAttach('div', {class: 'app-footer'}, [
@@ -46,6 +51,8 @@ class App extends CustomElement
 
         this.router.setStage(this.$refs.stage);
         this.router.listenToChanges();
+
+        //------------------------------
 
         this.addEventListener('playlist-updated', () =>
         {
@@ -80,9 +87,12 @@ class App extends CustomElement
         {
             var modal = ModalPlaylistEdit.instantiate(this.api, evt.detail.playlistId);
             this.append(modal);
-        }); 
+        });
 
-        this.classList.add('app');
+        this.addEventListener('summon-queue', () => 
+        {
+            this.$refs.queueDisplay.toggle();
+        });
     }
 
     playThis(item, resource) 
