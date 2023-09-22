@@ -22,8 +22,13 @@ List of features and status of implemenetation.
 :heavy_check_mark: Search items by title, genre and artist.  
       :heavy_check_mark: Among the playlists.  
       :heavy_check_mark: In individual playlists.  
-:x: Delete existing items.  
+:x: Delete existing items. 
 
+
+## Navigability
+:heavy_check_mark: Pagination.  
+      :heavy_check_mark: Prev/Next after a threshold.  
+      :heavy_check_mark: limited number of pages after a threshold.  
 
 
 ## Discoverability

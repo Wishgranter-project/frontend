@@ -9,51 +9,93 @@ class Pagination extends CustomElement
         this.api = api;
         this.request = request;
         this.response = response;
+
+        if (!this.response.meta || !this.response.meta.pages) {
+            return;
+        }
+
+        this.max = 10;
+        this.halfMax = this.max / 2;
+
+
+        if (this.response.meta.pages <= this.max) {
+            this.first = 1;
+            this.last = this.response.meta.pages;
+
+        } else if (this.response.meta.page + this.halfMax > this.response.meta.pages) {
+            this.last = this.response.meta.pages;
+            this.first = this.last - this.max;
+    
+        } else if (this.response.meta.page > this.halfMax) {
+            this.first = this.response.meta.page - this.halfMax;
+            this.last  = this.response.meta.page + this.halfMax;
+    
+        } else {
+            this.first = 1;
+            this.last = this.first + this.max;
+        }
     }
 
     render() 
     {
         this.classList.add('button-group');
         this.classList.add('view-nav');
-        var queryParams;
 
         if (!this.response.meta || !this.response.meta.pages) {
             return;
         }
 
-        if (this.response.meta.pages > 1) {
-            queryParams = this.request.queryParams.without('page');
-            queryParams.set('page', 1);
-            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-first'}, ['first']);
+        if (this.first > 1) {
+            this.subRenderAnchorToBeginning();
+            this.subRenderAnchorToPreviousPage();
         }
 
-        if (this.response.meta.page > 1) {
-            queryParams = this.request.queryParams.without('page');
-            queryParams.set('page', this.response.meta.page - 1);
-            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, ['prev']);
+        if (this.response.meta.pages > this.max) {
+            this.subRenderAnchorBetweenExtremes();
         }
 
-        if (this.response.meta.pages > 2) {
-            for (var p = 1; p < this.response.meta.pages; p++) {
-                queryParams = this.request.queryParams.without('page');
-                queryParams.set('page', p);
-                this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, [p]);
-            }
-        }
-
-        if (this.response.meta.pages > this.response.meta.page) {
-            queryParams = this.request.queryParams.without('page');
-            queryParams.set('page', this.response.meta.page + 1);
-            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, ['next']);
-        }
-
-        if (this.response.meta.pages > this.response.meta.page) {
-            queryParams = this.request.queryParams.without('page');
-            queryParams.set('page', this.response.meta.pages);
-            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-last'}, ['last']);
+        if (this.response.meta.pages > this.last) {
+            this.subRenderAnchorToNextPage();
+            this.subRenderAnchorToLast();
         }
     }
 
+    subRenderAnchorToBeginning() 
+    {
+        var queryParams = this.request.queryParams.without('page');
+        queryParams.set('page', 1);
+        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-first'}, ['first']);
+    }
+
+    subRenderAnchorToPreviousPage() 
+    {
+        var queryParams = this.request.queryParams.without('page');
+        queryParams.set('page', this.response.meta.page - 1);
+        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-previous'}, ['prev']);
+    }
+
+    subRenderAnchorBetweenExtremes() 
+    {
+        for (var p = this.first; p <= this.last; p++) {
+            var queryParams = this.request.queryParams.without('page');
+            queryParams.set('page', p);
+            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, [p]);
+        }
+    }
+
+    subRenderAnchorToNextPage()
+    {
+        var queryParams = this.request.queryParams.without('page');
+        queryParams.set('page', this.response.meta.page + 1);
+        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-next'}, ['next']);
+    }
+
+    subRenderAnchorToLast() 
+    {
+        var queryParams = this.request.queryParams.without('page');
+        queryParams.set('page', this.response.meta.pages);
+        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-last'}, ['last']);
+    }
 }
 
 Pagination.register();

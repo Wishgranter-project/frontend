@@ -241,11 +241,12 @@ body {
     }
 
     .view-nav .btn.view-nav-first,
-    .view-nav .btn.view-nav-last {
+    .view-nav .btn.view-nav-last, 
+    .view-nav .btn.view-nav-previous, 
+    .view-nav .btn.view-nav-next {
         width: 75px;
         flex-grow: 0;
     }
-
 
 .card {
     display: block;
