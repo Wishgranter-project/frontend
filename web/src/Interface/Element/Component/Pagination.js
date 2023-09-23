@@ -47,6 +47,9 @@ class Pagination extends CustomElement
 
         if (this.first > 1) {
             this.subRenderAnchorToBeginning();
+        }
+
+        if (this.response.meta.page > 1) {
             this.subRenderAnchorToPreviousPage();
         }
 
@@ -54,8 +57,11 @@ class Pagination extends CustomElement
             this.subRenderAnchorBetweenExtremes();
         }
 
-        if (this.response.meta.pages > this.last) {
+        if (this.response.meta.page < this.last) {
             this.subRenderAnchorToNextPage();
+        }
+        
+        if (this.response.meta.pages > this.last) {
             this.subRenderAnchorToLast();
         }
     }

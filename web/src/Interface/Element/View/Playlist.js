@@ -32,14 +32,9 @@ class Playlist extends ViewElement
 
     fetch() 
     {
-        if (this.request.queryParams.without('page').isEmpty()) {
-            return this.api.collection.playlists
-                .get(this.request.attributes.playlistId)
-                .getItems(this.request.queryParams);
-        } else {
-            return this.api.collection.playlistItems
-                .search(this.request.queryParams.withAdded('playlist', this.request.attributes.playlistId));
-        }
+        return this.api.collection.playlists
+            .get(this.request.attributes.playlistId)
+            .getItems(this.request.queryParams);    
     }
 
     renderHeader(response) 
