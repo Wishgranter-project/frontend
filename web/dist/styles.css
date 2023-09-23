@@ -252,6 +252,11 @@ body {
         flex-grow: 0;
     }
 
+    .view-nav .btn.view-nav-current {
+        border-color: #454545;
+        background-color: #454545;
+    }
+
 .card {
     display: block;
     height: 100%;

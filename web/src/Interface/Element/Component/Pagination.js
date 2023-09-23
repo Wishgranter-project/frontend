@@ -79,7 +79,8 @@ class Pagination extends CustomElement
         for (var p = this.first; p <= this.last; p++) {
             var queryParams = this.request.queryParams.without('page');
             queryParams.set('page', p);
-            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn'}, [p]);
+            var current = this.response.meta.page == p;
+            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: current ? 'btn view-nav-current' : 'btn'}, [p]);
         }
     }
 

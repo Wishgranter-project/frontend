@@ -29,6 +29,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Pagination.  
       :heavy_check_mark: Prev/Next after a threshold.  
       :heavy_check_mark: limited number of pages after a threshold.  
+      :heavy_check_mark: visual indication of the current page.  
 
 
 ## Discoverability
@@ -55,6 +56,8 @@ List of features and status of implemenetation.
       :heavy_check_mark: SliderKz.  
 :heavy_check_mark: Reproduction queue, automatically playing one after the other.  
       :heavy_check_mark: Skip item in queue, to the next item.  
+      :heavy_check_mark: Ability of playing entire playlists, start to finish.  
+      :heavy_check_mark: Ability of playing entire search results, start to finish.  
       :x: Display queue contents.  
       :x: Go back in the queue, to the previous item.  
 :heavy_check_mark: Display timer as track progresses.  
