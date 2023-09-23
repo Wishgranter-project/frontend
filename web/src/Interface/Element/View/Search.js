@@ -1,7 +1,8 @@
 import SearchHeader from '../Component/SearchHeader';
 import Playlist from './Playlist';
-import QueueContextSearch from '../QueueContextSearch';
 import PlaylistItem from '../Component/PlaylistItem';
+import QueueContextSearch from '../../../Queue/QueueContextSearch';
+import Queue from '../../../Queue/Queue';
 
 class Search extends Playlist 
 {
@@ -37,11 +38,13 @@ class Search extends Playlist
             }
         }
 
-        evt.detail.context = new QueueContextSearch(
-            initialBatch,
+        var context = new QueueContextSearch(
             this.api, 
             this.request.queryParams
         );
+
+        var queue = Queue.instantiate(initialBatch, context);
+        evt.detail.queue = queue;
     }
 }
 

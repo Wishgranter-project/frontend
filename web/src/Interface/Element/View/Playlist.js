@@ -3,7 +3,8 @@ import PlaylistItem from '../Component/PlaylistItem';
 import SearchHeader from '../Component/SearchHeader';
 import Pagination from '../Component/Pagination';
 import Events from '../../../Helper/Events';
-import QueueContextPlaylist from '../QueueContextPlaylist';
+import QueueContextPlaylist from '../../../Queue/QueueContextPlaylist';
+import Queue from '../../../Queue/Queue';
 
 class Playlist extends ViewElement 
 {
@@ -87,12 +88,14 @@ class Playlist extends ViewElement
             }
         }
 
-        evt.detail.context = new QueueContextPlaylist(
-            initialBatch,
+        var context = new QueueContextPlaylist(
             this.api, 
             this.request.queryParams, 
             this.request.attributes.playlistId
         );
+
+        var queue = Queue.instantiate(initialBatch, context);
+        evt.detail.queue = queue;
     }
 }
 

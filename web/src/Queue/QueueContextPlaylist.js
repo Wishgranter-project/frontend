@@ -2,9 +2,9 @@ import QueueContextSearch from './QueueContextSearch';
 
 class QueueContextPlaylist extends QueueContextSearch 
 {
-    constructor(initialBatch, api, queryParams, playlistId) 
+    constructor(api, queryParams, playlistId) 
     {
-        super(initialBatch, api, queryParams);
+        super(api, queryParams);
         this.playlistId = playlistId;
     }
 

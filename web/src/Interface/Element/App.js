@@ -95,7 +95,7 @@ class App extends CustomElement
         });
     }
 
-    playThis(item, resource) 
+    playResource(item, resource) 
     {
         this.$refs.controls.destroy().remove();
         this.$refs.controls = ReproductionControls.instantiate(this.api, item, resource);

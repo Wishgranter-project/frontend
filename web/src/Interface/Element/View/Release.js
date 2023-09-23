@@ -1,7 +1,7 @@
 import ViewElement from './ViewElement';
 import PlaylistItem from '../Component/PlaylistItem';
-//import ViewHeader from '../Component/SearchHeader';
-import QueueContextRelease from '../QueueContextRelease';
+import QueueContextRelease from '../../../Queue/QueueContextRelease';
+import Queue from '../../../Queue/Queue';
 
 class Release extends ViewElement 
 {
@@ -66,10 +66,12 @@ class Release extends ViewElement
             }
         }
 
-        evt.detail.context = new QueueContextRelease(
-            initialBatch,
+        var context = QueueContextRelease(
             this.api
         );
+
+        var queue = Queue.instantiate(initialBatch, context);
+        evt.detail.queue = queue;
     }
 }
 

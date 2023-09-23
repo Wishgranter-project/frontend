@@ -2,9 +2,9 @@ import QueueContextBase from './QueueContextBase';
 
 class QueueContextSearch extends QueueContextBase 
 {
-    constructor(initialBatch, api, queryParams) 
+    constructor(api, queryParams) 
     {
-        super(initialBatch, api);
+        super(api);
         this.queryParams = queryParams;
     }
 

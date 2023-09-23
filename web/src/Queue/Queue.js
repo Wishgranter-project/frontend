@@ -1,11 +1,18 @@
 
 class Queue extends Array 
 {
-    constructor(...args) 
+    static instantiate(items = [], queueContext) 
     {
-        super(...args);
-        this.context = null;
-        this.fetchingPromise = null;
+        var queue = new Queue();
+        queue.enqueue(items);
+        queue.context = queueContext;
+        queue.fetchingPromise = null;
+
+        if (queue.length <= 1) {
+            queue.fetchMore();
+        }
+
+        return queue;
     }
 
     enqueue(item) 
@@ -32,12 +39,23 @@ class Queue extends Array
         return null;
     }
 
-    setContext(queueContext) 
+    async advance() 
     {
-        this.context = queueContext;
-        console.log('Queue: context set');
-        this.clear();
-        this.enqueue(queueContext.initialBatch);
+        var previous = this.theOneInFront;
+
+        this.dequeue();
+
+        if (this.length > 1) {
+            return new Promise((success, fail) =>
+            {
+                return success(previous);
+            });
+        }
+
+        return this.fetchMore().then( () => 
+        {
+            return previous;
+        });
     }
 
     async fetchMore() 
@@ -62,10 +80,10 @@ class Queue extends Array
         });
     }
 
-    clear() 
+    clear(fromKey = 0) 
     {
         console.log('Queue: emptied');
-        this.splice(0, this.length);
+        this.splice(fromKey, this.length);
     }
 
     //-------------------

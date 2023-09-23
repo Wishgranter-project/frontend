@@ -2,9 +2,9 @@ import QueueContextBase from './QueueContextBase';
 
 class QueueContextRelease extends QueueContextBase 
 {
-    constructor(initialBatch, api) 
+    constructor(api) 
     {
-        super(initialBatch, api);
+        super(api);
         this.noMore = true;
     }
 

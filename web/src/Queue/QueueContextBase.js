@@ -4,14 +4,10 @@
 class QueueContextBase 
 {
     /**
-     * @param array initialBatch 
-     *   Array of playlist items.
-     *
      * @param Api api
      */
-    constructor(initialBatch, api) 
+    constructor(api) 
     {
-        this.initialBatch = initialBatch;
         this.api = api;
         this.noMore = false;
     }
