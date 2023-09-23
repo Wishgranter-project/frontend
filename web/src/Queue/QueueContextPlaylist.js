@@ -10,7 +10,14 @@ class QueueContextPlaylist extends QueueContextSearch
 
     async request(queue) 
     {
-        return this.api.collection.playlists.get(this.playlistId).getItems(this.queryParams);
+        if (this.queryParams.without('page').isEmpty()) {
+            return this.api.collection.playlists
+                .get(this.playlistId)
+                .getItems(this.queryParams);
+        } else {
+            return this.api.collection.playlistItems
+                .search(this.queryParams.withAdded('playlist', this.playlistId));
+        }
     }
 }
 
