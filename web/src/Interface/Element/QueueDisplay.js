@@ -34,15 +34,17 @@ class QueueDisplay extends CustomElement
         this.classList.add('queue-display');
 
         this.createAndAttach('div', {class: 'queue-display__drawer'}, 
-            this.$refs.content = this.create('div', {class: 'queue-display__content'})
+            this.$refs.content = this.create('div', {class: 'queue-display__content'}, 
+                this.$refs.list = this.create('ol')
+            )
         );
     }
 
     showQueue(ar) 
     {
-        this.$refs.content.clear();
+        this.$refs.list.clear();
         for (var i of ar) {
-            this.$refs.content.createAndAttach('div', null, i.title);
+            this.$refs.list.createAndAttach('li', null, i.title);
         }
     }
 }

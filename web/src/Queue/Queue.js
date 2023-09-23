@@ -26,6 +26,7 @@ class Queue extends Array
     {
         var last = this[0] || null;
         this.splice(0, 1);
+        this.updatedCallback();
         return last;
     }
 
@@ -92,12 +93,19 @@ class Queue extends Array
     {
         this.push(...items);
         console.log('Queue: multiple items added');
+        this.updatedCallback();
     }
 
     enqueueSingle(item) 
     {
         this.push(item);
         console.log('Queue: single item added');
+        this.updatedCallback();
+    }
+
+    updatedCallback() 
+    {
+        console.log('queue updated');
     }
 }
 

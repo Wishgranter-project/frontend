@@ -358,6 +358,7 @@ body {
         .queue-display__content {
             width: 200px;
             height: 100%;
+            padding: 10px;
             overflow: auto;
             overflow-x: visible;
             overflow-y: auto;

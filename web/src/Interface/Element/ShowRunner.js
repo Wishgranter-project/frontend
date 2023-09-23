@@ -32,13 +32,17 @@ class ShowRunner
 
     async playNewQueue(queue) 
     {
-        console.log(queue);
         var oldQueue = this.queue;
         if (oldQueue.theOneInFront) {
             this.addToHistory(oldQueue.theOneInFront);
         }
 
         this.queue = queue;
+        this.app.$refs.queueDisplay.showQueue(this.queue);
+        this.queue.updatedCallback = () =>
+        {
+            this.app.$refs.queueDisplay.showQueue(this.queue);
+        }
 
         return this.playItem(this.queue.theOneInFront);
     }
