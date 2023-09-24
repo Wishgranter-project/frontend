@@ -12,7 +12,8 @@ class ShowRunner
 
         this.app.addEventListener('item-selected', this.onItemSelected.bind(this));
         this.app.addEventListener('player:ended', this.onPlayerEnded.bind(this));
-        this.app.addEventListener('controls:forward', this.jumpTheQueue.bind(this));
+        this.app.addEventListener('controls:forward', this.forwardTheQueue.bind(this));
+        this.app.addEventListener('controls:backward', this.rewindTheQueue.bind(this));
         this.app.addEventListener('queue:jump', this.onJumpLine.bind(this));
     }
 
@@ -76,7 +77,22 @@ class ShowRunner
         return this.advanceTheQueue();
     }
 
-    async jumpTheQueue(evt) 
+    async rewindTheQueue(evt) 
+    {
+        if (! this.history.length) {
+            return;
+        }
+
+        console.log('-------------------------------');
+        console.log('Show runner: rewinding queue.');
+
+        var previous = this.history.rewind(1)[0];
+        this.queue.dropIn(previous);
+
+        return this.playItem(previous);
+    }
+
+    async forwardTheQueue(evt) 
     {
         console.log('-------------------------------');
         console.log('Show runner: song skipped, next.');

@@ -49,11 +49,11 @@ class QueueDisplay extends CustomElement
         this.$refs.queued.clear();
 
         for (var i = history.length -1; i >= 0; i--) {
-            this.$refs.history.createAndAttach('li', { class: 'ellipsis'}, history[i].title);
+            this.$refs.history.createAndAttach('li', null, this.create('div', { class: 'ellipsis'}, history[i].title));
         }
 
         for (var i = 0; i < queue.length; i++) {
-            this.$refs.queued.createAndAttach('li', { class: 'ellipsis'}, queue[i].title).addEventListener('click', (evt) =>
+            this.$refs.queued.createAndAttach('li', null, this.create('div', { class: 'ellipsis'}, queue[i].title)).addEventListener('click', (evt) =>
             {
                 var from = [...this.$refs.queued.children].indexOf(evt.target);
                 this.fireEvent('queue:jump', { from, to: 0 });

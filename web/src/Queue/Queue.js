@@ -42,7 +42,7 @@ class Queue extends Array
      */
     dropIn(item) 
     {
-        this.queue.splice(0, 0, item);
+        this.splice(0, 0, item);
         this.updatedCallback();
     }
 
@@ -72,6 +72,13 @@ class Queue extends Array
         
         console.log('Queue: end reached');
         return null;
+    }
+
+    get back() 
+    {
+        return this.length
+            ? this[this.length - 1]
+            : null;
     }
 
     async getNextInLine() 

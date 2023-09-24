@@ -16,15 +16,15 @@ List of features and status of implemenetation.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Add the same item to different playlists.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Edit the same item and have it reflect in other playlists it is also present.  
 :heavy_check_mark: Search items by title, genre and artist.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Among the playlists.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Among all the playlists.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: In individual playlists.  
 :x: Delete existing items. 
 
 ## Navigability
 
 :heavy_check_mark: Pagination.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Prev/Next after a threshold.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: limited number of pages after a threshold.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Prev/Next buttons after a threshold.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: limited number of pages after a threshold ( to not get too crowded with pages ).  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: visual indication of the current page.  
 
 ## Discoverability
@@ -38,6 +38,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Search albuns by artist name.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Add tracks search results to playlists.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Add entire albuns worth of tracks to playlist.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Add single track to playlist.  
 
 ## Reproduction
 
@@ -53,7 +54,7 @@ List of features and status of implemenetation.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of playing entire search results, start to finish.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Display queue contents.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of jumping a selected queue item to the front.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:x: Go back in the queue, to the previous item.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Go back in the queue, to the previous item.  
 :heavy_check_mark: Display timer as track progresses.  
 :heavy_check_mark: Display progress bar as track progresses.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Control playback by clicking in the progress bar.  

@@ -76,7 +76,7 @@ class ReproductionControls extends CustomElement
 
         this.$refs.buttonBackward.addEventListener('click', () => 
         {
-            alert('not implemented yet');
+            this.fireEvent('controls:backward');
         });
 
         this.$refs.buttonNext.addEventListener('click', () => 

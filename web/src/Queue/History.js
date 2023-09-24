@@ -10,12 +10,21 @@ class History extends Array
 
     get theMostRecent() 
     {
-        if (this[0]) {
-            return this[0];
-        }
-        
-        console.log('History: end reached');
-        return null;
+        return this.length
+            ? this[0]
+            : null;
+    }
+
+    get theOldest() 
+    {
+        return this.length
+            ? this[this.length - 1]
+            : null;
+    }
+
+    rewind(length = 1) 
+    {
+        return this.splice(0, length);
     }
 
     //-------------------
