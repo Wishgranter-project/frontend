@@ -2,8 +2,6 @@
 
 List of features and status of implemenetation.  
 
-
-
 ## Playlists
 
 :heavy_check_mark: Edit existing playlists.  
@@ -11,67 +9,61 @@ List of features and status of implemenetation.
 :heavy_check_mark: Create new playlists.  
 :x: Delete existing playlists.  
 
-
-
 ## Playlist items
 
 :heavy_check_mark: Create new items.  
 :heavy_check_mark: Edit existing items.  
-      :heavy_check_mark: Add the same item to different playlists.  
-      :heavy_check_mark: Edit the same item and have it reflect in other playlists it is also present.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Add the same item to different playlists.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Edit the same item and have it reflect in other playlists it is also present.  
 :heavy_check_mark: Search items by title, genre and artist.  
-      :heavy_check_mark: Among the playlists.  
-      :heavy_check_mark: In individual playlists.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Among the playlists.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: In individual playlists.  
 :x: Delete existing items. 
 
-
 ## Navigability
-:heavy_check_mark: Pagination.  
-      :heavy_check_mark: Prev/Next after a threshold.  
-      :heavy_check_mark: limited number of pages after a threshold.  
-      :heavy_check_mark: visual indication of the current page.  
 
+:heavy_check_mark: Pagination.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Prev/Next after a threshold.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: limited number of pages after a threshold.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: visual indication of the current page.  
 
 ## Discoverability
 
 :heavy_check_mark: Support for discography resources ( Last Fm, Discogs etc ).  
-      :heavy_check_mark: Last Fm.  
-      :heavy_check_mark: Discogs.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Last Fm.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Discogs.  
 :x: Search artist by musical genre.  
 :x: Search for similar artists.  
 :heavy_check_mark: Search artists by name.  
 :heavy_check_mark: Search albuns by artist name.  
-      :heavy_check_mark: Add tracks search results to playlists.  
-            :heavy_check_mark: Add entire albuns worth of tracks to playlist.  
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Add tracks search results to playlists.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Add entire albuns worth of tracks to playlist.  
 
 ## Reproduction
 
 :heavy_check_mark: Search for multimidia in different sources ( Youtube, Spotify etc ).  
-      :heavy_check_mark: Youtube.  
-      :heavy_check_mark: SliderKz.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Youtube.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: SliderKz.  
 :heavy_check_mark: Reproduce multimidia from different sources.  
-      :heavy_check_mark: Youtube.  
-      :heavy_check_mark: SliderKz.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Youtube.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: SliderKz.  
 :heavy_check_mark: Reproduction queue, automatically playing one after the other.  
-      :heavy_check_mark: Skip item in queue, to the next item.  
-      :heavy_check_mark: Ability of playing entire playlists, start to finish.  
-      :heavy_check_mark: Ability of playing entire search results, start to finish.  
-      :x: Display queue contents.  
-      :x: Go back in the queue, to the previous item.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Skip item in queue, to the next item.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of playing entire playlists, start to finish.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of playing entire search results, start to finish.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Display queue contents.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of jumping a selected queue item to the front.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:x: Go back in the queue, to the previous item.  
 :heavy_check_mark: Display timer as track progresses.  
 :heavy_check_mark: Display progress bar as track progresses.  
-      :heavy_check_mark: Control playback by clicking in the progress bar.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Control playback by clicking in the progress bar.  
 :heavy_check_mark: Pause/play.  
 :heavy_check_mark: Queue is automatically filled based on context.  
-      :heavy_check_mark: When an item is selected from a playlist.  
-      :heavy_check_mark: When an item is selected from an album.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: When an item is selected from a playlist.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: When an item is selected from an album.  
 :x: ability to add current playing item into playlist.  
 :heavy_check_mark: Control reproduction volume.  
 :x: Keyboard shortcuts.  
-
-
 
 ## Needs polishing
 
@@ -79,3 +71,5 @@ List of features and status of implemenetation.
 
 - Obscure or underground music will play the wrong multimedia.  
   Most of the time returns the correct one, but in second place or further down in the search results.  
+
+

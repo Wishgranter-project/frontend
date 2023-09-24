@@ -34,17 +34,30 @@ class QueueDisplay extends CustomElement
         this.classList.add('queue-display');
 
         this.createAndAttach('div', {class: 'queue-display__drawer'}, 
-            this.$refs.content = this.create('div', {class: 'queue-display__content'}, 
-                this.$refs.list = this.create('ol')
+            this.$refs.content = this.create('div', {class: 'queue-display__content'}, [
+                    this.$refs.history = this.create('ol', {reversed: 'reversed'}),
+                    this.create('hr'),
+                    this.$refs.queued = this.create('ol')
+                ]
             )
         );
     }
 
-    showQueue(ar) 
+    showQueue(queue, history) 
     {
-        this.$refs.list.clear();
-        for (var i of ar) {
-            this.$refs.list.createAndAttach('li', null, i.title);
+        this.$refs.history.clear();
+        this.$refs.queued.clear();
+
+        for (var i = history.length -1; i >= 0; i--) {
+            this.$refs.history.createAndAttach('li', { class: 'ellipsis'}, history[i].title);
+        }
+
+        for (var i = 0; i < queue.length; i++) {
+            this.$refs.queued.createAndAttach('li', { class: 'ellipsis'}, queue[i].title).addEventListener('click', (evt) =>
+            {
+                var from = [...this.$refs.queued.children].indexOf(evt.target);
+                this.fireEvent('queue:jump', { from, to: 0 });
+            });
         }
     }
 }

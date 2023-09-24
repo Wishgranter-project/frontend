@@ -66,7 +66,7 @@ class Release extends ViewElement
             }
         }
 
-        var context = QueueContextRelease(
+        var context = new QueueContextRelease(
             this.api
         );
 

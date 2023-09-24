@@ -1,4 +1,9 @@
 
+/**
+ * The item in front is the focus.
+ * It does not leave the queue until it is time 
+ * for the next in line to be in focus.
+ */
 class Queue extends Array 
 {
     static instantiate(items = [], queueContext) 
@@ -24,13 +29,42 @@ class Queue extends Array
 
     dequeue() 
     {
-        var last = this[0] || null;
+        var previousFrontOfTheLine = this[0] || null;
         this.splice(0, 1);
         this.updatedCallback();
-        return last;
+        return previousFrontOfTheLine;
     }
 
-    get theOneInFront() 
+    /**
+     * Adds a new item to the very beginning of the queue.
+     *
+     * @param object item 
+     */
+    dropIn(item) 
+    {
+        this.queue.splice(0, 0, item);
+        this.updatedCallback();
+    }
+
+    /**
+     * Moves a single item up or down the line.
+     *
+     * @param int fromIndex 
+     * @param int intoIndex 
+     *
+     * @return object
+     *   The targeted item
+     */
+    move(fromIndex, intoIndex = 0) 
+    {
+        console.log(fromIndex, intoIndex);
+        var target = this.splice(fromIndex, 1)[0];
+        this.splice(intoIndex, 0, target);
+        this.updatedCallback();
+        return target;
+    }
+
+    get front() 
     {
         if (this[0]) {
             return this[0];
@@ -40,22 +74,18 @@ class Queue extends Array
         return null;
     }
 
-    async advance() 
+    async getNextInLine() 
     {
-        var previous = this.theOneInFront;
-
-        this.dequeue();
-
-        if (this.length > 1) {
+        if (this.length >= 2) {
             return new Promise((success, fail) =>
             {
-                return success(previous);
+                return success(this[1]);
             });
         }
 
-        return this.fetchMore().then( () => 
+        return this.fetchMore().then( (response) => 
         {
-            return previous;
+            return this[1] || null;
         });
     }
 
@@ -67,7 +97,8 @@ class Queue extends Array
             return this.fetchingPromise;
         }
 
-        return this.fetchingPromise = this.context.fetchMore(this).then( (response) => 
+        return this.fetchingPromise = 
+               this.context.fetchMore(this).then( (response) => 
         {
             this.fetchingPromise = null;
 
@@ -79,12 +110,6 @@ class Queue extends Array
 
             return response;
         });
-    }
-
-    clear(fromKey = 0) 
-    {
-        console.log('Queue: emptied');
-        this.splice(fromKey, this.length);
     }
 
     //-------------------
