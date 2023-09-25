@@ -123,12 +123,12 @@ class ShowRunner
     {
         return this.findResourcesForMusicalItem(item).then( (response) =>
         {
-            if (!response.data[0]) {
+            if (!response.data.length) {
                 alert('Show runner: Nothing found to play');
                 return;
             }
 
-            this.app.playResource(item, response.data[0]);
+            this.app.playItem(item, response.data);
             return response;
         });
     }

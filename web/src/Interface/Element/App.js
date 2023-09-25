@@ -95,10 +95,10 @@ class App extends CustomElement
         });
     }
 
-    playResource(item, resource) 
+    playItem(item, resources) 
     {
-        this.$refs.controls.destroy().remove();
-        this.$refs.controls = ReproductionControls.instantiate(this.api, item, resource);
+        this.$refs.controls.destroyPlayer().remove();
+        this.$refs.controls = ReproductionControls.instantiate(this.api, item, resources);
         this.$refs.footer.append(this.$refs.controls);
     }
 

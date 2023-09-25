@@ -10,13 +10,14 @@ class ReproductionControls extends CustomElement
 {
     static elementName = 'reproduction-controls';
 
-    __construct(api, item = null, resource = null) 
+    __construct(api, item = null, resources = null) 
     {
-        this.api      = api;
-        this.item     = item;
-        this.resource = resource;
-        this.player   = null;
-        this.settings = new Settings('controls.settings');
+        this.api       = api;
+        this.item      = item;
+        this.resources = resources;
+        this.index     = 0;
+        this.player    = null;
+        this.settings  = new Settings('controls.settings');
 
         if (this.item && this.item.artist && !Array.isArray(this.item.artist)) {
             this.item.artist = [this.item.artist];
@@ -30,6 +31,11 @@ class ReproductionControls extends CustomElement
             this.$refs.title = this.createAndAttach('div', {class: 'reproduction-controls__title'}),
             this.$refs.artists = this.createAndAttach('div', {class: 'reproduction-controls__artists'})
         ]);
+
+        if (this.resources && this.resources.length) {
+            this.$refs.buttonNotIt = this.createAndAttach('button', {class: 'reproduction-controls__not-it', title: 'not it'}, this.create('span', {class: 'fa fa-refresh'}));
+        }
+
         this.$refs.timer = this.createAndAttach('span', {class: 'reproduction-controls__timer'}, ['--:--']);
 
         this.createAndAttach('div', {class: 'reproduction-controls__buttons button-group'}, [
@@ -51,7 +57,7 @@ class ReproductionControls extends CustomElement
             this.fireEvent('summon-queue');
         });
 
-        if (! this.resource) {
+        if (! this.resources) {
             return;
         }
 
@@ -84,15 +90,33 @@ class ReproductionControls extends CustomElement
             this.fireEvent('controls:forward');
         });
 
+        if (this.$refs.buttonNotIt) {
+            this.$refs.buttonNotIt.addEventListener('click', this.notIt.bind(this));
+        }
+
         this.playResource();
     }
 
-    playResource() 
+    notIt() 
+    {
+        if (!this.resources[this.index + 1]) {
+            alert('no more alternatives');
+            return;
+        }
+
+        this.index ++;
+
+        this.destroyPlayer();
+
+        this.playResource(this.index);
+    }
+
+    playResource(index = 0) 
     {
         console.log('Reproduction: booting player');
 
         window.player = 
-        this.player = this.createPlayer(this.resource);
+        this.player = this.createPlayer(this.resources[index]);
         
         this.player.appendTo(this.$refs.playerFrame).then(() => 
         {
@@ -102,7 +126,7 @@ class ReproductionControls extends CustomElement
         });
     }
 
-    destroy() 
+    destroyPlayer() 
     {
         if (this.player) {
             this.player.pause();

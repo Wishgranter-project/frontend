@@ -115,6 +115,10 @@ body {
                 line-height: 1.5;
             }
 
+        .reproduction-controls__not-it {
+            margin: 0px auto 0px 10px;
+        }
+
         .reproduction-controls__timer {
             margin: auto 10px auto auto;
             width: 50px;

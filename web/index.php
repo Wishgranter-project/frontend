@@ -5,7 +5,7 @@ $backEndPort = '80';
 if ($port != '80') {
     $backEndPort = $port == '8000' ? '8080' : '8000';
 }
-$backEndPort = '8080';
+$backEndPort = '8000';
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
