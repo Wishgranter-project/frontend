@@ -1,21 +1,16 @@
-<?php
-$port = $_SERVER['HTTP_X_FORWARDED_PORT'] ?? $_SERVER['SERVER_PORT'];
-$baseHref = 'http://player-frontend.lndo.site' . ($port != '80' ? ':' . $port : '') . '/';
-$backEndPort = '80';
-if ($port != '80') {
-    $backEndPort = $port == '8000' ? '8080' : '8000';
-}
-$backEndPort = '8000';
+<?php 
+session_start();
+require 'settings.php';
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
-        <base href="<?php echo $baseHref;?>" />
+        <base href="<?php echo $selfBaseHref;?>" />
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script>
             window.playerSettings = {
-                backEndBaseUrl: '<?php echo 'http://player-backend.lndo.site' . ($backEndPort != '80' ? ':' . $backEndPort : '') . '/'; ?>'
+                backEndBaseUrl: '<?php echo $backendBaseHref; ?>'
             }
         </script>
         <script src="dist/main.js"></script>
