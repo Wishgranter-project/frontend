@@ -7,7 +7,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Edit existing playlists.  
 :heavy_check_mark: List playlist.  
 :heavy_check_mark: Create new playlists.  
-:x: Delete existing playlists.  
+:heavy_check_mark: Delete existing playlists.  
 
 ## Playlist items
 
@@ -18,7 +18,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Search items by title, genre and artist.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Among all the playlists.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: In individual playlists.  
-:x: Delete existing items. 
+:heavy_check_mark: Delete existing items.  
 
 ## Navigability
 

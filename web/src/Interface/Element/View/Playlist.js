@@ -14,10 +14,10 @@ class Playlist extends ViewElement
     {
         this.fetch().then((response) =>
         {
-            this.renderHeader(response);
-            this.renderItems(response);
-            this.renderNavigation(response);
-            this.renderNewItem();
+            this.subRenderHeader(response);
+            this.subRenderItems(response);
+            this.subRenderNavigation(response);
+            this.subRenderButtonGroup();
         });
 
         Events.enableBottomReached(this);
@@ -37,7 +37,7 @@ class Playlist extends ViewElement
             .getItems(this.request.queryParams);    
     }
 
-    renderHeader(response) 
+    subRenderHeader(response) 
     {
         return this.append(SearchHeader.instantiate(this.request, response.playlist ? response.playlist.title : this.request.attributes.playlistId, [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
@@ -46,7 +46,7 @@ class Playlist extends ViewElement
         ]));
     }
 
-    async renderItems(response) 
+    async subRenderItems(response) 
     {
         if (response.data) {
             for (var item of response.data) {
@@ -55,17 +55,26 @@ class Playlist extends ViewElement
         }
     }
 
-    renderNavigation(response) 
+    subRenderNavigation(response) 
     {
         this.append(Pagination.instantiate(this.api, this.request, response));
     }
 
-    renderNewItem() 
+    subRenderButtonGroup() 
     {
-        // this.createAndAttach('a', {href: '#playlist:' + this.request.attributes.playlistId + '/create-item' }, 'New Item')
-        this.createAndAttach('a', null, 'New Item').addEventListener('click', () => 
+        this.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [
+            this.$refs.buttonCreate = this.create('button', {class: 'main'}, 'New Item'),
+            this.$refs.buttonDelete = this.create('button', {class: 'btn-danger'}, 'Delete playlist')
+        ]);
+
+        this.$refs.buttonCreate.addEventListener('click', () => 
         {
             this.fireEvent('add-item', { playlist: this.request.attributes.playlistId });
+        });
+
+        this.$refs.buttonDelete.addEventListener('click', () => 
+        {
+            this.fireEvent('delete-playlist', { playlist: this.request.attributes.playlistId });
         });
     }
 

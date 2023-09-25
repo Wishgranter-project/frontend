@@ -54,6 +54,11 @@ class App extends CustomElement
 
         //------------------------------
 
+        this.addEventListener('playlist-added', () =>
+        {
+            this.$refs.navMenu.render();
+        });
+
         this.addEventListener('playlist-updated', () =>
         {
             this.$refs.navMenu.render();
@@ -77,6 +82,15 @@ class App extends CustomElement
             this.append(modal);
         });
 
+        this.addEventListener('delete-item', (evt) => 
+        {
+            var doRemove = confirm('Are you sure you want to remove it ?');
+            if (doRemove) {
+                this.api.collection.playlistItems.get(evt.detail.uuid).delete();
+                evt.target.remove();
+            }
+        });
+
         this.addEventListener('add-playlist', (evt) => 
         {
             var modal = ModalPlaylistAdd.instantiate(this.api);
@@ -87,6 +101,18 @@ class App extends CustomElement
         {
             var modal = ModalPlaylistEdit.instantiate(this.api, evt.detail.playlistId);
             this.append(modal);
+        });
+
+        this.addEventListener('delete-playlist', (evt) => 
+        {
+            var doRemove = confirm('Are you sure you want to delete the playlist ?');
+            if (doRemove) {
+                this.api.collection.playlists.get(evt.detail.playlist).delete().then(() =>
+                {
+                    this.$refs.navMenu.render();
+                });
+                window.location.hash = '#home';
+            }
         });
 
         this.addEventListener('summon-queue', () => 

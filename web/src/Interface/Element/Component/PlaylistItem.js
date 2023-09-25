@@ -63,6 +63,14 @@ class PlaylistItem extends CustomElement
             {
                 this.fireEvent('edit-item', {uuid: this.item.uuid})
             });
+
+            this.$refs.removeButton = this.$refs.action.createAndAttach('a', { title: 'Remove'}, 
+                this.createAndAttach('span', {class: 'fa fa-times'})
+            );
+            this.$refs.removeButton.addEventListener('click', () => 
+            {
+                this.fireEvent('delete-item', {uuid: this.item.uuid});
+            });
         }
 
         this.$refs.title.addEventListener('click', () => 

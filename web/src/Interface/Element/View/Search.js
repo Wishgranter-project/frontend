@@ -15,13 +15,18 @@ class Search extends Playlist
             : this.api.collection.playlistItems.search(this.request.queryParams);
     }
 
-    renderHeader(response) 
+    subRenderHeader(response) 
     {
         this.append(SearchHeader.instantiate(this.request, 'Search', [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
             {type: 'search', name: 'artist', placeholder: 'Artist'},
             {type: 'search', name: 'genre', placeholder: 'Genre'}
         ]));
+    }
+
+    subRenderButtonGroup() 
+    {
+        // maybe I should invert the inheritance...
     }
 
     onItemSelected(evt) 

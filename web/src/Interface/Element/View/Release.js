@@ -11,7 +11,7 @@ class Release extends ViewElement
     {
         this.api.discover.releases.get(this.request.attributes.releaseId).getTracks().then((response) =>
         {
-            this.renderHeader(response);
+            this.subRenderHeader(response);
             this.renderTracks(response);
         });
 
@@ -19,7 +19,7 @@ class Release extends ViewElement
         this.classList.add('release-view');
     }
 
-    renderHeader(response) 
+    subRenderHeader(response) 
     {
         this.createAndAttach('div', { class: 'release-view-header'}, [
             this.create('img', {src: response.data.thumbnail || 'dist/img/missing-cover-art.webp' }),
