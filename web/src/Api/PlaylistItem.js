@@ -10,17 +10,17 @@ class PlaylistItem extends Base
 
     read() 
     {
-        return this.apiCall('get', '/api/v1/collection/items/' + this.uuid);
+        return this.apiCall('get', 'api/v1/collection/items/' + this.uuid);
     }
 
     update(data) 
     {
-        return this.apiCall('put', '/api/v1/collection/items/' + this.uuid, data, null, { headers: { 'Content-Type': undefined } });
+        return this.apiCall('put', 'api/v1/collection/items/' + this.uuid, data, null, { headers: { 'Content-Type': undefined } });
     }
 
     delete() 
     {
-        return this.apiCall('delete', '/api/v1/collection/items/' + this.uuid);
+        return this.apiCall('delete', 'api/v1/collection/items/' + this.uuid);
     }
 }
 

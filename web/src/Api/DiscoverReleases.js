@@ -5,7 +5,7 @@ class DiscoverReleases extends Base
 {
     search(params) 
     {
-        return this.apiCall('get', '/api/v1/discover/releases', null, params);
+        return this.apiCall('get', 'api/v1/discover/releases', null, params);
     }
 
     get(releaseId) 

@@ -13,7 +13,7 @@ class Discover extends Base
 
     resources(params) 
     {
-        return this.apiCall('get', '/api/v1/discover/resources', null, params);
+        return this.apiCall('get', 'api/v1/discover/resources', null, params);
     }
 }
 

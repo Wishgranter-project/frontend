@@ -4,7 +4,7 @@ class Artists extends Base
 {
     list() 
     {
-        return this.apiCall('get', '/api/v1/collection/artists');
+        return this.apiCall('get', 'api/v1/collection/artists');
     }
 }
 

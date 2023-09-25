@@ -4,7 +4,7 @@ class DiscoverArtists extends Base
 {
     search(params) 
     {
-        return this.apiCall('get', '/api/v1/discover/artists', null, params);
+        return this.apiCall('get', 'api/v1/discover/artists', null, params);
     }
 }
 
