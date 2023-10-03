@@ -13,6 +13,12 @@ class Playlist extends Base
         return this.apiCall('get', 'api/v1/collection/playlists/' + this.playlistId);
     }
 
+    download() 
+    {
+        var url = new URL('api/v1/collection/playlists/' + this.playlistId + '?download=1', this.httpClient.defaultOptions.baseHref);
+        window.open(url.toString(), "_blank");
+    }
+
     getItems(params = null) 
     {
         return this.apiCall('get', 'api/v1/collection/playlists/' + this.playlistId + '/items', null, params);

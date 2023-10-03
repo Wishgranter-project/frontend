@@ -91,6 +91,11 @@ class App extends CustomElement
             }
         });
 
+        this.addEventListener('download-playlists', (evt) => 
+        {
+            this.api.collection.playlists.downloadAll();
+        });
+
         this.addEventListener('add-playlist', (evt) => 
         {
             var modal = ModalPlaylistAdd.instantiate(this.api);

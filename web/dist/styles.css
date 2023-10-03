@@ -348,6 +348,7 @@ body {
     display: block;
     width: 0px;
     height: 100%;
+    z-index: 10;
 }
 
     .queue-display__drawer {

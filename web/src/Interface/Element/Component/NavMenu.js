@@ -46,6 +46,12 @@ class NavMenu extends CustomElement
                 this.fireEvent('add-playlist');
             });
 
+            this.$refs.playlists.append(this.$refs.downloadPlaylists = this.createGenericNavItem(null, 'Download playlists', 'fa-download'));
+            this.$refs.downloadPlaylists.addEventListener('click', () =>
+            {
+                this.fireEvent('download-playlists');
+            });
+
         });
     }
 
