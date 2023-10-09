@@ -47,6 +47,9 @@ class Release extends ViewElement
 
     async renderTracks(response) 
     {
+        if (!response.data.tracks) {
+            return;
+        }
         for (var t of response.data.tracks) {
             this.append(PlaylistItem.instantiate({ title: t, artist: response.data.artist, album: response.data.title }))
         }

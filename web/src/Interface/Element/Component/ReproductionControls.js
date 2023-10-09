@@ -138,11 +138,11 @@ class ReproductionControls extends CustomElement
 
     createPlayer(resource) 
     {
-        switch (resource.vendor) {
+        switch (resource.source) {
             case 'youtube':
                 return this.createPlayerYouTube(resource);
                 break;
-            case 'slider_kz':
+            case 'sliderkz':
                 return this.createPlayerSliderKz(resource);
                 break;
         }
@@ -150,9 +150,8 @@ class ReproductionControls extends CustomElement
 
     createPlayerYouTube(resource) 
     {
-        var videoId    = resource.id.split('@')[0];
         var player     = document.createElement('player-youtube');
-        player.videoId = videoId;
+        player.videoId = resource.id;
         player.width   = 390;
 
         return player;
@@ -161,7 +160,7 @@ class ReproductionControls extends CustomElement
     createPlayerSliderKz(resource) 
     {
         var player = document.createElement('player-audio');
-        player.src = resource.source;
+        player.src = resource.src;
 
         return player;
     }
