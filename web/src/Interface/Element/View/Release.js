@@ -50,8 +50,11 @@ class Release extends ViewElement
         if (!response.data.tracks) {
             return;
         }
+
+        this.$refs.playlist = this.createAndAttach('div', { class: 'playlist' });
+
         for (var t of response.data.tracks) {
-            this.append(PlaylistItem.instantiate({ title: t, artist: response.data.artist, album: response.data.title }))
+            this.$refs.playlist.append(PlaylistItem.instantiate({ title: t, artist: response.data.artist, album: response.data.title }))
         }
     }
 

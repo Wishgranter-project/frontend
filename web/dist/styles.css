@@ -89,6 +89,7 @@ body {
 
 .app-footer {
     border-top: solid 1px #3a3a3a;
+    text-align: left;
     background-color: #303030;
 }
 
@@ -99,24 +100,12 @@ body {
         padding: 10px;
     }
 
-        .reproduction-controls__label {
-            width: auto;
+        .reproduction-controls .playlist-item {
             margin: 0px;
-            text-align: left;
         }
 
-            .reproduction-controls__title {
-                font-size: 20px;
-                line-height: 1.5;
-            }
-
-            .reproduction-controls__artists {
-                font-size: 16px;
-                line-height: 1.5;
-            }
-
         .reproduction-controls__not-it {
-            margin: 0px auto 0px 10px;
+            margin: 0px 10px;
         }
 
         .reproduction-controls__timer {
@@ -165,6 +154,13 @@ body {
     border-bottom: solid 1px #3a3a3a;
 }
 
+    .playlist-item button {
+        border-color: transparent;
+        border-radius: 0px;
+        color: rgba(255,255,255,0.1);
+        background-color: transparent;
+    }
+
     .playlist-item__header {
         flex-shrink: 1;
         width: auto;
@@ -173,18 +169,19 @@ body {
     .playlist-item__body {
         flex-grow: 10;
         margin-left: 10px;
+        line-height: 0;
     }
 
         .playlist-item__title {
             display: block;
             font-size: 20px;
-            line-height: 1.5;
-            display: block;
+            line-height: 26px;
         }
 
         .playlist-item__info {
+            display: inline-block;
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 20px;
         }
 
             .playlist-item__info a:link {
@@ -206,6 +203,22 @@ body {
     .playlist-item__footer {
         width: auto;
         margin-left: 10px;
+    }
+
+
+/*--------------------------------------------*/
+
+.playlist .playlist-item {
+    align-items: stretch;
+}
+
+    .playlist .playlist-item__body {
+        padding: 5px 0px;
+    }
+
+    .playlist .playlist-item button, 
+    .playlist .playlist-item .popup-button {
+        height: 100%;
     }
 
 /*--------------------------------------------*/

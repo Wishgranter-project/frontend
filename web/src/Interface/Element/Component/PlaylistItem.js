@@ -6,9 +6,10 @@ class PlaylistItem extends CustomElement
 {
     static elementName = 'playlist-item';
 
-    __construct(item = {}) 
+    __construct(item = {}, options = {}) 
     {
         this.item = item;
+        this.options = options;
 
         if (!this.item.artist) {
             this.item.artist = [];
@@ -39,6 +40,10 @@ class PlaylistItem extends CustomElement
 
     subRenderHeader() 
     {
+        if (this.options.disablePlayButton) {
+            return;
+        }
+
         this.$refs.header = this.createAndAttach('div', {class: 'playlist-item__header'}, [
             this.$refs.playButton = this.create('button', null, this.createAndAttach('span', {class: 'fa fa-play'}))
         ]);

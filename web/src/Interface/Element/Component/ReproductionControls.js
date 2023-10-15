@@ -1,7 +1,8 @@
 import CustomElement from '../CustomElement';
 import { PlayerYouTube } from 'youtube-wrapper';
 import { PlayerAudio } from 'html-multimedia-wrapper';
-import Settings from '../../Settings/Settings.js';
+import Settings from '../../Settings/Settings';
+import PlaylistItem from './PlaylistItem';
 
 customElements.define('player-youtube', PlayerYouTube);
 customElements.define('player-audio', PlayerAudio);
@@ -18,67 +19,66 @@ class ReproductionControls extends CustomElement
         this.index     = 0;
         this.player    = null;
         this.settings  = new Settings('controls.settings');
-
-        if (this.item && this.item.artist && !Array.isArray(this.item.artist)) {
-            this.item.artist = [this.item.artist];
-        }
     }
 
     render() 
     {
         this.classList.add('reproduction-controls');
-        this.createAndAttach('div', {class: 'reproduction-controls__label'}, [
-            this.$refs.title = this.createAndAttach('div', {class: 'reproduction-controls__title'}),
-            this.$refs.artists = this.createAndAttach('div', {class: 'reproduction-controls__artists'})
-        ]);
-
-        if (this.resources && this.resources.length) {
-            this.$refs.buttonNotIt = this.createAndAttach('button', {class: 'reproduction-controls__not-it', title: 'not it'}, this.create('span', {class: 'fa fa-refresh'}));
-        }
-
-        this.$refs.timer = this.createAndAttach('span', {class: 'reproduction-controls__timer'}, ['--:--']);
-
-        this.createAndAttach('div', {class: 'reproduction-controls__buttons button-group'}, [
-            this.$refs.buttonBackward = this.createAndAttach('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-backward'})),
-            this.$refs.buttonPlay = this.createAndAttach('button', {class: 'reproduction-controls__button-play'}, this.create('span', {class: 'fa fa-play'})),
-            this.$refs.buttonNext = this.createAndAttach('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-forward'}))
-        ]);
-
-        this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
-        this.$refs.buttonQueue   = this.createAndAttach('button', {class: 'reproduction-controls__button-queue', title: 'Queue'}, this.create('span', {class: 'fa fa-list'}));
-        this.$refs.progress      = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
-        this.$refs.playerFrame   = this.createAndAttach('div', {class: 'player-frame intangible'});
-
-        this.$refs.volumeControl.value = this.settings.getInt('volume', 15);
-        this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
-
-        this.$refs.buttonQueue.addEventListener('click', () =>
-        {
-            this.fireEvent('summon-queue');
-        });
+        this.subRenderItem();
+        this.subRenderClock();
+        this.subRenderButtons();
+        this.subRenderVolume();
+        this.subRenderQueueButton();
+        this.subRenderProgressBar();
+        this.$refs.playerFrame = this.createAndAttach('div', {class: 'player-frame intangible'});
 
         if (! this.resources) {
             return;
         }
-
-        this.$refs.title.innerHTML = this.item.title;
-        for (var a of this.item.artist) {
-            this.$refs.artists.createAndAttach('a', null, a);
-        }
-
-        this.$refs.progress.addEventListener('click', this.seek.bind(this));
-        this.$refs.buttonPlay.addEventListener('click', this.toggle.bind(this));
+        
         this.addEventListener('player:timeupdate', this.onTimeUpdate.bind(this));
 
         this.addEventListener('player:ended', () => 
         {
-            console.log('Reproduction: ended')
+            console.log('Reproduction: ended');
         });
 
         this.addEventListener('player:pause', () => 
         {
             console.log('Reproduction: paused');
         });
+
+        this.playResource();
+    }
+
+    subRenderItem() 
+    {        
+        if (this.item) {
+            this.$refs.playlistItem = this.attach(PlaylistItem.instantiate(this.item, {disablePlayButton: true}));
+        }
+
+        if (!this.resources || !this.resources.length) {
+            return;
+        }
+
+        this.$refs.buttonNotIt = this.createAndAttach('button', {class: 'reproduction-controls__not-it', title: 'not it'}, this.create('span', {class: 'fa fa-refresh'}));
+        this.$refs.buttonNotIt.addEventListener('click', this.notIt.bind(this));
+    }
+
+    subRenderClock() 
+    {
+        this.$refs.timer = this.createAndAttach('span', {class: 'reproduction-controls__timer'}, '--:--');
+    }
+
+    subRenderButtons() 
+    {
+        this.createAndAttach('div', {class: 'reproduction-controls__buttons button-group'}, [
+            this.$refs.buttonBackward = this.createAndAttach('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-backward'})),
+            this.$refs.buttonPlay = this.createAndAttach('button', {class: 'reproduction-controls__button-play'}, this.create('span', {class: 'fa fa-play'})),
+            this.$refs.buttonNext = this.createAndAttach('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-forward'}))
+        ]);
+
+        this.$refs.buttonPlay.addEventListener('click', this.toggle.bind(this));
 
         this.$refs.buttonBackward.addEventListener('click', () => 
         {
@@ -89,12 +89,28 @@ class ReproductionControls extends CustomElement
         {
             this.fireEvent('controls:forward');
         });
+    }
 
-        if (this.$refs.buttonNotIt) {
-            this.$refs.buttonNotIt.addEventListener('click', this.notIt.bind(this));
-        }
+    subRenderVolume() 
+    {
+        this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
+        this.$refs.volumeControl.value = this.settings.getInt('volume', 15);
+        this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
+    }
 
-        this.playResource();
+    subRenderQueueButton() 
+    {
+        this.$refs.buttonQueue = this.createAndAttach('button', {class: 'reproduction-controls__button-queue', title: 'Queue'}, this.create('span', {class: 'fa fa-list'}));
+        this.$refs.buttonQueue.addEventListener('click', () =>
+        {
+            this.fireEvent('summon-queue');
+        });
+    }
+
+    subRenderProgressBar() 
+    {
+        this.$refs.progress = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
+        this.$refs.progress.addEventListener('click', this.seek.bind(this));
     }
 
     notIt() 

@@ -48,10 +48,14 @@ class Playlist extends ViewElement
 
     async subRenderItems(response) 
     {
-        if (response.data) {
-            for (var item of response.data) {
-                this.attach(PlaylistItem.instantiate(item));
-            }
+        if (!response.data) {
+            return;
+        }
+
+        this.$refs.playlist = this.createAndAttach('div', { class: 'playlist' });
+
+        for (var item of response.data) {
+            this.$refs.playlist.attach(PlaylistItem.instantiate(item));
         }
     }
 
