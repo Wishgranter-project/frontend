@@ -1,4 +1,6 @@
 import CustomElement from '../CustomElement';
+import PopupMenu from './PopupMenu/PopupMenu';
+import PopupButton from './PopupMenu/PopupButton';
 
 class PlaylistItem extends CustomElement 
 {
@@ -30,9 +32,29 @@ class PlaylistItem extends CustomElement
         this.innerHTML = ``;
         this.classList.add('playlist-item');
 
-        this.$refs.body = this.createAndAttach('div', {class: 'playlist-item__body'});
-        this.$refs.action = this.createAndAttach('div', {class: 'playlist-item__actions'});
-    
+        this.subRenderHeader();
+        this.subRenderBody();
+        this.subRenderFooter();        
+    }
+
+    subRenderHeader() 
+    {
+        this.$refs.header = this.createAndAttach('div', {class: 'playlist-item__header'}, [
+            this.$refs.playButton = this.create('button', null, this.createAndAttach('span', {class: 'fa fa-play'}))
+        ]);
+
+        this.$refs.playButton.addEventListener('click', () => 
+        {
+            this.fireEvent('item-selected', {
+                item: this.item
+            });
+        });
+    }
+
+    subRenderBody() 
+    {
+        this.$refs.body   = this.createAndAttach('div', {class: 'playlist-item__body'});
+
         if (this.item.title) {
             this.$refs.title = this.$refs.body.createAndAttach('span', {class: 'playlist-item__title'}, [ this.item.title ]);
         }
@@ -41,7 +63,7 @@ class PlaylistItem extends CustomElement
             this.$refs.body.createAndAttach('span', {class: 'playlist-item__artist playlist-item__info'}, [ 
                 this.create('a', {href: `#search?artist=${artist}` }, artist), 
                 ' ',
-                this.create('a', {href: `#discover:releases?artist=${artist}`}, [this.createAndAttach('span', {class: 'fa fa-search'}) ])
+                this.create('a', {href: `#discover:releases?artist=${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
             ]);
         }
 
@@ -50,42 +72,49 @@ class PlaylistItem extends CustomElement
                 this.create('a', {href: `#search?soundtrack=${soundtrack}` }, soundtrack)
             ]);
         }
+    }
 
-        this.$refs.addButton = this.$refs.action.createAndAttach('a', { title: 'Add'}, 
-            this.createAndAttach('span', {class: 'fa fa-plus'})
-        );
+    subRenderFooter() 
+    {
+        this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});
+
+        var actions = [];
+
+        actions.push({
+            title: 'Add to playlist',
+            helpText: 'choose a playlist',
+            icon: 'fa-plus',
+            onClick: () => 
+            {
+                this.fireEvent('item-to-add', {
+                    items: [ this.item ]
+                });
+            }
+        });
 
         if (this.item.uuid) {
-            this.$refs.editButton = this.$refs.action.createAndAttach('a', { title: 'Edit'}, 
-                this.createAndAttach('span', {class: 'fa fa-pencil'})
-            );
-            this.$refs.editButton.addEventListener('click', () => 
-            {
-                this.fireEvent('edit-item', {uuid: this.item.uuid})
+            actions.push({
+                title: 'Edit item',
+                helpText: '',
+                icon: 'fa-pencil',
+                onClick: () => 
+                {
+                    this.fireEvent('edit-item', {uuid: this.item.uuid})
+                }
             });
 
-            this.$refs.removeButton = this.$refs.action.createAndAttach('a', { title: 'Remove'}, 
-                this.createAndAttach('span', {class: 'fa fa-times'})
-            );
-            this.$refs.removeButton.addEventListener('click', () => 
-            {
-                this.fireEvent('delete-item', {uuid: this.item.uuid});
+            actions.push({
+                title: 'Remove item',
+                helpText: '',
+                icon: 'fa-times',
+                onClick: () => 
+                {
+                    this.fireEvent('delete-item', {uuid: this.item.uuid});
+                }
             });
         }
 
-        this.$refs.title.addEventListener('click', () => 
-        {
-            this.fireEvent('item-selected', {
-                item: this.item
-            });
-        });
-
-        this.$refs.addButton.addEventListener('click', () => 
-        {
-            this.fireEvent('item-to-add', {
-                items: [ this.item ]
-            });
-        });
+        this.$refs.popupButton = this.$refs.footer.attach(PopupButton.instantiate(actions));
     }
 }
 

@@ -47,6 +47,19 @@ class CustomElement extends HTMLElement
         }
     }
 
+    once(name, event, listener) 
+    {
+        var attributeName = 'data-once-' + name;
+
+        if (this.hasAttribute(attributeName)) {
+            return;
+        }
+
+        this.setAttribute(attributeName, '1');
+
+        this.addEventListener(event, listener);
+    }
+
     static elementName = 'base-element';
 
     static register() 
