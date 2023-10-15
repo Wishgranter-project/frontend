@@ -21,14 +21,20 @@ class Release extends ViewElement
 
     subRenderHeader(response) 
     {
-        this.createAndAttach('div', { class: 'release-view-header'}, [
-            this.create('img', {src: response.data.thumbnail || 'dist/img/missing-cover-art.webp' }),
-            this.create('div', {class: 'release-view-label'}, [
-                this.create('h1', null, response.data.title),
-                this.create('h3', null, this.create('a', { href: '#discover:releases?artist=' + response.data.artist }, response.data.artist))
-            ]),
-            this.$refs.addButton = this.create('button', null, this.createAndAttach('span', {class: 'fa fa-plus'}))
+        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
+            this.$refs.headerH = this.create('div', { class: 'header__header' }),
+            this.$refs.headerB = this.create('div', { class: 'header__body' }),
+            this.$refs.headerF = this.create('div', { class: 'header__footer' })
         ]);
+
+        this.$refs.headerH.createAndAttach('img', {src: response.data.thumbnail || 'dist/img/missing-cover-art.webp' });
+
+        this.$refs.headerB.createAndAttach('h1', null, response.data.title);
+        this.$refs.headerB.createAndAttach('h3', null, this.create('a', { href: '#discover:releases?artist=' + response.data.artist }, response.data.artist));
+
+        this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, 
+            this.$refs.addButton = this.create('button', { title: 'Add new item to playlist' }, this.create('span', { class: 'fa fa-plus' }))
+        );
 
         this.$refs.addButton.addEventListener('click', this.addEntireRelease.bind(this));
     }

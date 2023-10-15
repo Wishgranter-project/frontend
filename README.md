@@ -55,6 +55,7 @@ List of features and status of implemenetation.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Display queue contents.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of jumping a selected queue item to the front.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Go back in the queue, to the previous item.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:x: Ability of adding queue and story items into playlists.
 :heavy_check_mark: Display timer as track progresses.  
 :heavy_check_mark: Display progress bar as track progresses.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Control playback by clicking in the progress bar.  
@@ -62,7 +63,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Queue is automatically filled based on context.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: When an item is selected from a playlist.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: When an item is selected from an album.  
-:x: ability to add current playing item into playlist.  
+:heavy_check_mark: ability to add current playing item into playlist.  
 :heavy_check_mark: Control reproduction volume.  
 :x: Keyboard shortcuts.  
 
@@ -72,5 +73,3 @@ List of features and status of implemenetation.
 
 - Obscure or underground music will play the wrong multimedia.  
   Most of the time returns the correct one, but in second place or further down in the search results.  
-
-

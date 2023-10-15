@@ -120,7 +120,7 @@ class ReproductionControls extends CustomElement
             return;
         }
 
-        this.index ++;
+        this.index++;
 
         this.destroyPlayer();
 

@@ -12,12 +12,15 @@ class Playlist extends ViewElement
 
     async render() 
     {
-        this.fetch().then((response) =>
+        await this.fetchPlaylist().then((response) =>
         {
-            this.subRenderHeader(response);
+            return this.subRenderHeader(response);
+        });
+
+        this.fetchItems().then((response) =>
+        {
             this.subRenderItems(response);
             this.subRenderNavigation(response);
-            this.subRenderButtonGroup();
         });
 
         Events.enableBottomReached(this);
@@ -30,7 +33,14 @@ class Playlist extends ViewElement
         console.log('Bottom of the page reached');
     }
 
-    fetch() 
+    fetchPlaylist() 
+    {
+        return this.api.collection.playlists
+            .get(this.request.attributes.playlistId)
+            .read();
+    }
+
+    fetchItems() 
     {
         return this.api.collection.playlists
             .get(this.request.attributes.playlistId)
@@ -39,7 +49,39 @@ class Playlist extends ViewElement
 
     subRenderHeader(response) 
     {
-        return this.append(SearchHeader.instantiate(this.request, response.playlist ? response.playlist.title : this.request.attributes.playlistId, [
+        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
+            this.$refs.headerH = this.create('div', { class: 'header__header' }),
+            this.$refs.headerB = this.create('div', { class: 'header__body' }),
+            this.$refs.headerF = this.create('div', { class: 'header__footer' })
+        ]);
+
+        this.$refs.headerB.createAndAttach('h1', null, response.data.title);
+        if (response.data.description) {
+            this.$refs.headerB.createAndAttach('h3', null, response.data.description);
+        }
+
+        this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, [
+            this.$refs.buttonAdd = this.create('button', { title: 'Add new item to playlist' }, this.create('span', { class: 'fa fa-plus' })),
+            this.$refs.buttonEdit = this.create('button', { title: 'Edit playlist' }, this.create('span', { class: 'fa fa-pencil' })),
+            this.$refs.buttonDelete = this.create('button', { title: 'Delete entire playlist', class: 'btn-danger' }, this.create('span', { class: 'fa fa-close' }))
+        ]);
+
+        this.$refs.buttonAdd.addEventListener('click', () => 
+        {
+            this.fireEvent('add-item', { playlist: this.request.attributes.playlistId });
+        });
+
+        this.$refs.buttonEdit.addEventListener('click', () => 
+        {
+            this.fireEvent('edit-playlist', { playlistId: this.request.attributes.playlistId });
+        });
+
+        this.$refs.buttonDelete.addEventListener('click', () => 
+        {
+            this.fireEvent('delete-playlist', { playlist: this.request.attributes.playlistId });
+        });
+
+        this.append(SearchHeader.instantiate(this.request, '', [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
             {type: 'search', name: 'artist', placeholder: 'Artist'},
             {type: 'search', name: 'genre', placeholder: 'Genre'}
@@ -62,24 +104,6 @@ class Playlist extends ViewElement
     subRenderNavigation(response) 
     {
         this.append(Pagination.instantiate(this.api, this.request, response));
-    }
-
-    subRenderButtonGroup() 
-    {
-        this.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [
-            this.$refs.buttonCreate = this.create('button', {class: 'main'}, 'New Item'),
-            this.$refs.buttonDelete = this.create('button', {class: 'btn-danger'}, 'Delete playlist')
-        ]);
-
-        this.$refs.buttonCreate.addEventListener('click', () => 
-        {
-            this.fireEvent('add-item', { playlist: this.request.attributes.playlistId });
-        });
-
-        this.$refs.buttonDelete.addEventListener('click', () => 
-        {
-            this.fireEvent('delete-playlist', { playlist: this.request.attributes.playlistId });
-        });
     }
 
     onItemSelected(evt) 

@@ -40,13 +40,16 @@ class NavMenu extends CustomElement
                 }
             }
 
-            this.$refs.playlists.append(this.$refs.createPlaylist = this.createGenericNavItem(null, 'Create playlist', 'fa-plus-circle'));
+            this.$refs.playlists.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [
+                this.$refs.createPlaylist    = this.create('button', {title: 'Create playlist'}, this.create('span', {class: 'fa fa-plus-circle'})),
+                this.$refs.downloadPlaylists = this.create('button', {title: 'Download playlist'}, this.create('span', {class: 'fa fa-download'}))
+            ]);
+
             this.$refs.createPlaylist.addEventListener('click', () =>
             {
                 this.fireEvent('add-playlist');
             });
 
-            this.$refs.playlists.append(this.$refs.downloadPlaylists = this.createGenericNavItem(null, 'Download playlists', 'fa-download'));
             this.$refs.downloadPlaylists.addEventListener('click', () =>
             {
                 this.fireEvent('download-playlists');
@@ -74,16 +77,9 @@ class NavMenu extends CustomElement
 
     addPlaylistNavItem(playlistId, playlistTitle) 
     {
-        var edit;
         this.$refs.playlists.createAndAttach('div', {class: 'app-nav__item'}, [
-            this.create('a', {href: `#playlist:${playlistId}`, class: 'ellipsis'}, playlistTitle),
-            edit = this.create('a', { class: 'editing'}, this.create('span', {class: 'fa fa-pencil'}))
+            this.create('a', {href: `#playlist:${playlistId}`, class: 'ellipsis'}, playlistTitle)
         ]);
-
-        edit.addEventListener('click', () => 
-        {
-            this.fireEvent('edit-playlist', { playlistId });
-        });
     }
 
     addGenericNavItem(href, label, icon = null) 
