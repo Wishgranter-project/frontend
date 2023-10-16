@@ -8,6 +8,18 @@ class Search extends Playlist
 {
     static elementName = 'view-search';
 
+    async render() 
+    {
+        this.fetch().then((response) =>
+        {
+            this.subRenderHeader(response);
+            this.subRenderItems(response);
+            this.subRenderNavigation(response);
+        });
+
+        this.addEventListener('item-selected', this.onItemSelected.bind(this));
+    }
+
     fetch() 
     {
         return this.request.queryParams.isEmpty()

@@ -57,7 +57,7 @@ class Queue extends Array
      */
     move(fromIndex, intoIndex = 0) 
     {
-        console.log(fromIndex, intoIndex);
+        console.log(`movin queue item from ${fromIndex} to position ${intoIndex}`);
         var target = this.splice(fromIndex, 1)[0];
         this.splice(intoIndex, 0, target);
         this.updatedCallback();

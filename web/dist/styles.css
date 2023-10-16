@@ -146,7 +146,6 @@ body {
 .playlist-item {
     display: flex;
     align-items: center;
-    border-bottom: solid 1px #3a3a3a;
 }
 
     .playlist-item button {
@@ -204,6 +203,7 @@ body {
 /*--------------------------------------------*/
 
 .playlist .playlist-item {
+    border-bottom: solid 1px #3a3a3a;
     align-items: stretch;
 }
 
@@ -338,7 +338,7 @@ body {
     }
 
         .queue-display__content {
-            width: 200px;
+            width: 500px;
             height: 100%;
             padding: 10px;
             overflow: auto;
@@ -348,8 +348,8 @@ body {
         }
 
 .queue-display.open .queue-display__drawer {
-    width: 200px;
-    margin: 0px 0px 0px -200px;
+    width: 500px;
+    margin: 0px 0px 0px -500px;
 }
 
 /*--------------------------------------------*/

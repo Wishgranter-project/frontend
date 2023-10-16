@@ -159,6 +159,7 @@ class ReproductionControls extends CustomElement
                 return this.createPlayerYouTube(resource);
                 break;
             case 'sliderkz':
+            case 'localFiles':
                 return this.createPlayerSliderKz(resource);
                 break;
         }

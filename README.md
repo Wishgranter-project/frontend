@@ -55,7 +55,7 @@ List of features and status of implemenetation.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Display queue contents.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of jumping a selected queue item to the front.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Go back in the queue, to the previous item.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:x: Ability of adding queue and story items into playlists.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Ability of adding queue and story items into playlists.
 :heavy_check_mark: Display timer as track progresses.  
 :heavy_check_mark: Display progress bar as track progresses.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: Control playback by clicking in the progress bar.  

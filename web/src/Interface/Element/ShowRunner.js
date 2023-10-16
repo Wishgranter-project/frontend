@@ -39,12 +39,19 @@ class ShowRunner
             : this.jumpTheQueue(item);
     }
 
+    /**
+     * Keeps queue, but jump item to the front of it.
+     */
     async jumpTheQueue(item) 
     {
+        this.queue.dropIn(item);
         // add previous to history etc
         return this.playItem(item);
     }
 
+    /**
+     * Clears old queue, set this new one up.
+     */
     async playNewQueue(queue) 
     {
         var oldQueue = this.queue;

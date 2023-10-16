@@ -1,5 +1,4 @@
 import CustomElement from '../CustomElement';
-import PopupMenu from './PopupMenu/PopupMenu';
 import PopupButton from './PopupMenu/PopupButton';
 
 class PlaylistItem extends CustomElement 

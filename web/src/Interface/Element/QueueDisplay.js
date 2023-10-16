@@ -1,4 +1,5 @@
 import CustomElement from './CustomElement';
+import PlaylistItem from './Component/PlaylistItem';
 
 class QueueDisplay extends CustomElement 
 {
@@ -45,17 +46,27 @@ class QueueDisplay extends CustomElement
 
     showQueue(queue, history) 
     {
+        var item;
         this.$refs.history.clear();
         this.$refs.queued.clear();
 
         for (var i = history.length -1; i >= 0; i--) {
-            this.$refs.history.createAndAttach('li', null, this.create('div', { class: 'ellipsis'}, history[i].title));
+            item = PlaylistItem.instantiate(history[i]);
+            this.$refs.history.createAndAttach('li', null, item);
         }
 
         for (var i = 0; i < queue.length; i++) {
-            this.$refs.queued.createAndAttach('li', null, this.create('div', { class: 'ellipsis'}, queue[i].title)).addEventListener('click', (evt) =>
+            item = PlaylistItem.instantiate(queue[i]);
+            this.$refs.queued.createAndAttach('li', null, item).addEventListener('item-selected', (evt) =>
             {
-                var from = [...this.$refs.queued.children].indexOf(evt.target);
+                evt.stopPropagation();
+                var li = evt.target.parentNode;
+                var from = [...this.$refs.queued.children].indexOf(li);
+
+                if (from == 0) {
+                    return;
+                }
+
                 this.fireEvent('queue:jump', { from, to: 0 });
             });
         }
