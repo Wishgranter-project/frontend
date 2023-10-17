@@ -133,13 +133,48 @@ class ReproductionControls extends CustomElement
 
         window.player = 
         this.player = this.createPlayer(this.resources[index]);
+
+        if (!this.player) {
+            console.error('Could not instantiate a player');
+            return;
+        }
         
         this.player.appendTo(this.$refs.playerFrame).then(() => 
         {
+            this.setMediaSession(this.resources[index]);
             this.player.play();
             this.player.setVolume(this.settings.getInt('volume', 15));
             console.log('Reproduction: reproducing audio');
         });
+    }
+
+    setMediaSession(resource) 
+    {
+        if (!'mediaSession' in navigator) {
+            return;
+        }
+
+        var { title, artist, album } = this.item;
+
+        artist = Array.isArray(artist) ? artist.join(', ') : artist;
+
+        var mediaMetadata = new MediaMetadata({
+            title,
+            artist,
+            album
+        });
+
+        if (resource.thumbnail) {
+            mediaMetadata.artwork = [
+                {
+                  src: resource.thumbnail,
+                  sizes: '120x90',
+                  type: 'image/jpeg'
+                }
+            ];
+        }
+
+        navigator.mediaSession.metadata = mediaMetadata;
     }
 
     destroyPlayer() 

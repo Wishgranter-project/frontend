@@ -92,6 +92,10 @@ if (isLocalEnvironment()) {
 
 }
 
+if (isset($_GET['refresh'])) {
+    unset($_SESSION['sucessfullyContactedBackEnd']);
+}
+
 $selfBaseHref        = baseHref($selfProtocol, $selfHost, $selfPath, $selfPort);
 $backendBaseHref     = baseHref($backendProtocol, $backendHost, $backendPath, $backendPort);
 
@@ -102,3 +106,4 @@ if (isLocalEnvironment() && empty($_SESSION['sucessfullyContactedBackEnd'])) {
         header('Location: ' . $selfBaseHref);
     }
 }
+
