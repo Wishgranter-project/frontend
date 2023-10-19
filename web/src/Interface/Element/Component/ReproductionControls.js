@@ -1,11 +1,11 @@
 import CustomElement from '../CustomElement';
-import { PlayerYouTube } from 'youtube-wrapper';
-import { PlayerAudio } from 'html-multimedia-wrapper';
+import PlayableYouTube from 'playable-youtube-wrapper';
+import PlayableAudio from 'playable-html-wrapper';
 import Settings from '../../Settings/Settings';
 import PlaylistItem from './PlaylistItem';
 
-customElements.define('player-youtube', PlayerYouTube);
-customElements.define('player-audio', PlayerAudio);
+customElements.define('player-youtube', PlayableYouTube);
+customElements.define('player-audio', PlayableAudio);
 
 class ReproductionControls extends CustomElement 
 {
