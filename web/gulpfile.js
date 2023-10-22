@@ -1,8 +1,9 @@
 const gulp    = require('gulp');
 const rename  = require('gulp-rename');
 const webpack = require('webpack-stream');
+const sass    = require('gulp-sass')(require('sass'));
 
-async function build() 
+async function buildJs() 
 {
     return gulp.src('./src/main.js')
 
@@ -15,5 +16,15 @@ async function build()
     .pipe(gulp.dest('./dist/'));
 }
 
-exports.build = build;
-exports.default = build;
+async function buildCss() 
+{
+    return gulp.src('./scss/styles.scss')
+    
+    .pipe(sass().on('error', sass.logError))
+    
+    .pipe(gulp.dest('./dist/'));
+}
+
+exports.buildJs  = buildJs;
+exports.buildCss = buildCss;
+exports.default  = gulp.series(buildJs, buildCss);

@@ -2,10 +2,6 @@ body {
     overflow: hidden;
 }
 
-div {
-    width: 100%;
-}
-
 .app {
     display: flex;
     flex-direction: column;
@@ -14,9 +10,8 @@ div {
     align-content: space-between;
     width: 100vw;
     height: 100vh;
-}
 
-    .app-middle {
+    &__middle {
         display: flex;
         position: relative;
         flex-grow: 1;
@@ -25,24 +20,25 @@ div {
         margin: 0;
     }
 
-        .app-nav {
-            display: block;
+        .app-navigation {
             width: 200px;
         }
 
-        .app-stage {
+        &__stage {
             overflow: hidden;
             width: calc(100% - 200px);
             height: 100%;
-        }
 
             .view {
                 display: block;
                 overflow: auto;
                 height: 100%;
             }
+        }
 
 
-    .app-footer {
+    &__footer {
         text-align: center;
     }
+
+}

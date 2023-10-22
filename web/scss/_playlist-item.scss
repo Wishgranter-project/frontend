@@ -1,0 +1,55 @@
+.playlist-item {
+    display: flex;
+    align-items: center;
+
+    button {
+        border-color: transparent;
+        border-radius: 0px;
+        color: rgba(255,255,255,0.1);
+        background-color: transparent;
+    }
+
+    &__header {
+        flex-shrink: 1;
+        width: auto;
+    }
+
+    &__body {
+        flex-grow: 10;
+        margin-left: 10px;
+        line-height: 0;
+    }
+
+        &__title {
+            display: block;
+            font-size: 20px;
+            line-height: 26px;
+        }
+
+        &__info {
+            display: inline-block;
+            font-size: 16px;
+            line-height: 20px;
+
+            a:link {
+                color: rgba(255, 255, 255, 0.15);
+            }
+
+            a:hover {
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            .fa {
+                opacity: 0;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+
+    &__footer {
+        width: auto;
+        margin-left: 10px;
+    }
+}

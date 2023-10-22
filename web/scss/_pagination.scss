@@ -1,0 +1,25 @@
+.simple .view-nav {
+    width: 100%;
+}
+
+    .view-nav .btn {
+        flex-grow: 1;
+    }
+
+    .view-nav .btn.view-nav-first,
+    .view-nav .btn.view-nav-last, 
+    .view-nav .btn.view-nav-previous, 
+    .view-nav .btn.view-nav-next {
+        width: 75px;
+        flex-grow: 0;
+    }
+
+    .view-nav .btn.view-nav-previous:last-child, 
+    .view-nav .btn.view-nav-next:first-child {
+        width: 100%;
+    }
+
+    .view-nav .btn.view-nav-current {
+        border-color: #454545;
+        background-color: #454545;
+    }

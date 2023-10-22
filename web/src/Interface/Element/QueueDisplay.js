@@ -5,22 +5,24 @@ class QueueDisplay extends CustomElement
 {
     static elementName = 'queue-display';
 
+    get isOpen() 
+    {
+        return this.classList.contains('is-open')
+    }
+
     constructor() 
     {
         super();
-        this.isOpen = false;
     }
 
     open() 
     {
-        this.isOpen = true;
-        this.classList.add('open');
+        this.classList.add('is-open');
     }
 
     close() 
     {
-        this.isOpen = false;
-        this.classList.remove('open');
+        this.classList.remove('is-open');
     }
 
     toggle() 

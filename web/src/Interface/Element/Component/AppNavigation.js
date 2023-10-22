@@ -1,8 +1,8 @@
 import CustomElement from '../CustomElement';
 
-class NavMenu extends CustomElement 
+class AppNavigation extends CustomElement 
 {
-    static elementName = 'nav-menu';
+    static elementName = 'app-navigation';
 
     __construct(api) 
     {
@@ -12,7 +12,7 @@ class NavMenu extends CustomElement
     render() 
     {
         this.clear();
-        this.classList.add('app-nav');
+        this.classList.add('app-navigation');
 
         this.addGenericNavItem('#home', 'Home', 'fa-chevron-right');
         this.addGenericNavItem('#search', 'Search', 'fa-chevron-right');
@@ -20,11 +20,11 @@ class NavMenu extends CustomElement
 
         this.createAndAttach('hr');
 
-        this.$refs.playlists = this.createAndAttach('div', {class: 'app-nav__playlists'});
+        this.$refs.playlists = this.createAndAttach('div', {class: 'app-navigation__playlists'});
 
         this.createAndAttach('hr');
 
-        this.$refs.artists = this.createAndAttach('div', {class: 'app-nav__artists'});
+        this.$refs.artists = this.createAndAttach('div', {class: 'app-navigation__artists'});
 
         this.updatePlaylists();
         this.updateArtists();
@@ -70,14 +70,14 @@ class NavMenu extends CustomElement
 
     addArtistNavItem(artistName) 
     {
-        this.$refs.artists.createAndAttach('div', {class: 'app-nav__item'},
+        this.$refs.artists.createAndAttach('div', {class: 'app-navigation__item'},
             this.create('a', {href: '#search?artist=' + artistName}, artistName)
         );
     }
 
     addPlaylistNavItem(playlistId, playlistTitle) 
     {
-        this.$refs.playlists.createAndAttach('div', {class: 'app-nav__item'}, [
+        this.$refs.playlists.createAndAttach('div', {class: 'app-navigation__item'}, [
             this.create('a', {href: `#playlist:${playlistId}`, class: 'ellipsis'}, playlistTitle)
         ]);
     }
@@ -93,7 +93,7 @@ class NavMenu extends CustomElement
     {
         var item, a;
 
-        item = this.createAndAttach('div', {class: 'app-nav__item'});
+        item = this.createAndAttach('div', {class: 'app-navigation__item'});
 
         a = href != null 
             ? item.createAndAttach('a', { href }) 
@@ -109,6 +109,6 @@ class NavMenu extends CustomElement
     }
 }
 
-NavMenu.register();
+AppNavigation.register();
 
-export default NavMenu;
+export default AppNavigation;

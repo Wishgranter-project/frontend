@@ -1,0 +1,23 @@
+.app-navigation {
+    display: block;
+
+    border-right: solid 1px #3a3a3a;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .input-group button {
+        flex-grow: 1;
+    }
+
+    &__item {
+        display: flex;
+    }
+
+        a {
+            display: block;
+            padding: 10px;
+            flex-grow: 1;
+        }
+
+}

@@ -1,0 +1,32 @@
+.popup-menu {
+    position: fixed;
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        max-width: 100vw;
+        max-height: 100vh;
+        margin: 0px;
+        overflow: hidden;
+
+        overflow-x: hidden;
+        overflow-y: auto
+    }
+
+        &__item {
+            cursor: pointer;
+            width: 100%;
+            padding: 5px 10px;
+            white-space: nowrap;
+            background-color: #454545;
+
+            &:first-child {
+                border-radius: 3px 3px 0px 0px;
+            }
+    
+            &:last-child {
+                border-radius: 0px 0px 3px 3px;
+            }
+        }
+}

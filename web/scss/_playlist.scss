@@ -1,0 +1,16 @@
+.playlist {
+    
+    .playlist-item {
+        border-bottom: solid 1px #3a3a3a;
+        align-items: stretch;
+
+        &__body {
+            padding: 5px 0px;
+        }
+
+        button, 
+        .popup-button {
+            height: 100%;
+        }
+    }
+}

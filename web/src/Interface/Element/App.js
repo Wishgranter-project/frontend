@@ -1,5 +1,5 @@
 import CustomElement    from './CustomElement';
-import NavMenu          from './Component/NavMenu';
+import AppNavigation    from './Component/AppNavigation';
 import ReproductionControls from './Component/ReproductionControls';
 import ViewWelcome      from './View/Welcome';
 
@@ -39,13 +39,13 @@ class App extends CustomElement
     {
         this.classList.add('app');
 
-        this.$refs.middle = this.createAndAttach('div', {class: 'app-middle'}, [
-            this.$refs.navMenu = NavMenu.instantiate(this.api),
-            this.$refs.stage = this.create('div', {class: 'app-stage', id: 'stage'}),
+        this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
+            this.$refs.navMenu = AppNavigation.instantiate(this.api),
+            this.$refs.stage = this.create('div', {class: 'app__stage', id: 'stage'}),
             this.$refs.queueDisplay = QueueDisplay.instantiate()
         ]);
 
-        this.$refs.footer = this.createAndAttach('div', {class: 'app-footer'}, [
+        this.$refs.footer = this.createAndAttach('div', {class: 'app__footer'}, [
             this.$refs.controls = ReproductionControls.instantiate(this.api)
         ]);
 

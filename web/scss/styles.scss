@@ -1,0 +1,104 @@
+
+@import './_layout.scss';
+@import './_globals.scss';
+@import './_app-navigation.scss';
+@import './_reproduction-controls.scss';
+@import './_playlist-item.scss';
+@import './_playlist.scss';
+@import './_queue-display.scss';
+@import './_header.scss';
+@import './_popup-menu.scss';
+@import './_pagination.scss';
+@import './_popup-button.scss';
+
+.hidden {
+    display: none;
+}
+
+/*--------------------------------------------*/
+
+.app-stage {
+    background-color: #1e1e1e;
+}
+
+.app-footer {
+    border-top: solid 1px #3a3a3a;
+    text-align: left;
+    background-color: #303030;
+}
+
+/*--------------------------------------------*/
+
+.search-header {
+    display: flex;
+    padding: 10px;
+}
+
+    .search-header h1 {
+        margin: 0px 10px 0px 0px;
+    }
+
+    .search-header__form {
+        flex-grow: 1;
+    }
+
+/*--------------------------------------------*/
+
+.card {
+    display: block;
+    height: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    background: #242424;
+}
+
+    .card img {
+        width: 100%;
+        margin: 0px 0px 10px 0px;
+    }
+
+
+.simple .grid.releases {
+    padding: 10px;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
+.simple .grid.artists {
+    padding: 10px;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
+
+.messages ul {
+    list-style: none;    
+}
+
+.messages ul.errors {
+    background-color: red;
+}
+
+.messages ul.successes {
+    background-color: green;
+}
+
+.messages ul.warnings {
+    background-color: orange;
+}
+
+/*--------------------------------------------*/
+
+.modal .modal-content {
+    background-color: #505050;
+}
+
+/*--------------------------------------------*/
+
+.simple .form-group {
+    display: block;
+}
+
+/*--------------------------------------------*/
+
