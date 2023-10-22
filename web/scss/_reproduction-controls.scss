@@ -3,38 +3,38 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 10px;
-}
 
-    .reproduction-controls .playlist-item {
+    .playlist-item {
         margin: 0px;
+        text-align: left;
     }
 
-    .reproduction-controls__not-it {
+    &__not-it {
         margin: 0px 10px;
     }
 
-    .reproduction-controls__timer {
+    &__timer {
         margin: auto 10px auto auto;
         width: 50px;
         font-size: 16px;
         line-height: 16px;
     }
 
-    .reproduction-controls__buttons {
+    &__buttons {
         width: auto;
         margin: 0px;
     }
 
-    .reproduction-controls__volume {
+    &__volume {
         width: 250px;
         margin: auto 0px auto auto;
     }
 
-    .reproduction-controls__button-queue {
+    &__button-queue {
         margin: 0px 0px 0px 10px;
     }
 
-    .reproduction-controls__progress {
+    &__progress {
         width: calc(100% + 20px);
         height: 10px;
         margin: 0px -10px -10px -10px;
@@ -50,3 +50,4 @@
             right: 0px;
             bottom: 0px;
         }
+}

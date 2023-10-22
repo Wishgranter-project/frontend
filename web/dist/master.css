@@ -1084,18 +1084,24 @@ math.div in sass label[for] {
   width: 1.5em;
   height: 1.5em;
 }
-.simple .input-group.input-group-horizontal .main {
-  flex-grow: 1;
-}
 .simple .input-group.input-group-horizontal > input,
 .simple .input-group.input-group-horizontal > textarea,
 .simple .input-group.input-group-horizontal > select,
 .simple .input-group.input-group-horizontal > button,
 .simple .input-group.input-group-horizontal > .btn,
 .simple .input-group.input-group-horizontal > .input-group-text {
+  flex-grow: 1;
   height: auto;
   border-radius: 0px;
   margin-left: -1px;
+}
+.simple .input-group.input-group-horizontal > input.main,
+.simple .input-group.input-group-horizontal > textarea.main,
+.simple .input-group.input-group-horizontal > select.main,
+.simple .input-group.input-group-horizontal > button.main,
+.simple .input-group.input-group-horizontal > .btn.main,
+.simple .input-group.input-group-horizontal > .input-group-text.main {
+  flex-grow: 1000;
 }
 .simple .input-group.input-group-horizontal > input:first-child,
 .simple .input-group.input-group-horizontal > textarea:first-child,
@@ -1192,6 +1198,7 @@ math.div in sass label[for] {
 #*** FORM GROUP
 #************************************/
 .simple .form-group {
+  display: block;
   margin-bottom: 20px;
 }
 .simple .form-group > label {

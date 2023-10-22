@@ -9,38 +9,17 @@
 @import './_header.scss';
 @import './_popup-menu.scss';
 @import './_pagination.scss';
+@import './_search-header.scss';
 @import './_popup-button.scss';
+@import './_view--playlist.scss';
+@import './_view--release.scss';
+@import './_view--search.scss';
+@import './_view--releases.scss';
+@import './_view--artists.scss';
 
 .hidden {
     display: none;
 }
-
-/*--------------------------------------------*/
-
-.app-stage {
-    background-color: #1e1e1e;
-}
-
-.app-footer {
-    border-top: solid 1px #3a3a3a;
-    text-align: left;
-    background-color: #303030;
-}
-
-/*--------------------------------------------*/
-
-.search-header {
-    display: flex;
-    padding: 10px;
-}
-
-    .search-header h1 {
-        margin: 0px 10px 0px 0px;
-    }
-
-    .search-header__form {
-        flex-grow: 1;
-    }
 
 /*--------------------------------------------*/
 
@@ -92,12 +71,6 @@
 
 .modal .modal-content {
     background-color: #505050;
-}
-
-/*--------------------------------------------*/
-
-.simple .form-group {
-    display: block;
 }
 
 /*--------------------------------------------*/

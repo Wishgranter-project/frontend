@@ -7,6 +7,7 @@ class DiscoverArtists extends ViewElement
 
     async render() 
     {
+        this.classList.add('view--artists');
         this.fetch().then((response) =>
         {
             this.renderHeader(response);
@@ -23,10 +24,17 @@ class DiscoverArtists extends ViewElement
 
     renderHeader(response) 
     {
-        var header = SearchHeader.instantiate(this.request, 'Discover artist', [
-            {type: 'search', name: 'name', placeholder: 'name', class: 'main'}
+        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
+            this.$refs.headerH = this.create('div', { class: 'header__header' }),
+            this.$refs.headerB = this.create('div', { class: 'header__body' }),
+            this.$refs.headerF = this.create('div', { class: 'header__footer' })
         ]);
-        this.append(header);
+
+        this.$refs.headerH.createAndAttach('h1', null, 'Discover artist');
+
+        this.$refs.headerB.append(SearchHeader.instantiate(this.request, '', [
+            {type: 'search', name: 'name', placeholder: 'Name', class: 'main'},
+        ]));
     }
 
     async renderArtists(response) 

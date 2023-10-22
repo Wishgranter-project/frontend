@@ -1,7 +1,6 @@
-.playlist {
-    
+.playlist {    
     .playlist-item {
-        border-bottom: solid 1px #3a3a3a;
+        border-top: solid 1px #272727;
         align-items: stretch;
 
         &__body {
@@ -12,5 +11,9 @@
         .popup-button {
             height: 100%;
         }
+    }
+
+    .playlist-item + .playlist-item {
+        margin-top: -1px;
     }
 }

@@ -28,6 +28,7 @@ body {
             overflow: hidden;
             width: calc(100% - 200px);
             height: 100%;
+            background-color: #303030;
 
             .view {
                 display: block;
@@ -38,7 +39,9 @@ body {
 
 
     &__footer {
+        border-top: solid 1px #242424;
         text-align: center;
+        background-color: #363636;
     }
 
 }

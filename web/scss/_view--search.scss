@@ -1,0 +1,14 @@
+.view--search {
+    .header {
+        &__head {
+            h1 {
+                margin: 0px;
+            }
+        }
+
+        &__body {
+            flex-grow: 1;
+            padding: 0px 0px 0px 10px;
+        }
+    }
+}

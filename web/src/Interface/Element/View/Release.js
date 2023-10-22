@@ -9,6 +9,8 @@ class Release extends ViewElement
 
     async render() 
     {
+        this.classList.add('view--release');
+
         this.api.discover.releases.get(this.request.attributes.releaseId).getTracks().then((response) =>
         {
             this.subRenderHeader(response);

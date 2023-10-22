@@ -1,0 +1,28 @@
+.view--playlist {
+    .header {
+
+        h1, 
+        h3 {
+            margin: 0px;
+        }
+
+        &__body {
+            flex-grow: 1;
+
+            .search-header {
+                height: 100%;
+                padding: 0px 10px;
+
+                .input-group {
+                    height: 100%;
+                }
+            }
+        }
+
+        &__footer {
+            .button-group {
+                height: 100%;
+            }
+        }
+    }
+}

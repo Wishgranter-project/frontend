@@ -10,6 +10,8 @@ class Search extends Playlist
 
     async render() 
     {
+        this.classList.add('view--search');
+
         this.fetch().then((response) =>
         {
             this.subRenderHeader(response);
@@ -29,7 +31,15 @@ class Search extends Playlist
 
     subRenderHeader(response) 
     {
-        this.append(SearchHeader.instantiate(this.request, 'Search', [
+        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
+            this.$refs.headerH = this.create('div', { class: 'header__header' }),
+            this.$refs.headerB = this.create('div', { class: 'header__body' }),
+            this.$refs.headerF = this.create('div', { class: 'header__footer' })
+        ]);
+
+        this.$refs.headerH.createAndAttach('h1', null, 'Search');
+
+        this.$refs.headerB.append(SearchHeader.instantiate(this.request, '', [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
             {type: 'search', name: 'artist', placeholder: 'Artist'},
             {type: 'search', name: 'genre', placeholder: 'Genre'}

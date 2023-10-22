@@ -1,7 +1,8 @@
 .popup-menu {
     position: fixed;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 
-    .popup-menu__list {
+    &__list {
         display: flex;
         flex-direction: column;
         width: auto;
@@ -14,19 +15,23 @@
         overflow-y: auto
     }
 
-        .popup-menu__item {
+        &__item {
             cursor: pointer;
             width: 100%;
             padding: 5px 10px;
             white-space: nowrap;
             background-color: #454545;
+
+            &:hover {
+                background-color: #2f2f2f;
+            }
         }
 
-        .popup-menu__item:first-child {
+        &__item:first-child {
             border-radius: 3px 3px 0px 0px;
         }
 
-        .popup-menu__item:last-child {
+        &__item:last-child {
             border-radius: 0px 0px 3px 3px;
         }
 

@@ -1,23 +1,31 @@
 .app-navigation {
     display: block;
 
+    padding: 0px 0px 0px 5px;
     border-right: solid 1px #3a3a3a;
     overflow: auto;
     overflow-x: hidden;
     overflow-y: auto;
 
-    .input-group button {
-        flex-grow: 1;
+    background-color: #272727;
+
+    hr {
+        border-top: solid 1px #232323;
+        margin: 0px;
     }
 
     &__item {
         display: flex;
+
+        &:hover {
+            background-color: #2f2f2f;
+        }
     }
 
-        a {
-            display: block;
-            padding: 10px;
-            flex-grow: 1;
-        }
+    a {
+        display: block;
+        padding: 10px;
+        flex-grow: 1;
+    }
 
 }

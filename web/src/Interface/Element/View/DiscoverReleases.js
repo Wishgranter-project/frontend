@@ -8,6 +8,8 @@ class DiscoverReleases extends ViewElement
 
     async render() 
     {
+        this.classList.add('view--releases');
+
         this.api.discover.releases.search(this.request.queryParams).then((response) =>
         {
             this.renderHeader(response);
@@ -18,10 +20,17 @@ class DiscoverReleases extends ViewElement
 
     renderHeader(response) 
     {
-        var header = SearchHeader.instantiate(this.request, 'Discover albums', [
-            {type: 'search', name: 'artist', placeholder: 'artist', class: 'main'}
+        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
+            this.$refs.headerH = this.create('div', { class: 'header__header' }),
+            this.$refs.headerB = this.create('div', { class: 'header__body' }),
+            this.$refs.headerF = this.create('div', { class: 'header__footer' })
         ]);
-        this.append(header);
+
+        this.$refs.headerH.createAndAttach('h1', null, 'Discover albums');
+
+        this.$refs.headerB.append(SearchHeader.instantiate(this.request, '', [
+            {type: 'search', name: 'artist', placeholder: 'Artist', class: 'main'},
+        ]));
     }
 
     async renderReleases(response) 

@@ -12,6 +12,8 @@ class Playlist extends ViewElement
 
     async render() 
     {
+        this.classList.add('view--playlist');
+
         await this.fetchPlaylist().then((response) =>
         {
             return this.subRenderHeader(response);
@@ -55,9 +57,9 @@ class Playlist extends ViewElement
             this.$refs.headerF = this.create('div', { class: 'header__footer' })
         ]);
 
-        this.$refs.headerB.createAndAttach('h1', null, response.data.title);
+        this.$refs.headerH.createAndAttach('h1', null, response.data.title);
         if (response.data.description) {
-            this.$refs.headerB.createAndAttach('h3', null, response.data.description);
+            this.$refs.headerH.createAndAttach('h3', null, response.data.description);
         }
 
         this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, [
@@ -81,7 +83,7 @@ class Playlist extends ViewElement
             this.fireEvent('delete-playlist', { playlist: this.request.attributes.playlistId });
         });
 
-        this.append(SearchHeader.instantiate(this.request, '', [
+        this.$refs.headerB.append(SearchHeader.instantiate(this.request, '', [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
             {type: 'search', name: 'artist', placeholder: 'Artist'},
             {type: 'search', name: 'genre', placeholder: 'Genre'}
