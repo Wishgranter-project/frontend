@@ -15,17 +15,34 @@
     }
 
     &__item {
-        display: flex;
+        display: block;
 
-        &:hover {
-            background-color: #2f2f2f;
+        a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+
+            .label {
+                display: inline-block;
+                flex-grow: 1;
+            }
+
+            .badge {
+                display: inline-block;
+                padding: 3px 5px;
+                border-radius: 50px;
+                font-size: 12px;
+                color: #fff;
+                background-color: #1e1e1e;
+            }
+
+            .fa {
+                margin: 0px 10px 0px 0px;
+            }
+
+            &:hover {
+                background-color: #2f2f2f;
+            }
         }
     }
-
-    a {
-        display: block;
-        padding: 10px;
-        flex-grow: 1;
-    }
-
 }

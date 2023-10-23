@@ -14,9 +14,9 @@ class AppNavigation extends CustomElement
         this.clear();
         this.classList.add('app-navigation');
 
-        this.addGenericNavItem('#home', 'Home', 'fa-chevron-right');
-        this.addGenericNavItem('#search', 'Search', 'fa-chevron-right');
-        this.addGenericNavItem('#discover:artist', 'Discover', 'fa-chevron-right');
+        this.addGenericNavItem('#home', 'Home', 'fa-home');
+        this.addGenericNavItem('#search', 'Search', 'fa-search');
+        this.addGenericNavItem('#discover:artist', 'Discover', 'fa fa-search-plus');
 
         this.createAndAttach('hr');
 
@@ -62,16 +62,19 @@ class AppNavigation extends CustomElement
     {
         this.api.collection.artists.list().then((response) => 
         {
-            for (var artist of response.data) {
-                this.addArtistNavItem(artist);
+            for (var artist in response.data) {
+                this.addArtistNavItem(artist, response.data[artist]);
             }
         });
     }
 
-    addArtistNavItem(artistName) 
+    addArtistNavItem(artistName, count) 
     {
         this.$refs.artists.createAndAttach('div', {class: 'app-navigation__item'},
-            this.create('a', {href: '#search?artist=' + artistName}, artistName)
+            this.create('a', {href: '#search?artist=' + artistName}, [
+                this.create('span', {class: 'label'}, artistName),
+                this.create('span', {class: 'badge'}, count)
+            ])
         );
     }
 
