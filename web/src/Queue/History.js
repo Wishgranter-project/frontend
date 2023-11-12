@@ -24,7 +24,9 @@ class History extends Array
 
     rewind(length = 1) 
     {
-        return this.splice(0, length);
+        var first = this.splice(0, length);
+        this.updatedCallback();
+        return first;
     }
 
     //-------------------

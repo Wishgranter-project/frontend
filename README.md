@@ -70,7 +70,8 @@ List of features and status of implemenetation.
 :heavy_check_mark: Pause/play.  
 :heavy_check_mark: Queue is automatically filled based on context.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: When an item is selected from a playlist.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: When an item is selected from an album.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:heavy_check_mark: When an item is selected from an album. 
+:heavy_check_mark: Queue content and previous items are saved and survive refreshing the page.   
 :heavy_check_mark: ability to add current playing item into playlist.  
 :heavy_check_mark: Control reproduction volume.  
 :x: Keyboard shortcuts.  

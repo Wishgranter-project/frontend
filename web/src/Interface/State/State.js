@@ -1,4 +1,4 @@
-class Settings 
+class State 
 {
     constructor(name, data = null) 
     {
@@ -46,4 +46,4 @@ class Settings
     }
 }
 
-export default Settings;
+export default State;

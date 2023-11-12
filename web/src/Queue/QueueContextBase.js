@@ -12,6 +12,26 @@ class QueueContextBase
         this.noMore = false;
     }
 
+    static id() 
+    {
+        return 'base';
+    }
+
+    // To help us serialize the object.
+    serialize() 
+    {
+        return {
+            id: QueueContextBase.id(),
+            noMore: this.noMore
+        };
+    }
+
+    static unserialize(api, obj) 
+    {
+        var context = new QueueContextBase(api);
+        return context;
+    }
+
     /**
      * make whatever calculations may be needed to reach in
      * preparation to fetch more items.

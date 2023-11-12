@@ -104,8 +104,15 @@ class Queue extends Array
             return this.fetchingPromise;
         }
 
+        if (!this.context) {
+            return new Promise((success, fail) => 
+            {
+                success([]);
+            });
+        }
+
         return this.fetchingPromise = 
-               this.context.fetchMore(this).then( (response) => 
+        this.context.fetchMore(this).then( (response) => 
         {
             this.fetchingPromise = null;
 

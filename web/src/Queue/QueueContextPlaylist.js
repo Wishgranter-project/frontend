@@ -8,6 +8,28 @@ class QueueContextPlaylist extends QueueContextSearch
         this.playlistId = playlistId;
     }
 
+    static id() 
+    {
+        return 'playlist';
+    }
+
+    serialize() 
+    {
+        return {
+            id: QueueContextPlaylist.id(),
+            noMore: this.noMore,
+            queryParams: (this.queryParams ? this.queryParams.toString() : ''),
+            playlistId: this.playlistId
+        };
+    }
+
+    static unserialize(api, obj) 
+    {
+        var context = new QueueContextPlaylist(api, new URLSearchParams(obj.queryParams), obj.playlistId);
+        context.noMore = obj.noMore;
+        return context;
+    }
+
     async request(queue) 
     {
         return this.api.collection.playlists

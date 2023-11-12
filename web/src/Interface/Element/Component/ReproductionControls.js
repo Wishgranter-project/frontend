@@ -1,7 +1,7 @@
 import CustomElement from '../CustomElement';
 import PlayableYouTube from 'playable-youtube-wrapper';
 import PlayableAudio from 'playable-html-wrapper';
-import Settings from '../../Settings/Settings';
+import State from '../../State/State';
 import PlaylistItem from './PlaylistItem';
 
 customElements.define('player-youtube', PlayableYouTube);
@@ -11,14 +11,15 @@ class ReproductionControls extends CustomElement
 {
     static elementName = 'reproduction-controls';
 
-    __construct(api, item = null, resources = null) 
+    __construct(api, item = null, resources = null, autoPlay = true) 
     {
         this.api       = api;
         this.item      = item;
         this.resources = resources;
         this.index     = 0;
         this.player    = null;
-        this.settings  = new Settings('controls.settings');
+        this.state     = new State('controls.state');
+        this.autoPlay  = autoPlay;
     }
 
     render() 
@@ -48,7 +49,7 @@ class ReproductionControls extends CustomElement
             console.log('Reproduction: paused');
         });
 
-        this.playResource();
+        this.setupResource(0, this.autoPlay);
     }
 
     subRenderItem() 
@@ -94,7 +95,7 @@ class ReproductionControls extends CustomElement
     subRenderVolume() 
     {
         this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
-        this.$refs.volumeControl.value = this.settings.getInt('volume', 15);
+        this.$refs.volumeControl.value = this.state.getInt('volume', 15);
         this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
     }
 
@@ -113,6 +114,12 @@ class ReproductionControls extends CustomElement
         this.$refs.progress.addEventListener('click', this.seek.bind(this));
     }
 
+    remove() 
+    {
+        this.destroyPlayer();
+        return super.remove();
+    }
+
     notIt() 
     {
         if (!this.resources[this.index + 1]) {
@@ -129,6 +136,11 @@ class ReproductionControls extends CustomElement
 
     playResource(index = 0) 
     {
+        this.setupResource(index, true);
+    }
+
+    setupResource(index = 0, play = true) 
+    {
         console.log('Reproduction: booting player');
 
         window.player = 
@@ -142,8 +154,10 @@ class ReproductionControls extends CustomElement
         this.player.appendTo(this.$refs.playerFrame).then(() => 
         {
             this.setMediaSession(this.resources[index]);
-            this.player.play();
-            this.player.setVolume(this.settings.getInt('volume', 15));
+            if (play) {
+                this.player.play();
+            }
+            this.player.setVolume(this.state.getInt('volume', 15));
             console.log('Reproduction: reproducing audio');
         });
     }
@@ -235,7 +249,7 @@ class ReproductionControls extends CustomElement
     dialVolume(evt) 
     {
         var volume = evt.target.value;
-        this.settings.set('volume', volume);
+        this.state.set('volume', volume);
 
         if (!this.player) {
             return;

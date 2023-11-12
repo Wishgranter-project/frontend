@@ -8,6 +8,27 @@ class QueueContextSearch extends QueueContextBase
         this.queryParams = queryParams;
     }
 
+    static id() 
+    {
+        return 'search';
+    }
+
+    serialize() 
+    {
+        return {
+            id: QueueContextSearch.id(),
+            noMore: this.noMore,
+            queryParams: (this.queryParams ? this.queryParams.toString() : ''),
+        };
+    }
+
+    static unserialize(api, obj) 
+    {
+        var context = new QueueContextSearch(api, new URLSearchParams(obj.queryParams));
+        context.noMore = obj.noMore;
+        return context;
+    }
+
     progress() 
     {
         var page = parseInt(this.queryParams.get('page') || 1) + 1;
