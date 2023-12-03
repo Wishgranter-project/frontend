@@ -1,12 +1,11 @@
 import CustomElement from '../../CustomElement';
 
-class PopupMenuItem extends CustomElement 
+class FloatMenuItem extends CustomElement 
 {
-    static elementName = 'popup-menuitem';
+    static elementName = 'float-menu-item';
 
-    __construct(parentMenu, title, helpText, icon, onClick) 
+    __construct(title, helpText, icon, onClick) 
     {
-        this.parentMenu = parentMenu;
         this.title      = title;
         this.helpText   = helpText;
         this.icon       = icon;
@@ -15,17 +14,17 @@ class PopupMenuItem extends CustomElement
     
     render() 
     {
-        this.classList.add('popup-menu__item');
+        this.classList.add('float-menu__item');
         this.$refs.body = this.createAndAttach('div', {title: this.helpText}, this.title);
-        this.addEventListener('click', this.onClick);
         this.addEventListener('click', (evt) => 
         {
             evt.stopPropagation();
-            this.parentMenu.close();
+            this.onClick();
+            this.fireEvent('float-menu-item:selected');
         });
     }
 }
 
-PopupMenuItem.register();
+FloatMenuItem.register();
 
-export default PopupMenuItem;
+export default FloatMenuItem;

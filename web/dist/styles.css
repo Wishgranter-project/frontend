@@ -290,11 +290,11 @@ div {
   height: 100%;
 }
 
-.popup-menu {
+.float-menu {
   position: fixed;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
-.popup-menu__list {
+.float-menu__list {
   display: flex;
   flex-direction: column;
   width: auto;
@@ -305,20 +305,20 @@ div {
   overflow-x: hidden;
   overflow-y: auto;
 }
-.popup-menu__item {
+.float-menu__item {
   cursor: pointer;
   width: 100%;
   padding: 5px 10px;
   white-space: nowrap;
   background-color: #454545;
 }
-.popup-menu__item:hover {
+.float-menu__item:hover {
   background-color: #2f2f2f;
 }
-.popup-menu__item:first-child {
+.float-menu__item:first-child {
   border-radius: 3px 3px 0px 0px;
 }
-.popup-menu__item:last-child {
+.float-menu__item:last-child {
   border-radius: 0px 0px 3px 3px;
 }
 
@@ -350,34 +350,6 @@ div {
 
 .search-header {
   display: block;
-}
-
-.popup-menu {
-  position: fixed;
-}
-.popup-menu__list {
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  max-width: 100vw;
-  max-height: 100vh;
-  margin: 0px;
-  overflow: hidden;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.popup-menu__item {
-  cursor: pointer;
-  width: 100%;
-  padding: 5px 10px;
-  white-space: nowrap;
-  background-color: #454545;
-}
-.popup-menu__item:first-child {
-  border-radius: 3px 3px 0px 0px;
-}
-.popup-menu__item:last-child {
-  border-radius: 0px 0px 3px 3px;
 }
 
 .view--playlist .header h1,

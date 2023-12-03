@@ -1,5 +1,6 @@
 import CustomElement from '../CustomElement';
-import PopupButton from './PopupMenu/PopupButton';
+//import PopupButton from './PopupMenu/PopupButton';
+import FloatMenu from './FloatMenu/FloatMenu';
 
 class PlaylistItem extends CustomElement 
 {
@@ -7,24 +8,10 @@ class PlaylistItem extends CustomElement
 
     __construct(item = {}, options = {}) 
     {
-        this.item = item;
+        PlaylistItem.sanitizeItem(item);
+        this.item    = item;
         this.options = options;
-
-        if (!this.item.artist) {
-            this.item.artist = [];
-        } else {
-            this.item.artist = Array.isArray(this.item.artist)
-                ? this.item.artist
-                : [this.item.artist];
-        }
-
-        if (!this.item.soundtrack) {
-            this.item.soundtrack = [];
-        } else {
-            this.item.soundtrack = Array.isArray(this.item.soundtrack)
-                ? this.item.soundtrack
-                : [this.item.soundtrack];
-        }
+        this.actions = this.getContextActions();
     }
 
     render() 
@@ -80,45 +67,88 @@ class PlaylistItem extends CustomElement
 
     subRenderFooter() 
     {
-        this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});
+        this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});       
 
-        var actions = [];
-
-        actions.push({
-            title: 'Add to playlist',
-            helpText: 'choose a playlist',
-            icon: 'fa-plus',
-            onClick: () => 
-            {
-                this.fireEvent('item-to-add', {
-                    items: [ this.item ]
-                });
-            }
+        this.addEventListener('contextmenu', (evt) => 
+        {
+            evt.preventDefault();
+            this.openContextMenu(evt);
         });
 
-        if (this.item.uuid) {
-            actions.push({
-                title: 'Edit item',
-                helpText: '',
-                icon: 'fa-pencil',
-                onClick: () => 
-                {
-                    this.fireEvent('edit-item', {uuid: this.item.uuid})
-                }
-            });
+        this.$refs.popupButton = this.$refs.footer.createAndAttach('button', null, this.create('span', { class: 'fa fa-ellipsis-v' }));
+        this.$refs.popupButton.addEventListener('click', (evt) => 
+        {
+            evt.stopPropagation();
+            this.openContextMenu(evt)
+        });
+    }
 
-            actions.push({
-                title: 'Remove item',
-                helpText: '',
-                icon: 'fa-times',
+    getContextActions() 
+    {
+        var actions = {
+            addToPlaylist: {
+                title: 'Add to playlist',
+                helpText: 'choose a playlist',
+                icon: 'fa-plus',
                 onClick: () => 
                 {
-                    this.fireEvent('delete-item', {uuid: this.item.uuid});
+                    this.fireEvent('item-to-add', {
+                        items: [ this.item ]
+                    });
                 }
-            });
+            }
         }
 
-        this.$refs.popupButton = this.$refs.footer.attach(PopupButton.instantiate(actions));
+        if (!this.item.uuid) {
+            return actions;
+        }
+
+        actions.editItem = {
+            title: 'Edit item',
+            helpText: '',
+            icon: 'fa-pencil',
+            onClick: () => 
+            {
+                this.fireEvent('edit-item', {uuid: this.item.uuid})
+            }
+        };
+
+        actions.removeItem = {
+            title: 'Remove item',
+            helpText: '',
+            icon: 'fa-times',
+            onClick: () => 
+            {
+                this.fireEvent('delete-item', {uuid: this.item.uuid});
+            }
+        };
+
+        return actions;
+    }
+
+    openContextMenu(evt) 
+    {
+        var menu = FloatMenu.instantiate(this.actions);
+        this.append(menu);
+        menu.open(evt, evt.clientX, evt.clientY);
+    }
+
+    static sanitizeItem(item) {
+        if (!item.artist) {
+            item.artist = [];
+        } else {
+            item.artist = Array.isArray(item.artist)
+                ? item.artist
+                : [item.artist];
+        }
+
+        if (!item.soundtrack) {
+            item.soundtrack = [];
+        } else {
+            item.soundtrack = Array.isArray(item.soundtrack)
+                ? item.soundtrack
+                : [item.soundtrack];
+        }
     }
 }
 

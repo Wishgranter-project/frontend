@@ -59,6 +59,7 @@ class QueueDisplay extends CustomElement
 
         for (var i = 0; i < queue.length; i++) {
             item = PlaylistItem.instantiate(queue[i]);
+            this.addContextMenuItems(item, queue, i);
             this.$refs.queued.createAndAttach('li', null, item).addEventListener('item-selected', (evt) =>
             {
                 evt.stopPropagation();
@@ -72,6 +73,19 @@ class QueueDisplay extends CustomElement
                 this.fireEvent('queue:jump', { from, to: 0 });
             });
         }
+    }
+
+    addContextMenuItems(item, queue, i) 
+    {
+        item.actions.removeFromQueue = {
+            title: 'Remove from queue',
+            helpText: 'remove',
+            icon: 'fa-minus',
+            onClick: () =>
+            {
+                queue.removeIndex(i);
+            }
+        };
     }
 }
 

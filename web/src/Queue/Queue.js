@@ -35,6 +35,14 @@ class Queue extends Array
         return previousFrontOfTheLine;
     }
 
+    removeIndex(index) 
+    {
+        var removedItem = this[index];
+        this.splice(index, 1);
+        this.updatedCallback();
+        return removedItem;
+    }
+
     /**
      * Adds a new item to the very beginning of the queue.
      *
