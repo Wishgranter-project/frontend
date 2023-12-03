@@ -50,6 +50,7 @@ class App extends CustomElement
         this.addEventListener('controls:forward', this.forwardTheQueue.bind(this));
         this.addEventListener('controls:backward', this.rewindTheQueue.bind(this));
         this.addEventListener('queue:jump', this.onJumpLine.bind(this));
+        this.addEventListener('play-item-next', this.onPlayNext.bind(this));
     }
 
     saveHistory(history) 
@@ -273,6 +274,16 @@ class App extends CustomElement
 
         if (to == 0) {
             this.playItem(target);
+        }
+    }
+
+    onPlayNext(evt) 
+    {
+        var { item } = evt.detail;
+        if (this.queue.length == 0) {
+            this.playItem(item)
+        } else {
+            this.queue.jump(item, 1);
         }
     }
 

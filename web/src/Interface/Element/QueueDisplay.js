@@ -86,6 +86,18 @@ class QueueDisplay extends CustomElement
                 queue.removeIndex(i);
             }
         };
+
+        if (i > 1) {
+            item.actions.playNext = {
+                title: 'Play next',
+                helpText: 'play next',
+                icon: 'fa-minus',
+                onClick: () =>
+                {
+                    queue.move(i, 1);
+                }
+            };
+        }
     }
 }
 

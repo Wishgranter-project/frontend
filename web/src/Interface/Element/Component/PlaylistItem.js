@@ -123,6 +123,16 @@ class PlaylistItem extends CustomElement
             }
         };
 
+        actions.playNext = {
+            title: 'Play next',
+            helpText: 'play next',
+            icon: 'fa-minus',
+            onClick: () =>
+            {
+                this.fireEvent('play-item-next', {item: this.item});
+            }
+        };
+
         return actions;
     }
 

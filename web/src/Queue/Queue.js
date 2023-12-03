@@ -20,6 +20,12 @@ class Queue extends Array
         return queue;
     }
 
+    jump(item, index = 1) 
+    {
+        this.splice(index, 0, item);
+        this.updatedCallback();
+    }
+
     enqueue(item) 
     {
         Array.isArray(item)

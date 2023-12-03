@@ -27,6 +27,7 @@ List of features and status of implemenetation.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: Among all the playlists.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: In individual playlists.  
 :heavy_check_mark: Delete existing items.  
+:x: Change order of items inside playlists.  
 
 ## Navigability
 
@@ -68,6 +69,7 @@ List of features and status of implemenetation.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: Ability of jumping a selected item to the front of the queue.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: Ability of removing specific items from the queue.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: Ability of adding queue and story items into playlists.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: Ability of adding items to the haphazardly.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: Queue automatically fetches more items based on context.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: From playlist.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: From search results.  
