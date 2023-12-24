@@ -53,11 +53,13 @@ class QueueDisplay extends CustomElement
         this.$refs.queued.clear();
 
         for (var i = history.length -1; i >= 0; i--) {
+            if (!history[i]) { continue; }
             item = PlaylistItem.instantiate(history[i]);
             this.$refs.history.createAndAttach('li', null, item);
         }
 
         for (var i = 0; i < queue.length; i++) {
+            if (!queue[i]) { continue; }
             item = PlaylistItem.instantiate(queue[i]);
             this.addContextMenuItems(item, queue, i);
             this.$refs.queued.createAndAttach('li', null, item).addEventListener('item-selected', (evt) =>
