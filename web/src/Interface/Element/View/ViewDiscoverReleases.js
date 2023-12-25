@@ -1,8 +1,8 @@
-import ViewElement from './ViewElement';
+import BaseView from './BaseView';
 import SearchHeader from '../Component/SearchHeader';
 import Pagination from '../Component/Pagination';
 
-class DiscoverReleases extends ViewElement 
+class ViewDiscoverReleases extends BaseView 
 {
     static elementName = 'view-discography';
 
@@ -53,6 +53,6 @@ class DiscoverReleases extends ViewElement
     }    
 }
 
-DiscoverReleases.register();
+ViewDiscoverReleases.register();
 
-export default DiscoverReleases;
+export default ViewDiscoverReleases;

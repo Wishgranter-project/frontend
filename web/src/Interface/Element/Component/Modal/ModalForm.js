@@ -1,7 +1,7 @@
 import Modal from './Modal';
 
-import Messages from './Messages';
-import FormElent from './Form/FormElent';
+import Messages from '../Messages';
+import FormElent from '../Form/FormElent';
 
 class ModalForm extends Modal 
 {

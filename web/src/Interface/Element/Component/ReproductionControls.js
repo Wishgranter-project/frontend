@@ -1,7 +1,7 @@
 import CustomElement from '../CustomElement';
 import PlayableYouTube from 'playable-youtube-wrapper';
 import PlayableAudio from 'playable-html-wrapper';
-import State from '../../State/State';
+import State from '../../../State/State';
 import PlaylistItem from './PlaylistItem';
 
 customElements.define('player-youtube', PlayableYouTube);

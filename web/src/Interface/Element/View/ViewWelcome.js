@@ -1,6 +1,6 @@
-import ViewElement from './ViewElement';
+import BaseView from './BaseView';
 
-class Welcome extends ViewElement 
+class ViewWelcome extends BaseView 
 {
     static elementName = 'view-welcome';
 
@@ -12,6 +12,6 @@ class Welcome extends ViewElement
     }
 }
 
-Welcome.register();
+ViewWelcome.register();
 
-export default Welcome;
+export default ViewWelcome;

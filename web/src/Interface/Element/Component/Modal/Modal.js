@@ -1,4 +1,4 @@
-import CustomElement from '../CustomElement';
+import CustomElement from '../../CustomElement';
 
 class Modal extends CustomElement 
 {

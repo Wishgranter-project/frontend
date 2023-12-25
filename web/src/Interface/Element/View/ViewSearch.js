@@ -1,10 +1,10 @@
 import SearchHeader from '../Component/SearchHeader';
-import Playlist from './Playlist';
+import ViewPlaylist from './ViewPlaylist';
 import PlaylistItem from '../Component/PlaylistItem';
 import QueueContextSearch from '../../../Queue/QueueContextSearch';
 import Queue from '../../../Queue/Queue';
 
-class Search extends Playlist 
+class ViewSearch extends ViewPlaylist 
 {
     static elementName = 'view-search';
 
@@ -75,6 +75,6 @@ class Search extends Playlist
     }
 }
 
-Search.register();
+ViewSearch.register();
 
-export default Search;
+export default ViewSearch;

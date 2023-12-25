@@ -1,9 +1,9 @@
-import ViewElement from './ViewElement';
+import BaseView from './BaseView';
 import PlaylistItem from '../Component/PlaylistItem';
 import QueueContextRelease from '../../../Queue/QueueContextRelease';
 import Queue from '../../../Queue/Queue';
 
-class Release extends ViewElement 
+class ViewRelease extends BaseView 
 {
     static elementName = 'view-release';
 
@@ -89,6 +89,6 @@ class Release extends ViewElement
     }
 }
 
-Release.register();
+ViewRelease.register();
 
-export default Release;
+export default ViewRelease;

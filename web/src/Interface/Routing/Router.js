@@ -4,7 +4,7 @@ import Request from './Request';
 class Router 
 {
     /**
-     * @param HTMLElement stage 
+     * @param {HTMLElement} stage 
      */
     constructor(stage = null) 
     {
@@ -13,7 +13,7 @@ class Router
     }
 
     /**
-     * @param HTMLElement stage 
+     * @param {HTMLElement} stage 
      */
     setStage(stage) 
     {
@@ -52,7 +52,7 @@ class Router
     }
 
     /**
-     * @param HTMLElement element 
+     * @param {HTMLElement} element 
      */
     stageIt(element) 
     {
@@ -60,10 +60,10 @@ class Router
     }
 
     /**
-     * @param Route route 
-     * @param Request request 
+     * @param {Route} route 
+     * @param {Request} request 
      * 
-     * @returns HTMLElement
+     * @return {HTMLElement}
      */
     call(route, request) 
     {
@@ -71,9 +71,9 @@ class Router
     }
 
     /**
-     * @param Request request 
+     * @param {Request} request 
      * 
-     * @returns Route
+     * @return {Route}
      */
     getMatchingRoute(request) 
     {
@@ -87,10 +87,10 @@ class Router
     }
 
     /**
-     * @param RegExp pattern 
-     * @param callable callback
+     * @param {RegExp} pattern 
+     * @param {callable} callback
      * 
-     * @returns this
+     * @return this
      */
     addRouter(pattern, callback) 
     {

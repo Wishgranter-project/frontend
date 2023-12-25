@@ -1,6 +1,6 @@
 import ModalForm from './ModalForm';
 
-import FormElent from './Form/FormElent';
+import FormElent from '../Form/FormElent';
 
 class ModalItemAdd extends ModalForm 
 {

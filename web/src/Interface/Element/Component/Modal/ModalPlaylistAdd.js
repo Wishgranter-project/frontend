@@ -1,6 +1,6 @@
 import ModalItemAdd from './ModalItemAdd';
 
-import FormElent from './Form/FormElent';
+import FormElent from '../Form/FormElent';
 
 class ModalPlaylistAdd extends ModalItemAdd 
 {

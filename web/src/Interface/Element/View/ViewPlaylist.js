@@ -1,4 +1,4 @@
-import ViewElement from './ViewElement';
+import BaseView from './BaseView';
 import PlaylistItem from '../Component/PlaylistItem';
 import SearchHeader from '../Component/SearchHeader';
 import Pagination from '../Component/Pagination';
@@ -6,7 +6,7 @@ import Events from '../../../Helper/Events';
 import QueueContextPlaylist from '../../../Queue/QueueContextPlaylist';
 import Queue from '../../../Queue/Queue';
 
-class Playlist extends ViewElement 
+class ViewPlaylist extends BaseView 
 {
     static elementName = 'view-playlist';
 
@@ -133,6 +133,6 @@ class Playlist extends ViewElement
     }
 }
 
-Playlist.register();
+ViewPlaylist.register();
 
-export default Playlist;
+export default ViewPlaylist;

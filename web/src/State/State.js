@@ -4,11 +4,7 @@ class State
     {
         this.name = name;
 
-        if (data) {
-            this.data = data
-        } else {
-            this.load();
-        }
+        this.data = data || this.retrieve();
     }
 
     get(variable, defaultValue = null) 
@@ -39,8 +35,14 @@ class State
 
     load() 
     {
+        this.data = this.retrieve() || this.data;
+    }
+
+    retrieve() 
+    {
         var json = localStorage.getItem(this.name);
-        return this.data = json
+
+        return json
             ? JSON.parse(json)
             : {};
     }

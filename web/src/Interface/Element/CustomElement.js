@@ -8,6 +8,27 @@ class CustomElement extends HTMLElement
         // to the actual constructor.
     }
 
+    connectedCallback() 
+    {
+        if (!this.attached) {
+            this.attached = true;
+            this.renderLifeCycle();
+        }
+    }
+
+    renderLifeCycle() 
+    {
+        this.beforeRender();
+        this.render();
+        this.afterRender();
+    }
+
+    refresh() 
+    {
+        this.clear();
+        this.renderLifeCycle();
+    }
+
     beforeRender() 
     {
 
@@ -24,27 +45,6 @@ class CustomElement extends HTMLElement
     afterRender() 
     {
         
-    }
-
-    refresh() 
-    {
-        this.clear();
-        this.renderLifeCycle();
-    }
-
-    renderLifeCycle() 
-    {
-        this.beforeRender();
-        this.render();
-        this.afterRender();
-    }
-
-    connectedCallback() 
-    {
-        if (!this.attached) {
-            this.attached = true;
-            this.renderLifeCycle();
-        }
     }
 
     once(name, event, listener) 
@@ -109,4 +109,5 @@ class CustomElement extends HTMLElement
 
 // Remember to register the element at the end of the document.
 // CustomElement.register();
+
 export default CustomElement;

@@ -2,22 +2,22 @@ import CustomElement    from './CustomElement';
 import AppNavigation    from './Component/AppNavigation';
 import ReproductionControls from './Component/ReproductionControls';
 //-------------------------------------------------------------------
-import ViewWelcome      from './View/Welcome';
-import ViewPlaylist     from './View/Playlist';
-import ViewReleases     from './View/DiscoverReleases';
-import ViewRelease      from './View/Release';
-import ViewSearch       from './View/Search';
-import ViewDiscover     from './View/DiscoverArtists';
-import ViewNotFound     from './View/NotFound';
+import ViewWelcome      from './View/ViewWelcome';
+import ViewPlaylist     from './View/ViewPlaylist';
+import ViewReleases     from './View/ViewDiscoverReleases';
+import ViewRelease      from './View/ViewRelease';
+import ViewSearch       from './View/ViewSearch';
+import ViewDiscover     from './View/ViewDiscoverArtists';
+import ViewNotFound     from './View/ViewNotFound';
 import Router           from '../Routing/Router.js';
 
 import QueueDisplay     from './QueueDisplay';
 //-------------------------------------------------------------------
-import ModalAddToPlaylist from './Component/ModalAddToPlaylist';
-import ModalItemAdd from './Component/ModalItemAdd';
-import ModalItemEdit from './Component/ModalItemEdit';
-import ModalPlaylistAdd from './Component/ModalPlaylistAdd';
-import ModalPlaylistEdit from './Component/ModalPlaylistEdit';
+import ModalAddToPlaylist from './Component/Modal/ModalAddToPlaylist';
+import ModalItemAdd from './Component/Modal/ModalItemAdd';
+import ModalItemEdit from './Component/Modal/ModalItemEdit';
+import ModalPlaylistAdd from './Component/Modal/ModalPlaylistAdd';
+import ModalPlaylistEdit from './Component/Modal/ModalPlaylistEdit';
 //-------------------------------------------------------------------
 import QueueContextPlaylist from '../../Queue/QueueContextPlaylist';
 import QueueContextSearch from '../../Queue/QueueContextSearch';
@@ -25,7 +25,7 @@ import QueueContextRelease from '../../Queue/QueueContextRelease';
 
 import Queue from '../../Queue/Queue';
 import History from '../../Queue/History';
-import State from '../State/State';
+import State from '../../State/State';
 
 class App extends CustomElement
 {
@@ -234,10 +234,6 @@ class App extends CustomElement
         {
             return ViewPlaylist.instantiate(request, api);
         })
-        .addRouter(/playlist:(?<playlistId>[\w\d\-]+)\/edit/, function(request) 
-        {
-            return ViewEditPlaylist.instantiate(request, api);
-        })
         .addRouter(/search/, function(request) 
         {
             return ViewSearch.instantiate(request, api);
@@ -253,10 +249,6 @@ class App extends CustomElement
         .addRouter(/discover:release:(?<releaseId>.+)/, function(request) 
         {
             return ViewRelease.instantiate(request, api);
-        })
-        .addRouter(/playlist\/create/, function(request) 
-        {
-            return ViewAddPlaylist.instantiate(request, api);
         })
         .notFoundCallback = function(route, request) 
         {

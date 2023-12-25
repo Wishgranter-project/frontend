@@ -1,6 +1,6 @@
-import ViewElement from './ViewElement';
+import BaseView from './BaseView';
 
-class NotFound extends ViewElement 
+class ViewNotFound extends BaseView 
 {
     static elementName = 'not-found';
 
@@ -12,6 +12,6 @@ class NotFound extends ViewElement
     
 }
 
-NotFound.register();
+ViewNotFound.register();
 
-export default NotFound;
+export default ViewNotFound;

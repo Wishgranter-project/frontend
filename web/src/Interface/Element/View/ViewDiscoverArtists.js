@@ -1,7 +1,7 @@
-import ViewElement from './ViewElement';
+import BaseView from './BaseView';
 import SearchHeader from '../Component/SearchHeader';
 
-class DiscoverArtists extends ViewElement 
+class ViewDiscoverArtists extends BaseView 
 {
     static elementName = 'view-discover';
 
@@ -53,6 +53,6 @@ class DiscoverArtists extends ViewElement
     
 }
 
-DiscoverArtists.register();
+ViewDiscoverArtists.register();
 
-export default DiscoverArtists;
+export default ViewDiscoverArtists;

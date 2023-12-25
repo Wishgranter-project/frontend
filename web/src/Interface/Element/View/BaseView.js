@@ -2,7 +2,7 @@ import CustomElement from '../CustomElement';
 
 class ViewElement extends CustomElement 
 {
-    static elementName = 'view-welcome';
+    static elementName = 'view-base';
 
     /**
      * @param Request request 

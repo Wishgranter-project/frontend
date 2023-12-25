@@ -4,8 +4,8 @@ import ObjectsHelper from '../../Helper/Objects';
 class Route 
 {
     /**
-     * @param RegExp pattern 
-     * @param callable callback
+     * @param {RegExp} pattern 
+     * @param {callable} callback
      */
     constructor(patterns, callback) 
     {
@@ -17,9 +17,9 @@ class Route
     }
 
     /**
-     * @param Request request 
+     * @param {Request} request 
      * 
-     * @returns HTMLElement
+     * @return {HTMLElement}
      */
     callIt(request) 
     {
@@ -48,9 +48,9 @@ class Route
     }
 
     /**
-     * @param Request request 
+     * @param {Request} request 
      * 
-     * @returns bool
+     * @return {bool}
      */
     doesItMatcheRequest(request) 
     {

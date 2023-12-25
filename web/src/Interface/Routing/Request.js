@@ -1,8 +1,8 @@
 class Request 
 {
     /**
-     * @param string path 
-     * @param object queryParams 
+     * @param {string} path 
+     * @param {object} queryParams 
      */
     constructor(path, queryParams) 
     {
@@ -12,7 +12,7 @@ class Request
     }
 
     /**
-     * @returns Request
+     * @return {Request}
      */
     static createFromGlobals() 
     {
