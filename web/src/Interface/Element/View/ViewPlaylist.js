@@ -83,7 +83,7 @@ class ViewPlaylist extends BaseView
             this.fireEvent('delete-playlist', { playlist: this.request.attributes.playlistId });
         });
 
-        this.$refs.headerB.append(SearchHeader.instantiate(this.request, '', [
+        this.$refs.headerB.append(SearchHeader.instantiate(this.request, response.data.title, [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
             {type: 'search', name: 'artist', placeholder: 'Artist'},
             {type: 'search', name: 'genre', placeholder: 'Genre'}

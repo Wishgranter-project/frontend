@@ -102,6 +102,8 @@ class AppNavigation extends CustomElement
             ? item.createAndAttach('a', { href }) 
             : item.createAndAttach('a');
 
+        a.setAttribute('title', label);
+
         if (icon) {
             a.createAndAttach('span', {class: 'fa ' + icon})
         }

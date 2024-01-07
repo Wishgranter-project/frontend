@@ -28,7 +28,7 @@ import State from '../../State/State';
 
 
 import TabManager from 'tabbed-router';
-// import { Request } from 'tabbed-router';
+import { Request } from 'tabbed-router';
 // import { Route } from 'tabbed-router';
 import { RouteCollection } from 'tabbed-router';
 import { TabLink } from 'tabbed-router';
@@ -152,7 +152,11 @@ class App extends CustomElement
             this.$refs.controls = ReproductionControls.instantiate(this.api)
         ]);
 
-        this.$refs.stage.createTab('main-tab', true);
+        var mainTab = this.$refs.stage.createTab('main-tab', true);
+
+        var home = Request.createFromHref('#home');
+        home.meta.title = 'Home';
+        mainTab.goTo(home);
 
         //------------------------------
 
