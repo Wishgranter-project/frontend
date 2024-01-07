@@ -9,7 +9,6 @@ import ViewRelease      from './View/ViewRelease';
 import ViewSearch       from './View/ViewSearch';
 import ViewDiscover     from './View/ViewDiscoverArtists';
 import ViewNotFound     from './View/ViewNotFound';
-import Router           from '../Routing/Router.js';
 
 import QueueDisplay     from './QueueDisplay';
 //-------------------------------------------------------------------
@@ -27,15 +26,27 @@ import Queue from '../../Queue/Queue';
 import History from '../../Queue/History';
 import State from '../../State/State';
 
+
+import TabManager from 'tabbed-router';
+// import { Request } from 'tabbed-router';
+// import { Route } from 'tabbed-router';
+import { RouteCollection } from 'tabbed-router';
+import { TabLink } from 'tabbed-router';
+import { TabPanel } from 'tabbed-router';
+
+customElements.define('tab-manager', TabManager);
+customElements.define('tab-link', TabLink);
+customElements.define('tab-panel', TabPanel);
+
 class App extends CustomElement
 {
     static elementName = 'the-app';
 
     __construct(api) 
     {
-        this.api        = api;
-        this.router     = this.setUpRouter(api);
-        this.state      = new State('showrunner.state');
+        this.api             = api;
+        this.routeCollection = this.setUpRouteCollection(api);
+        this.state           = new State('showrunner.state');
 
         //--------------------------------------------------
 
@@ -126,9 +137,14 @@ class App extends CustomElement
     {
         this.classList.add('app');
 
+        this.$refs.stage = new TabManager();
+        this.$refs.stage.classList.add('app__stage');
+        this.$refs.stage.setAttribute('id', 'stage');
+        this.$refs.stage.setRouteCollection(this.routeCollection);
+
         this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
             this.$refs.navMenu = AppNavigation.instantiate(this.api),
-            this.$refs.stage = this.create('div', {class: 'app__stage', id: 'stage'}),
+            this.$refs.stage,
             this.$refs.queueDisplay = QueueDisplay.instantiate()
         ]);
 
@@ -136,8 +152,7 @@ class App extends CustomElement
             this.$refs.controls = ReproductionControls.instantiate(this.api)
         ]);
 
-        this.router.setStage(this.$refs.stage);
-        this.router.listenToChanges();
+        this.$refs.stage.createTab('main-tab', true);
 
         //------------------------------
 
@@ -221,41 +236,44 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    setUpRouter(api) 
+    setUpRouteCollection(api) 
     {
-        var router = new Router();
+        var collection = new RouteCollection();
 
-        router
-        .addRoute([/^$/, /home$/], function(request)
+        collection
+        .createRoute([/^$/, /home$/], function(request)
         {
             return ViewWelcome.instantiate(request, api);
         })
-        .addRoute(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
+        .createRoute(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
         {
             return ViewPlaylist.instantiate(request, api);
         })
-        .addRoute(/search/, function(request) 
+        .createRoute(/search/, function(request) 
         {
             return ViewSearch.instantiate(request, api);
         })
-        .addRoute(/discover:artist/, function(request) 
+        .createRoute(/discover:artist/, function(request) 
         {
             return ViewDiscover.instantiate(request, api);
         })
-        .addRoute(/discover:releases$/, function(request) 
+        .createRoute(/discover:releases$/, function(request) 
         {
             return ViewReleases.instantiate(request, api);
         })
-        .addRoute(/discover:release:(?<releaseId>.+)/, function(request) 
+        .createRoute(/discover:release:(?<releaseId>.+)/, function(request) 
         {
             return ViewRelease.instantiate(request, api);
-        })
+        });
+
+        /*
         .notFoundCallback = function(route, request) 
         {
             return ViewNotFound.instantiate(request, api);
         };
+        */
 
-        return router;
+        return collection;
     }
 
 

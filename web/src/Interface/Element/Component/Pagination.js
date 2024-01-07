@@ -70,14 +70,14 @@ class Pagination extends CustomElement
     {
         var queryParams = this.request.queryParams.without('page');
         queryParams.set('page', 1);
-        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-first'}, ['first']);
+        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), class: 'btn view-nav-first', title: this.request.meta.title}, ['first']);
     }
 
     subRenderAnchorToPreviousPage() 
     {
         var queryParams = this.request.queryParams.without('page');
         queryParams.set('page', this.response.meta.page - 1);
-        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-previous'}, ['prev']);
+        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), class: 'btn view-nav-previous', title: this.request.meta.title}, ['prev']);
     }
 
     subRenderAnchorBetweenExtremes() 
@@ -86,7 +86,7 @@ class Pagination extends CustomElement
             var queryParams = this.request.queryParams.without('page');
             queryParams.set('page', p);
             var current = this.response.meta.page == p;
-            this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: current ? 'btn view-nav-current' : 'btn'}, [p]);
+            this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), class: current ? 'btn view-nav-current' : 'btn', title: this.request.meta.title}, [p]);
         }
     }
 
@@ -94,14 +94,14 @@ class Pagination extends CustomElement
     {
         var queryParams = this.request.queryParams.without('page');
         queryParams.set('page', this.response.meta.page + 1);
-        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-next'}, ['next']);
+        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), class: 'btn view-nav-next', title: this.request.meta.title}, ['next']);
     }
 
     subRenderAnchorToLast() 
     {
         var queryParams = this.request.queryParams.without('page');
         queryParams.set('page', this.response.meta.pages);
-        this.createAndAttach('a', {href: this.request.path + '?' + queryParams.toString(), class: 'btn view-nav-last'}, ['last']);
+        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), class: 'btn view-nav-last', title: this.request.meta.title}, ['last']);
     }
 }
 

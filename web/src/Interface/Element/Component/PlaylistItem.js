@@ -52,15 +52,15 @@ class PlaylistItem extends CustomElement
 
         for (var artist of this.item.artist) {
             this.$refs.body.createAndAttach('span', {class: 'playlist-item__artist playlist-item__info'}, [ 
-                this.create('a', {href: `#search?artist=${artist}` }, artist), 
+                this.create('a', {href: `#search?artist=${artist}`, title: artist }, artist), 
                 ' ',
-                this.create('a', {href: `#discover:releases?artist=${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
+                this.create('a', {href: `#discover:releases?artist=${artist}`, title: `Search ${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
             ]);
         }
 
         for (var soundtrack of this.item.soundtrack) {
             this.$refs.body.createAndAttach('span', {class: 'playlist-item__soundtrack playlist-item__info'}, [ 
-                this.create('a', {href: `#search?soundtrack=${soundtrack}` }, soundtrack)
+                this.create('a', {href: `#search?soundtrack=${soundtrack}`, title: soundtrack }, soundtrack)
             ]);
         }
     }

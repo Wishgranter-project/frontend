@@ -16,6 +16,7 @@
         "playable-html-wrapper": "git+ssh://git@github.com:adinan-cenci/playable-html-wrapper.git#4",
         "playable-youtube-wrapper": "git+ssh://git@github.com:adinan-cenci/playable-youtube-wrapper.git#4",
         "sass": "^1.69.4",
+        "tabbed-router": "git+ssh://git@github.com:adinan-cenci/tabbed-router.git",
         "webpack-stream": "^7.0.0",
         "y2be-player": "^3.5.4"
     },

@@ -38,7 +38,7 @@ class ViewDiscoverReleases extends BaseView
         var grid = this.createAndAttach('div', {class: 'grid releases'});
 
         for (var rl of response.data) {
-            grid.createAndAttach('a', {href: `#discover:release:${rl.id}`, class: 'col-6 col-sm-4 col-md-3 col-lg-2'}, [
+            grid.createAndAttach('a', {href: `#discover:release:${rl.id}`, class: 'col-6 col-sm-4 col-md-3 col-lg-2', title: this.request.queryParams.get('artist') + ': ' + rl.title }, [
                 this.create('span', {class: 'card'}, [
                     this.create('img', {src: rl.thumbnail || 'dist/img/missing-cover-art.webp' }),
                     this.create('h4', null, [rl.title])

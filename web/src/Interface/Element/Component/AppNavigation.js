@@ -71,7 +71,7 @@ class AppNavigation extends CustomElement
     addArtistNavItem(artistName, count) 
     {
         this.$refs.artists.createAndAttach('div', {class: 'app-navigation__item'},
-            this.create('a', {href: '#search?artist=' + artistName}, [
+            this.create('a', {href: '#search?artist=' + artistName, title: artistName}, [
                 this.create('span', {class: 'label'}, artistName),
                 this.create('span', {class: 'badge'}, count)
             ])
@@ -81,7 +81,7 @@ class AppNavigation extends CustomElement
     addPlaylistNavItem(playlistId, playlistTitle) 
     {
         this.$refs.playlists.createAndAttach('div', {class: 'app-navigation__item'}, [
-            this.create('a', {href: `#playlist:${playlistId}`, class: 'ellipsis'}, playlistTitle)
+            this.create('a', {href: `#playlist:${playlistId}`, class: 'ellipsis', title: playlistTitle}, playlistTitle)
         ]);
     }
 
