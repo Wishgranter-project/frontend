@@ -226,27 +226,27 @@ class App extends CustomElement
         var router = new Router();
 
         router
-        .addRouter([/^$/, /home$/], function(request)
+        .addRoute([/^$/, /home$/], function(request)
         {
             return ViewWelcome.instantiate(request, api);
         })
-        .addRouter(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
+        .addRoute(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
         {
             return ViewPlaylist.instantiate(request, api);
         })
-        .addRouter(/search/, function(request) 
+        .addRoute(/search/, function(request) 
         {
             return ViewSearch.instantiate(request, api);
         })
-        .addRouter(/discover:artist/, function(request) 
+        .addRoute(/discover:artist/, function(request) 
         {
             return ViewDiscover.instantiate(request, api);
         })
-        .addRouter(/discover:releases$/, function(request) 
+        .addRoute(/discover:releases$/, function(request) 
         {
             return ViewReleases.instantiate(request, api);
         })
-        .addRouter(/discover:release:(?<releaseId>.+)/, function(request) 
+        .addRoute(/discover:release:(?<releaseId>.+)/, function(request) 
         {
             return ViewRelease.instantiate(request, api);
         })

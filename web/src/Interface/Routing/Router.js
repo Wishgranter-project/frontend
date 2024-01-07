@@ -92,7 +92,7 @@ class Router
      * 
      * @return this
      */
-    addRouter(pattern, callback) 
+    addRoute(pattern, callback) 
     {
         this.routes.push(new Route(pattern, callback));
         return this;
