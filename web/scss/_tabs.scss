@@ -1,4 +1,4 @@
-.tabbed-router__tab-manager {
+.simple .tabbed-router__tab-manager {
     display: flex;
     flex-direction: column;
 
@@ -17,14 +17,18 @@
 
             &__controls button {
                 margin: 0px;
+                border-color: transparent;
+                background-color: transparent;
             }
 
             &__backwards-button:before {
-                content: 'B';
+                content: "\f060";
+                font-family: ForkAwesome;
             }
 
             &__forwards-button:before {
-                content: 'F';
+                content: "\f061";
+                font-family: ForkAwesome;
             }
         
         &__tab-links {

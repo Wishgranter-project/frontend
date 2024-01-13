@@ -1,35 +1,39 @@
-.tabbed-router__tab-manager {
+.simple .tabbed-router__tab-manager {
   display: flex;
   flex-direction: column;
 }
-.tabbed-router__tab-manager__header {
+.simple .tabbed-router__tab-manager__header {
   display: flex;
   align-items: center;
 }
-.tabbed-router__tab-manager__controls {
+.simple .tabbed-router__tab-manager__controls {
   flex-shrink: 1;
   align-items: center;
   display: flex;
   width: auto;
   margin: 0px 10px 0px 0px;
 }
-.tabbed-router__tab-manager__controls button {
+.simple .tabbed-router__tab-manager__controls button {
   margin: 0px;
+  border-color: transparent;
+  background-color: transparent;
 }
-.tabbed-router__tab-manager__backwards-button:before {
-  content: "B";
+.simple .tabbed-router__tab-manager__backwards-button:before {
+  content: "\f060";
+  font-family: ForkAwesome;
 }
-.tabbed-router__tab-manager__forwards-button:before {
-  content: "F";
+.simple .tabbed-router__tab-manager__forwards-button:before {
+  content: "\f061";
+  font-family: ForkAwesome;
 }
-.tabbed-router__tab-manager__tab-links {
+.simple .tabbed-router__tab-manager__tab-links {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
   overflow-x: auto;
   overflow-y: visible;
 }
-.tabbed-router__tab-manager__tab-panes {
+.simple .tabbed-router__tab-manager__tab-panes {
   overflow-y: auto;
 }
 
