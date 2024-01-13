@@ -99,6 +99,16 @@ class PlaylistItem extends CustomElement
             }
         }
 
+        actions.playNext = {
+            title: 'Play next',
+            helpText: 'play next',
+            icon: 'fa-minus',
+            onClick: () =>
+            {
+                this.fireEvent('play-item-next', {item: this.item});
+            }
+        };
+
         if (!this.item.uuid) {
             return actions;
         }
@@ -120,16 +130,6 @@ class PlaylistItem extends CustomElement
             onClick: () => 
             {
                 this.fireEvent('delete-item', {uuid: this.item.uuid});
-            }
-        };
-
-        actions.playNext = {
-            title: 'Play next',
-            helpText: 'play next',
-            icon: 'fa-minus',
-            onClick: () =>
-            {
-                this.fireEvent('play-item-next', {item: this.item});
             }
         };
 

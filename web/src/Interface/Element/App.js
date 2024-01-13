@@ -28,7 +28,7 @@ import State from '../../State/State';
 
 
 import TabManager from 'tabbed-router';
-import { Request } from 'tabbed-router';
+import { HashRequest } from 'tabbed-router';
 // import { Route } from 'tabbed-router';
 import { RouteCollection } from 'tabbed-router';
 import { TabLink } from 'tabbed-router';

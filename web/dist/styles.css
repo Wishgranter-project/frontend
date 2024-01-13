@@ -1,40 +1,40 @@
-.tab-manager {
+.tabbed-router__tab-manager {
   display: flex;
   flex-direction: column;
 }
-.tab-manager__header {
+.tabbed-router__tab-manager__header {
   display: flex;
   align-items: center;
 }
-.tab-manager__controls {
+.tabbed-router__tab-manager__controls {
   flex-shrink: 1;
   align-items: center;
   display: flex;
   width: auto;
   margin: 0px 10px 0px 0px;
 }
-.tab-manager__controls button {
+.tabbed-router__tab-manager__controls button {
   margin: 0px;
 }
-.tab-manager__backwards-button:before {
+.tabbed-router__tab-manager__backwards-button:before {
   content: "B";
 }
-.tab-manager__forwards-button:before {
+.tabbed-router__tab-manager__forwards-button:before {
   content: "F";
 }
-.tab-manager__tab-links {
+.tabbed-router__tab-manager__tab-links {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
   overflow-x: auto;
   overflow-y: visible;
 }
-.tab-manager__tab-panes {
+.tabbed-router__tab-manager__tab-panes {
   overflow-y: auto;
 }
 
 /*--------------------------*/
-.tab-link {
+.tabbed-router__tab-link {
   opacity: 0.5;
   display: flex;
   align-items: center;
@@ -44,16 +44,16 @@
   margin: 0px 3px 0px 0px;
   background: #5a5958;
 }
-.tab-link.focused {
+.tabbed-router__tab-link.focused {
   opacity: 1;
 }
-.tab-link span {
+.tabbed-router__tab-link span {
   display: block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.tab-link button {
+.tabbed-router__tab-link button {
   padding: 0px;
   border-radius: 50px;
   min-width: 26px;
@@ -61,18 +61,22 @@
   margin: 0px 0px 0px 10px;
   text-align: center;
 }
-.tab-link button:before {
+.tabbed-router__tab-link button:before {
   content: "X";
 }
 
+.tabbed-router__tab-link:first-child:last-child button {
+  display: none;
+}
+
 /*--------------------------*/
-.tab-panel {
+.tabbed-router__tab-panel {
   display: none;
   width: 100%;
   min-height: 200px;
   padding: 10px;
 }
-.tab-panel.focused {
+.tabbed-router__tab-panel.focused {
   display: block;
 }
 

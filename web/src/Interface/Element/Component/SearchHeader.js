@@ -21,7 +21,7 @@ class SearchHeader extends CustomElement
         //     this.$refs.h1 = this.createAndAttach('h1', null, this.title);
         // }
 
-        this.$refs.form = this.createAndAttach('form', {class: 'input-group input-group-horizontal'});
+        this.$refs.form = this.createAndAttach('form', { action: '#' + this.request.path, class: 'input-group input-group-horizontal'});
 
         var input;
         for (var field of this.fields) {
@@ -36,24 +36,6 @@ class SearchHeader extends CustomElement
         this.$refs.form.createAndAttach('button', null, [this.create('span', {class: 'fa fa-search'})]);
         this.$refs.form.addEventListener('submit', this.onSubmit.bind(this));
     }
-
-    onSubmit(evt) 
-    {
-        evt.preventDefault();
-
-        /**
-         * TODO: replace this error of a code for something decent.
-         */
-        var href = this.request.path.replace('/', '#') + '?' + Convert.objectToSearchParams(CastDown.toObject(this.$refs.form)).toString();
-        var a = document.createElement('a');
-        a.setAttribute('href', href);
-        a.setAttribute('title', this.title);
-        a.style.display = 'none';
-        this.append(a);
-        a.click();
-        a.remove();
-    }
-
 }
 
 SearchHeader.register();
