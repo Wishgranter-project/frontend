@@ -34,7 +34,6 @@ class SearchHeader extends CustomElement
         }
 
         this.$refs.form.createAndAttach('button', null, [this.create('span', {class: 'fa fa-search'})]);
-        this.$refs.form.addEventListener('submit', this.onSubmit.bind(this));
     }
 }
 

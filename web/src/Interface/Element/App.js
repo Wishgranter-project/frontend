@@ -154,7 +154,7 @@ class App extends CustomElement
 
         var mainTab = this.$refs.stage.createTab('main-tab', true);
 
-        var home = Request.createFromHref('#home');
+        var home = HashRequest.createFromUrl('#home');
         home.meta.title = 'Home';
         mainTab.goTo(home);
 
