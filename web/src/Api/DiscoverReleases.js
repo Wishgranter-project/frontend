@@ -12,6 +12,11 @@ class DiscoverReleases extends Base
     {
         return new Release(this.httpClient, releaseId);
     }
+
+    getAlbum(artist, title) 
+    {
+        return this.apiCall('get', 'api/v1/discover/album', null, {artist, title});
+    }
 }
 
 export default DiscoverReleases;

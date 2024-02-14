@@ -265,7 +265,7 @@ class App extends CustomElement
         {
             return ViewReleases.instantiate(request, api);
         })
-        .createRoute(/discover:release:(?<releaseId>.+)/, function(request) 
+        .createRoute(/discover:release/, function(request) 
         {
             return ViewRelease.instantiate(request, api);
         });

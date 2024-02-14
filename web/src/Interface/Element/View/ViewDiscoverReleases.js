@@ -1,6 +1,6 @@
 import BaseView from './BaseView';
 import SearchHeader from '../Component/SearchHeader';
-import Pagination from '../Component/Pagination';
+import MusicAlbum from '../Component/MusicAlbum';
 
 class ViewDiscoverReleases extends BaseView 
 {
@@ -14,7 +14,6 @@ class ViewDiscoverReleases extends BaseView
         {
             this.renderHeader(response);
             this.renderReleases(response);
-            this.renderNavigation(response);
         });
     }
 
@@ -38,19 +37,9 @@ class ViewDiscoverReleases extends BaseView
         var grid = this.createAndAttach('div', {class: 'grid releases'});
 
         for (var rl of response.data) {
-            grid.createAndAttach('a', {href: `#discover:release:${rl.id}`, class: 'col-6 col-sm-4 col-md-3 col-lg-2', title: this.request.queryParams.get('artist') + ': ' + rl.title }, [
-                this.create('span', {class: 'card'}, [
-                    this.create('img', {src: rl.thumbnail || 'dist/img/missing-cover-art.webp' }),
-                    this.create('h4', null, [rl.title])
-                ])
-            ]);
+            grid.createAndAttach('div', {class: 'col-6 col-sm-4 col-md-3 col-lg-2'}, MusicAlbum.instantiate(rl));
         }
-    }
-
-    renderNavigation(response) 
-    {
-        this.append(Pagination.instantiate(this.api, this.request, response));
-    }    
+    }   
 }
 
 ViewDiscoverReleases.register();

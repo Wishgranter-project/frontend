@@ -11,7 +11,7 @@ class ViewRelease extends BaseView
     {
         this.classList.add('view--release');
 
-        this.api.discover.releases.get(this.request.attributes.releaseId).getTracks().then((response) =>
+        this.api.discover.releases.getAlbum(this.request.queryParams.get('artist'), this.request.queryParams.get('title')).then((response) =>
         {
             this.subRenderHeader(response);
             this.renderTracks(response);
