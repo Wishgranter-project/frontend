@@ -82,9 +82,3 @@ List of features and status of implemenetation.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :heavy_check_mark: Control reproduction volume.  
 :x: Keyboard shortcuts.  
 
-## Needs polishing
-
-- Last fm and discogs return albuns with no tracks to play
-
-- Obscure or underground music will play the wrong multimedia.  
-  Most of the time returns the correct one, but in second place or further down in the search results.  

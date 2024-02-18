@@ -34,6 +34,7 @@
   overflow-y: visible;
 }
 .simple .tabbed-router__tab-manager__tab-panes {
+  height: 100%;
   overflow-y: auto;
 }
 
@@ -78,7 +79,6 @@
   display: none;
   width: 100%;
   min-height: 200px;
-  padding: 10px;
 }
 .tabbed-router__tab-panel.focused {
   display: block;
@@ -113,11 +113,11 @@ body {
   width: calc(100% - 200px);
   height: 100%;
   background-color: #303030;
-  /*.view {
-      display: block;
-      overflow: auto;
-      height: 100%;
-  }*/
+}
+.app__stage .view {
+  display: block;
+  overflow: auto;
+  height: 100%;
 }
 .app__footer {
   border-top: solid 1px #242424;
@@ -468,10 +468,10 @@ div {
   padding: 0px 0px 0px 10px;
 }
 
-.view--releases .header__head h1 {
+.view--albums .header__head h1 {
   margin: 0px;
 }
-.view--releases .header__body {
+.view--albums .header__body {
   flex-grow: 1;
   padding: 0px 0px 0px 10px;
 }
@@ -501,6 +501,10 @@ div {
 .card img {
   width: 100%;
   margin: 0px 0px 10px 0px;
+}
+
+.card h4 .fa {
+  margin-left: 10px;
 }
 
 .simple .grid.releases {

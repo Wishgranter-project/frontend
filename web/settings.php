@@ -1,10 +1,11 @@
 <?php
-function isLocalEnvironment() : bool 
+
+function isLocalEnvironment(): bool
 {
     return isset($_SERVER['HTTP_X_LANDO']);
 }
 
-function getHost() : string
+function getHost(): string
 {
     $host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'];
     return substr_count($host, ':')
@@ -12,7 +13,7 @@ function getHost() : string
         : $host;
 }
 
-function getPort() : ?string
+function getPort(): ?string
 {
     $port = $_SERVER['HTTP_X_FORWARDED_PORT'] ?? $_SERVER['SERVER_PORT'];
     return is_numeric($port) 
@@ -20,7 +21,7 @@ function getPort() : ?string
         : null;
 }
 
-function baseHref(string $protocol, string $host, string $path, string $port) : string
+function baseHref(string $protocol, string $host, string $path, string $port): string
 {
     $baseUrl = $protocol . '://' . $host;
 
@@ -36,7 +37,6 @@ function baseHref(string $protocol, string $host, string $path, string $port) : 
 //------------------------------------------------------------------------
 
 if (isLocalEnvironment()) {
-
     $selfProtocol    = 'http';
     $selfHost        = getHost() ?? 'player-frontend.lndo.site';
     $selfPath        = '/';
@@ -46,9 +46,7 @@ if (isLocalEnvironment()) {
     $backendHost     = 'player-backend.lndo.site';
     $backendPath     = '/';
     $backendPort     = '80';
-
 } else {
-
     $selfProtocol    = 'https';
     $selfHost        = 'adinancenci.com.br';
     $selfPath        = '/player/';
@@ -58,7 +56,6 @@ if (isLocalEnvironment()) {
     $backendHost     = 'adinancenci.com.br';
     $backendPath     = '/player/backend/web/';
     $backendPort     = '80';
-
 }
 
 $selfBaseHref        = baseHref($selfProtocol, $selfHost, $selfPath, $selfPort);

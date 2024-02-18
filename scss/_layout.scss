@@ -1,0 +1,47 @@
+body {
+    overflow: hidden;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: space-between;
+    width: 100vw;
+    height: 100vh;
+
+    &__middle {
+        display: flex;
+        position: relative;
+        flex-grow: 1;
+        width: 100%;
+        min-height: 0px;
+        margin: 0;
+    }
+
+        .app-navigation {
+            width: 200px;
+        }
+
+        &__stage {
+            overflow: hidden;
+            width: calc(100% - 200px);
+            height: 100%;
+            background-color: #303030;
+
+            .view {
+                display: block;
+                overflow: auto;
+                height: 100%;
+            }
+        }
+
+
+    &__footer {
+        border-top: solid 1px #242424;
+        text-align: center;
+        background-color: #363636;
+    }
+
+}
