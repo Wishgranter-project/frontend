@@ -6,10 +6,10 @@ class QueueContextBase
     /**
      * @param Api api
      */
-    constructor(api) 
+    constructor(api, noMore = false) 
     {
         this.api = api;
-        this.noMore = false;
+        this.noMore = noMore;
     }
 
     static id() 
@@ -21,14 +21,17 @@ class QueueContextBase
     serialize() 
     {
         return {
-            id: QueueContextBase.id(),
+            id: this.constructor.id(),
             noMore: this.noMore
         };
     }
 
-    static unserialize(api, obj) 
+    static instantiate(api, obj) 
     {
-        var context = new QueueContextBase(api);
+        var parameters = Object.values(obj);
+        parameters.splice(0, 1, api); // replace id by api
+
+        var context = new this(...parameters);
         return context;
     }
 

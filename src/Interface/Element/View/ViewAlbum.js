@@ -1,7 +1,5 @@
-import BaseView            from './BaseView';
-import PlaylistItem        from '../Component/PlaylistItem';
-import QueueContextRelease from '../../../Line/QueueContextRelease';
-import Queue               from '../../../Line/Queue';
+import BaseView     from './BaseView';
+import PlaylistItem from '../Component/PlaylistItem';
 
 class ViewAlbum extends BaseView 
 {
@@ -82,10 +80,11 @@ class ViewAlbum extends BaseView
             }
         }
 
-        var context = new QueueContextRelease(this.api);
-
-        var queue = Queue.instantiate(initialBatch, context);
-        evt.detail.queue = queue;
+        evt.detail.initialBatch = initialBatch;
+        evt.detail.meta = {
+            id: 'album',
+            noMore: false
+        };
     }
 }
 

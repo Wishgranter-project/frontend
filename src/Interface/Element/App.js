@@ -18,9 +18,10 @@ import ModalPlaylistEdit    from './Component/Modal/ModalPlaylistEdit';
 //=============================================================================
 import QueueContextPlaylist from '../../Line/QueueContextPlaylist';
 import QueueContextSearch   from '../../Line/QueueContextSearch';
-import QueueContextRelease  from '../../Line/QueueContextRelease';
+import QueueContextAlbum    from '../../Line/QueueContextAlbum';
 import Queue                from '../../Line/Queue';
 import History              from '../../Line/History';
+import QueueContextFactory  from '../../Line/QueueContextFactory';
 import State                from '../../State/State';
 //=============================================================================
 import TabManager, { 
@@ -41,9 +42,10 @@ class App extends CustomElement
 
     __construct(api) 
     {
-        this.api             = api;
-        this.routeCollection = this.setUpRouteCollection(api);
-        this.state           = new State('showrunner.state');
+        this.api                 = api;
+        this.routeCollection     = this.setUpRouteCollection(api);
+        this.state               = new State('showrunner.state');
+        this.queueContextFactory = new QueueContextFactory(api);
 
         //--------------------------------------------------
 
@@ -108,19 +110,7 @@ class App extends CustomElement
 
         var c = this.state.get('queueContext');
 
-        switch (c.id) {
-            case QueueContextPlaylist.id() :
-                return QueueContextPlaylist.unserialize(this.api, c);
-                break;
-            case QueueContextSearch.id() :
-                return QueueContextSearch.unserialize(this.api, c);
-                break;
-            case QueueContextRelease.id() :
-                return QueueContextRelease.unserialize(this.api, c);
-                break;
-        }
-
-        return null;
+        return this.queueContextFactory.instantiate(c);
     }
 
     render() 
@@ -300,10 +290,13 @@ class App extends CustomElement
 
     async onItemSelected(evt) 
     {
-        var { item, queue } = evt.detail;
+        var { item, initialBatch, meta } = evt.detail;
 
         console.log('-------------------------------');
         console.log('Show runner: New item selected');
+
+        var context = this.queueContextFactory.instantiate(meta);
+        var queue   = Queue.instantiate(initialBatch, context);
 
         return queue
             ? this.playNewQueue(queue)

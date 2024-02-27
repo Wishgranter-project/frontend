@@ -2,9 +2,9 @@ import QueueContextSearch from './QueueContextSearch';
 
 class QueueContextPlaylist extends QueueContextSearch 
 {
-    constructor(api, queryParams, playlistId) 
+    constructor(api, noMore = false, queryParams, playlistId) 
     {
-        super(api, queryParams);
+        super(api, noMore, queryParams);
         this.playlistId = playlistId;
     }
 
@@ -21,13 +21,6 @@ class QueueContextPlaylist extends QueueContextSearch
             queryParams: (this.queryParams ? this.queryParams.toString() : ''),
             playlistId: this.playlistId
         };
-    }
-
-    static unserialize(api, obj) 
-    {
-        var context = new QueueContextPlaylist(api, new URLSearchParams(obj.queryParams), obj.playlistId);
-        context.noMore = obj.noMore;
-        return context;
     }
 
     async request(queue) 

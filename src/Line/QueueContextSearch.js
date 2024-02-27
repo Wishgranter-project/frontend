@@ -2,10 +2,12 @@ import QueueContextBase from './QueueContextBase';
 
 class QueueContextSearch extends QueueContextBase 
 {
-    constructor(api, queryParams) 
+    constructor(api, noMore = false, queryParams) 
     {
-        super(api);
-        this.queryParams = queryParams;
+        super(api, noMore);
+        this.queryParams = typeof queryParams == 'string'
+            ? new URLSearchParams(queryParams)
+            : queryParams;
     }
 
     static id() 
@@ -20,13 +22,6 @@ class QueueContextSearch extends QueueContextBase
             noMore: this.noMore,
             queryParams: (this.queryParams ? this.queryParams.toString() : ''),
         };
-    }
-
-    static unserialize(api, obj) 
-    {
-        var context = new QueueContextSearch(api, new URLSearchParams(obj.queryParams));
-        context.noMore = obj.noMore;
-        return context;
     }
 
     progress() 

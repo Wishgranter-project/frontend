@@ -1,10 +1,8 @@
-import BaseView             from './BaseView';
-import PlaylistItem         from '../Component/PlaylistItem';
-import SearchHeader         from '../Component/SearchHeader';
-import Pagination           from '../Component/Pagination';
-import Events               from '../../../Helper/Events';
-import QueueContextPlaylist from '../../../Line/QueueContextPlaylist';
-import Queue                from '../../../Line/Queue';
+import BaseView     from './BaseView';
+import PlaylistItem from '../Component/PlaylistItem';
+import SearchHeader from '../Component/SearchHeader';
+import Pagination   from '../Component/Pagination';
+import Events       from '../../../Helper/Events';
 
 class ViewPlaylist extends BaseView 
 {
@@ -128,14 +126,13 @@ class ViewPlaylist extends BaseView
             }
         }
 
-        var context = new QueueContextPlaylist(
-            this.api, 
-            this.hashRequest.queryParams, 
-            this.hashRequest.attributes.playlistId
-        );
-
-        var queue = Queue.instantiate(initialBatch, context);
-        evt.detail.queue = queue;
+        evt.detail.initialBatch = initialBatch;
+        evt.detail.meta = {
+            id: 'playlist',
+            noMore: false,
+            queryParams: this.hashRequest.queryParams,
+            playlistId: this.hashRequest.attributes.playlistId
+        };
     }
 }
 

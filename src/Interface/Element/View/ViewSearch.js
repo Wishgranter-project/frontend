@@ -1,8 +1,6 @@
-import SearchHeader       from '../Component/SearchHeader';
-import ViewPlaylist       from './ViewPlaylist';
-import PlaylistItem       from '../Component/PlaylistItem';
-import QueueContextSearch from '../../../Line/QueueContextSearch';
-import Queue              from '../../../Line/Queue';
+import SearchHeader from '../Component/SearchHeader';
+import ViewPlaylist from './ViewPlaylist';
+import PlaylistItem from '../Component/PlaylistItem';
 
 class ViewSearch extends ViewPlaylist 
 {
@@ -65,13 +63,12 @@ class ViewSearch extends ViewPlaylist
             }
         }
 
-        var context = new QueueContextSearch(
-            this.api, 
-            this.hashRequest.queryParams
-        );
-
-        var queue = Queue.instantiate(initialBatch, context);
-        evt.detail.queue = queue;
+        evt.detail.initialBatch = initialBatch;
+        evt.detail.meta = {
+            id: 'search',
+            noMore: false,
+            queryParams: this.hashRequest.queryParams
+        };
     }
 }
 
