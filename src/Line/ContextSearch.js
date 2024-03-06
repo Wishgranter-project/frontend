@@ -1,6 +1,6 @@
-import QueueContextBase from './QueueContextBase';
+import ContextBase from './ContextBase';
 
-class QueueContextSearch extends QueueContextBase 
+class ContextSearch extends ContextBase 
 {
     constructor(api, noMore = false, queryParams) 
     {
@@ -18,7 +18,7 @@ class QueueContextSearch extends QueueContextBase
     serialize() 
     {
         return {
-            id: QueueContextSearch.id(),
+            id: ContextSearch.id(),
             noMore: this.noMore,
             queryParams: (this.queryParams ? this.queryParams.toString() : ''),
         };
@@ -36,4 +36,4 @@ class QueueContextSearch extends QueueContextBase
     }
 }
 
-export default QueueContextSearch;
+export default ContextSearch;

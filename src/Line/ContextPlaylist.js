@@ -1,6 +1,6 @@
-import QueueContextSearch from './QueueContextSearch';
+import ContextSearch from './ContextSearch';
 
-class QueueContextPlaylist extends QueueContextSearch 
+class ContextPlaylist extends ContextSearch 
 {
     constructor(api, noMore = false, queryParams, playlistId) 
     {
@@ -16,7 +16,7 @@ class QueueContextPlaylist extends QueueContextSearch
     serialize() 
     {
         return {
-            id: QueueContextPlaylist.id(),
+            id: ContextPlaylist.id(),
             noMore: this.noMore,
             queryParams: (this.queryParams ? this.queryParams.toString() : ''),
             playlistId: this.playlistId
@@ -31,4 +31,4 @@ class QueueContextPlaylist extends QueueContextSearch
     }
 }
 
-export default QueueContextPlaylist;
+export default ContextPlaylist;

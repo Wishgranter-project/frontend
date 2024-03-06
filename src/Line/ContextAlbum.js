@@ -1,6 +1,6 @@
-import QueueContextBase from './QueueContextBase';
+import ContextBase from './ContextBase';
 
-class QueueContextAlbum extends QueueContextBase 
+class ContextAlbum extends ContextBase 
 {
     constructor(api, noMore = false) 
     {
@@ -21,4 +21,4 @@ class QueueContextAlbum extends QueueContextBase
     }
 }
 
-export default QueueContextAlbum;
+export default ContextAlbum;

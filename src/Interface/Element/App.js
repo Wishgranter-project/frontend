@@ -16,12 +16,9 @@ import ModalItemEdit        from './Component/Modal/ModalItemEdit';
 import ModalPlaylistAdd     from './Component/Modal/ModalPlaylistAdd';
 import ModalPlaylistEdit    from './Component/Modal/ModalPlaylistEdit';
 //=============================================================================
-import QueueContextPlaylist from '../../Line/QueueContextPlaylist';
-import QueueContextSearch   from '../../Line/QueueContextSearch';
-import QueueContextAlbum    from '../../Line/QueueContextAlbum';
 import Queue                from '../../Line/Queue';
 import History              from '../../Line/History';
-import QueueContextFactory  from '../../Line/QueueContextFactory';
+import ContextFactory       from '../../Line/ContextFactory';
 import State                from '../../State/State';
 //=============================================================================
 import TabManager, { 
@@ -45,7 +42,7 @@ class App extends CustomElement
         this.api                 = api;
         this.routeCollection     = this.setUpRouteCollection(api);
         this.state               = new State('showrunner.state');
-        this.queueContextFactory = new QueueContextFactory(api);
+        this.contextFactory      = new ContextFactory(api);
 
         //--------------------------------------------------
 
@@ -110,7 +107,7 @@ class App extends CustomElement
 
         var c = this.state.get('queueContext');
 
-        return this.queueContextFactory.instantiate(c);
+        return this.contextFactory.instantiate(c);
     }
 
     render() 
@@ -295,7 +292,7 @@ class App extends CustomElement
         console.log('-------------------------------');
         console.log('Show runner: New item selected');
 
-        var context = this.queueContextFactory.instantiate(meta);
+        var context = this.contextFactory.instantiate(meta);
         var queue   = Queue.instantiate(initialBatch, context);
 
         return queue

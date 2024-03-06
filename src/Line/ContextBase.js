@@ -1,7 +1,4 @@
-/**
- * 
- */
-class QueueContextBase 
+class ContextBase 
 {
     /**
      * @param Api api
@@ -26,15 +23,6 @@ class QueueContextBase
         };
     }
 
-    static instantiate(api, obj) 
-    {
-        var parameters = Object.values(obj);
-        parameters.splice(0, 1, api); // replace id by api
-
-        var context = new this(...parameters);
-        return context;
-    }
-
     /**
      * make whatever calculations may be needed to reach in
      * preparation to fetch more items.
@@ -45,7 +33,7 @@ class QueueContextBase
     }
 
     /**
-     * @param QueueContextBase queue 
+     * @param ContextBase queue 
      * 
      * @return Promise
      */
@@ -72,7 +60,7 @@ class QueueContextBase
     }
 
     /**
-     * @param QueueContextBase queue 
+     * @param ContextBase queue 
      * 
      * @return Promise
      */
@@ -82,4 +70,4 @@ class QueueContextBase
     }
 }
 
-export default QueueContextBase;
+export default ContextBase;
