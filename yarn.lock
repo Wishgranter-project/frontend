@@ -2081,21 +2081,21 @@ pinkie@^2.0.0:
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha512-MnUuEycAemtSaeFSjXKW/aroV7akBbY+Sv+RkyqFjgAe73F+MR0TBWKBRDkmfWq/HiFmdavfZ1G7h4SPZXaCSg==
 
-"playable-html-wrapper@git+ssh://git@github.com:wishgranter-project/playable-html-wrapper.git#4":
+"playable-html-wrapper@git+ssh://git@github.com:adinan-cenci/playable-html-wrapper.git#4":
   version "4.0.0"
-  resolved "git+ssh://git@github.com:wishgranter-project/playable-html-wrapper.git#3b669a80bb4d2d499acb3686756919373b035718"
+  resolved "git+ssh://git@github.com:adinan-cenci/playable-html-wrapper.git#3b669a80bb4d2d499acb3686756919373b035718"
   dependencies:
-    playable "git+ssh://git@github.com:wishgranter-project/playable.git#4"
+    playable "git+ssh://git@github.com:adinan-cenci/playable.git#4"
 
-"playable-youtube-wrapper@git+ssh://git@github.com:wishgranter-project/playable-youtube-wrapper.git#4":
+"playable-youtube-wrapper@git+ssh://git@github.com:adinan-cenci/playable-youtube-wrapper.git#4":
   version "4.0.0"
-  resolved "git+ssh://git@github.com:wishgranter-project/playable-youtube-wrapper.git#299c239fddb6308ae2d76ca636a1f92d03b820f2"
+  resolved "git+ssh://git@github.com:adinan-cenci/playable-youtube-wrapper.git#299c239fddb6308ae2d76ca636a1f92d03b820f2"
   dependencies:
-    playable "git+ssh://git@github.com:wishgranter-project/playable.git#4"
+    playable "git+ssh://git@github.com:adinan-cenci/playable.git#4"
 
-"playable@git+ssh://git@github.com:wishgranter-project/playable.git#4":
+"playable@git+ssh://git@github.com:adinan-cenci/playable.git#4":
   version "4.0.0"
-  resolved "git+ssh://git@github.com:wishgranter-project/playable.git#0fa34eaf11c2f43c87058629ad79b0c39aad8e2a"
+  resolved "git+ssh://git@github.com:adinan-cenci/playable.git#0fa34eaf11c2f43c87058629ad79b0c39aad8e2a"
 
 plugin-error@^1.0.1:
   version "1.0.1"
@@ -2570,7 +2570,7 @@ sver-compat@^1.5.0:
 
 "tabbed-router@git+ssh://git@github.com:adinan-cenci/tabbed-router.git":
   version "0.0.0"
-  resolved "git+ssh://git@github.com:adinan-cenci/tabbed-router.git#27e1f04e03dff389b3f03eef373cd92d04499b80"
+  resolved "git+ssh://git@github.com:adinan-cenci/tabbed-router.git#f8d9afa313f3cb9212236f4c91f76d37481c99f5"
   dependencies:
     gulp "^4.0.2"
     gulp-rename "^2.0.0"

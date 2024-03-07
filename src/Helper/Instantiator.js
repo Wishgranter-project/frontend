@@ -30,7 +30,8 @@ class Instantiator
             } else if (!parameter.noDefault) {
                 var value = parameter.default;
             } else {
-                throw `Could not instantiate {this.class.name}`;
+                console.log(parameter);
+                throw `Could not instantiate ${this.class.name}`;
             }
 
             values.push(value);
@@ -106,6 +107,10 @@ class Instantiator
 
         if (string == 'true') {
             return true;
+        }
+
+        if (string == '{}') {
+            return {};
         }
 
         if (!isNaN(string)) {

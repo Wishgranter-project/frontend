@@ -21,6 +21,9 @@ import History              from '../../Line/History';
 import ContextFactory       from '../../Line/ContextFactory';
 import State                from '../../State/State';
 //=============================================================================
+import Serialization        from '../../Helper/Serialization';
+import Instantiator         from '../../Helper/Instantiator';
+//=============================================================================
 import TabManager, { 
     HashRequest,
     RouteCollection,
@@ -42,6 +45,7 @@ class App extends CustomElement
         this.api                 = api;
         this.routeCollection     = this.setUpRouteCollection(api);
         this.state               = new State('showrunner.state');
+        this.navigationState     = new State('navigation.state');
         this.contextFactory      = new ContextFactory(api);
 
         //--------------------------------------------------
@@ -127,16 +131,13 @@ class App extends CustomElement
 
         this.$refs.footer = this.createAndAttach('div', {class: 'app__footer'}, [
             this.$refs.controls = ReproductionControls.instantiate(this.api)
-        ]);
+        ]);      
 
-        var mainTab = this.$refs.stage.createTab('main-tab', true);
-
-        var home = HashRequest.createFromUrl('#home');
-        home.meta.title = 'Home';
-        mainTab.goTo(home);
+        if (!this.restoreTabs()) {
+            this.openHomePage();
+        }
 
         //------------------------------
-
 
         this.addEventListener('queue:item-selected',          this.onItemSelected.bind(this));
         this.addEventListener('player:ended',                 this.onPlayerEnded.bind(this));
@@ -144,6 +145,7 @@ class App extends CustomElement
         this.addEventListener('queue:intention:backward',     this.rewindTheQueue.bind(this));
         this.addEventListener('queue:intention:jump',         this.onJumpLine.bind(this));
         this.addEventListener('queue:intention:play-it-next', this.onPlayNext.bind(this));
+        this.addEventListener('tabbed-router:updated',        this.onNavigationUpdate.bind(this));
 
         this.addEventListener('playlist:added', () =>
         {
@@ -465,6 +467,67 @@ class App extends CustomElement
         }
 
         return this.api.discover.resources(params);
+    }
+
+    onNavigationUpdate(evt)
+    {
+        this.saveTabs();
+    }
+
+    saveTabs() 
+    {
+        var requests = [];
+
+        var tabs = this.$refs.stage.tabs;
+        for (var tabId in tabs) {
+            var tab = tabs[tabId];
+            var request = tab.childNodes[0].request || null;
+            if (request) {
+                requests.push(Serialization.serialize(request));
+            }
+        }
+        
+        this.navigationState.set('requests', requests);
+    }
+
+    restoreTabs() 
+    {
+        var requests = this.loadTabs();
+        var focus = false;
+        var n = 0;
+        for (var r of requests) {
+            focus = n == requests.length -1;
+            this.$refs.stage.openInNewTab(r, focus);
+            n++;
+        }
+
+        return requests.length;
+    }
+
+    openHomePage() 
+    {
+        var mainTab = this.$refs.stage.createTab('main-tab', true);
+        var home = HashRequest.createFromUrl('#home');
+        home.meta.title = 'Home';
+        mainTab.goTo(home);
+    }
+
+    loadTabs() 
+    {
+        var serializedRequests = this.navigationState.get('requests', []);
+        var requests = [];
+        var ins;
+
+        for (var s of serializedRequests) {
+            var values = Object.values(s);
+            // thanks to webpack renaming the constructor's parameters, Instantiator will not be an option here.
+            // var instantiator = new Instantiator(HashRequest, s);
+            // var ins = instantiator.instantiate();
+            ins = new HashRequest(...values);
+            requests.push(ins);
+        }
+
+        return requests;
     }
 }
 
