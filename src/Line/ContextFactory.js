@@ -34,12 +34,13 @@ class ContextFactory
             break;
         }
 
-        if (classe) {
+        if (!classe) {
             return null;
         }
 
         var inst = new Instantiator(classe, dependencies);
-        return inst.instantiate();
+        var context = inst.instantiate();
+        return context;
     }
 }
 

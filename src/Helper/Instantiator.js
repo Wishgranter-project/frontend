@@ -20,7 +20,8 @@ class Instantiator
      */
     compileValues()
     {
-        var constructorParameters = this.getConstructorParameters();
+        var parametersString = this.getConstructorParemetersString();
+        var constructorParameters = this.getConstructorParameters(parametersString);
         var values = [];
 
         for (var parameter of constructorParameters) {
@@ -31,7 +32,7 @@ class Instantiator
                 var value = parameter.default;
             } else {
                 console.log(parameter);
-                throw `Could not instantiate ${this.class.name}`;
+                throw `Could not instantiate ${this.classe.name}`;
             }
 
             values.push(value);
@@ -42,7 +43,12 @@ class Instantiator
 
 
     /**
+     * Get the parameters of the constructor method.
+     *
      * @protected
+     *
+     * @return string
+     *   E.g.: "param1, param2 = 'default value'"
      */
     getConstructorParemetersString()
     {
@@ -50,13 +56,30 @@ class Instantiator
     }
 
     /**
+     * Returns an array containing the parameters of the constructor.
+     *
      * @protected
+     *
+     * @param {string} parametersString
+     *   E.g.: "param1, param2 = 'default value'"
+     *
+     * @return array
+     *   E.g.: [
+     *    {
+     *      name: 'param1',
+     *      noDefault: true
+     *    },
+     *    {
+     *      name: 'param2',
+     *      default: 'default value'
+     *    }
+     *   ]
      */
-    getConstructorParameters()
+    getConstructorParameters(parametersString)
     {
         var constuctorParameters = [];
 
-        var parameterStrings = this.getConstructorParemetersString().split(',');
+        var parameterStrings = parametersString.split(',');
 
         for (var ps of parameterStrings) {
             constuctorParameters.push(this.parseParemeter(ps));
@@ -101,7 +124,7 @@ class Instantiator
             return null;
         }
 
-        if (string == 'false') {
+        if (string == 'false' || string == '!1') {
             return false;
         }
 
