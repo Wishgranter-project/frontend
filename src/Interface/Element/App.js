@@ -43,7 +43,7 @@ class App extends CustomElement
     __construct(api) 
     {
         this.api                 = api;
-        this.routeCollection     = this.setUpRouteCollection(api);
+        this.routeCollection     = this.instantiateRouteCollection(api);
         this.state               = new State('showrunner.state');
         this.navigationState     = new State('navigation.state');
         this.contextFactory      = new ContextFactory(api);
@@ -227,7 +227,7 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    setUpRouteCollection(api) 
+    instantiateRouteCollection(api) 
     {
         var collection = new RouteCollection();
 
@@ -267,7 +267,6 @@ class App extends CustomElement
         return collection;
     }
 
-
     async onJumpLine(evt) 
     {
         var { from, to } = evt.detail;
@@ -276,6 +275,13 @@ class App extends CustomElement
         if (to == 0) {
             this.playItem(target);
         }
+    }
+
+    async onPlayerEnded(evt) 
+    {
+        console.log('-------------------------------');
+        console.log('Show runner: song ended, next.');
+        return this.advanceTheQueue();
     }
 
     onPlayNext(evt) 
@@ -287,40 +293,15 @@ class App extends CustomElement
             : this.queue.jump(item, 1);
     }
 
-    async onItemSelected(evt) 
-    {
-        var { item, initialBatch, meta } = evt.detail;
-
-        console.log('-------------------------------');
-        console.log('Show runner: New item selected');
-
-        var context = this.contextFactory.instantiate(meta);
-        var queue   = Queue.instantiate(initialBatch, context);
-
-        return queue
-            ? this.playNewQueue(queue)
-            : this.jumpTheQueue(item);
-    }
-
-    /**
-     * Keeps queue, but jump item to the front of it.
-     */
-    async jumpTheQueue(item) 
-    {
-        this.queue.dropIn(item);
-        // add previous to history etc
-        return this.playItem(item);
-    }
-
     /**
      * Clears old queue, set this new one up.
      */
-    async playNewQueue(queue) 
+    async stopAndBeginThisNewQueue(queue) 
     {
         var oldQueue = this.queue;
 
         if (oldQueue.front) {
-            this.addToHistory(oldQueue.front);
+            this.history.add(oldQueue.front);
         }
 
         this.setQueue(queue);
@@ -331,6 +312,7 @@ class App extends CustomElement
     setHistory(history, save = true) 
     {
         this.history = history;
+
         if (save) {
             this.saveHistory(history);
         }
@@ -347,6 +329,7 @@ class App extends CustomElement
     setQueue(queue, save = true) 
     {
         this.queue = queue;
+
         if (save) {
             this.saveQueue(queue);
         }
@@ -364,13 +347,6 @@ class App extends CustomElement
         if (this.$refs.queueDisplay) {
             this.$refs.queueDisplay.showQueue(this.queue, this.history);
         }
-    }
-
-    async onPlayerEnded(evt) 
-    {
-        console.log('-------------------------------');
-        console.log('Show runner: song ended, next.');
-        return this.advanceTheQueue();
     }
 
     async rewindTheQueue(evt) 
@@ -399,25 +375,51 @@ class App extends CustomElement
     {
         return this.queue.getNextInLine().then( (next) => 
         {
-            this.addToHistory(this.queue.front);
-            this.queue.dequeue();
+            var current = this.queue.dequeue();
+            this.history.add(current);
 
-            if (next) {
-                return this.playItem(next);
-            } else {
+            if (!next) {
                 console.log('Showrunner: Nothing else to play');
+                return;
             }
+            
+            return this.playItem(next);
         });
     }
 
-    addToHistory(item) 
+    async onItemSelected(evt) 
     {
-        this.history.add(item);
+        var { item, initialBatch, meta } = evt.detail;
+
+        console.log('-------------------------------');
+        console.log('Show runner: New item selected');
+
+        var context = this.contextFactory.instantiate(meta);
+        var queue   = Queue.instantiate(initialBatch, context);
+
+        // Has a queue attached to it ?
+        if (queue.length) {
+            return this.stopAndBeginThisNewQueue(queue);
+        } else {
+            // Add item to the beginning of the queue.
+            this.queue.dropIn(item);
+            // add previous to history etc
+            return this.playItem(item);
+        }
     }
 
     async playItem(item) 
     {
-        return this.setupItem(item, true);
+        //return this.setupItem(item, true);
+        var isAlbum = item.hasOwnProperty('album') && !item.hasOwnProperty('title');
+        if (isAlbum) {
+            var tracks = await this.api.discover.albums.get(Array.isArray(item.artist) ? item.artist[0] : item.artist, item.album).fetchItems();
+            this.queue.dequeue();
+            this.queue.dropIn(tracks);
+            return this.setupItem(this.queue.front, true);
+        } else {
+            return this.setupItem(item, true);
+        }
     }
 
     async setupItem(item, play = true) 
@@ -519,11 +521,8 @@ class App extends CustomElement
         var ins;
 
         for (var s of serializedRequests) {
-            var values = Object.values(s);
-            // thanks to webpack renaming the constructor's parameters, Instantiator will not be an option here.
-            // var instantiator = new Instantiator(HashRequest, s);
-            // var ins = instantiator.instantiate();
-            ins = new HashRequest(...values);
+            var instantiator = new Instantiator(HashRequest, s);
+            var ins = instantiator.instantiate();
             requests.push(ins);
         }
 

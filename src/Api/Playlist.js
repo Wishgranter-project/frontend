@@ -8,7 +8,7 @@ class Playlist extends Base
         this.playlistId = playlistId;
     }
 
-    read() 
+    async read() 
     {
         return this.apiCall('get', 'api/v1/collection/playlists/' + this.playlistId);
     }
@@ -19,17 +19,17 @@ class Playlist extends Base
         window.open(url.toString(), "_blank");
     }
 
-    getItems(params = null) 
+    async getItems(params = null) 
     {
         return this.apiCall('get', 'api/v1/collection/playlists/' + this.playlistId + '/items', null, params);
     }
 
-    update(data) 
+    async update(data) 
     {
         return this.apiCall('put', 'api/v1/collection/playlists/' + this.playlistId, data, null, { headers: { 'Content-Type': undefined } });
     }
 
-    delete() 
+    async delete() 
     {
         return this.apiCall('delete', 'api/v1/collection/playlists/' + this.playlistId);
     }

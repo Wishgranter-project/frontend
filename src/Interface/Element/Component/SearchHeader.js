@@ -19,7 +19,7 @@ class SearchHeader extends CustomElement
         //     this.$refs.h1 = this.createAndAttach('h1', null, this.title);
         // }
 
-        this.$refs.form = this.createAndAttach('form', { action: '#' + this.request.path, class: 'input-group input-group-horizontal'});
+        this.$refs.form = this.createAndAttach('form', { action: '#' + this.request.path, title: this.title, class: 'input-group input-group-horizontal'});
 
         var input;
         for (var field of this.fields) {

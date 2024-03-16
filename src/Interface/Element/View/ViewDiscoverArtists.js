@@ -18,7 +18,7 @@ class ViewDiscoverArtists extends BaseView
     fetch() 
     {
         return this.hashRequest.queryParams.isEmpty()
-            ? new Promise(() => {return r({data: []});})
+            ? new Promise((r,f) => {return r({data: []});})
             : this.api.discover.artists.search(this.hashRequest.queryParams)
     }
 
@@ -32,7 +32,7 @@ class ViewDiscoverArtists extends BaseView
 
         this.$refs.headerH.createAndAttach('h1', null, 'Discover artist');
 
-        this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, '', [
+        this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, 'Discover artist', [
             {type: 'search', name: 'name', placeholder: 'Name', class: 'main'},
         ]));
     }
@@ -42,7 +42,7 @@ class ViewDiscoverArtists extends BaseView
         var grid = this.createAndAttach('div', {class: 'grid artists'});
 
         for (var ar of response.data) {
-            grid.createAndAttach('a', {href: `#discover:albums?artist=${ar.name}`, class: 'col-6 col-sm-4 col-md-3 col-lg-2'}, [
+            grid.createAndAttach('a', {href: `#discover:albums?artist=${ar.name}`, title: ar.name, class: 'col-6 col-sm-4 col-md-3 col-lg-2'}, [
                 this.create('span', {class: 'card'}, [
                     (ar.thumbnail ? this.create('img', {src: ar.thumbnail}) : null),
                     this.create('h4', null, [ar.name])

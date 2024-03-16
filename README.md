@@ -11,12 +11,14 @@ This repository contains the front-end, the server can be found [here](https://g
 List of features and status of implemenetation.  
 
 ## Playlists
+
 :heavy_check_mark: List playlist.  
 :heavy_check_mark: Delete playlists.  
 :heavy_check_mark: Edit playlists.  
 :heavy_check_mark: Create new playlists.  
 
 ## Playlist items
+
 :heavy_check_mark: Create new items.  
 :heavy_check_mark: Edit existing items.  
 :heavy_check_mark: Search items by title, genre and artist, among all playlists as well as individually.  
@@ -24,16 +26,19 @@ List of features and status of implemenetation.
 :x: Change order of items inside playlists.  
 
 ## Navigability
+
 :heavy_check_mark: Tabs: open links into tabs.  
-:x: Tabs survive refreshing the page.
+:heavy_check_mark: Tabs survive refreshing the page.
 
 ### Pagination
+
 :heavy_check_mark: Pagination.  
 :heavy_check_mark: Prev/Next buttons after a minimum of number of pages.  
 :heavy_check_mark: Limited number of pages to be displayed at once.  
 :heavy_check_mark: visual indication of the current page.  
 
 ## Discoverability
+
 :x: Search artist by musical genre.  
 :x: Search for similar artists.  
 :heavy_check_mark: Search artists by name.  
@@ -43,16 +48,19 @@ List of features and status of implemenetation.
 :heavy_check_mark: Add single track to playlist.  
 
 ## Reproduction
+
 :heavy_check_mark: Reproduce multimidia from different sources.  
 :heavy_check_mark: Youtube videos.  
 :heavy_check_mark: mp3 files.  
 
 ### History system
+
 :heavy_check_mark: History system to save items previously reproduced.  
 :heavy_check_mark: History survives page refresh.  
 :heavy_check_mark: Add items into playlists.  
 
 ### Queue system
+
 :heavy_check_mark: Queue system.  
 :heavy_check_mark: Inspect the contents of the queue.  
 :heavy_check_mark: Queue survives refreshing the page.  
@@ -68,6 +76,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Add queue items into playlists.  
 
 ### Playback control
+
 :heavy_check_mark: Update timer and progress bar as playback progresses.   
 :heavy_check_mark: Rewind/fast-forward by clicking in the progress bar.  
 :heavy_check_mark: Pause/play button.  

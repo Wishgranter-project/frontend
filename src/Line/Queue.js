@@ -20,12 +20,11 @@ class Queue extends Array
         return queue;
     }
 
-    jump(item, index = 1) 
-    {
-        this.splice(index, 0, item);
-        this.updatedCallback();
-    }
-
+    /**
+     * Adds item(s) to the end of the queue.
+     *
+     * @param {object|array} item
+     */
     enqueue(item) 
     {
         Array.isArray(item)
@@ -33,17 +32,24 @@ class Queue extends Array
             : this.enqueueSingle(item);
     }
 
+    /**
+     * Removes the item in front ( index 0 ) and returns it.
+     *
+     * @return {object}
+     */
     dequeue() 
     {
-        var previousFrontOfTheLine = this[0] || null;
-        this.splice(0, 1);
-        this.updatedCallback();
-        return previousFrontOfTheLine;
+        return this.removeIndex(0);
     }
 
+    /**
+     * Removes the item in the specified index and returns it.
+     *
+     * @return {object}
+     */
     removeIndex(index) 
     {
-        var removedItem = this[index];
+        var removedItem = this[index] || null;
         this.splice(index, 1);
         this.updatedCallback();
         return removedItem;
@@ -56,7 +62,27 @@ class Queue extends Array
      */
     dropIn(item) 
     {
-        this.splice(0, 0, item);
+        this.jump(item, 0);
+    }
+
+    /**
+     * Adds a new item to the specified position.
+     *
+     * @param {object|array} item 
+     * @param {int} index 
+     */
+    jump(item, index = 1) 
+    {
+        if (Array.isArray(item)) {
+            // var params = [index, 0].concat(item);
+            // this.splice([...params]);
+            for (var i = 0; i < item.length; i++) {
+                this.jump(item[i], i);
+            }
+        } else {
+            this.splice(index, 0, item);
+        }
+
         this.updatedCallback();
     }
 
@@ -120,10 +146,12 @@ class Queue extends Array
     {
         console.log('Queue: Searching for more content')
 
+        // Just fucking wait.
         if (this.fetchingPromise) {
             return this.fetchingPromise;
         }
 
+        // No context, just return an empty array.
         if (!this.context) {
             return new Promise((success, fail) => 
             {
@@ -132,7 +160,7 @@ class Queue extends Array
         }
 
         return this.fetchingPromise = 
-        this.context.fetchMore(this).then( (response) => 
+        this.context.fetchMore(this).then((response) => 
         {
             this.fetchingPromise = null;
 

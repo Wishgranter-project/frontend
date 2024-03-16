@@ -54,7 +54,7 @@ class PlaylistItem extends CustomElement
             this.$refs.body.createAndAttach('span', {class: 'playlist-item__artist playlist-item__info'}, [ 
                 this.create('a', {href: `#search?artist=${artist}`, title: artist }, artist), 
                 ' ',
-                this.create('a', {href: `#discover:albums?artist=${artist}`, title: `Search ${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
+                this.create('a', {href: `#discover:albums?artist=${artist}`, title: `${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
             ]);
         }
 

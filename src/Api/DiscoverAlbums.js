@@ -1,4 +1,5 @@
 import Base from './Base';
+import Album from './Album';
 
 class DiscoverAlbums extends Base
 {
@@ -9,7 +10,7 @@ class DiscoverAlbums extends Base
 
     get(artist, title) 
     {
-        return this.apiCall('get', 'api/v1/discover/album', null, {artist, title});
+        return new Album(this.httpClient, artist, title);
     }
 }
 

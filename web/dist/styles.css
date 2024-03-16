@@ -497,16 +497,25 @@ div {
   text-align: center;
   background: #242424;
 }
-
-.card img {
+.card .thumbnail {
+  display: block;
   width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
   margin: 0px 0px 10px 0px;
 }
-
+.card .thumbnail img {
+  width: auto;
+  height: 100%;
+}
 .card h4 .fa {
   margin-left: 10px;
 }
+.card button {
+  width: 100%;
+}
 
+/*--------------------------------------------*/
 .simple .grid.releases {
   padding: 10px;
   grid-column-gap: 10px;

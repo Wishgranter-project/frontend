@@ -12,7 +12,7 @@ class ViewAlbum extends BaseView
         var artist = this.hashRequest.queryParams.get('artist');
         var title  = this.hashRequest.queryParams.get('title');
 
-        this.api.discover.albums.get(artist, title).then((response) =>
+        this.api.discover.albums.get(artist, title).read().then((response) =>
         {
             this.subRenderHeader(response);
             this.subRenderTracks(response);

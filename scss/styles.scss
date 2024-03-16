@@ -30,17 +30,31 @@
     border-radius: 5px;
     text-align: center;
     background: #242424;
-}
 
-    .card img {
+
+    .thumbnail {
+        display: block;
         width: 100%;
+        aspect-ratio: 1;
+        overflow: hidden;
         margin: 0px 0px 10px 0px;
+
+        img {
+            width: auto;
+            height: 100%;
+        }
     }
 
-    .card h4 .fa {
+    h4 .fa {
         margin-left: 10px;
     }
 
+    button {
+        width: 100%;
+    }
+}
+
+/*--------------------------------------------*/
 
 .simple .grid.releases {
     padding: 10px;
