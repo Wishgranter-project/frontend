@@ -46,8 +46,8 @@ class PlaylistItem extends CustomElement
     {
         this.$refs.body   = this.createAndAttach('div', {class: 'playlist-item__body'});
 
-        if (this.item.title) {
-            this.$refs.title = this.$refs.body.createAndAttach('span', {class: 'playlist-item__title'}, [ this.item.title ]);
+        if (this.item.title || this.item.album) {
+            this.$refs.title = this.$refs.body.createAndAttach('span', {class: 'playlist-item__title'}, [ (this.item.title || this.item.album) ]);
         }
 
         for (var artist of this.item.artist) {

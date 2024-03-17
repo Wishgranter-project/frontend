@@ -67,7 +67,8 @@ List of features and status of implemenetation.
 :heavy_check_mark: Support playlists: play from start to finish.  
 :heavy_check_mark: Support search results: play from start to finish.  
 :heavy_check_mark: Support discoverability: add items from albums.  
-:x: Support discoverability: add entire albums.  
+:heavy_check_mark: add entire albums.  
+:heavy_check_mark: add artist's entire discographies.  
 :heavy_check_mark: Skipp items.  
 :heavy_check_mark: Rewind, play previous items.  
 :heavy_check_mark: Jump selected items to the front of the queue.  

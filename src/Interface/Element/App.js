@@ -389,22 +389,21 @@ class App extends CustomElement
 
     async onItemSelected(evt) 
     {
-        var { item, initialBatch, meta } = evt.detail;
+        var { item, queue } = evt.detail;
 
         console.log('-------------------------------');
         console.log('Show runner: New item selected');
 
-        var context = this.contextFactory.instantiate(meta);
-        var queue   = Queue.instantiate(initialBatch, context);
-
         // Has a queue attached to it ?
-        if (queue.length) {
+        if (queue && queue.length) {
             return this.stopAndBeginThisNewQueue(queue);
         } else {
             // Add item to the beginning of the queue.
             this.queue.dropIn(item);
             // add previous to history etc
-            return this.playItem(item);
+            return Array.isArray(item)
+                ? this.playItem(item[0])
+                : this.playItem(item);
         }
     }
 

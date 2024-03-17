@@ -1,11 +1,11 @@
-import BaseView     from './BaseView';
-import PlaylistItem from '../Component/PlaylistItem';
+import MusicPlayingView from './MusicPlayingView';
+import PlaylistItem     from '../Component/PlaylistItem';
 
-class ViewAlbum extends BaseView 
+class ViewAlbum extends MusicPlayingView 
 {
     static elementName = 'view-release';
 
-    async render() 
+    async render()
     {
         this.classList.add('view--release');
 
@@ -21,7 +21,7 @@ class ViewAlbum extends BaseView
         this.addEventListener('queue:item-selected', this.onItemSelected.bind(this));
     }
 
-    subRenderHeader(response) 
+    subRenderHeader(response)
     {
         this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
             this.$refs.headerH = this.create('div', { class: 'header__header' }),
@@ -32,16 +32,18 @@ class ViewAlbum extends BaseView
         this.$refs.headerH.createAndAttach('img', {src: response.data.thumbnail || 'dist/img/missing-cover-art.webp' });
 
         this.$refs.headerB.createAndAttach('h1', null, response.data.title);
-        this.$refs.headerB.createAndAttach('h3', null, this.create('a', { href: '#discover:albums?artist=' + response.data.artist }, response.data.artist));
+        this.$refs.headerB.createAndAttach('h3', null, this.create('a', { title: response.data.artist, href: '#discover:albums?artist=' + response.data.artist }, response.data.artist));
 
-        this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, 
-            this.$refs.addButton = this.create('button', { title: 'Add new item to playlist' }, this.create('span', { class: 'fa fa-plus' }))
-        );
+        this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, [ 
+            this.$refs.playButton = this.create('button', { title: 'Play album' }, this.create('span', { class: 'fa fa-play' })),
+            this.$refs.addButton = this.create('button', { title: 'Add all tracks to playlist' }, this.create('span', { class: 'fa fa-plus' }))
+        ]);
 
-        this.$refs.addButton.addEventListener('click', this.addEntireRelease.bind(this));
+        this.$refs.playButton.addEventListener('click', this.playEntireAlbum.bind(this));
+        this.$refs.addButton.addEventListener('click', this.addEntireAlbumToPlaylist.bind(this));
     }
 
-    subRenderTracks(response) 
+    subRenderTracks(response)
     {
         if (!response.data.tracks) {
             return;
@@ -54,37 +56,25 @@ class ViewAlbum extends BaseView
         }
     }
 
-    addEntireRelease() 
+    addEntireAlbumToPlaylist()
     {
-        var items = [];
-
-        this.querySelectorAll(PlaylistItem.elementName).forEach((el) => 
-        {
-            items.push(el.item);
-        });
-
+        var items = this.getPlayableItems();
         this.fireEvent('item:intention:add-to-collection', { items });
     }
 
-    onItemSelected(evt) 
+    playEntireAlbum(evt)
     {
-        var initialBatch = [];
-        for (var item of this.querySelectorAll(PlaylistItem.elementName)) {
-            initialBatch.push(item.item);
-        }
+        var items = this.getPlayableItems();
+        this.fireEvent('queue:item-selected', {
+            item: items
+        });
+    }
 
-        for (var key in initialBatch) {
-            if (initialBatch[key] == evt.detail.item) {
-                initialBatch = initialBatch.slice(key);
-                break;
-            }
-        }
-
-        evt.detail.initialBatch = initialBatch;
-        evt.detail.meta = {
-            id: 'album',
-            noMore: false
-        };
+    // Play the item selected and subsequent ones, leave the ones before it.
+    onItemSelected(evt)
+    {
+        var items = this.getPlayableItems(evt.detail.item);
+        evt.detail.item = items;
     }
 }
 

@@ -1,4 +1,8 @@
-class ContextBase 
+/**
+ * A queue context knows how to fetch more items.
+ * It is used maily for pagination.
+ */
+class ContextBase
 {
     /**
      * @param Api api

@@ -32,6 +32,7 @@
     &.is-open &__drawer {
         width: 500px;
         margin: 0px 0px 0px -500px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     }
 
 }

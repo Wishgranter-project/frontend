@@ -1,10 +1,12 @@
-import BaseView     from './BaseView';
-import PlaylistItem from '../Component/PlaylistItem';
-import SearchHeader from '../Component/SearchHeader';
-import Pagination   from '../Component/Pagination';
-import Events       from '../../../Helper/Events';
+import MusicPlayingView  from './MusicPlayingView';
+import PlaylistItem      from '../Component/PlaylistItem';
+import SearchHeader      from '../Component/SearchHeader';
+import Pagination        from '../Component/Pagination';
+import Events            from '../../../Helper/Events';
+import Queue             from '../../../Line/Queue';
+import ContextPlaylist   from '../../../Line/ContextPlaylist';
 
-class ViewPlaylist extends BaseView 
+class ViewPlaylist extends MusicPlayingView 
 {
     static elementName = 'view-playlist';
 
@@ -114,25 +116,11 @@ class ViewPlaylist extends BaseView
 
     onItemSelected(evt) 
     {
-        var initialBatch = [];
-        for (var item of this.querySelectorAll(PlaylistItem.elementName)) {
-            initialBatch.push(item.item);
-        }
-
-        for (var key in initialBatch) {
-            if (initialBatch[key] == evt.detail.item) {
-                initialBatch = initialBatch.slice(key);
-                break;
-            }
-        }
-
-        evt.detail.initialBatch = initialBatch;
-        evt.detail.meta = {
-            id: 'playlist',
-            noMore: false,
-            queryParams: this.hashRequest.queryParams,
-            playlistId: this.hashRequest.attributes.playlistId
-        };
+        var context      = new ContextPlaylist(this.api, false, this.hashRequest.queryParams, this.hashRequest.attributes.playlistId);
+        var initialBatch = this.getPlayableItems(evt.detail.item);
+        var queue        = Queue.instantiate(initialBatch, context)
+        
+        evt.detail.queue = queue;
     }
 }
 

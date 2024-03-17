@@ -1,6 +1,7 @@
-import SearchHeader from '../Component/SearchHeader';
-import ViewPlaylist from './ViewPlaylist';
-import PlaylistItem from '../Component/PlaylistItem';
+import SearchHeader  from '../Component/SearchHeader';
+import ViewPlaylist  from './ViewPlaylist';
+import Queue         from '../../../Line/Queue';
+import ContextSearch from '../../../Line/ContextSearch';
 
 class ViewSearch extends ViewPlaylist 
 {
@@ -51,24 +52,11 @@ class ViewSearch extends ViewPlaylist
 
     onItemSelected(evt) 
     {
-        var initialBatch = [];
-        for (var item of this.querySelectorAll(PlaylistItem.elementName)) {
-            initialBatch.push(item.item);
-        }
-
-        for (var key in initialBatch) {
-            if (initialBatch[key] == evt.detail.item) {
-                initialBatch = initialBatch.slice(key);
-                break;
-            }
-        }
-
-        evt.detail.initialBatch = initialBatch;
-        evt.detail.meta = {
-            id: 'search',
-            noMore: false,
-            queryParams: this.hashRequest.queryParams
-        };
+        var context      = new ContextSearch(this.api, false, this.hashRequest.queryParams);
+        var initialBatch = this.getPlayableItems(evt.detail.item);
+        var queue        = Queue.instantiate(initialBatch, context)
+        
+        evt.detail.queue = queue;
     }
 }
 
