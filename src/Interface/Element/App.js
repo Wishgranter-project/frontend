@@ -177,7 +177,7 @@ class App extends CustomElement
 
         this.addEventListener('item:intention:delete', (evt) => 
         {
-            var doRemove = confirm('Are you sure you want to remove it ?');
+            var doRemove = confirm('Are you sure you want to remove it from your collection ?');
             if (doRemove) {
                 this.api.collection.playlistItems.get(evt.detail.uuid).delete();
                 evt.target.remove();
@@ -345,7 +345,7 @@ class App extends CustomElement
     updateReproductionTray() 
     {
         if (this.$refs.queueDisplay) {
-            this.$refs.queueDisplay.showQueue(this.queue, this.history);
+            this.$refs.queueDisplay.refresh(this.queue, this.history);
         }
     }
 

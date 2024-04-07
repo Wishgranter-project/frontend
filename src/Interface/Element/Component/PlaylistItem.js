@@ -1,8 +1,6 @@
-import CustomElement from '../CustomElement';
-//import PopupButton from './PopupMenu/PopupButton';
-import FloatMenu from './FloatMenu/FloatMenu';
+import ContextualElement from './ContextualElement';
 
-class PlaylistItem extends CustomElement 
+class PlaylistItem extends ContextualElement 
 {
     static elementName = 'playlist-item';
 
@@ -11,11 +9,12 @@ class PlaylistItem extends CustomElement
         PlaylistItem.sanitizeItem(item);
         this.item    = item;
         this.options = options;
-        this.actions = this.getContextActions();
+        super.__construct();
     }
 
     render() 
     {
+        super.render();
         this.innerHTML = ``;
         this.classList.add('playlist-item');
 
@@ -67,13 +66,7 @@ class PlaylistItem extends CustomElement
 
     subRenderFooter() 
     {
-        this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});       
-
-        this.addEventListener('contextmenu', (evt) => 
-        {
-            evt.preventDefault();
-            this.openContextMenu(evt);
-        });
+        this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});
 
         this.$refs.popupButton = this.$refs.footer.createAndAttach('button', null, this.create('span', { class: 'fa fa-ellipsis-v' }));
         this.$refs.popupButton.addEventListener('click', (evt) => 
@@ -134,13 +127,6 @@ class PlaylistItem extends CustomElement
         };
 
         return actions;
-    }
-
-    openContextMenu(evt) 
-    {
-        var menu = FloatMenu.instantiate(this.actions);
-        this.append(menu);
-        menu.open(evt, evt.clientX, evt.clientY);
     }
 
     static sanitizeItem(item) {

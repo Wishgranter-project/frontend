@@ -45,6 +45,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Search albuns by artist name.  
 :heavy_check_mark: Add items from search results into playlists.  
 :heavy_check_mark: Add entire albuns worth of tracks to playlist.  
+:heavy_check_mark: Add entire albuns to playlist.  
 :heavy_check_mark: Add single track to playlist.  
 
 ## Reproduction
@@ -73,6 +74,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Rewind, play previous items.  
 :heavy_check_mark: Jump selected items to the front of the queue.  
 :heavy_check_mark: Cut the line, play next button.  
+:heavy_check_mark: Re-order queue by dragging and dropping.  
 :heavy_check_mark: Remove specific items from the queue.  
 :heavy_check_mark: Add queue items into playlists.  
 

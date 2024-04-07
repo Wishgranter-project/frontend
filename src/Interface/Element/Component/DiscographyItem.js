@@ -1,16 +1,18 @@
-import CustomElement from '../CustomElement';
+import ContextualElement from './ContextualElement';
 
-class DiscographyItem extends CustomElement 
+class DiscographyItem extends ContextualElement 
 {
     static elementName = 'discography-item';
 
     __construct(album) 
     {
         this.album = album;
+        super.__construct();
     }
 
     render()
     {
+        super.render();
         this.classList.add('card');
         this.classList.add('discography-item');
 
@@ -75,6 +77,39 @@ class DiscographyItem extends CustomElement
         ]);
     }
 
+    getContextActions() 
+    {
+        var item = {
+            artist: this.album.artist,
+            album: this.album.title
+        };
+
+        var actions = {
+            addToPlaylist: {
+                title: 'Add to playlist',
+                helpText: 'choose a playlist',
+                icon: 'fa-plus',
+                onClick: () => 
+                {
+                    this.fireEvent('item:intention:add-to-collection', {
+                        items: [ item ]
+                    });
+                }
+            },
+
+            playNext: {
+                title: 'Play next',
+                helpText: 'play next',
+                icon: 'fa-minus',
+                onClick: () =>
+                {
+                    this.fireEvent('queue:intention:play-it-next', {item: item});
+                }
+            }
+        };
+
+        return actions;
+    }
 }
 
 DiscographyItem.register();

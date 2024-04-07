@@ -104,6 +104,28 @@ class Queue extends Array
         return target;
     }
 
+    /**
+     * Gets the position a specific item finds itself in.
+     *
+     * @param {object} item
+     *
+     * @return {int}
+     *   The position.
+     */
+    getPosition(item)
+    {
+        for (var i = 0; i < this.length; i++) {
+            if (
+                item == this[i] ||
+                (item.uuid && this[i].uuid && item.uuid == this[i].uuid)
+            ) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     clear() 
     {
         this.splice(0, this.length);

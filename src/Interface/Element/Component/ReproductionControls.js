@@ -49,6 +49,12 @@ class ReproductionControls extends CustomElement
             console.log('Reproduction: paused');
         });
 
+        this.addEventListener('playable:error', (evt) =>
+        {
+            console.error(evt.detail);
+            this.notIt();
+        });
+
         this.setupResource(0, this.autoPlay);
     }
 

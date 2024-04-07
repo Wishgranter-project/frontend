@@ -12,6 +12,20 @@ URLSearchParams.prototype.without = function(name) { var newSearch = new URLSear
 URLSearchParams.prototype.withAdded = function(name, value) { var newSearch = new URLSearchParams(this.toString()); newSearch.append(name, value); return newSearch; }
 URLSearchParams.prototype.isEmpty = function() { return this.toString().length == 0; }
 
+HTMLElement.prototype.getAncestor = function(selector)
+{
+    var element = this;
+
+    while (element.parentNode) {
+        if (element.matches(selector)) {
+            return element;
+        }
+        element = element.parentNode;
+    }
+
+    return null;
+}
+
 //----------------------------------------
 
 const api  = new Api(window.playerSettings.backEndBaseUrl);

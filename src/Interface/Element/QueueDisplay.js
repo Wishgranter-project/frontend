@@ -44,25 +44,74 @@ class QueueDisplay extends CustomElement
                 ]
             )
         );
+
+        this.addEventListener('dragstart', (evt) => 
+        {
+            this.dragging = evt.target;
+        });
+
+        this.addEventListener('dragend', (evt) => 
+        {
+            this.dragging = null;
+        });
     }
 
-    showQueue(queue, history) 
+    onDrop(evt)
+    {
+        var droppedLi   = this.dragging;
+        var droppedOnLi = evt.target.getAncestor('li');
+
+        var from = this.queue.getPosition(droppedLi.children[0].item);
+        var to   = this.queue.getPosition(droppedOnLi.children[0].item);
+
+        // Don't let drag the front of the queue. there are different ways.
+        to = to == 0
+            ? 1
+            : to;
+
+        if (from != to) {
+            this.queue.move(from, to);
+        }
+    }
+
+    refresh(queue, history) 
+    {
+        this.queue = queue;
+        this.history = history;
+
+        this.refreshQueue(queue);
+        this.refreshHistory(history);
+    }
+
+    refreshHistory(history) 
     {
         var item;
         this.$refs.history.clear();
-        this.$refs.queued.clear();
 
         for (var i = history.length -1; i >= 0; i--) {
             if (!history[i]) { continue; }
             item = PlaylistItem.instantiate(history[i]);
             this.$refs.history.createAndAttach('li', null, item);
         }
+    }
+
+    refreshQueue(queue)
+    {
+        var item, li, attributes;
+        this.$refs.queued.clear();
 
         for (var i = 0; i < queue.length; i++) {
             if (!queue[i]) { continue; }
             item = PlaylistItem.instantiate(queue[i]);
             this.addContextMenuItems(item, queue, i);
-            this.$refs.queued.createAndAttach('li', null, item).addEventListener('queue:item-selected', (evt) =>
+
+            // Don't let drag the front of the queue. there are different ways.
+            attributes = i > 0
+                ? {'draggable': 'true'}
+                : null;
+
+            li = this.$refs.queued.createAndAttach('li', attributes, item)
+            li.addEventListener('queue:item-selected', (evt) =>
             {
                 evt.stopPropagation();
                 var li = evt.target.parentNode;
@@ -74,6 +123,9 @@ class QueueDisplay extends CustomElement
 
                 this.fireEvent('queue:intention:jump', { from, to: 0 });
             });
+
+            li.addEventListener('dragover', (evt) => { evt.preventDefault() });
+            li.addEventListener('drop', this.onDrop.bind(this));
         }
     }
 

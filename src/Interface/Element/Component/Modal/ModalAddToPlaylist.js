@@ -36,11 +36,30 @@ class ModalAddToPlaylist extends Modal
         var playlist = evt.target.getAttribute('data-playlist');
         var promise;
         var promises = [];
+        var i;
 
         for (var item of this.items) {
-            promise = item.uuid
-                ? this.api.collection.playlistItems.create({ playlist, uuid: item.uuid })
-                : this.api.collection.playlistItems.create({ playlist, title: item.title, artist: item.artist });
+
+            if (item.uuid) {
+                promise = this.api.collection.playlistItems.create({ playlist, uuid: item.uuid });
+            } else {
+
+                i = {
+                    playlist,
+                    artist: item.artist
+                };
+
+                if (item.title) {
+                    i.title = item.title;
+                }
+
+                if (item.album) {
+                    i.album = item.album;
+                }
+
+                promise = this.api.collection.playlistItems.create(i);
+            }
+
             promises.push(promise);
         }
 
