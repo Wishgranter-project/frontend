@@ -1,5 +1,6 @@
 import MusicPlayingView  from './MusicPlayingView';
 import PlaylistItem      from '../Component/PlaylistItem';
+import ListOfItems       from '../Component/ListOfItems';
 import SearchHeader      from '../Component/SearchHeader';
 import Pagination        from '../Component/Pagination';
 import Events            from '../../../Helper/Events';
@@ -102,11 +103,9 @@ class ViewPlaylist extends MusicPlayingView
             return;
         }
 
-        this.$refs.playlist = this.createAndAttach('div', { class: 'playlist' });
-
-        for (var item of response.data) {
-            this.$refs.playlist.attach(PlaylistItem.instantiate(item));
-        }
+        this.$refs.playlist = ListOfItems.instantiate(response.data);
+        this.$refs.playlist.classList.add('playlist');
+        this.append(this.$refs.playlist);
     }
 
     subRenderNavigation(response) 

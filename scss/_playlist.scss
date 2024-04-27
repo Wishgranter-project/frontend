@@ -1,6 +1,27 @@
-.playlist {    
+.list-of-items {
+
+    ol {
+        list-style: none;
+        padding: 0px;
+    }
+
+    li + li {
+        margin: 0px;
+    }
+
+    li:not(:first-child) {
+        .playlist-item {
+            border-top: solid 1px #272727;
+        }
+    }
+
+    li.selected {
+        .playlist-item {
+            border-color: #bde6fb;
+        }
+    }
+
     .playlist-item {
-        border-top: solid 1px #272727;
         align-items: stretch;
 
         &__body {
@@ -11,9 +32,5 @@
         .popup-button {
             height: 100%;
         }
-    }
-
-    .playlist-item + .playlist-item {
-        margin-top: -1px;
     }
 }

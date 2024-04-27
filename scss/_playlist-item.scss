@@ -1,6 +1,7 @@
 .playlist-item {
     display: flex;
     align-items: center;
+    user-select: none;
 
     button {
         border-color: transparent;
@@ -51,5 +52,35 @@
     &__footer {
         width: auto;
         margin-left: 10px;
+    }
+}
+
+.selected {  
+    .playlist-item {
+        color: #444;
+        border-color: #bde6fb;
+        background-color: #bde6fb;
+
+        &__info {
+            display: inline-block;
+            font-size: 16px;
+            line-height: 20px;
+
+            a:link {
+                color: rgba(0, 0, 0, 0.15);
+            }
+
+            a:hover {
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            .fa {
+                opacity: 0;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
     }
 }

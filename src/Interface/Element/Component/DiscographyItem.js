@@ -1,5 +1,9 @@
 import ContextualElement from './ContextualElement';
 
+/**
+ * Discography item represents an item in an artist's discography.
+ * Be it a full featured album or a single.
+ */
 class DiscographyItem extends ContextualElement 
 {
     static elementName = 'discography-item';
