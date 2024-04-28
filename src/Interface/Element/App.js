@@ -1,5 +1,5 @@
 import CustomElement        from './CustomElement';
-import AppNavigation        from './Component/AppNavigation';
+import AppNavigation        from './Component/Navigation/AppNavigation';
 import ReproductionControls from './Component/ReproductionControls';
 //=============================================================================
 import ViewWelcome          from './View/ViewWelcome';
