@@ -1,4 +1,5 @@
 import MusicPlayingView from './MusicPlayingView';
+import ListOfItems       from '../Component/ListOfItems';
 import PlaylistItem     from '../Component/PlaylistItem';
 
 class ViewAlbum extends MusicPlayingView 
@@ -49,11 +50,14 @@ class ViewAlbum extends MusicPlayingView
             return;
         }
 
-        this.$refs.playlist = this.createAndAttach('div', { class: 'playlist' });
-
+        var tracks = [];
         for (var t of response.data.tracks) {
-            this.$refs.playlist.append(PlaylistItem.instantiate({ title: t, artist: response.data.artist, album: response.data.title }))
+            tracks.push({ title: t, artist: response.data.artist, album: response.data.title });
         }
+
+        this.$refs.playlist = ListOfItems.instantiate(tracks);
+        this.$refs.playlist.classList.add('playlist');
+        this.append(this.$refs.playlist);
     }
 
     addEntireAlbumToPlaylist()

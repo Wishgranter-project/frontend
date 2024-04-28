@@ -22,6 +22,7 @@ class ListOfItems extends CustomElement
 
         this.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.addEventListener('mouseup', this.onMouseUp.bind(this));
+        this.addEventListener('dragstart', this.onDragStart.bind(this));
 
         // this.addEventListener('dragstart', (evt) => 
         // {
@@ -29,6 +30,12 @@ class ListOfItems extends CustomElement
         // });
 
         this.addEventListener('item:intention:add-to-collection', this.onAddToCollection.bind(this)) ;
+    }
+
+    onDragStart(evt)
+    {
+        var json = JSON.stringify(this.getSelectedItems());
+        evt.dataTransfer.setData('text/plain', json);
     }
 
     onAddToCollection(evt)

@@ -26,7 +26,7 @@ class AppNavigationPlaylists extends CustomElement
     {
         var data = response.data || [];
         for (var playlist of data) {
-            this.attach(NavigationItemPlaylist.instantiate(playlist.title, null, `#playlist:${playlist.id}`));
+            this.attach(NavigationItemPlaylist.instantiate(playlist.title, null, `#playlist:${playlist.id}`, playlist.id, this.api));
         }
     }
 

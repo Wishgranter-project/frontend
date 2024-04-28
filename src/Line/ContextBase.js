@@ -54,7 +54,7 @@ class ContextBase
 
         return this.request(queue).then((response) => 
         {
-            console.log(response);
+            // console.log(response);
             if (!response.data || response.data.length == 0) {
                 this.noMore = true;
             }

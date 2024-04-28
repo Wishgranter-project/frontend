@@ -12,15 +12,17 @@ List of features and status of implemenetation.
 
 ## Playlists
 
-:heavy_check_mark: List playlist.  
-:heavy_check_mark: Delete playlists.  
-:heavy_check_mark: Edit playlists.  
 :heavy_check_mark: Create new playlists.  
+:heavy_check_mark: List playlist.  
+:heavy_check_mark: Edit playlists.  
+:heavy_check_mark: Delete playlists.
 
 ## Playlist items
 
 :heavy_check_mark: Create new items.  
 :heavy_check_mark: Edit existing items.  
+:heavy_check_mark: Select and add multiple items to playlist at the same time.  
+:heavy_check_mark: Drag and drop multiple items to add them to a playlist at the same time.  
 :heavy_check_mark: Search items by title, genre and artist, among all playlists as well as individually.  
 :heavy_check_mark: Delete existing items.  
 :x: Change order of items inside playlists.  
@@ -28,7 +30,7 @@ List of features and status of implemenetation.
 ## Navigability
 
 :heavy_check_mark: Tabs: open links into tabs.  
-:heavy_check_mark: Tabs survive refreshing the page.
+:heavy_check_mark: Tabs are restored after refreshing the page.
 
 ### Pagination
 
@@ -77,6 +79,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Re-order queue by dragging and dropping.  
 :heavy_check_mark: Remove specific items from the queue.  
 :heavy_check_mark: Add queue items into playlists.  
+:x: Drag and drop into queue.  
 
 ### Playback control
 

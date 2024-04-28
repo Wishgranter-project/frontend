@@ -1,5 +1,4 @@
 import MusicPlayingView  from './MusicPlayingView';
-import PlaylistItem      from '../Component/PlaylistItem';
 import ListOfItems       from '../Component/ListOfItems';
 import SearchHeader      from '../Component/SearchHeader';
 import Pagination        from '../Component/Pagination';
