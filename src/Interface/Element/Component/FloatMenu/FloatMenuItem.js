@@ -19,8 +19,18 @@ class FloatMenuItem extends CustomElement
         this.addEventListener('click', (evt) => 
         {
             evt.stopPropagation();
-            this.onClick();
+            this.onClick(evt);
             this.fireEvent('float-menu-item:selected');
+        });
+
+        this.addEventListener('mousedown', (evt) =>
+        {
+            evt.stopPropagation();
+        });
+
+        this.addEventListener('mouseup', (evt) =>
+        {
+            evt.stopPropagation();
         });
     }
 }

@@ -23,11 +23,17 @@ class ListOfItems extends CustomElement
         this.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.addEventListener('mouseup', this.onMouseUp.bind(this));
 
-        this.addEventListener('dragstart', (evt) => 
-        {
-            console.log('drag');
-            evt.stopPropagation();
-        });
+        // this.addEventListener('dragstart', (evt) => 
+        // {
+        //     evt.stopPropagation();
+        // });
+
+        this.addEventListener('item:intention:add-to-collection', this.onAddToCollection.bind(this)) ;
+    }
+
+    onAddToCollection(evt)
+    {
+        evt.detail.items = this.getSelectedItems();
     }
 
     addElement(item)
@@ -54,7 +60,9 @@ class ListOfItems extends CustomElement
             return;
         }
         
-        this.deselectAllElements();
+        if (!evt.ctrlKey) {
+            this.deselectAllElements();
+        }
 
         if (this.selectionStart === null || evt.shiftKey == false) {
             this.selectionStart = liIndex;
@@ -81,7 +89,9 @@ class ListOfItems extends CustomElement
         var liIndex = li.index();
 
         if (evt.shiftKey == false) {
-            this.deselectAllElements();
+            if (evt.ctrlKey == false) {
+                this.deselectAllElements();
+            }
             this.selectElement(li);
             this.selectionStart = liIndex;
         }
