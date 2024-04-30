@@ -62,7 +62,7 @@ class ListOfItems extends CustomElement
 
         var liIndex = li.index();
 
-        if (this.getSelectedElements().length && evt.shiftKey == false && this.isElementSelected(li)) {
+        if (this.getSelectedElements().length && evt.shiftKey == false && evt.ctrlKey == false && this.isElementSelected(li)) {
             // Let onMouseUp handle it.
             return;
         }
@@ -75,10 +75,16 @@ class ListOfItems extends CustomElement
             this.selectionStart = liIndex;
         }
 
-        this.selectElement(li);
+        if (evt.ctrlKey) {
+            this.isElementSelected(li)
+                ? this.deselectElement(li)
+                : this.selectElement(li);
+        } else {
+            this.selectElement(li);
 
-        if (evt.shiftKey) {
-            this.selectRange(this.selectionStart, liIndex);
+            if (evt.shiftKey) {
+                this.selectRange(this.selectionStart, liIndex);
+            }
         }
     }
 
@@ -95,10 +101,8 @@ class ListOfItems extends CustomElement
 
         var liIndex = li.index();
 
-        if (evt.shiftKey == false) {
-            if (evt.ctrlKey == false) {
-                this.deselectAllElements();
-            }
+        if (evt.shiftKey == false && evt.ctrlKey == false) {
+            this.deselectAllElements();
             this.selectElement(li);
             this.selectionStart = liIndex;
         }
@@ -107,6 +111,11 @@ class ListOfItems extends CustomElement
     selectElement(element)
     {
         element.classList.add('selected');
+    }
+
+    deselectElement(element)
+    {
+        element.classList.remove('selected');
     }
 
     isElementSelected(element)
@@ -140,7 +149,7 @@ class ListOfItems extends CustomElement
     {
         this.querySelectorAll('li.selected').forEach((el) =>
         {
-            el.classList.remove('selected');
+            this.deselectElement(el);
         });
     }
 
