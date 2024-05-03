@@ -80,8 +80,8 @@ class PlaylistItem extends ContextualElement
     {
         var actions = {
             addToPlaylist: {
-                title: 'Add to playlist',
-                helpText: 'choose a playlist',
+                title: 'Save to collection',
+                helpText: 'Add item to a playlist',
                 icon: 'fa-plus',
                 onClick: () => 
                 {
@@ -94,7 +94,7 @@ class PlaylistItem extends ContextualElement
 
         actions.playNext = {
             title: 'Play next',
-            helpText: 'play next',
+            helpText: 'Play once current song is finished',
             icon: 'fa-minus',
             onClick: () =>
             {
@@ -107,8 +107,8 @@ class PlaylistItem extends ContextualElement
         }
 
         actions.editItem = {
-            title: 'Edit item',
-            helpText: '',
+            title: 'Edit it',
+            helpText: 'Edit item in your collection',
             icon: 'fa-pencil',
             onClick: () => 
             {
@@ -117,8 +117,8 @@ class PlaylistItem extends ContextualElement
         };
 
         actions.removeItem = {
-            title: 'Remove item',
-            helpText: '',
+            title: 'Delete item',
+            helpText: 'Delete item from your collection',
             icon: 'fa-times',
             onClick: () => 
             {

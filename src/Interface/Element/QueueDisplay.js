@@ -54,6 +54,40 @@ class QueueDisplay extends CustomElement
         {
             this.dragging = null;
         });
+
+        this.addEventListener('context-menu:actions:invite-alter', this.onContextMenuInviteAlter.bind(this));
+    }
+
+    onContextMenuInviteAlter(evt)
+    {
+        var el = evt.target;
+        var index = el.parentNode.index();
+
+        evt.detail.actions.removeFromQueue = {
+            title: 'De-queue',
+            helpText: 'Remove from queue',
+            icon: 'fa-minus',
+            onClick: () =>
+            {
+                this.queue.removeIndex(index);
+            }
+        };
+
+        if (index > 1) {
+            // Overwrites default action.
+            evt.detail.actions.playNext = {
+                title: 'Play next',
+                helpText: 'Play once current song is finished',
+                icon: 'fa-minus',
+                onClick: () =>
+                {
+                    this.queue.move(index, 1);
+                }
+            };
+        } else {
+            // Deletes default action.
+            delete evt.detail.actions.playNext;
+        }
     }
 
     onDrop(evt)
@@ -103,7 +137,6 @@ class QueueDisplay extends CustomElement
         for (var i = 0; i < queue.length; i++) {
             if (!queue[i]) { continue; }
             item = PlaylistItem.instantiate(queue[i]);
-            this.addContextMenuItems(item, queue, i);
 
             // Don't let drag the front of the queue. there are different ways.
             attributes = i > 0
@@ -126,31 +159,6 @@ class QueueDisplay extends CustomElement
 
             li.addEventListener('dragover', (evt) => { evt.preventDefault() });
             li.addEventListener('drop', this.onDrop.bind(this));
-        }
-    }
-
-    addContextMenuItems(item, queue, i) 
-    {
-        item.actions.removeFromQueue = {
-            title: 'Remove from queue',
-            helpText: 'remove',
-            icon: 'fa-minus',
-            onClick: () =>
-            {
-                queue.removeIndex(i);
-            }
-        };
-
-        if (i > 1) {
-            item.actions.playNext = {
-                title: 'Play next',
-                helpText: 'play next',
-                icon: 'fa-minus',
-                onClick: () =>
-                {
-                    queue.move(i, 1);
-                }
-            };
         }
     }
 }

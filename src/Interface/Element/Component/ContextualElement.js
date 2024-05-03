@@ -7,7 +7,7 @@ class ContextualElement extends CustomElement
 
     __construct() 
     {
-        this.actions = this.getContextActions();
+        // something something.
     }
 
     render() 
@@ -40,6 +40,8 @@ class ContextualElement extends CustomElement
 
     openContextMenu(evt) 
     {
+        this.actions = this.getContextActions();
+        this.fireEvent('context-menu:actions:invite-alter', {actions: this.actions});
         var menu = FloatMenu.instantiate(this.actions);
         this.append(menu);
         menu.open(evt, evt.clientX, evt.clientY);
