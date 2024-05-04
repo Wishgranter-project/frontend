@@ -9,6 +9,7 @@ class ListOfItems extends CustomElement
     {
         this.items = items;
         this.selectionStart = null;
+        this.draggingElement = null;
     }
 
     render() 
@@ -23,19 +24,25 @@ class ListOfItems extends CustomElement
         this.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.addEventListener('mouseup', this.onMouseUp.bind(this));
         this.addEventListener('dragstart', this.onDragStart.bind(this));
+        this.addEventListener('dragend', this.onDragEnd.bind(this));
+        this.addEventListener('item:intention:add-to-collection', this.onAddToCollection.bind(this));
 
-        // this.addEventListener('dragstart', (evt) => 
-        // {
-        //     evt.stopPropagation();
-        // });
-
-        this.addEventListener('item:intention:add-to-collection', this.onAddToCollection.bind(this)) ;
+        if (true) {//this.isReordable) {
+            this.addEventListener('dragover', this.onDragOver.bind(this));
+            this.addEventListener('drop', this.onDrop.bind(this));
+        }
     }
 
     onDragStart(evt)
     {
+        this.draggingElement = evt.target;
         var json = JSON.stringify(this.getSelectedItems());
         evt.dataTransfer.setData('text/plain', json);
+    }
+
+    onDragEnd(evt)
+    {
+        //this.draggingElement = null;
     }
 
     onAddToCollection(evt)
@@ -107,6 +114,53 @@ class ListOfItems extends CustomElement
             this.selectionStart = liIndex;
         }
     }
+
+    //-----REORDABLE------------------------
+
+    onDragOver(evt)
+    {
+        evt.preventDefault();
+    }
+
+    onDrop(evt)
+    {
+        this.draggingElement
+            ? this.onDropLocal(evt)
+            : this.onDropForeign(evt);
+    }
+
+    onDropLocal(evt)
+    {
+        var droppedOnLi      = evt.target.getAncestor('li');
+        var selectedElements = this.getSelectedElements();
+
+        var oldIndexes = this.extractIndexes(selectedElements);
+        droppedOnLi.before(...selectedElements);
+        selectedElements = this.getSelectedElements();
+        var newIndexes = this.extractIndexes(selectedElements);
+        var changes = [];
+
+        for (var n in newIndexes) {
+            if (oldIndexes[n] == newIndexes[n]) {
+                continue;
+            }
+
+            changes.push({
+                from: oldIndexes[n],
+                item: selectedElements[n].firstChild.item,
+                to: newIndexes[n]
+            });
+        }
+
+        this.fireEvent('list-of-items:reordered', changes);
+    }
+
+    onDropForeign(evt)
+    {
+        // to be implemented
+    }
+
+    //---------------------------------------------
 
     selectElement(element)
     {
@@ -182,6 +236,17 @@ class ListOfItems extends CustomElement
         });
 
         return items;
+    }
+
+    extractIndexes(nodeList)
+    {
+        var indexes = [];
+        nodeList.forEach((el) =>
+        {
+            indexes.push(el.index());
+        });
+
+        return indexes;
     }
 }
 
