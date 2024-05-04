@@ -27,7 +27,7 @@ class ListOfItems extends CustomElement
         this.addEventListener('dragend', this.onDragEnd.bind(this));
         this.addEventListener('item:intention:add-to-collection', this.onAddToCollection.bind(this));
 
-        if (true) {//this.isReordable) {
+        if (this.getAttribute('reordable') == 'true') {
             this.addEventListener('dragover', this.onDragOver.bind(this));
             this.addEventListener('drop', this.onDrop.bind(this));
         }
@@ -152,7 +152,7 @@ class ListOfItems extends CustomElement
             });
         }
 
-        this.fireEvent('list-of-items:reordered', changes);
+        this.fireEvent('list-of-items:reordered', {changes});
     }
 
     onDropForeign(evt)

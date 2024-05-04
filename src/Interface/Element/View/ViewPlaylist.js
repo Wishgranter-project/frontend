@@ -21,6 +21,7 @@ class ViewPlaylist extends MusicPlayingView
 
         this.fetchItems().then((response) =>
         {
+            this.response = response;
             this.subRenderItems(response);
             this.subRenderNavigation(response);
         });
@@ -28,6 +29,7 @@ class ViewPlaylist extends MusicPlayingView
         Events.enableBottomReached(this);
         this.addEventListener('scroll:bottom-reached', this.bottomReached.bind(this));
         this.addEventListener('queue:item-selected', this.onItemSelected.bind(this));
+        this.addEventListener('list-of-items:reordered', this.onItemsReordered.bind(this));
     }
 
     bottomReached(evt) 
@@ -104,7 +106,16 @@ class ViewPlaylist extends MusicPlayingView
 
         this.$refs.playlist = ListOfItems.instantiate(response.data);
         this.$refs.playlist.classList.add('playlist');
+        if (this.filtering()) {
+            this.$refs.playlist.setAttribute('reordable', 'true');
+        }
+
         this.append(this.$refs.playlist);
+    }
+
+    filtering()
+    {
+        return this.hashRequest.queryParams.without('page').isEmpty();
     }
 
     subRenderNavigation(response) 
@@ -119,6 +130,22 @@ class ViewPlaylist extends MusicPlayingView
         var queue        = Queue.instantiate(initialBatch, context)
         
         evt.detail.queue = queue;
+    }
+
+    onItemsReordered(evt)
+    {
+        var changes = evt.detail.changes;
+        var offset = (this.response.meta.page - 1) * this.response.meta.itensPerPage;
+
+        for (var c of changes) {
+            c.from += offset;
+            c.to += offset;
+
+            c.item.position = c.to;
+            this.api.collection.playlistItems.get(c.item.uuid).update(c.item);
+        }
+
+        console.log('playlist: reordered items');
     }
 }
 
