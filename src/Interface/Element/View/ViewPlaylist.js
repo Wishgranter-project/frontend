@@ -106,7 +106,7 @@ class ViewPlaylist extends MusicPlayingView
 
         this.$refs.playlist = ListOfItems.instantiate(response.data);
         this.$refs.playlist.classList.add('playlist');
-        if (this.filtering()) {
+        if (!this.filtering()) {
             this.$refs.playlist.setAttribute('reordable', 'true');
         }
 
@@ -115,12 +115,48 @@ class ViewPlaylist extends MusicPlayingView
 
     filtering()
     {
-        return this.hashRequest.queryParams.without('page').isEmpty();
+        return !this.hashRequest.queryParams.without('page').isEmpty();
     }
 
     subRenderNavigation(response) 
     {
-        this.append(Pagination.instantiate(this.api, this.hashRequest, response));
+        this.$refs.pagination = Pagination.instantiate(this.api, this.hashRequest, response);
+        this.append(this.$refs.pagination);
+
+        if (this.filtering()) {
+            return;
+        }
+
+        this.$refs.pagination.querySelectorAll('.btn').forEach((el) =>
+        {
+            el.addEventListener('dragover', (evt) => { evt.preventDefault(); });
+            el.addEventListener('drop', (evt) =>
+            {
+                var toPage = parseInt(el.innerHTML);
+                if (isNaN(toPage)) {
+                    return;
+                }
+
+                var json = evt.dataTransfer.getData('text');
+                var data = JSON.parse(json);
+                var offset = (toPage - 1) * this.response.meta.itensPerPage;
+
+                var n = 0;
+                var promises = [];
+                for (var item of data) {
+                    item.position = n + offset;
+                    promises.push(this.api.collection.playlistItems.get(item.uuid).update(item));
+                    n++;
+                }
+
+                Promise.all(promises).then(() =>
+                {
+                    console.log('playlist: reordered');
+                    this.refresh();
+                });
+
+            });
+        });
     }
 
     onItemSelected(evt) 
@@ -136,16 +172,20 @@ class ViewPlaylist extends MusicPlayingView
     {
         var changes = evt.detail.changes;
         var offset = (this.response.meta.page - 1) * this.response.meta.itensPerPage;
+        var promises = [];
 
         for (var c of changes) {
             c.from += offset;
             c.to += offset;
 
             c.item.position = c.to;
-            this.api.collection.playlistItems.get(c.item.uuid).update(c.item);
+            promises.push(this.api.collection.playlistItems.get(c.item.uuid).update(c.item));
         }
 
-        console.log('playlist: reordered items');
+        Promise.all(promises).then(() =>
+        {
+            console.log('playlist: reordered items');
+        });
     }
 }
 

@@ -25,7 +25,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Drag and drop multiple items to add them to a playlist at the same time.  
 :heavy_check_mark: Search items by title, genre and artist, among all playlists as well as individually.  
 :heavy_check_mark: Delete existing items.  
-:heavy_check_mark: :x: Change order of items inside playlists ( still not able to reorder between pages ).  
+:heavy_check_mark: Change order of items inside playlists.  
 
 ## Navigability
 
