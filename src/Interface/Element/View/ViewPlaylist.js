@@ -132,8 +132,13 @@ class ViewPlaylist extends MusicPlayingView
             el.addEventListener('dragover', (evt) => { evt.preventDefault(); });
             el.addEventListener('drop', (evt) =>
             {
-                var toPage = parseInt(el.innerHTML);
+                var toPage = parseInt(el.getAttribute('data-page'));
                 if (isNaN(toPage)) {
+                    return;
+                }
+
+                if (this.hashRequest.queryParams.get('page') == toPage) {
+                    // Already here...
                     return;
                 }
 
