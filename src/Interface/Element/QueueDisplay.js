@@ -1,5 +1,6 @@
 import CustomElement from './CustomElement';
 import PlaylistItem from './Component/PlaylistItem';
+import ListOfItems from './Component/ListOfItems';
 
 class QueueDisplay extends CustomElement 
 {
@@ -38,24 +39,51 @@ class QueueDisplay extends CustomElement
 
         this.createAndAttach('div', {class: 'queue-display__drawer'}, 
             this.$refs.content = this.create('div', {class: 'queue-display__content'}, [
-                    this.$refs.history = this.create('ol', {reversed: 'reversed'}),
-                    this.create('hr'),
-                    this.$refs.queued = this.create('ol')
+                    this.$refs.hr = this.create('hr'),
                 ]
             )
         );
 
-        this.addEventListener('dragstart', (evt) => 
-        {
-            this.dragging = evt.target;
-        });
+        this.addEventListener('list-of-items:reordered', this.onEqueueReordered.bind(this));
 
-        this.addEventListener('dragend', (evt) => 
-        {
-            this.dragging = null;
-        });
+        this.subRenderHistory();
+        this.subRenderQueue();
+    }
 
-        this.addEventListener('context-menu:actions:invite-alter', this.onContextMenuInviteAlter.bind(this));
+    subRenderHistory()
+    {
+        this.$refs.history = ListOfItems.instantiate([]);
+        this.$refs.hr.before(this.$refs.history);
+    }
+
+    subRenderQueue()
+    {
+        this.$refs.queued = ListOfItems.instantiate([]);
+        this.$refs.queued.setAttribute('reordable', true);
+        this.$refs.queued.dropIsValid = function(dropEvt) {
+            var draggingLocalElements = this.draggingElement;
+            if (!draggingLocalElements) {
+                return true;
+            }
+
+            // Don't move items in place of the front queue.
+            var droppedOn = dropEvt.target.getAncestor('li');
+            if (droppedOn.index() == 0) {
+                return false;
+            }
+
+            // Don't move the front queue away.
+            var selectedElements = this.getSelectedElements();
+            var indexes = this.extractIndexes(selectedElements);
+            if (indexes.includes(0)) {
+                return false;
+            }
+
+            return true;
+        }
+        this.$refs.queued.addEventListener('context-menu:actions:invite-alter', this.onContextMenuInviteAlter.bind(this));
+        this.$refs.queued.addEventListener('queue:item-selected', this.onQueueItemSelected.bind(this));
+        this.$refs.hr.after(this.$refs.queued);
     }
 
     onContextMenuInviteAlter(evt)
@@ -90,24 +118,6 @@ class QueueDisplay extends CustomElement
         }
     }
 
-    onDrop(evt)
-    {
-        var droppedLi   = this.dragging;
-        var droppedOnLi = evt.target.getAncestor('li');
-
-        var from = this.queue.getPosition(droppedLi.children[0].item);
-        var to   = this.queue.getPosition(droppedOnLi.children[0].item);
-
-        // Don't let drag the front of the queue. there are different ways.
-        to = to == 0
-            ? 1
-            : to;
-
-        if (from != to) {
-            this.queue.move(from, to);
-        }
-    }
-
     refresh(queue, history) 
     {
         this.queue = queue;
@@ -117,49 +127,37 @@ class QueueDisplay extends CustomElement
         this.refreshHistory(history);
     }
 
-    refreshHistory(history) 
+    refreshHistory(ar)
     {
-        var item;
-        this.$refs.history.clear();
+        this.$refs.history.setItems(ar.slice().reverse());
+    }
 
-        for (var i = history.length -1; i >= 0; i--) {
-            if (!history[i]) { continue; }
-            item = PlaylistItem.instantiate(history[i]);
-            this.$refs.history.createAndAttach('li', null, item);
+    refreshQueue(ar)
+    {
+        this.$refs.queued.setItems(ar);
+    }
+
+    onEqueueReordered(evt)
+    {
+        var changes = evt.detail.changes;
+        for (var change of changes) {
+            this.queue.move(change.from, change.to);
         }
     }
 
-    refreshQueue(queue)
+    onQueueItemSelected(evt)
     {
-        var item, li, attributes;
-        this.$refs.queued.clear();
+        var target = evt.target;
+        var index = target.parentNode.index();
 
-        for (var i = 0; i < queue.length; i++) {
-            if (!queue[i]) { continue; }
-            item = PlaylistItem.instantiate(queue[i]);
-
-            // Don't let drag the front of the queue. there are different ways.
-            attributes = i > 0
-                ? {'draggable': 'true'}
-                : null;
-
-            li = this.$refs.queued.createAndAttach('li', attributes, item)
-            li.addEventListener('queue:item-selected', (evt) =>
-            {
-                evt.stopPropagation();
-                var li = evt.target.parentNode;
-                var from = [...this.$refs.queued.children].indexOf(li);
-
-                if (from == 0) {
-                    return;
-                }
-
-                this.fireEvent('queue:intention:jump', { from, to: 0 });
-            });
-
-            li.addEventListener('dragover', (evt) => { evt.preventDefault() });
-            li.addEventListener('drop', this.onDrop.bind(this));
+        if (index == 0) {
+            // do nothing.
+            evt.stopPropagation();
+            return;
         }
+
+        // Remove, code in the App.js will add it back at the begining of the queue.
+        this.queue.removeIndex(index);
     }
 }
 

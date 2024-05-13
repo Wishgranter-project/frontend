@@ -15,21 +15,22 @@ class ListOfItems extends CustomElement
     render() 
     {
         this.$refs.list = this.createAndAttach('ol');
+
         this.classList.add('list-of-items');
 
         for (var item of this.items) {
             this.addElement(item);
         }
 
-        this.addEventListener('mousedown', this.onMouseDown.bind(this));
-        this.addEventListener('mouseup', this.onMouseUp.bind(this));
-        this.addEventListener('dragstart', this.onDragStart.bind(this));
-        this.addEventListener('dragend', this.onDragEnd.bind(this));
-        this.addEventListener('item:intention:add-to-collection', this.onAddToCollection.bind(this));
+        this.addEventListenerOnce('mousedown', 'mousedown', this.onMouseDown.bind(this));
+        this.addEventListenerOnce('mouseup', 'mouseup', this.onMouseUp.bind(this));
+        this.addEventListenerOnce('dragstart', 'dragstart', this.onDragStart.bind(this));
+        this.addEventListenerOnce('dragend', 'dragend', this.onDragEnd.bind(this));
+        this.addEventListenerOnce('item-add-to-collection', 'item:intention:add-to-collection', this.onAddToCollection.bind(this));
 
         if (this.getAttribute('reordable') == 'true') {
-            this.addEventListener('dragover', this.onDragOver.bind(this));
-            this.addEventListener('drop', this.onDrop.bind(this));
+            this.addEventListenerOnce('dragover', 'dragover', this.onDragOver.bind(this));
+            this.addEventListenerOnce('drop', 'drop', this.onDrop.bind(this));
         }
     }
 
@@ -124,6 +125,10 @@ class ListOfItems extends CustomElement
 
     onDrop(evt)
     {
+        if (!this.dropIsValid(evt)) {
+            return;
+        }
+
         this.draggingElement
             ? this.onDropLocal(evt)
             : this.onDropForeign(evt);
@@ -153,6 +158,11 @@ class ListOfItems extends CustomElement
         }
 
         this.fireEvent('list-of-items:reordered', {changes});
+    }
+
+    dropIsValid(dropEvt)
+    {
+        return true;
     }
 
     onDropForeign(evt)
@@ -233,7 +243,7 @@ class ListOfItems extends CustomElement
         nodeList.forEach((el) =>
         {
             items.push(el.querySelector(PlaylistItem.elementName).item);
-        });
+        }); 
 
         return items;
     }
@@ -247,6 +257,31 @@ class ListOfItems extends CustomElement
         });
 
         return indexes;
+    }
+
+    setItems(items)
+    {
+        this.items = items;
+        if (!this.attached) {
+            return;
+        }
+
+        var previouslySelectedItems = this.getSelectedItems();
+        this.refresh();
+
+        if (!previouslySelectedItems.length) {
+            return;
+        }
+
+        // Select them back.
+        // @todo Need to find a better way of doing this bullshit.
+        setTimeout(()=>{
+            for (var li of this.$refs.list.children) {
+                if (previouslySelectedItems.includes(li.firstChild.item)) {
+                    this.selectElement(li);
+                }
+            }
+        }, 100);
     }
 }
 

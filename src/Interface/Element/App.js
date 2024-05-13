@@ -398,6 +398,12 @@ class App extends CustomElement
         if (queue && queue.length) {
             return this.stopAndBeginThisNewQueue(queue);
         } else {
+            var current = this.queue.dequeue();
+            if (current) {
+                // Add the one in front to the history.
+                this.history.add(current);
+            }
+
             // Add item to the beginning of the queue.
             this.queue.dropIn(item);
             // add previous to history etc
