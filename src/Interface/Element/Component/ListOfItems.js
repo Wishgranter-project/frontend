@@ -275,7 +275,7 @@ class ListOfItems extends CustomElement
 
         // Select them back.
         // @todo Need to find a better way of doing this bullshit.
-        setTimeout(()=>{
+        setTimeout(() => {
             for (var li of this.$refs.list.children) {
                 if (previouslySelectedItems.includes(li.firstChild.item)) {
                     this.selectElement(li);

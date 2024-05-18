@@ -64,13 +64,18 @@ class App extends CustomElement
 
     loadHistory() 
     {
+        var history = new History();
+
         if (!this.state.get('history')) {
-            return new History([]);
+            return history;
         }
 
-        var history = new History();
-        history.add(this.state.get('history'));
+        var items = this.state.get('history');
+        if (items == null || items.length == 0) {
+            return history;
+        }
 
+        history.add(items);
         return history;
     }
 
