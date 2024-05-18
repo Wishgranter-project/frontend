@@ -34,7 +34,6 @@ class ModalAddToPlaylist extends Modal
     onPlaylistChoosen(evt) 
     {
         var playlist = evt.target.getAttribute('data-playlist');
-
         this.api.collection.playlistItems.addMultiple(this.items, playlist).then(() =>
         {
             alert('Item(s) added!!');

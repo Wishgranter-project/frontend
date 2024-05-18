@@ -48,7 +48,7 @@ class ListOfItems extends CustomElement
 
     onAddToCollection(evt)
     {
-        evt.detail.items = this.getSelectedItems();
+        evt.detail.items = evt.detail.items.concat(this.getSelectedItems());
     }
 
     addElement(item)
