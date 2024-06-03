@@ -19,6 +19,10 @@ class ListOfItems extends CustomElement
         this.classList.add('list-of-items');
 
         for (var item of this.items) {
+            if (!item) {
+                console.error('falsy item');
+                continue;
+            }
             this.addElement(item);
         }
 
