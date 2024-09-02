@@ -478,6 +478,12 @@ class App extends CustomElement
             params.artist = item.artist;
         }
 
+        if (item.genre) {
+            params.genre = Array.isArray(item.genre)
+                ? item.genre[0]
+                : item.genre;
+        }
+
         return this.api.discover.resources(params);
     }
 
