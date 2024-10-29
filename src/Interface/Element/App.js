@@ -25,16 +25,20 @@ import Serialization        from '../../Helper/Serialization';
 import Instantiator         from '../../Helper/Instantiator';
 //=============================================================================
 import TabManager, { 
-    HashRequest,
+    TabPanel,
+    TabButton,
+    TabsBar,
+    TabControls,
     RouteCollection,
-    TabLink,
-    TabPanel
+    HashRequest,
 } from 'tabbed-router';
 //=============================================================================
 
-customElements.define('tab-manager', TabManager);
-customElements.define('tab-link', TabLink);
-customElements.define('tab-panel', TabPanel);
+customElements.define('tab-manager',  TabManager);
+customElements.define('tab-panel',    TabPanel);
+customElements.define('tab-link',     TabButton);
+customElements.define('tab-links',    TabsBar);
+customElements.define('tab-controls', TabControls);
 
 class App extends CustomElement
 {
@@ -150,7 +154,7 @@ class App extends CustomElement
         this.addEventListener('queue:intention:backward',     this.rewindTheQueue.bind(this));
         this.addEventListener('queue:intention:jump',         this.onJumpLine.bind(this));
         this.addEventListener('queue:intention:play-it-next', this.onPlayNext.bind(this));
-        this.addEventListener('tabbed-router:updated',        this.onNavigationUpdate.bind(this));
+        this.addEventListener('tabbed-router:tab-updated',    this.onNavigationUpdate.bind(this));
 
         this.addEventListener('playlist:added', () =>
         {
@@ -257,7 +261,7 @@ class App extends CustomElement
         {
             return ViewAlbums.instantiate(request, api);
         })
-        .createRoute(/discover:album/, function(request) 
+        .createRoute(/discover:album$/, function(request) 
         {
             return ViewAlbum.instantiate(request, api);
         });
@@ -496,10 +500,11 @@ class App extends CustomElement
     {
         var requests = [];
 
-        var tabs = this.$refs.stage.tabs;
-        for (var tabId in tabs) {
-            var tab = tabs[tabId];
-            var request = tab.childNodes[0].request || null;
+        for (var tab of this.$refs.stage.getTabs()) {
+            var request = tab.childNodes[0] && tab.childNodes[0].request
+                ? tab.childNodes[0].request
+                : null;
+
             if (request) {
                 requests.push(Serialization.serialize(request));
             }
@@ -525,9 +530,7 @@ class App extends CustomElement
     openHomePage() 
     {
         var mainTab = this.$refs.stage.createTab('main-tab', true);
-        var home = HashRequest.createFromUrl('#home');
-        home.meta.title = 'Home';
-        mainTab.goTo(home);
+        mainTab.access('#home');
     }
 
     loadTabs() 

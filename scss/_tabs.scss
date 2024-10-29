@@ -31,7 +31,7 @@
                 font-family: ForkAwesome;
             }
         
-        &__tab-links {
+        &__tabs-bar {
             display: flex;
             flex-grow: 1;
             overflow: hidden;
@@ -39,7 +39,7 @@
             overflow-y: visible;
         }
 
-    &__tab-panes {
+    &__tab-panels {
         height: 100%;
         overflow-y: auto;
     }
@@ -47,34 +47,50 @@
 
 /*--------------------------*/
 
-.tabbed-router__tab-link {
+.simple .tabbed-router__tab-button {
     opacity: 0.5;
+    cursor: pointer;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+
+    min-width: 0;
     width: auto;
     padding: 2px 10px;
     border-radius: 3px;
     margin: 0px 3px 0px 0px;
     background: #5a5958;
 
-    &.focused {
+    &--focused {
         opacity: 1;
     }
 
     span {
         display: block;
         overflow: hidden;
+        margin: 0px;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
 
     button {
+        opacity: 0;
         padding: 0px;
         border-radius: 50px;
-        min-width: 26px;
-        min-height: 26px;
+        width: 24px;
+        height: 24px;
+        min-width: 0px;
+        min-height: 0px;
         margin: 0px 0px 0px 10px;
         text-align: center;
+        font-size: 12px;
+        line-height: 24px;
+        background-color: #303030;
+    }
+
+    &:hover button {
+        opacity: 1;
+        background-color: #303030;
     }
 
     button:before {
@@ -82,7 +98,7 @@
     }
 }
 
-.tabbed-router__tab-link:first-child:last-child {
+.tabbed-router__tab-button:first-child:last-child {
     button {
         display: none;
     }
@@ -95,7 +111,7 @@
     width: 100%;
     min-height: 200px;
 
-    &.focused {
+    &--focused {
         display: block;
     }
 }

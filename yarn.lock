@@ -2569,8 +2569,8 @@ sver-compat@^1.5.0:
     es6-symbol "^3.1.1"
 
 "tabbed-router@git+ssh://git@github.com:adinan-cenci/tabbed-router.git":
-  version "0.0.0"
-  resolved "git+ssh://git@github.com:adinan-cenci/tabbed-router.git#f8d9afa313f3cb9212236f4c91f76d37481c99f5"
+  version "1.0.0-alpha"
+  resolved "git+ssh://git@github.com:adinan-cenci/tabbed-router.git#b56064589ca68fbd6709341dfbc36d48df8c952e"
   dependencies:
     gulp "^4.0.2"
     gulp-rename "^2.0.0"

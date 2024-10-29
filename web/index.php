@@ -16,7 +16,6 @@ require 'settings.php';
         </script>
         <script src="dist/main.js"></script>
         <link href="dist/master.css" rel="stylesheet" />
-        <link href="dist/layout.css" rel="stylesheet" />
         <link href="dist/styles.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="dist/favicon.ico" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous" />
