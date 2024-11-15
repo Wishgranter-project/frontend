@@ -1,6 +1,9 @@
 import CustomElement from '../CustomElement';
 import FloatMenu from './FloatMenu/FloatMenu';
 
+/**
+ * Abstract class, describes an element with a contextual menu.
+ */
 class ContextualElement extends CustomElement 
 {
     // static elementName = 'contextual-element';
@@ -38,13 +41,20 @@ class ContextualElement extends CustomElement
         return actions;
     }
 
-    openContextMenu(evt) 
+    /**
+     * Opens the context menu.
+     *
+     * Before rendering the menu, invites the parent elements to alter it.
+     *
+     * @param {Event} contextMenuEvent 
+     */
+    openContextMenu(contextMenuEvent) 
     {
         this.actions = this.getContextActions();
         this.fireEvent('context-menu:actions:invite-alter', {actions: this.actions});
         var menu = FloatMenu.instantiate(this.actions);
         this.append(menu);
-        menu.open(evt, evt.clientX, evt.clientY);
+        menu.open(contextMenuEvent, contextMenuEvent.clientX, contextMenuEvent.clientY);
     }
 }
 

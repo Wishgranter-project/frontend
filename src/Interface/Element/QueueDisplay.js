@@ -1,5 +1,4 @@
 import CustomElement from './CustomElement';
-import PlaylistItem from './Component/PlaylistItem';
 import ListOfItems from './Component/ListOfItems';
 
 class QueueDisplay extends CustomElement 

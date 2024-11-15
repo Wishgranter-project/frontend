@@ -6,7 +6,7 @@
     button {
         border-color: transparent;
         border-radius: 0px;
-        color: rgba(255,255,255,0.1);
+        color: rgba(255, 255, 255, 0.3);
         background-color: transparent;
     }
 
@@ -33,7 +33,7 @@
             line-height: 20px;
 
             a:link {
-                color: rgba(255, 255, 255, 0.15);
+                color: rgba(255, 255, 255, 0.30);
             }
 
             a:hover {
@@ -58,8 +58,11 @@
 .selected {  
     .playlist-item {
         color: #444;
-        border-color: #bde6fb;
         background-color: #bde6fb;
+
+        button {
+            color: rgba(0, 0, 0, 0.3);
+        }
 
         &__info {
             display: inline-block;
@@ -67,7 +70,7 @@
             line-height: 20px;
 
             a:link {
-                color: rgba(0, 0, 0, 0.15);
+                color: rgba(0, 0, 0, 0.30);
             }
 
             a:hover {

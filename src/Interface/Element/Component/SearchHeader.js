@@ -1,5 +1,8 @@
 import CustomElement from '../CustomElement';
 
+/**
+ * A minimal form to conduct searches.
+ */
 class SearchHeader extends CustomElement 
 {
     static elementName = 'view-search-header';
@@ -14,10 +17,6 @@ class SearchHeader extends CustomElement
     render() 
     {
         this.classList.add('search-header');
-
-        // if (this.title) {
-        //     this.$refs.h1 = this.createAndAttach('h1', null, this.title);
-        // }
 
         this.$refs.form = this.createAndAttach('form', { action: '#' + this.request.path, title: this.title, class: 'input-group input-group-horizontal'});
 

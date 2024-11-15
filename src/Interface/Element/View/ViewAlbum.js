@@ -2,6 +2,9 @@ import MusicPlayingView from './MusicPlayingView';
 import ListOfItems       from '../Component/ListOfItems';
 import PlaylistItem     from '../Component/PlaylistItem';
 
+/**
+ * Displays the contents of a single album.
+ */
 class ViewAlbum extends MusicPlayingView 
 {
     static elementName = 'view-release';
@@ -31,7 +34,6 @@ class ViewAlbum extends MusicPlayingView
         ]);
 
         this.$refs.headerH.createAndAttach('img', {src: response.data.thumbnail || 'dist/img/missing-cover-art.webp' });
-
         this.$refs.headerB.createAndAttach('h1', null, response.data.title);
         this.$refs.headerB.createAndAttach('h3', null, this.create('a', { title: response.data.artist, href: '#discover:albums?artist=' + response.data.artist }, response.data.artist));
 
@@ -41,7 +43,7 @@ class ViewAlbum extends MusicPlayingView
         ]);
 
         this.$refs.playButton.addEventListener('click', this.playEntireAlbum.bind(this));
-        this.$refs.addButton.addEventListener('click', this.addEntireAlbumToPlaylist.bind(this));
+        this.$refs.addButton.addEventListener('click', this.addEntireAlbumToCollection.bind(this));
     }
 
     subRenderTracks(response)
@@ -60,13 +62,13 @@ class ViewAlbum extends MusicPlayingView
         this.append(this.$refs.playlist);
     }
 
-    addEntireAlbumToPlaylist()
+    addEntireAlbumToCollection()
     {
         var items = this.getPlayableItems();
         this.fireEvent('item:intention:add-to-collection', { items });
     }
 
-    playEntireAlbum(evt)
+    playEntireAlbum()
     {
         var items = this.getPlayableItems();
         this.fireEvent('queue:item-selected', {

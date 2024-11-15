@@ -15,7 +15,8 @@ List of features and status of implemenetation.
 :heavy_check_mark: Create new playlists.  
 :heavy_check_mark: List playlist.  
 :heavy_check_mark: Edit playlists.  
-:heavy_check_mark: Delete playlists.
+:heavy_check_mark: Delete playlists.  
+:heavy_check_mark: Download playlists as zip file.
 
 ## Playlist items
 
@@ -35,7 +36,7 @@ List of features and status of implemenetation.
 ### Pagination
 
 :heavy_check_mark: Pagination.  
-:heavy_check_mark: Prev/Next buttons after a minimum of number of pages.  
+:heavy_check_mark: Prev/Next buttons displayed once there is a minimum of number of pages.  
 :heavy_check_mark: Limited number of pages to be displayed at once.  
 :heavy_check_mark: visual indication of the current page.  
 

@@ -2,6 +2,9 @@ import BaseView        from './BaseView';
 import SearchHeader    from '../Component/SearchHeader';
 import DiscographyItem from '../Component/DiscographyItem';
 
+/**
+ * Displays a grid of search results for albums.
+ */
 class ViewDiscoverAlbums extends BaseView
 {
     static elementName = 'view-discography';
@@ -28,14 +31,17 @@ class ViewDiscoverAlbums extends BaseView
         this.$refs.headerH.createAndAttach('h1', null, 'Discover albums');
 
         this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, '', [
-            {type: 'search', name: 'artist', placeholder: 'Artist', class: 'main'},
+            {type: 'search', name: 'artist', placeholder: 'Artist', title: 'Artist', class: 'main'},
         ]));
 
         this.$refs.playButton = this.$refs.headerF.createAndAttach('button', {title: 'Play all'}, this.create('span', {class: 'fa fa-play'}));
         this.$refs.playButton.addEventListener('click', this.playAllAlbuns.bind(this));
     }
 
-    playAllAlbuns(evt)
+    /**
+     * Adds all the albums in the view to the queue.
+     */
+    playAllAlbuns()
     {
         var initialBatch = [];
         for (var element of this.querySelectorAll(DiscographyItem.elementName)) {
@@ -50,7 +56,7 @@ class ViewDiscoverAlbums extends BaseView
         });
     }
 
-    async renderDiscographyItem(response) 
+    renderDiscographyItem(response) 
     {
         var grid = this.createAndAttach('div', {class: 'grid releases'});
 

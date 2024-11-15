@@ -15,14 +15,16 @@
         }
     }
 
-    li.selected {
-        .playlist-item {
-            border-color: #bde6fb;
-        }
-    }
-
     .playlist-item {
         align-items: stretch;
+
+        button {
+            opacity: 0;
+        }
+
+        &:hover button {
+            opacity: 1;
+        }
 
         &__body {
             padding: 5px 0px;
@@ -31,6 +33,13 @@
         button, 
         .popup-button {
             height: 100%;
+        }
+    }
+
+    li.selected .playlist-item {
+        button:hover {
+            border-color: #94d2f2;
+            background-color: #94d2f2;
         }
     }
 }

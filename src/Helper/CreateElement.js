@@ -1,5 +1,19 @@
-class CreateElement 
+/**
+ * A class to help create DOM elements.
+ */
+class CreateElement
 {
+    /**
+     * Constructor.
+     *
+     * @param {String} elementName
+     *   The element name.
+     * @param {Object} attributes
+     *   Attribute => Name key pairs.
+     * @param {Array} children
+     *   Array of DOM elements to append to the new element.
+     *   Useful to chain the creation of multiple elements.
+     */
     constructor(elementName, attributes = null, children = []) 
     {
         this.elementName = elementName;

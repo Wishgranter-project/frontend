@@ -6,6 +6,9 @@ import Events            from '../../../Helper/Events';
 import Queue             from '../../../Line/Queue';
 import ContextPlaylist   from '../../../Line/ContextPlaylist';
 
+/**
+ * Displays the contents of a playlist.
+ */
 class ViewPlaylist extends MusicPlayingView 
 {
     static elementName = 'view-playlist';
@@ -93,8 +96,9 @@ class ViewPlaylist extends MusicPlayingView
 
         this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, response.data.title, [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
-            {type: 'search', name: 'artist', placeholder: 'Artist'},
-            {type: 'search', name: 'genre', placeholder: 'Genre'}
+            {type: 'search', name: 'artist', placeholder: 'Artist', title: 'Artist'},
+            {type: 'search', name: 'genre', placeholder: 'Genre', title: 'Genre'},
+            {type: 'search', name: 'soundtrack', placeholder: 'Soundtrack', title: 'Soundtrack'}
         ]));
     }
 

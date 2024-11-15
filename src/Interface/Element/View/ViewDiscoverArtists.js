@@ -1,6 +1,9 @@
 import BaseView     from './BaseView';
 import SearchHeader from '../Component/SearchHeader';
 
+/**
+ * Displays a grid of search results for artists.
+ */
 class ViewDiscoverArtists extends BaseView 
 {
     static elementName = 'view-discover';
@@ -33,11 +36,11 @@ class ViewDiscoverArtists extends BaseView
         this.$refs.headerH.createAndAttach('h1', null, 'Discover artist');
 
         this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, 'Discover artist', [
-            {type: 'search', name: 'name', placeholder: 'Name', class: 'main'},
+            {type: 'search', name: 'name', placeholder: 'Artist', title: 'Artist', class: 'main'},
         ]));
     }
 
-    async renderArtists(response) 
+    renderArtists(response) 
     {
         var grid = this.createAndAttach('div', {class: 'grid artists'});
 

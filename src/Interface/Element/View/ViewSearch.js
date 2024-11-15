@@ -3,6 +3,9 @@ import ViewPlaylist  from './ViewPlaylist';
 import Queue         from '../../../Line/Queue';
 import ContextSearch from '../../../Line/ContextSearch';
 
+/**
+ * Displays search results within the collection.
+ */
 class ViewSearch extends ViewPlaylist 
 {
     static elementName = 'view-search';
@@ -40,8 +43,9 @@ class ViewSearch extends ViewPlaylist
 
         this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, '', [
             {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
-            {type: 'search', name: 'artist', placeholder: 'Artist'},
-            {type: 'search', name: 'genre', placeholder: 'Genre'}
+            {type: 'search', name: 'artist', placeholder: 'Artist', title: 'Artist'},
+            {type: 'search', name: 'genre', placeholder: 'Genre', title: 'Genre'},
+            {type: 'search', name: 'soundtrack', placeholder: 'Soundtrack', title: 'Soundtrack'}
         ]));
     }
 

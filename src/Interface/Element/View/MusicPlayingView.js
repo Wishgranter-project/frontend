@@ -1,15 +1,21 @@
 import BaseView        from './BaseView';
-import PlaylistItem    from '../Component/PlaylistItem';
 
+/**
+ * Abstract view.
+ */
 class MusicPlayingView extends BaseView 
 {
+    /**
+     * Return the playable items displayed in this view.
+     *
+     * @param {Object} beginningWith
+     *   Beginning with this one.
+     *
+     * @returns {Array}
+     *   Of playable items.
+     */
     getPlayableItems(beginningWith = null)
     {
-
-        // var initialBatch = [];
-        // for (var element of this.querySelectorAll(PlaylistItem.elementName)) {
-        //     initialBatch.push(element.item);
-        // }
         var initialBatch = this.$refs.playlist.getItems();
 
         for (var key in initialBatch) {

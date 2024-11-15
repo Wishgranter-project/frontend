@@ -1,5 +1,8 @@
 import BaseView from './BaseView';
 
+/**
+ * Generic not found view.
+ */
 class ViewNotFound extends BaseView 
 {
     static elementName = 'not-found';
