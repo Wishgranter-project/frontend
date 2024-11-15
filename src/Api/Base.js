@@ -21,31 +21,27 @@ class Base
         });
     }
 
+    async download(endpoint, queryParams, accept)
+    {
+        return this.request('get', endpoint, undefined, queryParams, { headers: { 'Accept': accept } } )
+        .then(response => response.blob())
+        .then(blob => {
+            const file = URL.createObjectURL(blob);
+            window.location.assign(file);
+        });
+    }
+
     request(method, endpoint, body = undefined, queryParams = undefined, otherOptions = undefined) 
     {
         var request;
-        var options = { body, queryParams };
+        var options = { method, body, queryParams };
 
         if (otherOptions) {
             options = { ...options, ...otherOptions };
         }
 
-        switch(method) {
-            case 'post':
-                request = this.httpClient.post(endpoint, options);
-                break;
-            case 'put':
-                request = this.httpClient.put(endpoint, options);
-                break;
-            case 'delete':
-                request = this.httpClient.delete(endpoint, options);
-                break;
-            case 'get':
-                request = this.httpClient.get(endpoint, options);
-                break;
-        }
-
-        return request;
+        var promise = this.httpClient.request(endpoint, options);
+        return promise;
     }
 }
 

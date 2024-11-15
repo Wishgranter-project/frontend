@@ -14,9 +14,8 @@ class Playlist extends Base
     }
 
     download() 
-    {
-        var url = new URL('api/v1/collection/playlists/' + this.playlistId + '?download=1', this.httpClient.defaultOptions.baseHref);
-        window.open(url.toString(), "_blank");
+    {   
+        this.download('api/v1/collection/playlists/' + this.playlistId, undefined, 'application/jsonl');
     }
 
     async getItems(params = null) 

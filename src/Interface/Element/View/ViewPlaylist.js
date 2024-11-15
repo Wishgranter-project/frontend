@@ -144,7 +144,7 @@ class ViewPlaylist extends MusicPlayingView
 
                 var json = evt.dataTransfer.getData('text');
                 var data = JSON.parse(json);
-                var offset = (toPage - 1) * this.response.meta.itensPerPage;
+                var offset = (toPage - 1) * this.response.meta.itemsPerPage;
 
                 var n = 0;
                 var promises = [];
@@ -176,7 +176,7 @@ class ViewPlaylist extends MusicPlayingView
     onItemsReordered(evt)
     {
         var changes = evt.detail.changes;
-        var offset = (this.response.meta.page - 1) * this.response.meta.itensPerPage;
+        var offset = (this.response.meta.page - 1) * this.response.meta.itemsPerPage;
         var promises = [];
 
         for (var c of changes) {

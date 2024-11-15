@@ -10,8 +10,7 @@ class Playlists extends Base
 
     downloadAll() 
     {
-        var url = new URL('api/v1/collection/playlists?download=1', this.httpClient.defaultOptions.baseHref);
-        window.open(url.toString(), "_blank");
+        this.download('api/v1/collection/playlists', undefined, 'application/zip');
     }
 
     create(data) 
