@@ -81,6 +81,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Remove specific items from the queue.  
 :heavy_check_mark: Add queue items into playlists.  
 :x: Drag and drop into queue.  
+:x: Shuffle system. 
 
 ### Playback control
 
