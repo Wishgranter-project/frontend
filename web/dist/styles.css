@@ -253,6 +253,9 @@ div {
   width: auto;
   margin: 0px;
 }
+.reproduction-controls__shuffle {
+  margin: auto auto auto 10px;
+}
 .reproduction-controls__volume {
   width: 250px;
   margin: auto 0px auto auto;

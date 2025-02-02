@@ -54,8 +54,8 @@ class App extends CustomElement
 
         //--------------------------------------------------
 
-        this.setHistory(this.loadHistory(), false);
-        this.setQueue(this.loadQueue(), false);
+        this.setHistory(this.loadHistory());
+        this.setQueue(this.loadQueue());
         this.updateReproductionTray();
 
         //--------------------------------------------------
@@ -92,7 +92,7 @@ class App extends CustomElement
         this.state.set('queue', queue);
     }
 
-    loadQueue() 
+    loadQueue()
     {
         if (!this.state.get('queue')) {
             return Queue.instantiate([], null);
@@ -139,7 +139,7 @@ class App extends CustomElement
         ]);
 
         this.$refs.footer = this.createAndAttach('div', {class: 'app__footer'}, [
-            this.$refs.controls = ReproductionControls.instantiate(this.api)
+            this.$refs.controls = ReproductionControls.instantiate(this.api, null, null, null, this.isShuffleOn())
         ]);      
 
         if (!this.restoreTabs()) {
@@ -148,13 +148,14 @@ class App extends CustomElement
 
         //------------------------------
 
-        this.addEventListener('queue:item-selected',          this.onItemSelected.bind(this));
-        this.addEventListener('player:ended',                 this.onPlayerEnded.bind(this));
-        this.addEventListener('queue:intention:forward',      this.forwardTheQueue.bind(this));
-        this.addEventListener('queue:intention:backward',     this.rewindTheQueue.bind(this));
-        this.addEventListener('queue:intention:jump',         this.onJumpLine.bind(this));
-        this.addEventListener('queue:intention:play-it-next', this.onPlayNext.bind(this));
-        this.addEventListener('tabbed-router:tab-updated',    this.onNavigationUpdate.bind(this));
+        this.addEventListener('queue:item-selected',             this.onItemSelected.bind(this));
+        this.addEventListener('player:ended',                    this.onPlayerEnded.bind(this));
+        this.addEventListener('player:intention:toggle-shuffle', this.toggleShuffle.bind(this));
+        this.addEventListener('queue:intention:forward',         this.forwardTheQueue.bind(this));
+        this.addEventListener('queue:intention:backward',        this.rewindTheQueue.bind(this));
+        this.addEventListener('queue:intention:jump',            this.onJumpLine.bind(this));
+        this.addEventListener('queue:intention:play-it-next',    this.onPlayNext.bind(this));
+        this.addEventListener('tabbed-router:tab-updated',       this.onNavigationUpdate.bind(this));
 
         this.addEventListener('playlist:added', () =>
         {
@@ -293,6 +294,94 @@ class App extends CustomElement
         return this.advanceTheQueue();
     }
 
+    isShuffleOn()
+    {
+        return this.state.get('shuffle') == 1;
+    }
+
+    toggleShuffle(evt)
+    {
+        this.isShuffleOn()
+            ? this.turnShuffleOff()
+            : this.turnShuffleOn();
+    }
+
+    turnShuffleOff()
+    {
+        this.state.set('shuffle', 0);
+        this.$refs.controls.turnShuffleOff();
+
+        if (!this.queue) {
+            return;
+        }
+
+        this.unshuffleQueue(this.queue);
+        this.saveQueue(this.queue);
+    }
+
+    turnShuffleOn()
+    {
+        this.state.set('shuffle', 1);
+        this.$refs.controls.turnShuffleOn();
+
+        if (!this.queue) {
+            return;
+        }
+
+        this.shuffleQueue(this.queue);
+        this.saveQueue(this.queue);
+    }
+
+    unshuffleQueue(queue)
+    {
+        if (!queue.context) {
+            return;
+        }
+
+        if (!queue.context.queryParams) {
+            return;
+        }
+
+        queue.context.queryParams.delete('orderBy');
+        queue.context.queryParams.delete('shuffle');
+    }
+
+    shuffleQueue(queue)
+    {
+        if (!queue.context) {
+            return;
+        }
+
+        if (!queue.context.queryParams) {
+            return;
+        }
+
+        var seed = this.generateRandomSeed();
+        queue.context.queryParams.set('orderBy', `RAND(${seed})`);
+        queue.context.queryParams.set('shuffle', `1`);
+    }
+
+    queueShuffled(queue)
+    {
+        if (!queue.context) {
+            return false;
+        }
+
+        if (!queue.context.queryParams) {
+            return false;
+        }
+
+        return queue.context.queryParams.get('shuffle') == '1';
+    }
+
+    generateRandomSeed()
+    {
+        // Generates an uuid, but it will serve for now.
+        return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+            (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+        );
+    }
+
     onPlayNext(evt) 
     {
         var { item } = evt.detail;
@@ -314,17 +403,14 @@ class App extends CustomElement
         }
 
         this.setQueue(queue);
+        this.saveQueue(queue);
 
         return this.playItem(this.queue.front);
     }
 
-    setHistory(history, save = true) 
+    setHistory(history) 
     {
         this.history = history;
-
-        if (save) {
-            this.saveHistory(history);
-        }
 
         this.history.updatedCallback = () =>
         {
@@ -335,12 +421,17 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    setQueue(queue, save = true) 
+    setQueue(queue) 
     {
-        this.queue = queue;
+        if (this.isShuffleOn() && !this.queueShuffled(queue)) {
+            this.shuffleQueue(queue);
+        } else if (!this.isShuffleOn()) {
+            this.unshuffleQueue(queue);
+        }
 
-        if (save) {
-            this.saveQueue(queue);
+        this.queue = queue;
+        if (queue.length <= 1) {
+            queue.fetchMore();
         }
 
         this.queue.updatedCallback = () =>
@@ -348,6 +439,7 @@ class App extends CustomElement
             this.saveQueue(queue);
             this.updateReproductionTray();
         }
+
         this.updateReproductionTray();
     }
 
@@ -453,7 +545,7 @@ class App extends CustomElement
     setupResources(item, resources, autoPlay = true) 
     {
         this.$refs.controls.remove();
-        this.$refs.controls = ReproductionControls.instantiate(this.api, item, resources, autoPlay);
+        this.$refs.controls = ReproductionControls.instantiate(this.api, item, resources, autoPlay, this.isShuffleOn());
         this.$refs.footer.append(this.$refs.controls);
     }
 

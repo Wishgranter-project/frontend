@@ -7,11 +7,11 @@ import State           from '../../../State/State';
 customElements.define('player-youtube', PlayableYouTube);
 customElements.define('player-audio', PlayableAudio);
 
-class ReproductionControls extends CustomElement 
+class ReproductionControls extends CustomElement
 {
     static elementName = 'reproduction-controls';
 
-    __construct(api, item = null, resources = null, autoPlay = true) 
+    __construct(api, item = null, resources = null, autoPlay = true, shuffleOn)
     {
         this.api       = api;
         this.item      = item;
@@ -20,9 +20,10 @@ class ReproductionControls extends CustomElement
         this.player    = null;
         this.state     = new State('controls.state');
         this.autoPlay  = autoPlay;
+        this.shuffleOn = shuffleOn;
     }
 
-    render() 
+    render()
     {
         this.classList.add('reproduction-controls');
         this.subRenderItem();
@@ -32,6 +33,10 @@ class ReproductionControls extends CustomElement
         this.subRenderQueueButton();
         this.subRenderProgressBar();
         this.$refs.playerFrame = this.createAndAttach('div', {class: 'player-frame intangible'});
+
+        this.shuffleOn
+            ? this.turnShuffleOn()
+            : this.turnShuffleOff();
 
         if (! this.resources) {
             return;
@@ -58,7 +63,7 @@ class ReproductionControls extends CustomElement
         this.setupResource(0, this.autoPlay);
     }
 
-    subRenderItem() 
+    subRenderItem()
     {        
         if (this.item) {
             this.$refs.playlistItem = this.attach(PlaylistItem.instantiate(this.item, {disablePlayButton: true}));
@@ -72,18 +77,20 @@ class ReproductionControls extends CustomElement
         this.$refs.buttonNotIt.addEventListener('click', this.notIt.bind(this));
     }
 
-    subRenderClock() 
+    subRenderClock()
     {
         this.$refs.timer = this.createAndAttach('span', {class: 'reproduction-controls__timer'}, '--:--');
     }
 
-    subRenderButtons() 
+    subRenderButtons()
     {
         this.createAndAttach('div', {class: 'reproduction-controls__buttons button-group'}, [
-            this.$refs.buttonBackward = this.createAndAttach('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-backward'})),
-            this.$refs.buttonPlay     = this.createAndAttach('button', {class: 'reproduction-controls__button-play'}, this.create('span', {class: 'fa fa-play'})),
-            this.$refs.buttonNext     = this.createAndAttach('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-forward'}))
+            this.$refs.buttonBackward = this.create('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-backward'})),
+            this.$refs.buttonPlay     = this.create('button', {class: 'reproduction-controls__button-play'}, this.create('span', {class: 'fa fa-play'})),
+            this.$refs.buttonNext     = this.create('button', {class: 'reproduction-controls__button-next'}, this.create('span', {class: 'fa fa-forward'}))
         ]);
+
+        this.$refs.buttonShuffle = this.createAndAttach('button', {class: 'reproduction-controls__shuffle', 'title': 'toggle shuffle'}, this.create('span', {class: 'fa fa-random'}));
 
         this.$refs.buttonPlay.addEventListener('click', this.toggle.bind(this));
 
@@ -96,16 +103,21 @@ class ReproductionControls extends CustomElement
         {
             this.fireEvent('queue:intention:forward');
         });
+
+        this.$refs.buttonShuffle.addEventListener('click', () =>
+        {
+            this.fireEvent('player:intention:toggle-shuffle');
+        })
     }
 
-    subRenderVolume() 
+    subRenderVolume()
     {
         this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
         this.$refs.volumeControl.value = this.state.getInt('volume', 15);
         this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
     }
 
-    subRenderQueueButton() 
+    subRenderQueueButton()
     {
         this.$refs.buttonQueue = this.createAndAttach('button', {class: 'reproduction-controls__button-queue', title: 'Queue'}, this.create('span', {class: 'fa fa-list'}));
         this.$refs.buttonQueue.addEventListener('click', () =>
@@ -114,19 +126,19 @@ class ReproductionControls extends CustomElement
         });
     }
 
-    subRenderProgressBar() 
+    subRenderProgressBar()
     {
         this.$refs.progress = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
         this.$refs.progress.addEventListener('click', this.seek.bind(this));
     }
 
-    remove() 
+    remove()
     {
         this.destroyPlayer();
         return super.remove();
     }
 
-    notIt() 
+    notIt()
     {
         if (!this.resources[this.index + 1]) {
             alert('no more alternatives');
@@ -140,12 +152,12 @@ class ReproductionControls extends CustomElement
         this.playResource(this.index);
     }
 
-    playResource(index = 0) 
+    playResource(index = 0)
     {
         this.setupResource(index, true);
     }
 
-    setupResource(index = 0, play = true) 
+    setupResource(index = 0, play = true)
     {
         console.log('Reproduction: booting player');
 
@@ -168,7 +180,7 @@ class ReproductionControls extends CustomElement
         });
     }
 
-    setMediaSession(resource) 
+    setMediaSession(resource)
     {
         if (!'mediaSession' in navigator) {
             return;
@@ -197,7 +209,7 @@ class ReproductionControls extends CustomElement
         navigator.mediaSession.metadata = mediaMetadata;
     }
 
-    destroyPlayer() 
+    destroyPlayer()
     {
         if (this.player) {
             this.player.pause();
@@ -207,7 +219,7 @@ class ReproductionControls extends CustomElement
         return this;
     }
 
-    createPlayer(resource) 
+    createPlayer(resource)
     {
         switch (resource.source) {
             case 'youtube':
@@ -220,7 +232,7 @@ class ReproductionControls extends CustomElement
         }
     }
 
-    createPlayerYouTube(resource) 
+    createPlayerYouTube(resource)
     {
         var player     = document.createElement('player-youtube');
         player.videoId = resource.id;
@@ -229,7 +241,7 @@ class ReproductionControls extends CustomElement
         return player;
     }
 
-    createPlayerSliderKz(resource) 
+    createPlayerSliderKz(resource)
     {
         var player = document.createElement('player-audio');
         player.src = resource.src;
@@ -239,20 +251,20 @@ class ReproductionControls extends CustomElement
 
     //--------
 
-    toggle() 
+    toggle()
     {
         if (this.player) {
             this.player.toggle();
         }
     }
 
-    onTimeUpdate() 
+    onTimeUpdate()
     {
         this.$refs.timer.innerHTML = this.player.currentTimeFormatted;
         this.$refs.progress.value  = this.player.currentTimePercentage;
     }
 
-    dialVolume(evt) 
+    dialVolume(evt)
     {
         var volume = evt.target.value;
         this.state.set('volume', volume);
@@ -264,7 +276,7 @@ class ReproductionControls extends CustomElement
         this.player.setVolume(volume);
     }
 
-    seek(evt) 
+    seek(evt)
     {
         if (!this.player) {
             return;
@@ -276,6 +288,16 @@ class ReproductionControls extends CustomElement
         perc  = Math.ceil((x / width) * 100) + '%';
 
         this.player.seek(perc);
+    }
+
+    turnShuffleOff()
+    {
+        this.$refs.buttonShuffle.setAttribute('title', 'turn shuffle on');
+    }
+
+    turnShuffleOn()
+    {
+        this.$refs.buttonShuffle.setAttribute('title', 'turn shuffle off');
     }
 }
 

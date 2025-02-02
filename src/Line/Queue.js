@@ -13,10 +13,6 @@ class Queue extends Array
         queue.context = queueContext;
         queue.fetchingPromise = null;
 
-        if (queue.length <= 1) {
-            queue.fetchMore();
-        }
-
         return queue;
     }
 
@@ -24,6 +20,7 @@ class Queue extends Array
      * Adds item(s) to the end of the queue.
      *
      * @param {object|array} item
+     *   Item(s)
      */
     enqueue(item) 
     {
@@ -36,6 +33,7 @@ class Queue extends Array
      * Removes the item in front ( index 0 ) and returns it.
      *
      * @return {object}
+     *   Queue item.
      */
     dequeue() 
     {
@@ -46,6 +44,7 @@ class Queue extends Array
      * Removes the item in the specified index and returns it.
      *
      * @return {object}
+     *   Queue item.
      */
     removeIndex(index) 
     {
@@ -58,7 +57,8 @@ class Queue extends Array
     /**
      * Adds a new item to the very beginning of the queue.
      *
-     * @param object item 
+     * @param {object} item 
+     *   Queue item.
      */
     dropIn(item) 
     {
@@ -126,12 +126,21 @@ class Queue extends Array
         return -1;
     }
 
+    /**
+     * Empties the queue.
+     */
     clear() 
     {
         this.splice(0, this.length);
         this.updatedCallback();
     }
 
+    /**
+     * Returns the first item in the queue.
+     *
+     * @return {object}
+     *   Queue item.
+     */
     get front() 
     {
         if (this[0]) {
@@ -142,6 +151,12 @@ class Queue extends Array
         return null;
     }
 
+    /**
+     * Returns the last item in the queue.
+     *
+     * @return {object}
+     *   Queue item.
+     */
     get back() 
     {
         return this.length
@@ -164,6 +179,9 @@ class Queue extends Array
         });
     }
 
+    /**
+     * Requests more items to be added to the queue.
+     */
     async fetchMore() 
     {
         console.log('Queue: Searching for more content')
@@ -196,8 +214,15 @@ class Queue extends Array
         });
     }
 
+    // protected
     //-------------------
 
+    /**
+     * Adds multiple item to the queue.
+     *
+     * @param {Array} items
+     *   Queue items.
+     */
     enqueueMultiple(items) 
     {
         this.push(...items);
@@ -205,6 +230,12 @@ class Queue extends Array
         this.updatedCallback();
     }
 
+    /**
+     * Adds an item to the queue.
+     *
+     * @param {object} item 
+     *   Queue item.
+     */
     enqueueSingle(item) 
     {
         this.push(item);
@@ -212,6 +243,9 @@ class Queue extends Array
         this.updatedCallback();
     }
 
+    /**
+     * For debugging.
+     */
     updatedCallback() 
     {
         console.log('queue updated');

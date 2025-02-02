@@ -1,11 +1,18 @@
 /**
+ * @abstract
+ *
  * A queue context knows how to fetch more items.
  * It is used maily for pagination.
  */
 class ContextBase
 {
     /**
+     * Constructor.
+     *
      * @param Api api
+     *   Interface with the back end.
+     * @param bool noMore
+     *   Flag, indicates there is nothing more to load, no more pages.
      */
     constructor(api, noMore = false) 
     {
@@ -13,27 +20,18 @@ class ContextBase
         this.noMore = noMore;
     }
 
-    static id() 
+    static id()
     {
         return 'base';
     }
 
     // To help us serialize the object.
-    serialize() 
+    serialize()
     {
         return {
             id: this.constructor.id(),
             noMore: this.noMore
         };
-    }
-
-    /**
-     * make whatever calculations may be needed to reach in
-     * preparation to fetch more items.
-     */
-    progress() 
-    {
-        // this.page += 1;
     }
 
     /**
@@ -43,6 +41,7 @@ class ContextBase
      */
     async fetchMore(queue) 
     {
+        // We reached the last page.
         if (this.noMore) {
             return new Promise((success, fail) => 
             {
@@ -63,10 +62,26 @@ class ContextBase
         });
     }
 
+    // protected
+    //-------------------
+
     /**
-     * @param ContextBase queue 
-     * 
+     * make whatever calculations may be needed to reach in
+     * preparation to fetch more items.
+     */
+    progress()
+    {
+        // this.page += 1;
+    }
+
+    /**
+     * Request more items.
+     *
+     * @param Queue queue 
+     *   Queue object.
+     *
      * @return Promise
+     *   Response to API request.
      */
     async request(queue) 
     {

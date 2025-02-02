@@ -2,6 +2,18 @@ import ContextSearch from './ContextSearch';
 
 class ContextPlaylist extends ContextSearch 
 {
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     *   Interface with the back end.
+     * @param {bool} noMore
+     *   Flag, indicates there is nothing more to load, no more pages.
+     * @param {URLSearchParams|string} queryString
+     *   Query string to use in the search.
+     * @param {string} playlistId
+     *   The playlist we are aiming for.
+     */
     constructor(api, noMore = false, queryParams, playlistId) 
     {
         super(api, noMore, queryParams);
@@ -23,6 +35,8 @@ class ContextPlaylist extends ContextSearch
         };
     }
 
+    // protected
+    //-------------------
     async request(queue) 
     {
         return this.api.collection.playlists

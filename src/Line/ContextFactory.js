@@ -6,6 +6,7 @@ class ContextFactory
 {
     /**
      * @param Api api
+     *   Interface with the back end.
      */
     constructor(api)
     {
