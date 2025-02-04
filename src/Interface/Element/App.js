@@ -55,6 +55,14 @@ class App extends CustomElement
         //--------------------------------------------------
 
         this.setHistory(this.loadHistory());
+
+        var queue = this.loadQueue();
+        if (this.isShuffleOn() && !this.isQueueShuffled(queue)) {
+            this.shuffleQueue(queue);
+        } else if (!this.isShuffleOn()) {
+            this.unshuffleQueue(queue);
+        }
+
         this.setQueue(this.loadQueue());
         this.updateReproductionTray();
 
@@ -342,11 +350,13 @@ class App extends CustomElement
             return;
         }
 
+        // set page 0 so it will begin from page 1.
+        queue.context.queryParams.set('page', 0);
         queue.context.queryParams.delete('orderBy');
         queue.context.queryParams.delete('shuffle');
     }
 
-    shuffleQueue(queue)
+    shuffleQueue(queue, reset = false)
     {
         if (!queue.context) {
             return;
@@ -357,11 +367,19 @@ class App extends CustomElement
         }
 
         var seed = this.generateRandomSeed();
+
+        if (reset) {
+            // Leaves the first item only.
+            queue.splice(1);
+        }
+
+        // set page 0 so it will begin from page 1.
+        queue.context.queryParams.set('page', 0);
         queue.context.queryParams.set('orderBy', `RAND(${seed})`);
         queue.context.queryParams.set('shuffle', `1`);
     }
 
-    queueShuffled(queue)
+    isQueueShuffled(queue)
     {
         if (!queue.context) {
             return false;
@@ -402,6 +420,9 @@ class App extends CustomElement
             this.history.add(oldQueue.front);
         }
 
+        if (this.isShuffleOn()) {
+            this.shuffleQueue(queue, true);
+        }
         this.setQueue(queue);
         this.saveQueue(queue);
 
@@ -423,12 +444,6 @@ class App extends CustomElement
 
     setQueue(queue) 
     {
-        if (this.isShuffleOn() && !this.queueShuffled(queue)) {
-            this.shuffleQueue(queue);
-        } else if (!this.isShuffleOn()) {
-            this.unshuffleQueue(queue);
-        }
-
         this.queue = queue;
         if (queue.length <= 1) {
             queue.fetchMore();
