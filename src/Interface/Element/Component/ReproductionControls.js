@@ -223,6 +223,7 @@ class ReproductionControls extends CustomElement
     {
         switch (resource.source) {
             case 'youtube':
+            case 'youtubeLax':
                 return this.createPlayerYouTube(resource);
                 break;
             case 'sliderkz':
