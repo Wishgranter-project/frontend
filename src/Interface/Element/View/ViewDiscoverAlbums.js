@@ -1,6 +1,7 @@
 import BaseView        from './BaseView';
 import SearchHeader    from '../Component/SearchHeader';
 import DiscographyItem from '../Component/DiscographyItem';
+import Queue           from '../../../Line/Queue';
 
 /**
  * Displays a grid of search results for albums.
@@ -43,17 +44,26 @@ class ViewDiscoverAlbums extends BaseView
      */
     playAllAlbuns()
     {
-        var initialBatch = [];
+        var items = this.getPlayableItems();
+
+        this.fireEvent('queue:item-selected', {
+            item: items[0],
+            queue: Queue.instantiate(items, null)
+        });
+    }
+
+    getPlayableItems()
+    {
+        var items = [];
+
         for (var element of this.querySelectorAll(DiscographyItem.elementName)) {
-            initialBatch.push({
+            items.push({
                 album: element.album.title,
                 artist: element.album.artist,
             });
         }
 
-        this.fireEvent('queue:item-selected', {
-            item: initialBatch
-        });
+        return items;
     }
 
     renderDiscographyItem(response) 

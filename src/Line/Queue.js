@@ -214,6 +214,66 @@ class Queue extends Array
         });
     }
 
+    isShuffled()
+    {
+        if (!this.context) {
+            return false;
+        }
+
+        if (!this.context.queryParams) {
+            return false;
+        }
+
+        return this.context.queryParams.get('shuffle') == '1';
+    }
+
+    shuffle(reset = false)
+    {
+        if (!this.context) {
+            return;
+        }
+
+        if (!this.context.queryParams) {
+            return;
+        }
+
+        var seed = this.generateRandomSeed();
+
+        if (reset) {
+            // Leaves the first item only.
+            this.splice(1);
+        }
+
+        // set page 0 so it will begin from page 1.
+        this.context.queryParams.set('page', 0);
+        this.context.queryParams.set('orderBy', `RAND(${seed})`);
+        this.context.queryParams.set('shuffle', `1`);
+    }
+
+    unshuffle()
+    {
+        if (!this.context) {
+            return;
+        }
+
+        if (!this.context.queryParams) {
+            return;
+        }
+
+        // set page 0 so it will begin from page 1.
+        this.context.queryParams.set('page', 0);
+        this.context.queryParams.delete('orderBy');
+        this.context.queryParams.delete('shuffle');
+    }
+
+    generateRandomSeed()
+    {
+        // Generates an uuid, but it will serve for now.
+        return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+            (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+        );
+    }
+
     // protected
     //-------------------
 

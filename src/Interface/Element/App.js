@@ -57,10 +57,10 @@ class App extends CustomElement
         this.setHistory(this.loadHistory());
 
         var queue = this.loadQueue();
-        if (this.isShuffleOn() && !this.isQueueShuffled(queue)) {
-            this.shuffleQueue(queue);
+        if (this.isShuffleOn() && !queue.isShuffled()) {
+            queue.shuffle();
         } else if (!this.isShuffleOn()) {
-            this.unshuffleQueue(queue);
+            queue.unshuffle();
         }
 
         this.setQueue(this.loadQueue());
@@ -323,7 +323,7 @@ class App extends CustomElement
             return;
         }
 
-        this.unshuffleQueue(this.queue);
+        this.queue.unshuffle();
         this.saveQueue(this.queue);
     }
 
@@ -336,47 +336,8 @@ class App extends CustomElement
             return;
         }
 
-        this.shuffleQueue(this.queue);
+        this.queue.shuffle();
         this.saveQueue(this.queue);
-    }
-
-    unshuffleQueue(queue)
-    {
-        if (!queue.context) {
-            return;
-        }
-
-        if (!queue.context.queryParams) {
-            return;
-        }
-
-        // set page 0 so it will begin from page 1.
-        queue.context.queryParams.set('page', 0);
-        queue.context.queryParams.delete('orderBy');
-        queue.context.queryParams.delete('shuffle');
-    }
-
-    shuffleQueue(queue, reset = false)
-    {
-        if (!queue.context) {
-            return;
-        }
-
-        if (!queue.context.queryParams) {
-            return;
-        }
-
-        var seed = this.generateRandomSeed();
-
-        if (reset) {
-            // Leaves the first item only.
-            queue.splice(1);
-        }
-
-        // set page 0 so it will begin from page 1.
-        queue.context.queryParams.set('page', 0);
-        queue.context.queryParams.set('orderBy', `RAND(${seed})`);
-        queue.context.queryParams.set('shuffle', `1`);
     }
 
     isQueueShuffled(queue)
@@ -390,14 +351,6 @@ class App extends CustomElement
         }
 
         return queue.context.queryParams.get('shuffle') == '1';
-    }
-
-    generateRandomSeed()
-    {
-        // Generates an uuid, but it will serve for now.
-        return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-            (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
-        );
     }
 
     onPlayNext(evt) 
@@ -421,7 +374,7 @@ class App extends CustomElement
         }
 
         if (this.isShuffleOn()) {
-            this.shuffleQueue(queue, true);
+            queue.shuffle(true);
         }
         this.setQueue(queue);
         this.saveQueue(queue);
@@ -534,8 +487,14 @@ class App extends CustomElement
         //return this.setupItem(item, true);
         var isAlbum = item.hasOwnProperty('album') && !item.hasOwnProperty('title');
         if (isAlbum) {
-            var tracks = await this.api.discover.albums.get(Array.isArray(item.artist) ? item.artist[0] : item.artist, item.album).fetchItems();
+            var artist = Array.isArray(item.artist) ? item.artist[0] : item.artist;
+            var album = item.album;
+
+            var tracks = await this.api.discover.albums.get(artist, album).fetchItems();
+
+            // Remove the album from the queue...
             this.queue.dequeue();
+            // and drop in its tracks.
             this.queue.dropIn(tracks);
             return this.setupItem(this.queue.front, true);
         } else {
