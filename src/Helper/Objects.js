@@ -1,5 +1,19 @@
-class Objects 
+/**
+ * Helper class to validate values.
+ */
+class Objects
 {
+    /**
+     * Checks if subject is an instance of a specific class.
+     *
+     * @param {object} subject
+     * Our data.
+     * @param {string|function} whatItIs 
+     * Class to compare.
+     *
+     * @returns {bool}
+     * True if it is.
+     */
     static isA(subject, whatItIs) 
     {
         var proto = subject.__proto__;

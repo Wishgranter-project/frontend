@@ -1,18 +1,18 @@
 /**
- * A class to help create DOM elements.
+ * A helper class to instantiate DOM elements.
  */
 class CreateElement
 {
     /**
      * Constructor.
      *
-     * @param {String} elementName
-     *   The element name.
-     * @param {Object} attributes
-     *   Attribute => Name key pairs.
-     * @param {Array} children
-     *   Array of DOM elements to append to the new element.
-     *   Useful to chain the creation of multiple elements.
+     * @param {string} elementName
+     * The element name.
+     * @param {object} attributes
+     * Attribute => Name key pairs.
+     * @param {array} children
+     * Array of DOM elements to append to the new element.
+     * Useful to chain the creation of multiple elements.
      */
     constructor(elementName, attributes = null, children = []) 
     {
@@ -23,6 +23,12 @@ class CreateElement
             : [children];
     }
 
+    /**
+     * Instantiates the element.
+     *
+     * @returns {HTMLElement}
+     * Ths instantiated element.
+     */
     create() 
     {
         var element = document.createElement(this.elementName);
@@ -46,6 +52,17 @@ class CreateElement
         return element;
     }
 
+    /**
+     * Creates an object from an object.
+     * 
+     * Given the properties: elementName, attributes and children.
+     *
+     * @param {object} obj
+     * The object.
+     *
+     * @returns {HTMLElement}
+     * The instantiated element.
+     */
     static createFromObject(obj) 
     {
         var { elementName, attributes, children } = obj;

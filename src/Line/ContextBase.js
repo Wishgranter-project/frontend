@@ -9,10 +9,10 @@ class ContextBase
     /**
      * Constructor.
      *
-     * @param Api api
-     *   Interface with the back end.
-     * @param bool noMore
-     *   Flag, indicates there is nothing more to load, no more pages.
+     * @param {Api} api
+     * Interface with the back end.
+     * @param {bool} noMore
+     * Flag to indicate if there is nothing more to load, no more pages.
      */
     constructor(api, noMore = false) 
     {
@@ -20,12 +20,23 @@ class ContextBase
         this.noMore = noMore;
     }
 
+    /**
+     * Returns the context's id.
+     *
+     * @returns {string}
+     * The id of the context.
+     */
     static id()
     {
         return 'base';
     }
 
-    // To help us serialize the object.
+    /**
+     * Serializes the object.
+     *
+     * @returns {Object}
+     * Plain representation of the object.
+     */
     serialize()
     {
         return {
@@ -35,13 +46,18 @@ class ContextBase
     }
 
     /**
-     * @param ContextBase queue 
-     * 
-     * @return Promise
+     * Retrieves more items to be added to the queue.
+     *
+     * @param {Queue} queue 
+     * The queue.
+     *
+     * @returns {Promise}
+     * To be resolved once the request is finished.
      */
     async fetchMore(queue) 
     {
-        // We reached the last page.
+        // We reached the last page,
+        // let's stop here.
         if (this.noMore) {
             return new Promise((success, fail) => 
             {
@@ -62,12 +78,13 @@ class ContextBase
         });
     }
 
-    // protected
-    //-------------------
-
     /**
-     * make whatever calculations may be needed to reach in
-     * preparation to fetch more items.
+     * Progress the queue.
+     *
+     * @protected
+     * 
+     * By making whatever calculations it may be needed to in preparation to
+     * fetch more items. Implementation specific.
      */
     progress()
     {
@@ -77,11 +94,15 @@ class ContextBase
     /**
      * Request more items.
      *
-     * @param Queue queue 
-     *   Queue object.
+     * Implementation specific.
      *
-     * @return Promise
-     *   Response to API request.
+     * @protected
+     *
+     * @param {Queue} queue 
+     * Queue object.
+     *
+     * @returns {Promise}
+     * To be resolved once the request is finished.
      */
     async request(queue) 
     {

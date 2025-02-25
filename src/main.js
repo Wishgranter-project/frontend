@@ -4,6 +4,7 @@ import CreateElement from './Helper/CreateElement';
 
 //----------------------------------------
 
+// Extending.
 HTMLElement.prototype.attach = function(element) { if (element instanceof NodeList || Array.isArray(element)) { element.forEach((el) => { this.attach(el); }); return element; } if (element !== null) { this.append(element); } return element; };
 HTMLElement.prototype.create = function(elementName, attributes = null, children = []) { return (new CreateElement(elementName, attributes, children)).create(); };
 HTMLElement.prototype.createAndAttach = function(elementName, attributes = null, children = []) { return this.attach(this.create(elementName, attributes, children)); };
@@ -13,7 +14,6 @@ HTMLElement.prototype.addEventListenerOnce = function(key, eventName, callback) 
 URLSearchParams.prototype.without = function(name) { var newSearch = new URLSearchParams(this.toString()); newSearch.delete(name); return newSearch; }
 URLSearchParams.prototype.withAdded = function(name, value) { var newSearch = new URLSearchParams(this.toString()); newSearch.append(name, value); return newSearch; }
 URLSearchParams.prototype.isEmpty = function() { return this.toString().length == 0; }
-
 HTMLElement.prototype.index = function() {
     var ar = Array.from(this.parentElement.childNodes);
     return ar.indexOf(this);
