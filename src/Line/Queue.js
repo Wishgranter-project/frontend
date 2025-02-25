@@ -6,6 +6,17 @@
  */
 class Queue extends Array 
 {
+    /**
+     * Instantiates a new queue.
+     *
+     * @param {array} items
+     * Array of playlist items.
+     * @param {ContextBase} queueContext
+     * The context of the queue.
+     *
+     * @returns {Queue}
+     * The new queue object.
+     */
     static instantiate(items = [], queueContext) 
     {
         var queue = new Queue();
@@ -20,7 +31,7 @@ class Queue extends Array
      * Adds item(s) to the end of the queue.
      *
      * @param {object|array} item
-     *   Item(s)
+     * Item(s) to add to the queue.
      */
     enqueue(item) 
     {
@@ -32,8 +43,8 @@ class Queue extends Array
     /**
      * Removes the item in front ( index 0 ) and returns it.
      *
-     * @return {object}
-     *   Queue item.
+     * @returns {object}
+     * The removed item.
      */
     dequeue() 
     {
@@ -43,8 +54,11 @@ class Queue extends Array
     /**
      * Removes the item in the specified index and returns it.
      *
-     * @return {object}
-     *   Queue item.
+     * @param {int} index
+     * The index to remove.
+     *
+     * @returns {object}
+     * The removed item.
      */
     removeIndex(index) 
     {
@@ -58,7 +72,7 @@ class Queue extends Array
      * Adds a new item to the very beginning of the queue.
      *
      * @param {object} item 
-     *   Queue item.
+     * Item to be added.
      */
     dropIn(item) 
     {
@@ -66,10 +80,13 @@ class Queue extends Array
     }
 
     /**
-     * Adds a new item to the specified position.
+     * Adds new item(s) to the specified position.
      *
-     * @param {object|array} item 
-     * @param {int} index 
+     * @param {object|array} item
+     * The item(s) to add to the queue.
+     *
+     * @param {int} index
+     * The index we are aiming for.
      */
     jump(item, index = 1) 
     {
@@ -87,13 +104,15 @@ class Queue extends Array
     }
 
     /**
-     * Moves a single item up or down the line.
+     * Moves a single item up or down the queue and returns it.
      *
-     * @param int fromIndex 
-     * @param int intoIndex 
-     *
-     * @return object
-     *   The targeted item
+     * @param {int} fromIndex
+     * From pisition.
+     * @param {int} intoIndex 
+     * To this position.
+     * 
+     * @returns {object}
+     * The moved queue item.
      */
     move(fromIndex, intoIndex = 0) 
     {

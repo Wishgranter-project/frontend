@@ -5,14 +5,25 @@ import Instantiator    from '../Helper/Instantiator';
 class ContextFactory 
 {
     /**
-     * @param Api api
-     *   Interface with the back end.
+     * Constructor.
+     *
+     * @param {Api} api
+     * To interface with the back-end.
      */
     constructor(api)
     {
         this.api = api;
     }
 
+    /**
+     * Instantiates a queue context.
+     *
+     * @param {Object} dependencies
+     * The context's dependencies.
+     *
+     * @returns {null|ContextBase}
+     * The instantiated context.
+     */
     instantiate(dependencies)
     {
         if (dependencies == null) {

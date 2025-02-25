@@ -1,22 +1,41 @@
 /**
- * Instantiate an object without worrying about the order of the parameters.
+ * Helper class to instantiate objects without worrying about the order of the parameters.
  */
 class Instantiator 
 {
+    /**
+     * Constructor
+     *
+     * @param {string} classe
+     * The class to instantiate.
+     * @param {array} dependencies
+     * Dependencies to be injected as parameters to the class' constructor.
+     */
     constructor(classe, dependencies)
     {
         this.classe = classe;
         this.dependencies = dependencies;
     }
 
-    instantiate() 
+    /**
+     * Instantiates the object.
+     *
+     * @returns {object}
+     * The instantiated object.
+     */
+    instantiate()
     {
         var values = this.compileValues();
         return new this.classe(...values);
     }
 
     /**
+     * Compiles the dependencies in the correct order.
+     *
      * @protected
+     *
+     * @returns {array}
+     * The dependencies in the correct order.
      */
     compileValues()
     {
@@ -41,14 +60,15 @@ class Instantiator
         return values;
     }
 
-
     /**
-     * Get the parameters of the constructor method.
+     * Get the parameters of the constructor.
+     *
+     * As a string like this: "param1, param2 = 'default value'"
      *
      * @protected
      *
-     * @return string
-     *   E.g.: "param1, param2 = 'default value'"
+     * @returns {string}
+     * The parameter definitions.
      */
     getConstructorParemetersString()
     {
@@ -56,15 +76,15 @@ class Instantiator
     }
 
     /**
-     * Returns an array containing the parameters of the constructor.
+     * Parses a string of parameters into an array.
      *
      * @protected
      *
      * @param {string} parametersString
-     *   E.g.: "param1, param2 = 'default value'"
+     * E.g.: "param1, param2 = 'default value'"
      *
-     * @return array
-     *   E.g.: [
+     * @returns {array}
+     * E.g.: [
      *    {
      *      name: 'param1',
      *      noDefault: true
@@ -73,7 +93,7 @@ class Instantiator
      *      name: 'param2',
      *      default: 'default value'
      *    }
-     *   ]
+     * ]
      */
     getConstructorParameters(parametersString)
     {
@@ -89,7 +109,19 @@ class Instantiator
     }
 
     /**
+     * Parses a parameter.
+     *
+     * @param {string} string
+     * The paremeter. E.g.: param2 = 'default value'
+     *
      * @protected
+     *
+     * @returns {object}
+     * The parsed parameter.
+     * E.g.: {
+     *   name: 'param2',
+     *   default: 'default value'
+     * }
      */
     parseParemeter(string)
     {
@@ -114,7 +146,15 @@ class Instantiator
     }
 
     /**
+     * Parses the default value of a parameter.
+     *
+     * @param {string} string
+     * The default value represented as a string.
+     *
      * @protected
+     *
+     * @returns {*}
+     * Bool, int, null...
      */
     parseDefaultValue(string)
     {
@@ -144,7 +184,15 @@ class Instantiator
     }
 
     /**
+     * Trims quotes out of a string.
+     *
      * @protected
+     *
+     * @param {string} string
+     * The string to be trimmed.
+     *
+     * @returns {string}
+     * The trimmed string.
      */
     trim(string) 
     {
