@@ -59,7 +59,7 @@ class App extends CustomElement
         var queue = this.loadQueue();
         if (this.isShuffleOn() && !queue.isShuffled()) {
             queue.shuffle();
-        } else if (!this.isShuffleOn()) {
+        } else if (!this.isShuffleOn() && queue.isShuffled()) {
             queue.unshuffle();
         }
 
@@ -340,19 +340,6 @@ class App extends CustomElement
         this.saveQueue(this.queue);
     }
 
-    isQueueShuffled(queue)
-    {
-        if (!queue.context) {
-            return false;
-        }
-
-        if (!queue.context.queryParams) {
-            return false;
-        }
-
-        return queue.context.queryParams.get('shuffle') == '1';
-    }
-
     onPlayNext(evt) 
     {
         var { item } = evt.detail;
@@ -376,6 +363,7 @@ class App extends CustomElement
         if (this.isShuffleOn()) {
             queue.shuffle(true);
         }
+
         this.setQueue(queue);
         this.saveQueue(queue);
 
