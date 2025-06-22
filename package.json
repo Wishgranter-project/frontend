@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "compile": "./node_modules/gulp-cli/bin/gulp.js"
     },
     "author": "Adinan Cenci",
     "license": "ISC",
@@ -14,9 +15,9 @@
         "gulp": "^4.0.2",
         "gulp-rename": "^2.0.0",
         "gulp-sass": "^5.1.0",
-        "http": "https://github.com/adinan-cenci/http",
-        "playable-html-wrapper": "git+ssh://git@github.com:adinan-cenci/playable-html-wrapper.git#4",
-        "playable-youtube-wrapper": "git+ssh://git@github.com:adinan-cenci/playable-youtube-wrapper.git#4",
+        "http": "git+ssh://git@github.com:adinan-cenci/http.git",
+        "playable-html-wrapper": "git+ssh://git@github.com:wishgranter-project/playable-html-wrapper.git",
+        "playable-youtube-wrapper": "git+ssh://git@github.com:wishgranter-project/playable-youtube-wrapper.git",
         "sass": "^1.69.4",
         "tabbed-router": "git+ssh://git@github.com:adinan-cenci/tabbed-router.git",
         "webpack-stream": "^7.0.0",
