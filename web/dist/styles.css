@@ -533,12 +533,22 @@ div {
   padding: 0px 0px 0px 10px;
 }
 
-.view--albums .header__head h1 {
+.simple .view-discography .header__head h1 {
   margin: 0px;
 }
-.view--albums .header__body {
+.simple .view-discography .header__body {
   flex-grow: 1;
   padding: 0px 10px;
+}
+.simple .view-discography__body {
+  flex-wrap: nowrap;
+}
+.simple .view-discography__releases {
+  flex-grow: 1;
+  flex-basis: calc(100% - 400px);
+}
+.simple .view-discography__tracks {
+  flex-basis: 400px;
 }
 
 .view--artists .header__head h1 {

@@ -42,14 +42,14 @@ class ReproductionControls extends CustomElement
             return;
         }
         
-        this.addEventListener('player:timeupdate', this.onTimeUpdate.bind(this));
+        this.addEventListener('playable:timeupdate', this.onTimeUpdate.bind(this));
 
-        this.addEventListener('player:ended', () => 
+        this.addEventListener('playable:ended', () => 
         {
             console.log('Reproduction: ended');
         });
 
-        this.addEventListener('player:pause', () => 
+        this.addEventListener('playable:pause', () => 
         {
             console.log('Reproduction: paused');
         });

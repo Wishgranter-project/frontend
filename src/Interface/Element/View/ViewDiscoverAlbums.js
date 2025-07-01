@@ -1,6 +1,7 @@
 import BaseView        from './BaseView';
 import SearchHeader    from '../Component/SearchHeader';
 import DiscographyItem from '../Component/DiscographyItem';
+import Album           from '../Component/Album';
 import Queue           from '../../../Line/Queue';
 
 /**
@@ -12,18 +13,30 @@ class ViewDiscoverAlbums extends BaseView
 
     async render() 
     {
-        this.classList.add('view--albums');
+        this.classList.add('view-discography');
+
+        var artist = this.hashRequest.queryParams.get('artist');
+        var title  = this.hashRequest.queryParams.get('title');
 
         this.api.discover.albums.search(this.hashRequest.queryParams).then((response) =>
         {
             this.renderHeader(response);
-            this.renderDiscographyItem(response);
+            this.renderBody();
+            this.renderDiscographyItems(response, artist, title);
+        }).then(() =>
+        {
+            if (!title) {
+                return;
+            }
+
+            var a = Album.instantiate(artist, title, this.api);
+            this.$refs.album.append(a);
         });
     }
 
     renderHeader(response) 
     {
-        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
+        this.$refs.header = this.createAndAttach('header', { class: 'header view-discography__header' }, [
             this.$refs.headerH = this.create('div', { class: 'header__header' }),
             this.$refs.headerB = this.create('div', { class: 'header__body' }),
             this.$refs.headerF = this.create('div', { class: 'header__footer' })
@@ -37,6 +50,30 @@ class ViewDiscoverAlbums extends BaseView
 
         this.$refs.playButton = this.$refs.headerF.createAndAttach('button', {title: 'Play all'}, this.create('span', {class: 'fa fa-play'}));
         this.$refs.playButton.addEventListener('click', this.playAllAlbuns.bind(this));
+    }
+
+    renderBody()
+    {
+        this.$refs.body = this.createAndAttach('main', { class: 'view-discography__body flexy' });
+    }
+
+    renderDiscographyItems(response, artist, title) 
+    {
+        var cssClass = title
+            ? 'col-12 col-sm-6 col-md-4 col-lg-3'
+            : 'col-6 col-sm-4 col-md-3 col-lg-2'
+
+        this.$refs.grid = this.$refs.body.createAndAttach('div', {class: 'grid view-discography__releases'});
+
+        for (var album of response.data) {
+            this.$refs.grid.createAndAttach('div', {class: cssClass}, DiscographyItem.instantiate(album));
+        }
+
+        if (!title) {
+            return;
+        }
+
+        this.$refs.album = this.$refs.body.createAndAttach('div', { class: 'view-discography__tracks' });
     }
 
     /**
@@ -64,15 +101,6 @@ class ViewDiscoverAlbums extends BaseView
         }
 
         return items;
-    }
-
-    renderDiscographyItem(response) 
-    {
-        var grid = this.createAndAttach('div', {class: 'grid releases'});
-
-        for (var album of response.data) {
-            grid.createAndAttach('div', {class: 'col-6 col-sm-4 col-md-3 col-lg-2'}, DiscographyItem.instantiate(album));
-        }
     }
 }
 

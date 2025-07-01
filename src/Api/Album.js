@@ -28,7 +28,7 @@ class Album extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    fetchItems()
+    async fetchItems()
     {
         return this.read().then((response) =>
         {

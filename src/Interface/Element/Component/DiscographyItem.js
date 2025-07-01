@@ -47,7 +47,7 @@ class DiscographyItem extends ContextualElement
 
     subRenderAlbum(attributes)
     {
-        attributes.href = `#discover:album?artist=${this.album.artist}&title=${this.album.title}`;
+        attributes.href = `#discover:albums?artist=${this.album.artist}&title=${this.album.title}`;
         this.subRenderCore('a', attributes);
 
         this.subRenderPlayButton().addEventListener('click', () => 

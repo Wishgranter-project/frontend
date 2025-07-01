@@ -5,7 +5,6 @@ import ReproductionControls from './Component/ReproductionControls';
 import ViewWelcome          from './View/ViewWelcome';
 import ViewPlaylist         from './View/ViewPlaylist';
 import ViewAlbums           from './View/ViewDiscoverAlbums';
-import ViewAlbum            from './View/ViewAlbum';
 import ViewSearch           from './View/ViewSearch';
 import ViewDiscover         from './View/ViewDiscoverArtists';
 import QueueDisplay         from './QueueDisplay';
@@ -156,14 +155,14 @@ class App extends CustomElement
 
         //------------------------------
 
-        this.addEventListener('queue:item-selected',             this.onItemSelected.bind(this));
-        this.addEventListener('player:ended',                    this.onPlayerEnded.bind(this));
-        this.addEventListener('player:intention:toggle-shuffle', this.toggleShuffle.bind(this));
-        this.addEventListener('queue:intention:forward',         this.forwardTheQueue.bind(this));
-        this.addEventListener('queue:intention:backward',        this.rewindTheQueue.bind(this));
-        this.addEventListener('queue:intention:jump',            this.onJumpLine.bind(this));
-        this.addEventListener('queue:intention:play-it-next',    this.onPlayNext.bind(this));
-        this.addEventListener('tabbed-router:tab-updated',       this.onNavigationUpdate.bind(this));
+        this.addEventListener('queue:item-selected',               this.onItemSelected.bind(this));
+        this.addEventListener('playable:ended',                    this.onPlayerEnded.bind(this));
+        this.addEventListener('player:intention:toggle-shuffle',   this.toggleShuffle.bind(this));
+        this.addEventListener('queue:intention:forward',           this.forwardTheQueue.bind(this));
+        this.addEventListener('queue:intention:backward',          this.rewindTheQueue.bind(this));
+        this.addEventListener('queue:intention:jump',              this.onJumpLine.bind(this));
+        this.addEventListener('queue:intention:play-it-next',      this.onPlayNext.bind(this));
+        this.addEventListener('tabbed-router:tab-updated',         this.onNavigationUpdate.bind(this));
 
         this.addEventListener('playlist:added', () =>
         {
@@ -270,10 +269,6 @@ class App extends CustomElement
         {
             return ViewAlbums.instantiate(request, api);
         })
-        .createRoute(/discover:album$/, function(request) 
-        {
-            return ViewAlbum.instantiate(request, api);
-        });
 
         /*
         .notFoundCallback = function(route, request) 

@@ -1,22 +1,25 @@
-import MusicPlayingView from './MusicPlayingView';
-import ListOfItems       from '../Component/ListOfItems';
-import PlaylistItem     from '../Component/PlaylistItem';
+import CustomElement from '../CustomElement';
+import ListOfItems   from './ListOfItems';
 
 /**
  * Displays the contents of a single album.
  */
-class ViewAlbum extends MusicPlayingView 
+class Album extends CustomElement 
 {
-    static elementName = 'view-release';
+    static elementName = 'album-container';
+
+    __construct(artist, title, api) 
+    {
+        this.artist = artist;
+        this.title = title;
+        this.api = api;
+    }
 
     async render()
     {
-        this.classList.add('view--release');
+        this.classList.add(this.elementName);
 
-        var artist = this.hashRequest.queryParams.get('artist');
-        var title  = this.hashRequest.queryParams.get('title');
-
-        this.api.discover.albums.get(artist, title).read().then((response) =>
+        this.api.discover.albums.get(this.artist, this.title).read().then((response) =>
         {
             this.subRenderHeader(response);
             this.subRenderTracks(response);
@@ -33,9 +36,7 @@ class ViewAlbum extends MusicPlayingView
             this.$refs.headerF = this.create('div', { class: 'header__footer' })
         ]);
 
-        this.$refs.headerH.createAndAttach('img', {src: response.data.thumbnail || 'dist/img/missing-cover-art.webp' });
-        this.$refs.headerB.createAndAttach('h1', null, response.data.title);
-        this.$refs.headerB.createAndAttach('h3', null, this.create('a', { title: response.data.artist, href: '#discover:albums?artist=' + response.data.artist }, response.data.artist));
+        this.$refs.headerB.createAndAttach('h2', null, response.data.title);
 
         this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, [ 
             this.$refs.playButton = this.create('button', { title: 'Play album' }, this.create('span', { class: 'fa fa-play' })),
@@ -82,8 +83,31 @@ class ViewAlbum extends MusicPlayingView
         var items = this.getPlayableItems(evt.detail.item);
         evt.detail.item = items;
     }
+
+    /**
+     * Return the playable items displayed in this view.
+     *
+     * @param {Object} beginningWith
+     * Beginning with this one.
+     *
+     * @returns {Array}
+     * Of playable items.
+     */
+    getPlayableItems(beginningWith = null)
+    {
+        var initialBatch = this.$refs.playlist.getItems();
+
+        for (var key in initialBatch) {
+            if (initialBatch[key] == beginningWith) {
+                initialBatch = initialBatch.slice(key);
+                break;
+            }
+        }
+
+        return initialBatch;
+    }
 }
 
-ViewAlbum.register();
+Album.register();
 
-export default ViewAlbum;
+export default Album;

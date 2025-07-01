@@ -1,7 +1,7 @@
 import Base from './Base';
 
 /**
- * Retrieves the artists from our collection.
+ * Retrieves the list of artists in our collection.
  */
 class Artists extends Base 
 {
