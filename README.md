@@ -23,10 +23,12 @@ List of features and status of implemenetation.
 :heavy_check_mark: Create new items.  
 :heavy_check_mark: Edit existing items.  
 :heavy_check_mark: Select and add multiple items to playlist at the same time.  
-:heavy_check_mark: Drag and drop multiple items to add them to a playlist at the same time.  
+:heavy_check_mark: Drag and drop multiple items into a playlist NAME to add them at the same time.  
+:x: Drag and drop multiple items into a playlist to add them at the same time.
+:heavy_check_mark: Drag and drop multiple items to change their order in the playlist.
+:heavy_check_mark: Drag and drop items on the pagination number to change their order in the playlist.
 :heavy_check_mark: Search items by title, genre and artist, among all playlists as well as individually.  
 :heavy_check_mark: Delete existing items.  
-:heavy_check_mark: Change order of items inside playlists.  
 
 ## Navigability
 
@@ -38,7 +40,7 @@ List of features and status of implemenetation.
 :heavy_check_mark: Pagination.  
 :heavy_check_mark: Prev/Next buttons displayed once there is a minimum of number of pages.  
 :heavy_check_mark: Limited number of pages to be displayed at once.  
-:heavy_check_mark: visual indication of the current page.  
+:heavy_check_mark: Visual indication of the current page.  
 
 ## Discoverability
 
@@ -71,17 +73,21 @@ List of features and status of implemenetation.
 :heavy_check_mark: Support playlists: play from start to finish.  
 :heavy_check_mark: Support search results: play from start to finish.  
 :heavy_check_mark: Support discoverability: add items from albums.  
-:heavy_check_mark: add entire albums.  
-:heavy_check_mark: add artist's entire discographies.  
+:heavy_check_mark: Add entire albums.  
+:heavy_check_mark: Add artist's entire discographies.  
 :heavy_check_mark: Skipp items.  
 :heavy_check_mark: Rewind, play previous items.  
-:heavy_check_mark: Jump selected items to the front of the queue.  
-:heavy_check_mark: Cut the line, play next button.  
+:heavy_check_mark: Cut the line, move item withing the queue to beginning and begin play it.  
+:x: Cut the line, move multiple items within the queue to play next.
+:heavy_check_mark: Cut the line, move item within the queue to play next.
+:heavy_check_mark: Cut the line, add item to play next from outside the queue.  
+:x: Cut the line, add multiple items from without the queue to play next.
 :heavy_check_mark: Re-order queue by dragging and dropping.  
 :heavy_check_mark: Remove specific items from the queue.  
+:x: Remove multiple selected items at once.
 :heavy_check_mark: Add queue items into playlists.  
-:x: Drag and drop into queue.  
-:x: Shuffle system. 
+:x: Drag and drop into the queue.  
+:heavy_check_mark: Shuffle system. 
 
 ### Playback control
 

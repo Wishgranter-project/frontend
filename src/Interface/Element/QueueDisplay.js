@@ -1,18 +1,21 @@
 import CustomElement from './CustomElement';
 import ListOfItems from './Component/ListOfItems';
 
+/**
+ * The playlist and history.
+ *
+ * @class
+ */
 class QueueDisplay extends CustomElement
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'queue-display';
 
     get isOpen()
     {
         return this.classList.contains('is-open')
-    }
-
-    constructor()
-    {
-        super();
     }
 
     open()
@@ -32,9 +35,12 @@ class QueueDisplay extends CustomElement
             : this.open();
     }
 
+    /**
+     * @inheritdoc
+     */
     render()
     {
-        this.classList.add('queue-display');
+        this.classList.add(QueueDisplay.elementName);
 
         this.createAndAttach('div', {class: 'queue-display__drawer'}, 
             this.$refs.content = this.create('div', {class: 'queue-display__content'}, [

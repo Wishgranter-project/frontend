@@ -64,7 +64,7 @@ class FloatMenu extends CustomElement
      */
     closeAndRemove(evt)
     {
-        if (e.detail.menu && e.detail.menu == this) {
+        if (evt.detail.menu && evt.detail.menu == this) {
             return;
         }
 
