@@ -11,7 +11,7 @@ class DiscoverArtists extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    search(params) 
+    search(params)
     {
         return this.apiCall('get', 'api/v1/discover/artists', null, params);
     }

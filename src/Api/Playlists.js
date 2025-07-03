@@ -1,7 +1,7 @@
 import Base     from './Base';
 import Playlist from './Playlist';
 
-class Playlists extends Base 
+class Playlists extends Base
 {
     /**
      * Fetches a list of all playlists.
@@ -9,7 +9,7 @@ class Playlists extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    list() 
+    list()
     {
         return this.apiCall('get', 'api/v1/collection/playlists');
     }
@@ -20,7 +20,7 @@ class Playlists extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    downloadAll() 
+    downloadAll()
     {
         this.download('api/v1/collection/playlists', undefined, 'application/zip');
     }
@@ -34,7 +34,7 @@ class Playlists extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    create(data) 
+    create(data)
     {
         return this.apiCall('post', 'api/v1/collection/playlists', data, null, {
             // To avoid the http client converting the body into json.
@@ -51,7 +51,7 @@ class Playlists extends Base
      * @returns {Playlist}
      * The playlist object.
      */
-    get(playlistId) 
+    get(playlistId)
     {
         return new Playlist(this.httpClient, playlistId);
     }

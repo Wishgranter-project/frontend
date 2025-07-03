@@ -14,7 +14,7 @@ class ContextBase
      * @param {bool} noMore
      * Flag to indicate if there is nothing more to load, no more pages.
      */
-    constructor(api, noMore = false) 
+    constructor(api, noMore = false)
     {
         this.api = api;
         this.noMore = noMore;
@@ -54,7 +54,7 @@ class ContextBase
      * @returns {Promise}
      * To be resolved once the request is finished.
      */
-    async fetchMore(queue) 
+    async fetchMore(queue)
     {
         // We reached the last page,
         // let's stop here.
@@ -104,7 +104,7 @@ class ContextBase
      * @returns {Promise}
      * To be resolved once the request is finished.
      */
-    async request(queue) 
+    async request(queue)
     {
         // return this.api.getItems(this.page);
     }

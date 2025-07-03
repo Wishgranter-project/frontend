@@ -6,7 +6,7 @@ import FormElent from '../Form/FormElent';
  *
  * @class
  */
-class ModalItemAdd extends ModalForm 
+class ModalItemAdd extends ModalForm
 {
     /**
      * @inheritdoc

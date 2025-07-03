@@ -1,10 +1,25 @@
 import CustomElement from '../../CustomElement';
 
-class TextArea extends CustomElement 
+class TextArea extends CustomElement
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'text-area-field';
 
-    __construct(name, label, value, placeholder = '') 
+    /**
+     * Constructor.
+     *
+     * @param {String} name
+     * The name of the text area.
+     * @param {String} label
+     * Human readable label.
+     * @param {String} value
+     * The value for the text area.
+     * @param {String} placeholder
+     * Human readable placeholder.
+     */
+    __construct(name, label, value, placeholder = '')
     {
         super.__construct();
         this.name        = name;
@@ -13,7 +28,10 @@ class TextArea extends CustomElement
         this.placeholder = placeholder;
     }
 
-    render() 
+    /**
+     * @inheritdoc
+     */
+    render()
     {
         var id = Math.floor(Math.random() * 10000);
         this.classList.add('form-group');
@@ -22,7 +40,13 @@ class TextArea extends CustomElement
         this.$refs.input.value = this.value;
     }
 
-    setValue(value) 
+    /**
+     * Set the value.
+     *
+     * @param {String} value
+     * The value for the text area.
+     */
+    setValue(value)
     {
         this.$refs.input.value = value;
     }

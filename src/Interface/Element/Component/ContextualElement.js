@@ -6,7 +6,7 @@ import FloatMenu from './FloatMenu/FloatMenu';
  *
  * @abstract
  */
-class ContextualElement extends CustomElement 
+class ContextualElement extends CustomElement
 {
     /**
      * @inheritdoc
@@ -16,7 +16,7 @@ class ContextualElement extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});       
 
@@ -33,7 +33,7 @@ class ContextualElement extends CustomElement
      * @returns {Object}
      * Object describing the default options for the context menu.
      */
-    getDefaultContextActions() 
+    getDefaultContextActions()
     {
         var actions = {
             helloWorld: {
@@ -56,7 +56,7 @@ class ContextualElement extends CustomElement
      * @returns {Object}
      * Object describing the options for the context menu.
      */
-    getContextActions() 
+    getContextActions()
     {
         var actions = this.getDefaultContextActions();
         this.fireEvent('context-menu:actions:invite-alter', {actions});
@@ -71,7 +71,7 @@ class ContextualElement extends CustomElement
      * @param {Event} contextMenuEvent
      * The context menu event.
      */
-    openContextMenu(contextMenuEvent) 
+    openContextMenu(contextMenuEvent)
     {
         this.actions = this.getContextActions();
         var menu = FloatMenu.instantiate(this.actions);

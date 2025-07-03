@@ -5,7 +5,7 @@ import ModalItemAdd from './ModalItemAdd';
  *
  * @class
  */
-class ModalItemEdit extends ModalItemAdd 
+class ModalItemEdit extends ModalItemAdd
 {
     /**
      * @inheritdoc
@@ -20,7 +20,7 @@ class ModalItemEdit extends ModalItemAdd
      * @param {String} uuid
      * The uuid of the playlist item to edit.
      */
-    __construct(api, uuid) 
+    __construct(api, uuid)
     {
         super.__construct(api);
         this.uuid = uuid;
@@ -29,7 +29,7 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         super.subRenderModal();
 
@@ -45,7 +45,7 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    subRenderHeader() 
+    subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit item';
@@ -54,7 +54,7 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    subRenderForm(response) 
+    subRenderForm(response)
     {
         super.subRenderForm();
 
@@ -71,7 +71,7 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    subRenderSubmitListener() 
+    subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
         {
@@ -86,7 +86,7 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    onResponse(response) 
+    onResponse(response)
     {
         this.$refs.messages.messages(response);
 

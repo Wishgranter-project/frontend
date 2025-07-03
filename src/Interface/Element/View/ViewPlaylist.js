@@ -9,11 +9,11 @@ import ContextPlaylist   from '../../../Line/ContextPlaylist';
 /**
  * Displays the contents of a playlist.
  */
-class ViewPlaylist extends MusicPlayingView 
+class ViewPlaylist extends MusicPlayingView
 {
     static elementName = 'view-playlist';
 
-    async render() 
+    async render()
     {
         this.classList.add(ViewPlaylist.elementName);
 
@@ -35,7 +35,7 @@ class ViewPlaylist extends MusicPlayingView
         this.addEventListener('list-of-items:reordered', this.onItemsReordered.bind(this));
     }
 
-    bottomReached(evt) 
+    bottomReached(evt)
     {
         console.log('Bottom of the page reached');
     }
@@ -43,7 +43,7 @@ class ViewPlaylist extends MusicPlayingView
     /**
      * Gets name and description for the playlist. 
      */
-    fetchPlaylist() 
+    fetchPlaylist()
     {
         return this.api.collection.playlists
             .get(this.hashRequest.attributes.playlistId)
@@ -53,14 +53,14 @@ class ViewPlaylist extends MusicPlayingView
     /**
      * Gets the items in the playlist ( for the current page, that is ).
      */
-    fetchItems() 
+    fetchItems()
     {
         return this.api.collection.playlists
             .get(this.hashRequest.attributes.playlistId)
             .getItems(this.hashRequest.queryParams);    
     }
 
-    subRenderHeader(response) 
+    subRenderHeader(response)
     {
         this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
             this.$refs.headerH = this.create('div', { class: 'header__header' }),
@@ -102,7 +102,7 @@ class ViewPlaylist extends MusicPlayingView
         ]));
     }
 
-    async subRenderItems(response) 
+    async subRenderItems(response)
     {
         if (!response.data) {
             return;
@@ -122,7 +122,7 @@ class ViewPlaylist extends MusicPlayingView
         return !this.hashRequest.queryParams.without('page').isEmpty();
     }
 
-    subRenderNavigation(response) 
+    subRenderNavigation(response)
     {
         this.$refs.pagination = Pagination.instantiate(this.hashRequest, response);
         this.append(this.$refs.pagination);
@@ -168,7 +168,7 @@ class ViewPlaylist extends MusicPlayingView
         });
     }
 
-    onItemSelected(evt) 
+    onItemSelected(evt)
     {
         var context      = new ContextPlaylist(this.api, false, this.hashRequest.queryParams, this.hashRequest.attributes.playlistId);
         var initialBatch = this.getPlayableItems(evt.detail.item);

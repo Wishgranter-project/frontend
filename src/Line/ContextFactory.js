@@ -2,7 +2,7 @@ import ContextPlaylist from './ContextPlaylist';
 import ContextSearch   from './ContextSearch';
 import Instantiator    from '../Helper/Instantiator';
 
-class ContextFactory 
+class ContextFactory
 {
     /**
      * Constructor.

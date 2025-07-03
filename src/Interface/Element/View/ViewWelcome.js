@@ -3,11 +3,11 @@ import BaseView from './BaseView';
 /**
  * The welcome screen.
  */
-class ViewWelcome extends BaseView 
+class ViewWelcome extends BaseView
 {
     static elementName = 'view-welcome';
 
-    render() 
+    render()
     {
         var p = document.createElement('p');
         p.innerHTML = 'Welcome back';

@@ -5,7 +5,7 @@ import Modal from './Modal';
  *
  * @class
  */
-class ModalAddToPlaylist extends Modal 
+class ModalAddToPlaylist extends Modal
 {
     /**
      * @inheritdoc
@@ -20,7 +20,7 @@ class ModalAddToPlaylist extends Modal
      * @param {Array} items
      * List of items to add to the collection.
      */
-    __construct(api, items) 
+    __construct(api, items)
     {
         super.__construct(api);
         this.items = items;
@@ -29,7 +29,7 @@ class ModalAddToPlaylist extends Modal
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         super.render();
         this.$refs.header.innerHTML = 'Add to playlist';
@@ -59,7 +59,7 @@ class ModalAddToPlaylist extends Modal
      * @param {Event} evt
      * Click event.
      */
-    onPlaylistChoosen(evt) 
+    onPlaylistChoosen(evt)
     {
         var playlist = evt.target.getAttribute('data-playlist');
         this.api.collection.playlistItems.addMultiple(this.items, playlist).then(() =>

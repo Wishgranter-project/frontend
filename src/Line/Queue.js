@@ -4,7 +4,7 @@
  * It does not leave the queue until it is time 
  * for the next in line to be in focus.
  */
-class Queue extends Array 
+class Queue extends Array
 {
     /**
      * Instantiates a new queue.
@@ -17,7 +17,7 @@ class Queue extends Array
      * @returns {Queue}
      * The new queue object.
      */
-    static instantiate(items = [], queueContext) 
+    static instantiate(items = [], queueContext)
     {
         var queue = new Queue();
         queue.enqueue(items);
@@ -33,7 +33,7 @@ class Queue extends Array
      * @param {object|array} item
      * Item(s) to add to the queue.
      */
-    enqueue(item) 
+    enqueue(item)
     {
         Array.isArray(item)
             ? this.enqueueMultiple(item)
@@ -46,7 +46,7 @@ class Queue extends Array
      * @returns {object}
      * The removed item.
      */
-    dequeue() 
+    dequeue()
     {
         return this.removeIndex(0);
     }
@@ -60,7 +60,7 @@ class Queue extends Array
      * @returns {object}
      * The removed item.
      */
-    removeIndex(index) 
+    removeIndex(index)
     {
         var removedItem = this[index] || null;
         this.splice(index, 1);
@@ -74,7 +74,7 @@ class Queue extends Array
      * @param {object} item 
      * Item to be added.
      */
-    dropIn(item) 
+    dropIn(item)
     {
         this.jump(item, 0);
     }
@@ -88,7 +88,7 @@ class Queue extends Array
      * @param {int} index
      * The index we are aiming for.
      */
-    jump(item, index = 1) 
+    jump(item, index = 1)
     {
         if (Array.isArray(item)) {
             // var params = [index, 0].concat(item);
@@ -114,7 +114,7 @@ class Queue extends Array
      * @returns {object}
      * The moved queue item.
      */
-    move(fromIndex, intoIndex = 0) 
+    move(fromIndex, intoIndex = 0)
     {
         console.log(`movin queue item from ${fromIndex} to position ${intoIndex}`);
         var target = this.splice(fromIndex, 1)[0];
@@ -148,7 +148,7 @@ class Queue extends Array
     /**
      * Empties the queue.
      */
-    clear() 
+    clear()
     {
         this.splice(0, this.length);
         this.updatedCallback();
@@ -160,7 +160,7 @@ class Queue extends Array
      * @return {object}
      *   Queue item.
      */
-    get front() 
+    get front()
     {
         if (this[0]) {
             return this[0];
@@ -176,7 +176,7 @@ class Queue extends Array
      * @return {object}
      *   Queue item.
      */
-    get back() 
+    get back()
     {
         return this.length
             ? this[this.length - 1]
@@ -191,7 +191,7 @@ class Queue extends Array
      * @returns {Promise}
      *   To be resolved when the back-end responds.
      */
-    async getNextInLine() 
+    async getNextInLine()
     {
         if (this.length >= 2) {
             return new Promise((success, fail) =>
@@ -212,7 +212,7 @@ class Queue extends Array
      * @returns {Promise}
      *   To be resolved when the back-end responds.
      */
-    async fetchMore() 
+    async fetchMore()
     {
         console.log('Queue: Searching for more content')
 
@@ -334,7 +334,7 @@ class Queue extends Array
      * @param {Array} items
      *   Queue items.
      */
-    enqueueMultiple(items) 
+    enqueueMultiple(items)
     {
         this.push(...items);
         console.log('Queue: multiple items added');
@@ -347,7 +347,7 @@ class Queue extends Array
      * @param {object} item 
      *   Queue item.
      */
-    enqueueSingle(item) 
+    enqueueSingle(item)
     {
         this.push(item);
         console.log('Queue: single item added');
@@ -357,7 +357,7 @@ class Queue extends Array
     /**
      * For debugging.
      */
-    updatedCallback() 
+    updatedCallback()
     {
         console.log('queue updated');
     }

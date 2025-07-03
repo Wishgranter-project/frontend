@@ -3,7 +3,7 @@ import Base from './Base';
 /**
  * Retrieves the list of artists in our collection.
  */
-class Artists extends Base 
+class Artists extends Base
 {
     /**
      * Fetches the artists.

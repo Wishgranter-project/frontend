@@ -3,7 +3,7 @@ import BaseView        from './BaseView';
 /**
  * Abstract view.
  */
-class MusicPlayingView extends BaseView 
+class MusicPlayingView extends BaseView
 {
     /**
      * Return the playable items displayed in this view.

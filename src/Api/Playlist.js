@@ -1,6 +1,6 @@
 import Base from './Base';
 
-class Playlist extends Base 
+class Playlist extends Base
 {
     /**
      * Constructor.
@@ -10,7 +10,7 @@ class Playlist extends Base
      * @param {string} playlistId
      * The playlist id.
      */
-    constructor(httpClient, playlistId) 
+    constructor(httpClient, playlistId)
     {
         super(httpClient);
         this.playlistId = playlistId;
@@ -24,7 +24,7 @@ class Playlist extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async read() 
+    async read()
     {
         return this.apiCall('get', 'api/v1/collection/playlists/' + this.playlistId);
     }
@@ -35,7 +35,7 @@ class Playlist extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    download() 
+    download()
     {   
         this.download('api/v1/collection/playlists/' + this.playlistId, undefined, 'application/jsonl');
     }
@@ -49,7 +49,7 @@ class Playlist extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async getItems(params = null) 
+    async getItems(params = null)
     {
         return this.apiCall('get', 'api/v1/collection/playlists/' + this.playlistId + '/items', null, params);
     }
@@ -63,7 +63,7 @@ class Playlist extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async update(data) 
+    async update(data)
     {
         return this.apiCall('put', 'api/v1/collection/playlists/' + this.playlistId, data, null, {
             // To avoid the http client converting the body into json.
@@ -77,7 +77,7 @@ class Playlist extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async delete() 
+    async delete()
     {
         return this.apiCall('delete', 'api/v1/collection/playlists/' + this.playlistId);
     }

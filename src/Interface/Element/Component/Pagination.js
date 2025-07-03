@@ -5,7 +5,7 @@ import CustomElement from '../CustomElement';
  *
  * @class
  */
-class Pagination extends CustomElement 
+class Pagination extends CustomElement
 {
     /**
      * @inheritdoc
@@ -20,7 +20,7 @@ class Pagination extends CustomElement
      * @param {Object} response
      * The response from the back-end.
      */
-    __construct(request, response) 
+    __construct(request, response)
     {
         super.__construct();
         this.request = request;
@@ -56,7 +56,7 @@ class Pagination extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.classList.add('button-group');
         this.classList.add('view-nav');
@@ -75,7 +75,7 @@ class Pagination extends CustomElement
     /**
      * Renders the button to return to the beginning.
      */
-    subRenderAnchorToBeginning() 
+    subRenderAnchorToBeginning()
     {
         if (this.first == 1) {
             return;
@@ -89,7 +89,7 @@ class Pagination extends CustomElement
     /**
      * Renders the button to return to the previous page.
      */
-    subRenderAnchorToPreviousPage() 
+    subRenderAnchorToPreviousPage()
     {
         if (this.response.meta.page == 1 || this.between <= 3) {
             return;
@@ -103,7 +103,7 @@ class Pagination extends CustomElement
     /**
      * Renders the buttons between extremes.
      */
-    subRenderAnchorBetweenExtremes() 
+    subRenderAnchorBetweenExtremes()
     {
         if (this.response.meta.pages <= 1) {
             return;
@@ -134,7 +134,7 @@ class Pagination extends CustomElement
     /**
      * Renders the button to go to the last page.
      */
-    subRenderAnchorToLast() 
+    subRenderAnchorToLast()
     {
         if (this.last == this.response.meta.pages) {
             return

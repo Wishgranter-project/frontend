@@ -3,7 +3,7 @@ import CustomElement from '../CustomElement';
 /**
  * An element to display status messages to the user.
  */
-class Messages extends CustomElement 
+class Messages extends CustomElement
 {
     /**
      * @inheritdoc
@@ -13,7 +13,7 @@ class Messages extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.classList.add('messages');
         this.successes = this.createAndAttach('ul', {class: 'successes hidden'});
@@ -27,7 +27,7 @@ class Messages extends CustomElement
      * @param {Object} messages
      * List of messages.
      */
-    messages(messages) 
+    messages(messages)
     {
         this.successes.clear().classList.add('hidden');
         this.warnings.clear().classList.add('hidden');

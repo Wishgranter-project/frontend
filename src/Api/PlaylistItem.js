@@ -1,6 +1,6 @@
 import Base from './Base';
 
-class PlaylistItem extends Base 
+class PlaylistItem extends Base
 {
     /**
      * Constructor.
@@ -10,7 +10,7 @@ class PlaylistItem extends Base
      * @param {string} uuid
      * The uuid of the playlist item.
      */
-    constructor(httpClient, uuid) 
+    constructor(httpClient, uuid)
     {
         super(httpClient);
         this.uuid = uuid;
@@ -22,7 +22,7 @@ class PlaylistItem extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async read() 
+    async read()
     {
         return this.apiCall('get', 'api/v1/collection/items/' + this.uuid);
     }
@@ -36,7 +36,7 @@ class PlaylistItem extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async update(data) 
+    async update(data)
     {
         return this.apiCall('put', 'api/v1/collection/items/' + this.uuid, data, null, {
             // To avoid the http client converting the body into json.
@@ -50,7 +50,7 @@ class PlaylistItem extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async delete() 
+    async delete()
     {
         return this.apiCall('delete', 'api/v1/collection/items/' + this.uuid);
     }

@@ -1,14 +1,14 @@
 import CustomElement from '../../CustomElement';
 import PopupMenu from './PopupMenu';
 
-class PopupButton extends CustomElement 
+class PopupButton extends CustomElement
 {
     /**
      * @inheritdoc
      */
     static elementName = 'popup-button';
 
-    __construct(menuItems = []) 
+    __construct(menuItems = [])
     {
         super.__construct();
         this.menuItems = menuItems;
@@ -18,7 +18,7 @@ class PopupButton extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.classList.add('popup-button');
 
@@ -44,7 +44,7 @@ class PopupButton extends CustomElement
         })
     }
 
-    onClick(evt) 
+    onClick(evt)
     {
         var length = this.menuItems.length;
 
@@ -69,7 +69,7 @@ class PopupButton extends CustomElement
         this.$refs.popupMenu.open(evt, evt.clientX, evt.clientY);
     }
 
-    addItem(title, helpText, icon, onClick) 
+    addItem(title, helpText, icon, onClick)
     {
         this.menuItems.push({
             title,

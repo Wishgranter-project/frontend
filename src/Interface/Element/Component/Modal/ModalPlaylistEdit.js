@@ -5,7 +5,7 @@ import ModalPlaylistAdd from './ModalPlaylistAdd';
  *
  * @class
  */
-class ModalPlaylistEdit extends ModalPlaylistAdd 
+class ModalPlaylistEdit extends ModalPlaylistAdd
 {
     /**
      * @inheritdoc
@@ -20,7 +20,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
      * @param {String} playlistId
      * The id of the playlist to edit.
      */
-    __construct(api, playlistId) 
+    __construct(api, playlistId)
     {
         super.__construct(api);
         this.playlistId = playlistId;
@@ -29,7 +29,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * @inheritdoc
      */
-    subRenderHeader() 
+    subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit playlist';
@@ -38,7 +38,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         super.subRenderModal();
 
@@ -54,7 +54,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * @inheritdoc
      */
-    subRenderForm(response) 
+    subRenderForm(response)
     {
         super.subRenderForm();
 
@@ -66,7 +66,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * @inheritdoc
      */
-    subRenderSubmitListener() 
+    subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
         {
@@ -81,7 +81,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * @inheritdoc
      */
-    onResponse(response) 
+    onResponse(response)
     {
         this.$refs.messages.messages(response);
 

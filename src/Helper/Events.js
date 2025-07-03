@@ -1,5 +1,7 @@
 /**
  * A helper class to handle handle and fire custom events.
+ *
+ * @class
  */
 class Events
 {
@@ -12,7 +14,7 @@ class Events
      * @param {HTMLElement} element
      * The node to enable such event.
      */
-    static enableBottomReached(element) 
+    static enableBottomReached(element)
     {
         element.addEventListener('scroll', Events.onScroll.bind(element));
     }
@@ -25,7 +27,7 @@ class Events
      * @param {Event} evt
      * The scroll event.
      */
-    static onScroll(evt) 
+    static onScroll(evt)
     {
         if (this.scrollTop + this.offsetHeight >= this.scrollHeight) {
             this.dispatchEvent(new CustomEvent('scroll:bottom-reached', { bubbles: false }));

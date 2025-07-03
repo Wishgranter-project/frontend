@@ -1,10 +1,25 @@
 import CustomElement from '../../CustomElement';
 
-class FloatMenuItem extends CustomElement 
+class FloatMenuItem extends CustomElement
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'float-menu-item';
 
-    __construct(title, helpText, icon, onClick) 
+    /**
+     * Constructor.
+     *
+     * @param {String} title
+     * Human readable label.
+     * @param {String} helpText
+     * Human readable text.
+     * @param {String} icon
+     * Icon to go with the label.
+     * @param {Function} onClick
+     * Callback.
+     */
+    __construct(title, helpText, icon, onClick)
     {
         super.__construct();
         this.title      = title;
@@ -13,7 +28,10 @@ class FloatMenuItem extends CustomElement
         this.onClick    = onClick;
     }
     
-    render() 
+    /**
+     * @inheritdoc
+     */
+    render()
     {
         this.classList.add('float-menu__item');
         this.$refs.body = this.createAndAttach('div', {title: this.helpText}, this.title);

@@ -5,7 +5,7 @@ import PlaylistsItems from './PlaylistsItems';
 /**
  * Entry point for the collection.
  */
-class Collection 
+class Collection
 {
     /**
      * Constructor.
@@ -13,7 +13,7 @@ class Collection
      * @param {Http} httpClient
      * A client to make http requests.
      */
-    constructor(httpClient) 
+    constructor(httpClient)
     {
         this.artists       = new Artists(httpClient);
         this.playlists     = new Playlists(httpClient);

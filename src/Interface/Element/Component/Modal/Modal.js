@@ -6,7 +6,7 @@ import CustomElement from '../../CustomElement';
  * @class
  * @abstract
  */
-class Modal extends CustomElement 
+class Modal extends CustomElement
 {
     /**
      * @inheritdoc
@@ -28,7 +28,7 @@ class Modal extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.subRenderModal();
     }
@@ -36,7 +36,7 @@ class Modal extends CustomElement
     /**
      * Renders the structure of the modal window.
      */
-    subRenderModal() 
+    subRenderModal()
     {
         this.classList.add('modal');
         this.createAndAttach('div', {class: 'modal-dialog'}, [

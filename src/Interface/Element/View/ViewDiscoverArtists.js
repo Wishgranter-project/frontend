@@ -4,11 +4,11 @@ import SearchHeader from '../Component/SearchHeader';
 /**
  * Displays a grid of search results for artists.
  */
-class ViewDiscoverArtists extends BaseView 
+class ViewDiscoverArtists extends BaseView
 {
     static elementName = 'view-discover';
 
-    async render() 
+    async render()
     {
         this.classList.add(ViewDiscoverArtists.elementName);
         this.fetch().then((response) =>
@@ -18,14 +18,14 @@ class ViewDiscoverArtists extends BaseView
         });
     }
 
-    fetch() 
+    fetch()
     {
         return this.hashRequest.queryParams.isEmpty()
             ? new Promise((r,f) => {return r({data: []});})
             : this.api.discover.artists.search(this.hashRequest.queryParams)
     }
 
-    renderHeader(response) 
+    renderHeader(response)
     {
         this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
             this.$refs.headerH = this.create('div', { class: 'header__header' }),
@@ -40,7 +40,7 @@ class ViewDiscoverArtists extends BaseView
         ]));
     }
 
-    renderArtists(response) 
+    renderArtists(response)
     {
         var grid = this.createAndAttach('div', {class: 'grid artists'});
 

@@ -15,7 +15,7 @@ class Album extends Base
      * @param {string} title
      * The title of the album.
      */
-    constructor(httpClient, artist, title) 
+    constructor(httpClient, artist, title)
     {
         super(httpClient);
         this.artist = artist;

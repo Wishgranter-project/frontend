@@ -17,7 +17,7 @@ class ViewDiscoverAlbums extends BaseView
     /**
      * @inheritdoc
      */
-    async render() 
+    async render()
     {
         this.classList.add('view-discography');
 
@@ -40,7 +40,7 @@ class ViewDiscoverAlbums extends BaseView
         });
     }
 
-    subRenderHeader() 
+    subRenderHeader()
     {
         this.$refs.header = this.createAndAttach('header', { class: 'header view-discography__header' }, [
             this.$refs.headerH = this.create('div', { class: 'header__header' }),
@@ -67,7 +67,7 @@ class ViewDiscoverAlbums extends BaseView
         }
     }
 
-    subRenderDiscographyItems(response, title) 
+    subRenderDiscographyItems(response, title)
     {
         var cssClass = title
             ? 'col-12 col-sm-6 col-md-4 col-lg-3'

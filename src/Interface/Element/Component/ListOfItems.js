@@ -8,7 +8,7 @@ import PlaylistItem  from './PlaylistItem';
  *
  * @class
  */
-class ListOfItems extends CustomElement 
+class ListOfItems extends CustomElement
 {
     /**
      * @inheritdoc
@@ -21,7 +21,7 @@ class ListOfItems extends CustomElement
      * @param {Array} descriptions
      * List of playlist items.
      */
-    __construct(descriptions = []) 
+    __construct(descriptions = [])
     {
         super.__construct();
         this.descriptions = descriptions;
@@ -32,7 +32,7 @@ class ListOfItems extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.$refs.list = this.createAndAttach('ol');
         this.classList.add(ListOfItems.elementName);

@@ -14,7 +14,7 @@ class Objects
      * @returns {bool}
      * True if it is.
      */
-    static isA(subject, whatItIs) 
+    static isA(subject, whatItIs)
     {
         var proto = subject.__proto__;
 

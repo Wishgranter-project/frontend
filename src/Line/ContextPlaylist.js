@@ -1,6 +1,6 @@
 import ContextSearch from './ContextSearch';
 
-class ContextPlaylist extends ContextSearch 
+class ContextPlaylist extends ContextSearch
 {
     /**
      * Constructor.
@@ -14,18 +14,18 @@ class ContextPlaylist extends ContextSearch
      * @param {string} playlistId
      *   The playlist we are aiming for.
      */
-    constructor(api, noMore = false, queryParams, playlistId) 
+    constructor(api, noMore = false, queryParams, playlistId)
     {
         super(api, noMore, queryParams);
         this.playlistId = playlistId;
     }
 
-    static id() 
+    static id()
     {
         return 'playlist';
     }
 
-    serialize() 
+    serialize()
     {
         return {
             id: ContextPlaylist.id(),
@@ -37,7 +37,7 @@ class ContextPlaylist extends ContextSearch
 
     // protected
     //-------------------
-    async request(queue) 
+    async request(queue)
     {
         return this.api.collection.playlists
             .get(this.playlistId)

@@ -21,7 +21,7 @@ class AppNavigation extends CustomElement
      * @param {Api} api
      * API to communicate with the back-end.
      */
-    __construct(api) 
+    __construct(api)
     {
         super.__construct();
         this.api = api;
@@ -30,7 +30,7 @@ class AppNavigation extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.clear();
         this.classList.add('app-navigation');

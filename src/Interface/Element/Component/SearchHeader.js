@@ -22,7 +22,7 @@ class SearchHeader extends CustomElement
      * @param {Object} fields
      * Definition of the form's fields.
      */
-    __construct(request, title, fields) 
+    __construct(request, title, fields)
     {
         super.__construct();
         this.request = request;
@@ -33,7 +33,7 @@ class SearchHeader extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.classList.add('search-header');
 

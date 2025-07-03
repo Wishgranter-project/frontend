@@ -5,7 +5,7 @@ import NavigationItem from './NavigationItem';
  *
  * @class
  */
-class NavigationItemPlaylist extends NavigationItem 
+class NavigationItemPlaylist extends NavigationItem
 {
     /**
      * @inheritdoc

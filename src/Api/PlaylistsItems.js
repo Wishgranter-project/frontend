@@ -1,7 +1,7 @@
 import Base from './Base';
 import PlaylistItem from './PlaylistItem';
 
-class PlaylistsItems extends Base 
+class PlaylistsItems extends Base
 {
     /**
      * Searches for playlist items.
@@ -12,7 +12,7 @@ class PlaylistsItems extends Base
      @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    search(params) 
+    search(params)
     {
         return this.apiCall('get', 'api/v1/collection/items', null, params);
     }
@@ -88,7 +88,7 @@ class PlaylistsItems extends Base
      * @returns {PlaylistItem}
      * The playlist item object.
      */
-    get(uuid) 
+    get(uuid)
     {
         return new PlaylistItem(this.httpClient, uuid);
     }

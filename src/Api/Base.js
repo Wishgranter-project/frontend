@@ -1,4 +1,4 @@
-class Base 
+class Base
 {
     /**
      * Constructor.
@@ -6,7 +6,7 @@ class Base
      * @param {Http} httpClient
      * A client to make http requests.
      */
-    constructor(httpClient) 
+    constructor(httpClient)
     {
         this.httpClient = httpClient;
     }
@@ -30,7 +30,7 @@ class Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async apiCall(method, endpoint, body = undefined, queryParams = undefined, otherOptions = undefined) 
+    async apiCall(method, endpoint, body = undefined, queryParams = undefined, otherOptions = undefined)
     {
         return new Promise((resolve, reject) => 
         {
@@ -88,7 +88,7 @@ class Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    request(method, endpoint, body = undefined, queryParams = undefined, otherOptions = undefined) 
+    request(method, endpoint, body = undefined, queryParams = undefined, otherOptions = undefined)
     {
         var request;
         var options = { method, body, queryParams };

@@ -13,7 +13,7 @@ class State
      * @param {Object} data
      *   Default data in case there's nothing in storage.
      */
-    constructor(name, data = null) 
+    constructor(name, data = null)
     {
         this.name = name;
         this.data = data || this.retrieve();
@@ -30,7 +30,7 @@ class State
      * @returns {*}
      *   Data stored or the defaultValue.
      */
-    get(variable, defaultValue = null) 
+    get(variable, defaultValue = null)
     {
         if (this.data[variable] == undefined) {
             return defaultValue;
@@ -50,7 +50,7 @@ class State
      * @returns {integer}
      *   Data stored or the defaultValue.
      */
-    getInt(variable, defaultValue = 0) 
+    getInt(variable, defaultValue = 0)
     {
         return parseInt(this.get(variable, defaultValue));
     }
@@ -63,7 +63,7 @@ class State
      * @param {mixed} value
      *   The value to be introduced.
      */
-    set(variable, value) 
+    set(variable, value)
     {
         this.data[variable] = value;
         this.save();
@@ -76,7 +76,7 @@ class State
      *
      * @private
      */
-    save() 
+    save()
     {
         var json = JSON.stringify(this.data);
         localStorage.setItem(this.name, json);
@@ -89,7 +89,7 @@ class State
      *
      * @return {Object}
      */
-    retrieve() 
+    retrieve()
     {
         var json = localStorage.getItem(this.name);
 

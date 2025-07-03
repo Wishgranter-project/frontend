@@ -8,7 +8,7 @@ import FormElent from '../Form/FormElent';
  * @class
  * @abstract
  */
-class ModalForm extends Modal 
+class ModalForm extends Modal
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class ModalForm extends Modal
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         super.subRenderModal();
         this.subRenderHeader();
@@ -31,7 +31,7 @@ class ModalForm extends Modal
      *
      * @protected
      */
-    subRenderHeader() 
+    subRenderHeader()
     {
         this.$refs.messages = this.$refs.body.attach(Messages.instantiate());
     }
@@ -41,7 +41,7 @@ class ModalForm extends Modal
      *
      * @protected
      */
-    subRenderForm() 
+    subRenderForm()
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
         this.$refs.form.addTextField('title', 'Title', '');
@@ -55,7 +55,7 @@ class ModalForm extends Modal
      *
      * Exists only to be overridden by child classes.
      */
-    subRenderSubmitListener() 
+    subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
         {
@@ -69,7 +69,7 @@ class ModalForm extends Modal
      * @param {Object} response
      * Response from the back-end.
      */
-    onResponse(response) 
+    onResponse(response)
     {
         this.$refs.messages.messages(response);
 

@@ -43,7 +43,7 @@ class App extends CustomElement
 {
     static elementName = 'the-app';
 
-    __construct(api) 
+    __construct(api)
     {
         super.__construct();
         this.api                 = api;
@@ -69,12 +69,12 @@ class App extends CustomElement
         //--------------------------------------------------
     }
 
-    saveHistory(history) 
+    saveHistory(history)
     {
         this.state.set('history', history);
     }
 
-    loadHistory() 
+    loadHistory()
     {
         var history = new History();
 
@@ -91,7 +91,7 @@ class App extends CustomElement
         return history;
     }
 
-    saveQueue(queue) 
+    saveQueue(queue)
     {
         if (queue.context) {
             this.saveQueueContext(queue.context);
@@ -115,12 +115,12 @@ class App extends CustomElement
         return queue;
     }
 
-    saveQueueContext(context) 
+    saveQueueContext(context)
     {
         this.state.set('queueContext', context.serialize());
     }
 
-    loadQueueContext() 
+    loadQueueContext()
     {
         if (!this.state.get('queueContext')) {
             return null;
@@ -131,7 +131,7 @@ class App extends CustomElement
         return this.contextFactory.instantiate(c);
     }
 
-    render() 
+    render()
     {
         this.classList.add('app');
 
@@ -245,7 +245,7 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    instantiateRouteCollection(api) 
+    instantiateRouteCollection(api)
     {
         var collection = new RouteCollection();
 
@@ -281,7 +281,7 @@ class App extends CustomElement
         return collection;
     }
 
-    async onJumpLine(evt) 
+    async onJumpLine(evt)
     {
         var { from, to } = evt.detail;
         var target = this.queue.move(from, to);
@@ -291,7 +291,7 @@ class App extends CustomElement
         }
     }
 
-    async onPlayerEnded(evt) 
+    async onPlayerEnded(evt)
     {
         console.log('-------------------------------');
         console.log('Show runner: song ended, next.');
@@ -336,7 +336,7 @@ class App extends CustomElement
         this.saveQueue(this.queue);
     }
 
-    onPlayNext(evt) 
+    onPlayNext(evt)
     {
         var { item } = evt.detail;
 
@@ -348,7 +348,7 @@ class App extends CustomElement
     /**
      * Clears old queue, set this new one up.
      */
-    async stopAndBeginThisNewQueue(queue) 
+    async stopAndBeginThisNewQueue(queue)
     {
         var oldQueue = this.queue;
 
@@ -366,7 +366,7 @@ class App extends CustomElement
         return this.playItem(this.queue.front);
     }
 
-    setHistory(history) 
+    setHistory(history)
     {
         this.history = history;
 
@@ -379,7 +379,7 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    setQueue(queue) 
+    setQueue(queue)
     {
         this.queue = queue;
         if (queue.length <= 1) {
@@ -395,14 +395,14 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    updateReproductionTray() 
+    updateReproductionTray()
     {
         if (this.$refs.queueDisplay) {
             this.$refs.queueDisplay.refresh(this.queue, this.history);
         }
     }
 
-    async rewindTheQueue(evt) 
+    async rewindTheQueue(evt)
     {
         if (! this.history.length) {
             return;
@@ -417,14 +417,14 @@ class App extends CustomElement
         return this.playItem(previous);
     }
 
-    async forwardTheQueue(evt) 
+    async forwardTheQueue(evt)
     {
         console.log('-------------------------------');
         console.log('Show runner: song skipped, next.');
         return this.advanceTheQueue();
     }
 
-    async advanceTheQueue() 
+    async advanceTheQueue()
     {
         return this.queue.getNextInLine().then( (next) => 
         {
@@ -440,7 +440,7 @@ class App extends CustomElement
         });
     }
 
-    async onItemSelected(evt) 
+    async onItemSelected(evt)
     {
         var { item, queue } = evt.detail;
 
@@ -466,7 +466,7 @@ class App extends CustomElement
         }
     }
 
-    async playItem(item) 
+    async playItem(item)
     {
         //return this.setupItem(item, true);
         var isAlbum = item.hasOwnProperty('album') && !item.hasOwnProperty('title');
@@ -486,7 +486,7 @@ class App extends CustomElement
         }
     }
 
-    async setupItem(item, play = true) 
+    async setupItem(item, play = true)
     {
         return this.findResourcesForMusicalItem(item).then( (response) =>
         {
@@ -500,7 +500,7 @@ class App extends CustomElement
         });
     }
 
-    setupResources(item, resources, autoPlay = true) 
+    setupResources(item, resources, autoPlay = true)
     {
         this.$refs.controls.remove();
         this.$refs.controls = ReproductionControls.instantiate(this.api, item, resources, autoPlay, this.isShuffleOn());
@@ -515,7 +515,7 @@ class App extends CustomElement
      *
      * @return Promise 
      */
-    async findResourcesForMusicalItem(item) 
+    async findResourcesForMusicalItem(item)
     {
         console.log('Show runner: searching for source to play');
 
@@ -546,7 +546,7 @@ class App extends CustomElement
         this.saveTabs();
     }
 
-    saveTabs() 
+    saveTabs()
     {
         var requests = [];
 
@@ -563,7 +563,7 @@ class App extends CustomElement
         this.navigationState.set('requests', requests);
     }
 
-    restoreTabs() 
+    restoreTabs()
     {
         var requests = this.loadTabs();
         var focus = false;
@@ -577,13 +577,13 @@ class App extends CustomElement
         return requests.length;
     }
 
-    openHomePage() 
+    openHomePage()
     {
         var mainTab = this.$refs.stage.createTab('main-tab', true);
         mainTab.access('#home');
     }
 
-    loadTabs() 
+    loadTabs()
     {
         var serializedRequests = this.navigationState.get('requests', []);
         var requests = [];

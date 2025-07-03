@@ -5,7 +5,7 @@ import CustomElement from '../../CustomElement';
  *
  * @class
  */
-class NavigationItem extends CustomElement 
+class NavigationItem extends CustomElement
 {
     /**
      * @inheritdoc

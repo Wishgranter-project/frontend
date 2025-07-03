@@ -1,11 +1,25 @@
 import CustomElement from '../../CustomElement';
 import FloatMenuItem from './FloatMenuItem';
 
-class FloatMenu extends CustomElement 
+/**
+ * A floating menu.
+ *
+ * @class
+ */
+class FloatMenu extends CustomElement
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'float-menu';
 
-    __construct(menuActions = {}) 
+    /**
+     * Constructor.
+     *
+     * @param {Object} menuActions
+     * Object describing the menu items.
+     */
+    __construct(menuActions = {})
     {
         super.__construct();
         this.menuActions = menuActions;
@@ -16,17 +30,10 @@ class FloatMenu extends CustomElement
         window.document.addEventListener('click', this.closeAndRemove.bind(this));
     }
 
-    closeAndRemove(e) 
-    {
-        if (e.detail.menu && e.detail.menu == this) {
-            return;
-        }
-
-        this.close()
-            .remove();
-    }
-
-    render() 
+    /**
+     * @inheritdoc
+     */
+    render()
     {
         this.classList.add('float-menu');
         this.$refs.list = this.createAndAttach('div', {class: 'float-menu__list'});
@@ -36,7 +43,12 @@ class FloatMenu extends CustomElement
         }
     }
 
-    subRenderItems() 
+    /**
+     * Renders the menu items.
+     *
+     * @protected
+     */
+    subRenderItems()
     {
         for (var p in this.menuActions) {
             var i = this.menuActions[p];
@@ -44,7 +56,36 @@ class FloatMenu extends CustomElement
         }
     }
 
-    open(evt, originX = 0, originY = 0) 
+    /**
+     * Closes and remove the menu from the DOM.
+     *
+     * @param {Event} evt
+     * The event to close it.
+     */
+    closeAndRemove(evt)
+    {
+        if (e.detail.menu && e.detail.menu == this) {
+            return;
+        }
+
+        this.close()
+            .remove();
+    }
+
+    /**
+     * Open the menu.
+     *
+     * @param {Event} evt
+     * The event that opened the menu.
+     * @param {Integer} originX
+     * Where to display it.
+     * @param {Integer} originY
+     * Where to display it.
+     *
+     * @returns {FloatMenu}
+     * Itself.
+     */
+    open(evt, originX = 0, originY = 0)
     {
         evt.menuOpened = this;
 
@@ -72,7 +113,13 @@ class FloatMenu extends CustomElement
         return this;
     }
 
-    close() 
+    /**
+     * Closes the menu.
+     *
+     * @returns {FloatMenu}
+     * Itself.
+     */
+    close()
     {
         this.opened = true;
         this.clear();
@@ -80,7 +127,24 @@ class FloatMenu extends CustomElement
         return this;
     }
 
-    addMenuItem(id, title, helpText, icon, onClick) 
+    /**
+     * Adds an item to the menu.
+     *
+     * @param {String} id
+     * The id of the menu item.
+     * @param {String} title
+     * Human readable label.
+     * @param {String} helpText
+     * Human readable text.
+     * @param {String} icon
+     * Icon to go with the label.
+     * @param {Function} onClick
+     * Callback.
+     *
+     * @returns {FloatMenu}
+     * Itself.
+     */
+    addMenuItem(id, title, helpText, icon, onClick)
     {
         this.menuItems[id] = {
             title,

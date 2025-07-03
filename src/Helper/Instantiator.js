@@ -1,7 +1,9 @@
 /**
  * Helper class to instantiate objects without worrying about the order of the parameters.
+ *
+ * @class
  */
-class Instantiator 
+class Instantiator
 {
     /**
      * Constructor
@@ -194,7 +196,7 @@ class Instantiator
      * @returns {string}
      * The trimmed string.
      */
-    trim(string) 
+    trim(string)
     {
         return string.replace(/^['"]|['"]$/g, '');
     }

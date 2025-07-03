@@ -6,7 +6,7 @@ import ListOfItems   from './ListOfItems';
  *
  * @class
  */
-class Album extends CustomElement 
+class Album extends CustomElement
 {
     /**
      * @inheritdoc
@@ -23,7 +23,7 @@ class Album extends CustomElement
      * @param {Api} api
      * Object to communicate with the back-end.
      */
-    __construct(artist, title, api) 
+    __construct(artist, title, api)
     {
         super.__construct();
         this.artist = artist;

@@ -13,7 +13,7 @@ class Discover extends Base
      * @param {Http} httpClient
      * A client to make http requests.
      */
-    constructor(httpClient) 
+    constructor(httpClient)
     {
         super(httpClient);
         this.albums  = new DiscoverAlbums(httpClient);

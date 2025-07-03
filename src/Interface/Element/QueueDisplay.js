@@ -1,38 +1,38 @@
 import CustomElement from './CustomElement';
 import ListOfItems from './Component/ListOfItems';
 
-class QueueDisplay extends CustomElement 
+class QueueDisplay extends CustomElement
 {
     static elementName = 'queue-display';
 
-    get isOpen() 
+    get isOpen()
     {
         return this.classList.contains('is-open')
     }
 
-    constructor() 
+    constructor()
     {
         super();
     }
 
-    open() 
+    open()
     {
         this.classList.add('is-open');
     }
 
-    close() 
+    close()
     {
         this.classList.remove('is-open');
     }
 
-    toggle() 
+    toggle()
     {
         this.isOpen
             ? this.close()
             : this.open();
     }
 
-    render() 
+    render()
     {
         this.classList.add('queue-display');
 
@@ -117,7 +117,7 @@ class QueueDisplay extends CustomElement
         }
     }
 
-    refresh(queue, history) 
+    refresh(queue, history)
     {
         this.queue = queue;
         this.history = history;

@@ -6,7 +6,7 @@ import NavigationItem from './NavigationItem';
  *
  * @class
  */
-class AppNavigationMain extends CustomElement 
+class AppNavigationMain extends CustomElement
 {
     /**
      * @inheritdoc
@@ -16,7 +16,7 @@ class AppNavigationMain extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.clear();
         this.attach(NavigationItem.instantiate('Home', 'fa-home', '#home'));

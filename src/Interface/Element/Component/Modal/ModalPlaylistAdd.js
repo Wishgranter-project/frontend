@@ -6,14 +6,14 @@ import FormElent from '../Form/FormElent';
  *
  * @class
  */
-class ModalPlaylistAdd extends ModalItemAdd 
+class ModalPlaylistAdd extends ModalItemAdd
 {
     static elementName = 'modal-add-playlist';
 
     /**
      * @inheritdoc
      */
-    subRenderHeader() 
+    subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit playlist';
@@ -22,7 +22,7 @@ class ModalPlaylistAdd extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    subRenderForm() 
+    subRenderForm()
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
         this.$refs.form.addTextField('title', 'Title', '');
@@ -33,7 +33,7 @@ class ModalPlaylistAdd extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    subRenderSubmitListener() 
+    subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
         {
@@ -47,7 +47,7 @@ class ModalPlaylistAdd extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    onResponse(response) 
+    onResponse(response)
     {
         this.$refs.messages.messages(response);
 

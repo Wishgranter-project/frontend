@@ -5,7 +5,7 @@ import Http       from 'http';
 /**
  * The api to communicate with the back-end.
  */
-class Api 
+class Api
 {
     /**
      * Constructor.
@@ -13,7 +13,7 @@ class Api
      * @param {string} baseHref
      * The base for all the URLs we will be using.
      */
-    constructor(baseHref) 
+    constructor(baseHref)
     {
         var defaultOptions = {
             baseHref,

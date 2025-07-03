@@ -12,7 +12,7 @@ class DiscoverAlbums extends Base
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    search(params) 
+    search(params)
     {
         return this.apiCall('get', 'api/v1/discover/albums', null, params);
     }
@@ -28,7 +28,7 @@ class DiscoverAlbums extends Base
      * @returns {Album}
      * The album object.
      */
-    get(artist, title) 
+    get(artist, title)
     {
         return new Album(this.httpClient, artist, title);
     }

@@ -3,7 +3,7 @@ import {HashRequest} from 'tabbed-router';
 /**
  * Helper class to serialize things.
  */
-class Serialization 
+class Serialization
 {
     /**
      * Serializes data.
@@ -34,7 +34,7 @@ class Serialization
      * @returns {object}
      * Flat representation.
      */
-    static serializeWhateverThisIs(arbitraryData) 
+    static serializeWhateverThisIs(arbitraryData)
     {
         switch(arbitraryData.constructor.name) {
             case HashRequest.name:

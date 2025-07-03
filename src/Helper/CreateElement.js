@@ -14,7 +14,7 @@ class CreateElement
      * Array of DOM elements to append to the new element.
      * Useful to chain the creation of multiple elements.
      */
-    constructor(elementName, attributes = null, children = []) 
+    constructor(elementName, attributes = null, children = [])
     {
         this.elementName = elementName;
         this.attributes = attributes;
@@ -29,7 +29,7 @@ class CreateElement
      * @returns {HTMLElement}
      * Ths instantiated element.
      */
-    create() 
+    create()
     {
         var element = document.createElement(this.elementName);
 
@@ -63,7 +63,7 @@ class CreateElement
      * @returns {HTMLElement}
      * The instantiated element.
      */
-    static createFromObject(obj) 
+    static createFromObject(obj)
     {
         var { elementName, attributes, children } = obj;
         var create = new CreateElement(elementName, attributes, children);

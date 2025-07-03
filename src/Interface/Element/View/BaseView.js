@@ -3,7 +3,7 @@ import CustomElement from '../CustomElement';
 /**
  * @abstract
  */
-class ViewElement extends CustomElement 
+class ViewElement extends CustomElement
 {
     /**
      * @inheritdoc
@@ -18,14 +18,14 @@ class ViewElement extends CustomElement
      * @param {Api} api 
      * The api to communicate with the server.
      */
-    __construct(hashRequest, api) 
+    __construct(hashRequest, api)
     {
         super.__construct();
         this.hashRequest = hashRequest;
         this.api = api;
     }
 
-    afterRender() 
+    afterRender()
     {
         this.classList.add('view');
     }

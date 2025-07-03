@@ -7,7 +7,7 @@ import ContextualElement from './ContextualElement';
  *
  * @class
  */
-class DiscographyItem extends ContextualElement 
+class DiscographyItem extends ContextualElement
 {
     /**
      * @inheritdoc
@@ -20,7 +20,7 @@ class DiscographyItem extends ContextualElement
      * @param {Object} album
      * Description of the album.
      */
-    __construct(album) 
+    __construct(album)
     {
         super.__construct();
         this.album = album;
@@ -135,7 +135,7 @@ class DiscographyItem extends ContextualElement
     /**
      * @inheritdoc
      */
-    getDefaultContextActions() 
+    getDefaultContextActions()
     {
         var item = {
             artist: this.album.artist,

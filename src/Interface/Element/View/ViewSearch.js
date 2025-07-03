@@ -6,7 +6,7 @@ import ContextSearch from '../../../Line/ContextSearch';
 /**
  * Displays search results within the collection.
  */
-class ViewSearch extends ViewPlaylist 
+class ViewSearch extends ViewPlaylist
 {
     /**
      * @inheritdoc
@@ -16,7 +16,7 @@ class ViewSearch extends ViewPlaylist
     /**
      * @inheritdoc
      */
-    async render() 
+    async render()
     {
         this.classList.add(ViewSearch.elementName);
 
@@ -30,14 +30,14 @@ class ViewSearch extends ViewPlaylist
         this.addEventListener('queue:item-selected', this.onItemSelected.bind(this));
     }
 
-    fetch() 
+    fetch()
     {
         return this.hashRequest.queryParams.isEmpty()
             ? new Promise((r,f)=>{return r({})})
             : this.api.collection.playlistItems.search(this.hashRequest.queryParams);
     }
 
-    subRenderHeader(response) 
+    subRenderHeader(response)
     {
         this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
             this.$refs.headerH = this.create('div', { class: 'header__header' }),
@@ -55,12 +55,12 @@ class ViewSearch extends ViewPlaylist
         ]));
     }
 
-    subRenderButtonGroup() 
+    subRenderButtonGroup()
     {
         // maybe I should invert the inheritance...
     }
 
-    onItemSelected(evt) 
+    onItemSelected(evt)
     {
         var context      = new ContextSearch(this.api, false, this.hashRequest.queryParams);
         var initialBatch = this.getPlayableItems(evt.detail.item);

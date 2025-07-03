@@ -1,7 +1,7 @@
 import CustomElement from '../../CustomElement';
 import NavigationItemArtist from './NavigationItemArtist';
 
-class AppNavigationArtists extends CustomElement 
+class AppNavigationArtists extends CustomElement
 {
     /**
      * @inheritdoc
@@ -14,7 +14,7 @@ class AppNavigationArtists extends CustomElement
      * @param {Api} api
      * API to communicate with the back-end.
      */
-    __construct(api) 
+    __construct(api)
     {
         super.__construct();
         this.api = api;
@@ -23,7 +23,7 @@ class AppNavigationArtists extends CustomElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         this.clear();
         this.classList.add('app-navigation__artists');
@@ -46,7 +46,7 @@ class AppNavigationArtists extends CustomElement
      * @param {Integer} count
      * Number of items in the collection.
      */
-    addArtistNavItem(artistName, count) 
+    addArtistNavItem(artistName, count)
     {
         NavigationItemArtist.instantiate(artistName, null, '#search?artist=' + artistName, count).attachTo(this);
     }

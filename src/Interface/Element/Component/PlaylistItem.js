@@ -7,7 +7,7 @@ import ContextualElement from './ContextualElement';
  *
  * @class
  */
-class PlaylistItem extends ContextualElement 
+class PlaylistItem extends ContextualElement
 {
     /**
      * @inheritdoc
@@ -22,7 +22,7 @@ class PlaylistItem extends ContextualElement
      * @param {Object} options
      * Options regarding how to render the element.
      */
-    __construct(item = {}, options = {}) 
+    __construct(item = {}, options = {})
     {
         super.__construct();
         PlaylistItem.sanitizeItem(item);
@@ -33,7 +33,7 @@ class PlaylistItem extends ContextualElement
     /**
      * @inheritdoc
      */
-    render() 
+    render()
     {
         super.render();
         this.innerHTML = ``;
@@ -47,7 +47,7 @@ class PlaylistItem extends ContextualElement
     /**
      * Renders the play button.
      */
-    subRenderHeader() 
+    subRenderHeader()
     {
         if (this.options.disablePlayButton) {
             return;
@@ -68,7 +68,7 @@ class PlaylistItem extends ContextualElement
     /**
      * Renders the title, artist name and links.
      */
-    subRenderBody() 
+    subRenderBody()
     {
         this.$refs.body = this.createAndAttach('div', {class: 'playlist-item__body'});
 
@@ -94,7 +94,7 @@ class PlaylistItem extends ContextualElement
     /**
      * Renders the button to open the context menu.
      */
-    subRenderFooter() 
+    subRenderFooter()
     {
         this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});
 
