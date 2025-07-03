@@ -9,8 +9,14 @@ import Queue           from '../../../Line/Queue';
  */
 class ViewDiscoverAlbums extends BaseView
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'view-discography';
 
+    /**
+     * @inheritdoc
+     */
     async render() 
     {
         this.classList.add('view-discography');
@@ -20,12 +26,12 @@ class ViewDiscoverAlbums extends BaseView
 
         this.api.discover.albums.search(this.hashRequest.queryParams).then((response) =>
         {
-            this.renderHeader(response);
-            this.renderBody();
-            this.renderDiscographyItems(response, artist, title);
+            this.subRenderHeader();
+            this.subRenderBody(title);
+            this.subRenderDiscographyItems(response, title);
         }).then(() =>
         {
-            if (!title) {
+            if (!this.$refs.album) {
                 return;
             }
 
@@ -34,7 +40,7 @@ class ViewDiscoverAlbums extends BaseView
         });
     }
 
-    renderHeader(response) 
+    subRenderHeader() 
     {
         this.$refs.header = this.createAndAttach('header', { class: 'header view-discography__header' }, [
             this.$refs.headerH = this.create('div', { class: 'header__header' }),
@@ -52,28 +58,24 @@ class ViewDiscoverAlbums extends BaseView
         this.$refs.playButton.addEventListener('click', this.playAllAlbuns.bind(this));
     }
 
-    renderBody()
+    subRenderBody(title)
     {
         this.$refs.body = this.createAndAttach('main', { class: 'view-discography__body flexy' });
+        this.$refs.grid = this.$refs.body.createAndAttach('div', {class: 'grid view-discography__releases'});
+        if (title) {
+            this.$refs.album = this.$refs.body.createAndAttach('div', { class: 'view-discography__tracks' });
+        }
     }
 
-    renderDiscographyItems(response, artist, title) 
+    subRenderDiscographyItems(response, title) 
     {
         var cssClass = title
             ? 'col-12 col-sm-6 col-md-4 col-lg-3'
-            : 'col-6 col-sm-4 col-md-3 col-lg-2'
-
-        this.$refs.grid = this.$refs.body.createAndAttach('div', {class: 'grid view-discography__releases'});
+            : 'col-6 col-sm-4 col-md-3 col-lg-2';
 
         for (var album of response.data) {
             this.$refs.grid.createAndAttach('div', {class: cssClass}, DiscographyItem.instantiate(album));
         }
-
-        if (!title) {
-            return;
-        }
-
-        this.$refs.album = this.$refs.body.createAndAttach('div', { class: 'view-discography__tracks' });
     }
 
     /**

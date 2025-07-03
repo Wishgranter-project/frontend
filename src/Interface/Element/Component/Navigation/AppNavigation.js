@@ -1,31 +1,45 @@
-import CustomElement from '../../CustomElement';
-import AppNavigationMain from './AppNavigationMain';
+import CustomElement          from '../../CustomElement';
+import AppNavigationMain      from './AppNavigationMain';
 import AppNavigationPlaylists from './AppNavigationPlaylists';
-import AppNavigationArtists from './AppNavigationArtists';
+import AppNavigationArtists   from './AppNavigationArtists';
 
-class AppNavigation extends CustomElement 
+/**
+ * The app's main navigation.
+ *
+ * @class
+ */
+class AppNavigation extends CustomElement
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'app-navigation';
 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end.
+     */
     __construct(api) 
     {
+        super.__construct();
         this.api = api;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.clear();
         this.classList.add('app-navigation');
 
-        this.$refs.main      = AppNavigationMain.instantiate(this.api);
-        this.$refs.playlists = AppNavigationPlaylists.instantiate(this.api);
-        this.$refs.artists   = AppNavigationArtists.instantiate(this.api);
-
-        this.attach(this.$refs.main);
+        this.$refs.main      = AppNavigationMain.instantiate().attachTo(this);
         this.createAndAttach('hr');
-        this.attach(this.$refs.playlists);
+        this.$refs.playlists = AppNavigationPlaylists.instantiate(this.api).attachTo(this);
         this.createAndAttach('hr');
-        this.attach(this.$refs.artists);
+        this.$refs.artists   = AppNavigationArtists.instantiate(this.api).attachTo(this);
     }
 
 }

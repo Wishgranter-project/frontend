@@ -11,11 +11,11 @@
 @import './_float-menu.scss';
 @import './_pagination.scss';
 @import './_search-header.scss';
-@import './_view--playlist.scss';
-@import './_view--release.scss';
-@import './_view--search.scss';
-@import './_view--albums.scss';
-@import './_view--artists.scss';
+@import './_view-playlist.scss';
+@import './_view-release.scss';
+@import './_view-search.scss';
+@import './_view-albums.scss';
+@import './_view-artists.scss';
 
 .hidden {
     display: none;
@@ -92,3 +92,9 @@
 }
 
 /*--------------------------------------------*/
+
+.album-container header {
+    h2 {
+        margin: 0px;
+    }
+}

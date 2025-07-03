@@ -10,7 +10,7 @@ class ViewDiscoverArtists extends BaseView
 
     async render() 
     {
-        this.classList.add('view--artists');
+        this.classList.add(ViewDiscoverArtists.elementName);
         this.fetch().then((response) =>
         {
             this.renderHeader(response);

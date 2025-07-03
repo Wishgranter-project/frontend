@@ -1,25 +1,45 @@
 import ModalForm from './ModalForm';
-
 import FormElent from '../Form/FormElent';
 
+/**
+ * Form to add a new item to the collection.
+ *
+ * @class
+ */
 class ModalItemAdd extends ModalForm 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-add-item';
 
-    __construct(api, playlistId) 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end.
+     * @param {String} playlistId
+     * The id of the playlist to add the item to.
+     */
+    __construct(api, playlistId)
     {
-        this.api = api;
+        super.__construct(api);
         this.playlistId = playlistId;
     }
 
-
-    subRenderHeader() 
+    /**
+     * @inheritdoc
+     */
+    subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Add item';
     }
 
-    subRenderForm() 
+    /**
+     * @inheritdoc
+     */
+    subRenderForm()
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
         this.$refs.form.addTextField('title', 'Title', '');
@@ -35,7 +55,10 @@ class ModalItemAdd extends ModalForm
         this.$refs.form.addSubmitButton('save', 'Save');
     }
 
-    subRenderSubmitListener() 
+    /**
+     * @inheritdoc
+     */
+    subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
         {
@@ -46,7 +69,10 @@ class ModalItemAdd extends ModalForm
         });
     }
 
-    onResponse(response) 
+    /**
+     * @inheritdoc
+     */
+    onResponse(response)
     {
         this.$refs.messages.messages(response);
 

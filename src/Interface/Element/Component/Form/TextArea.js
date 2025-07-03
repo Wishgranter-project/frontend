@@ -6,6 +6,7 @@ class TextArea extends CustomElement
 
     __construct(name, label, value, placeholder = '') 
     {
+        super.__construct();
         this.name        = name;
         this.label       = label;
         this.value       = value;

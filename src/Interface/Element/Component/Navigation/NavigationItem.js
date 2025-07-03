@@ -1,16 +1,38 @@
 import CustomElement from '../../CustomElement';
 
+/**
+ * A navigation item.
+ *
+ * @class
+ */
 class NavigationItem extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'navigation-item';
 
+    /**
+     * Constructor.
+     *
+     * @param {String} label
+     * Human-readable string.
+     * @param {String} icon
+     * Icon to accompany the label.
+     * @param {String} href
+     * URI.
+     */
     __construct(label, icon, href)
     {
+        super.__construct();
         this.label = label;
         this.icon  = icon;
         this.href  = href;
     }
 
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('app-navigation__item');

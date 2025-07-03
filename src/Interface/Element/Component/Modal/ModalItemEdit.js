@@ -1,15 +1,34 @@
 import ModalItemAdd from './ModalItemAdd';
 
+/**
+ * Form to edit existing item in the collection.
+ *
+ * @class
+ */
 class ModalItemEdit extends ModalItemAdd 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-edit-item';
 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end.
+     * @param {String} uuid
+     * The uuid of the playlist item to edit.
+     */
     __construct(api, uuid) 
     {
-        this.api = api;
+        super.__construct(api);
         this.uuid = uuid;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         super.subRenderModal();
@@ -23,12 +42,18 @@ class ModalItemEdit extends ModalItemAdd
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderHeader() 
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit item';
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderForm(response) 
     {
         super.subRenderForm();
@@ -43,6 +68,9 @@ class ModalItemEdit extends ModalItemAdd
         .setValue('genre[]', response.data.genre || ['']);
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderSubmitListener() 
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -55,6 +83,9 @@ class ModalItemEdit extends ModalItemAdd
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     onResponse(response) 
     {
         this.$refs.messages.messages(response);

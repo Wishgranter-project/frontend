@@ -1,5 +1,8 @@
 import BaseView from './BaseView';
 
+/**
+ * The welcome screen.
+ */
 class ViewWelcome extends BaseView 
 {
     static elementName = 'view-welcome';

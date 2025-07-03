@@ -1,17 +1,38 @@
 import ContextualElement from './ContextualElement';
 
+/**
+ * Represents a playlist item.
+ *
+ * A playlist or an album.
+ *
+ * @class
+ */
 class PlaylistItem extends ContextualElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'playlist-item';
 
+    /**
+     * Constructor.
+     *
+     * @param {Object} item
+     * The item, artist, title etc.
+     * @param {Object} options
+     * Options regarding how to render the element.
+     */
     __construct(item = {}, options = {}) 
     {
+        super.__construct();
         PlaylistItem.sanitizeItem(item);
         this.item    = item;
         this.options = options;
-        super.__construct();
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         super.render();
@@ -23,6 +44,9 @@ class PlaylistItem extends ContextualElement
         this.subRenderFooter();        
     }
 
+    /**
+     * Renders the play button.
+     */
     subRenderHeader() 
     {
         if (this.options.disablePlayButton) {
@@ -41,9 +65,12 @@ class PlaylistItem extends ContextualElement
         });
     }
 
+    /**
+     * Renders the title, artist name and links.
+     */
     subRenderBody() 
     {
-        this.$refs.body   = this.createAndAttach('div', {class: 'playlist-item__body'});
+        this.$refs.body = this.createAndAttach('div', {class: 'playlist-item__body'});
 
         if (this.item.title || this.item.album) {
             this.$refs.title = this.$refs.body.createAndAttach('span', {class: 'playlist-item__title'}, [ (this.item.title || this.item.album) ]);
@@ -64,6 +91,9 @@ class PlaylistItem extends ContextualElement
         }
     }
 
+    /**
+     * Renders the button to open the context menu.
+     */
     subRenderFooter() 
     {
         this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});
@@ -76,7 +106,10 @@ class PlaylistItem extends ContextualElement
         });
     }
 
-    getContextActions() 
+    /**
+     * @inheritdoc
+     */
+    getDefaultContextActions()
     {
         var actions = {
             addToPlaylist: {
@@ -94,7 +127,7 @@ class PlaylistItem extends ContextualElement
 
         actions.playNext = {
             title: 'Play next',
-            helpText: 'Play once current song is finished',
+            helpText: 'Play once the current song is finished',
             icon: 'fa-minus',
             onClick: () =>
             {
@@ -129,6 +162,12 @@ class PlaylistItem extends ContextualElement
         return actions;
     }
 
+    /**
+     * Normalizes an item.
+     *
+     * @param {Object} item
+     * item of a playlist item.
+     */
     static sanitizeItem(item) {
         if (!item.artist) {
             item.artist = [];

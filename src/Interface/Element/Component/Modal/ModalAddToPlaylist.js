@@ -1,15 +1,34 @@
 import Modal from './Modal';
 
+/**
+ * Prompt the user to chose a playlist to add items to.
+ *
+ * @class
+ */
 class ModalAddToPlaylist extends Modal 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-window-add-to-playlist';
 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end.
+     * @param {Array} items
+     * List of items to add to the collection.
+     */
     __construct(api, items) 
     {
         super.__construct(api);
         this.items = items;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         super.render();
@@ -31,6 +50,15 @@ class ModalAddToPlaylist extends Modal
         });
     }
 
+    /**
+     * Listens for click events.
+     *
+     * @listens click
+     * @protected
+     *
+     * @param {Event} evt
+     * Click event.
+     */
     onPlaylistChoosen(evt) 
     {
         var playlist = evt.target.getAttribute('data-playlist');

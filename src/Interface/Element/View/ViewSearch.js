@@ -8,11 +8,17 @@ import ContextSearch from '../../../Line/ContextSearch';
  */
 class ViewSearch extends ViewPlaylist 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'view-search';
 
+    /**
+     * @inheritdoc
+     */
     async render() 
     {
-        this.classList.add('view--search');
+        this.classList.add(ViewSearch.elementName);
 
         this.fetch().then((response) =>
         {

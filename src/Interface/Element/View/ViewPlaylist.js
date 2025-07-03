@@ -15,7 +15,7 @@ class ViewPlaylist extends MusicPlayingView
 
     async render() 
     {
-        this.classList.add('view--playlist');
+        this.classList.add(ViewPlaylist.elementName);
 
         await this.fetchPlaylist().then((response) =>
         {
@@ -124,7 +124,7 @@ class ViewPlaylist extends MusicPlayingView
 
     subRenderNavigation(response) 
     {
-        this.$refs.pagination = Pagination.instantiate(this.api, this.hashRequest, response);
+        this.$refs.pagination = Pagination.instantiate(this.hashRequest, response);
         this.append(this.$refs.pagination);
 
         if (this.filtering()) {

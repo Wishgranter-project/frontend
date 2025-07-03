@@ -5,14 +5,22 @@ import CustomElement from '../CustomElement';
  */
 class ViewElement extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'view-base';
 
     /**
-     * @param HashRequest hashRequest 
-     * @param Api api 
+     * Constructor.
+     *
+     * @param {HashRequest} hashRequest
+     * The request.
+     * @param {Api} api 
+     * The api to communicate with the server.
      */
     __construct(hashRequest, api) 
     {
+        super.__construct();
         this.hashRequest = hashRequest;
         this.api = api;
     }

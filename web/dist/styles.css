@@ -350,6 +350,9 @@ div {
   opacity: 1;
 }
 
+.list-of-items {
+  display: block;
+}
 .list-of-items ol {
   list-style: none;
   padding: 0px;
@@ -503,32 +506,32 @@ div {
   display: block;
 }
 
-.view--playlist .header h1,
-.view--playlist .header h3 {
+.view-playlist .header h1,
+.view-playlist .header h3 {
   margin: 0px;
 }
-.view--playlist .header__body {
+.view-playlist .header__body {
   flex-grow: 1;
 }
-.view--playlist .header__body .search-header {
+.view-playlist .header__body .search-header {
   height: 100%;
   padding: 0px 10px;
 }
-.view--playlist .header__body .search-header .input-group {
+.view-playlist .header__body .search-header .input-group {
   height: 100%;
 }
-.view--playlist .header__footer .button-group {
+.view-playlist .header__footer .button-group {
   height: 100%;
 }
 
-.view--release .header__body {
+.view-release .header__body {
   flex-grow: 1;
 }
 
-.view--search .header__head h1 {
+.view-search .header__head h1 {
   margin: 0px;
 }
-.view--search .header__body {
+.view-search .header__body {
   flex-grow: 1;
   padding: 0px 0px 0px 10px;
 }
@@ -551,10 +554,10 @@ div {
   flex-basis: 400px;
 }
 
-.view--artists .header__head h1 {
+.view-artists .header__head h1 {
   margin: 0px;
 }
-.view--artists .header__body {
+.view-artists .header__body {
   flex-grow: 1;
   padding: 0px 0px 0px 10px;
 }
@@ -625,3 +628,6 @@ div {
 }
 
 /*--------------------------------------------*/
+.album-container header h2 {
+  margin: 0px;
+}

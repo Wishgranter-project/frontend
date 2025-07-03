@@ -1,17 +1,23 @@
-import Modal from './Modal';
-
-import Messages from '../Messages';
+import Modal     from './Modal';
+import Messages  from '../Messages';
 import FormElent from '../Form/FormElent';
 
+/**
+ * A form inside a modal window.
+ *
+ * @class
+ * @abstract
+ */
 class ModalForm extends Modal 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-form';
 
-    __construct() 
-    {
-        
-    }
-
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         super.subRenderModal();
@@ -20,11 +26,21 @@ class ModalForm extends Modal
         this.subRenderSubmitListener();
     }
 
+    /**
+     * Renders the header.
+     *
+     * @protected
+     */
     subRenderHeader() 
     {
         this.$refs.messages = this.$refs.body.attach(Messages.instantiate());
     }
 
+    /**
+     * Renders the form.
+     *
+     * @protected
+     */
     subRenderForm() 
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
@@ -32,6 +48,13 @@ class ModalForm extends Modal
         this.$refs.form.addSubmitButton('save', 'Save');
     }
 
+    /**
+     * Adds an event listener to the form.
+     *
+     * @protected
+     *
+     * Exists only to be overridden by child classes.
+     */
     subRenderSubmitListener() 
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -40,6 +63,12 @@ class ModalForm extends Modal
         });
     }
 
+    /**
+     * Called after the response from the back-end.
+     *
+     * @param {Object} response
+     * Response from the back-end.
+     */
     onResponse(response) 
     {
         this.$refs.messages.messages(response);

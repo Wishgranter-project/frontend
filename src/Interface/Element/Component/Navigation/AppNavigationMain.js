@@ -1,15 +1,21 @@
 import CustomElement from '../../CustomElement';
 import NavigationItem from './NavigationItem';
 
+/**
+ * Main navigation.
+ *
+ * @class
+ */
 class AppNavigationMain extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'app-navigation-main';
 
-    __construct(api) 
-    {
-        this.api = api;
-    }
-
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.clear();

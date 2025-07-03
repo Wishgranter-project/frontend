@@ -6,6 +6,7 @@ import CreateElement from './Helper/CreateElement';
 
 // Extending.
 HTMLElement.prototype.attach = function(element) { if (element instanceof NodeList || Array.isArray(element)) { element.forEach((el) => { this.attach(el); }); return element; } if (element !== null) { this.append(element); } return element; };
+HTMLElement.prototype.attachTo = function(element) { element.append(this); return this; };
 HTMLElement.prototype.create = function(elementName, attributes = null, children = []) { return (new CreateElement(elementName, attributes, children)).create(); };
 HTMLElement.prototype.createAndAttach = function(elementName, attributes = null, children = []) { return this.attach(this.create(elementName, attributes, children)); };
 HTMLElement.prototype.clear = function() { var children = Array.from(this.children); for (var c of children) { c.remove(); } return this; }

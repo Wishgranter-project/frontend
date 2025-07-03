@@ -7,6 +7,7 @@ class FloatMenu extends CustomElement
 
     __construct(menuActions = {}) 
     {
+        super.__construct();
         this.menuActions = menuActions;
         this.opened      = false;
 

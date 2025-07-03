@@ -1,19 +1,34 @@
 import ContextualElement from './ContextualElement';
 
 /**
- * Discography item represents an item in an artist's discography.
+ * Represents an item in an artist's discography.
+ *
  * Be it a full featured album or a single.
+ *
+ * @class
  */
 class DiscographyItem extends ContextualElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'discography-item';
 
+    /**
+     * Constructor.
+     *
+     * @param {Object} album
+     * Description of the album.
+     */
     __construct(album) 
     {
-        this.album = album;
         super.__construct();
+        this.album = album;
     }
 
+    /**
+     * @inheritdoc
+     */
     render()
     {
         super.render();
@@ -29,6 +44,14 @@ class DiscographyItem extends ContextualElement
             : this.subRenderAlbum(attributes);
     }
 
+    /**
+     * Renders the item as a single.
+     *
+     * @protected
+     *
+     * @param {Object} attributes
+     * Attributes for the element.
+     */
     subRenderSingle(attributes)
     {
         this.subRenderCore('span', attributes);
@@ -45,6 +68,14 @@ class DiscographyItem extends ContextualElement
         });
     }
 
+    /**
+     * Renders the item as an album.
+     *
+     * @protected
+     *
+     * @param {Object} attributes
+     * Attributes for the element.
+     */
     subRenderAlbum(attributes)
     {
         attributes.href = `#discover:albums?artist=${this.album.artist}&title=${this.album.title}`;
@@ -61,27 +92,50 @@ class DiscographyItem extends ContextualElement
         });
     }
 
-    //-----------------------------------------
-
+    /**
+     * Renders the play button.
+     *
+     * @protected
+     *
+     * @returns {HTMLElement}
+     * The play button.
+     */
     subRenderPlayButton()
     {
         return this.$refs.playButton = this.createAndAttach('button', {}, this.create('span', {class: 'fa fa-play'}));
     }
 
-    subRenderCore(coreElement, attrs)
+    /**
+     * Renders the core of the item.
+     *
+     * @protected
+     * 
+     * @param {String} coreElement
+     * Tag name.
+     * @param {Object} attributes
+     * Attributes for the element.
+     *
+     * @returns {HTMLElement}
+     * The new element.
+     */
+    subRenderCore(coreElement, attributes)
     {
         var picture = this.create('picture');
         var thumbnail = this.create('span', {class: 'thumbnail'}, picture);
+
         picture.createAndAttach('source', {srcset: this.album.thumbnail || 'dist/img/missing-cover-art.webp' });
         picture.createAndAttach('img', {src: 'dist/img/missing-cover-art.webp', onerror: "this.onerror = null;this.parentNode.children[0].srcset = this.src;" });
 
-        return this.createAndAttach(coreElement, attrs, [
+        return this.createAndAttach(coreElement, attributes, [
             thumbnail,
             this.$refs.title = this.create('h4', null, [this.album.title])
         ]);
     }
 
-    getContextActions() 
+    /**
+     * @inheritdoc
+     */
+    getDefaultContextActions() 
     {
         var item = {
             artist: this.album.artist,

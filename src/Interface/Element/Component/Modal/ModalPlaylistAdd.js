@@ -1,22 +1,27 @@
 import ModalItemAdd from './ModalItemAdd';
-
 import FormElent from '../Form/FormElent';
 
+/**
+ * Form to create a new playlist.
+ *
+ * @class
+ */
 class ModalPlaylistAdd extends ModalItemAdd 
 {
     static elementName = 'modal-add-playlist';
 
-    __construct(api) 
-    {
-        this.api = api;
-    }
-
+    /**
+     * @inheritdoc
+     */
     subRenderHeader() 
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit playlist';
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderForm() 
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
@@ -25,6 +30,9 @@ class ModalPlaylistAdd extends ModalItemAdd
         this.$refs.form.addSubmitButton('save', 'Save');
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderSubmitListener() 
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -36,6 +44,9 @@ class ModalPlaylistAdd extends ModalItemAdd
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     onResponse(response) 
     {
         this.$refs.messages.messages(response);

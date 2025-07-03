@@ -1,24 +1,43 @@
 import CustomElement from '../CustomElement';
 import PlaylistItem  from './PlaylistItem';
 
+/**
+ * Contains a series of list of playlist elements.
+ *
+ * And govern how they interact with each other and the parent element.
+ *
+ * @class
+ */
 class ListOfItems extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'list-of-items';
 
-    __construct(items = []) 
+    /**
+     * Constructor.
+     *
+     * @param {Array} descriptions
+     * List of playlist items.
+     */
+    __construct(descriptions = []) 
     {
-        this.items = items;
+        super.__construct();
+        this.descriptions = descriptions;
         this.selectionStart = null;
         this.draggingElement = null;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.$refs.list = this.createAndAttach('ol');
+        this.classList.add(ListOfItems.elementName);
 
-        this.classList.add('list-of-items');
-
-        for (var item of this.items) {
+        for (var item of this.descriptions) {
             if (!item) {
                 console.error('falsy item');
                 continue;
@@ -38,6 +57,29 @@ class ListOfItems extends CustomElement
         }
     }
 
+    /**
+     * Instantiates a playlist item element and adds to the list.
+     *
+     * @param {Object} item
+     * Description of a playlist item.
+     *
+     * @returns {HTMLElement}
+     * <li> element.
+     */
+    addElement(item)
+    {
+        var li = this.$refs.list.createAndAttach('li', {draggable: 'true'}, PlaylistItem.instantiate(item));
+        return li;
+    }
+
+    /**
+     * Listens for the dragstart event.
+     *
+     * @listens dragstart
+     *
+     * @param {Event} evt
+     * Drag start event.
+     */
     onDragStart(evt)
     {
         this.draggingElement = evt.target;
@@ -45,22 +87,40 @@ class ListOfItems extends CustomElement
         evt.dataTransfer.setData('text/plain', json);
     }
 
+    /**
+     * Listens for the dragend event.
+     *
+     * @listens dragend
+     *
+     * @param {Event} evt
+     * Dragend event.
+     */
     onDragEnd(evt)
     {
         //this.draggingElement = null;
     }
 
+    /**
+     * Listens for the event that opens the playlist modal selector.
+     * 
+     * @listens item:intention:add-to-collection
+     *
+     * @param {Event} evt
+     * Drag end event.
+     */    
     onAddToCollection(evt)
     {
         evt.detail.items = evt.detail.items.concat(this.getSelectedItems());
     }
 
-    addElement(item)
-    {
-        var li = this.$refs.list.createAndAttach('li', {draggable: 'true'}, PlaylistItem.instantiate(item));
-        return li;
-    }
-
+    /**
+     * Listens for the mouse down event.
+     *
+     * @listens mousedown
+     *
+     * @param {Event} evt
+     * Mouse down event.
+     */
     onMouseDown(evt)
     {
         if (evt.which !== 1) {
@@ -100,6 +160,14 @@ class ListOfItems extends CustomElement
         }
     }
 
+    /**
+     * Listens for the mouse up event.
+     *
+     * @listens mouseup
+     *
+     * @param {Event} evt
+     * Mouse up event.
+     */
     onMouseUp(evt)
     {
         if (evt.which !== 1) {
@@ -122,11 +190,27 @@ class ListOfItems extends CustomElement
 
     //-----REORDABLE------------------------
 
+    /**
+     * Listens for the dragover event.
+     *
+     * @listens dragover
+     *
+     * @param {Event} evt
+     * Drag over event.
+     */
     onDragOver(evt)
     {
         evt.preventDefault();
     }
 
+    /**
+     * Listens for the drop event.
+     *
+     * @listens drop
+     *
+     * @param {Event} evt
+     * Drop event.
+     */
     onDrop(evt)
     {
         if (!this.dropIsValid(evt)) {
@@ -138,6 +222,12 @@ class ListOfItems extends CustomElement
             : this.onDropForeign(evt);
     }
 
+    /**
+     * Reacts to the user dropping a child element.
+     *
+     * @param {Event} evt
+     * Drop event.
+     */
     onDropLocal(evt)
     {
         var droppedOnLi      = evt.target.getAncestor('li');
@@ -164,11 +254,26 @@ class ListOfItems extends CustomElement
         this.fireEvent('list-of-items:reordered', {changes});
     }
 
+    /**
+     * Checks if we are good to handle the element being dropped.
+     *
+     * @param {Event} dropEvt
+     * Drop event.
+     *
+     * @returns {Bool}
+     * Returns true if it is valid.
+     */
     dropIsValid(dropEvt)
     {
         return true;
     }
 
+    /**
+     * Reacts to the user dropping an element from outside.
+     *
+     * @param {Event} evt
+     * Drop event.
+     */
     onDropForeign(evt)
     {
         // to be implemented
@@ -176,27 +281,62 @@ class ListOfItems extends CustomElement
 
     //---------------------------------------------
 
+    /**
+     * Marks an element as selected.
+     *
+     * @param {HTMLElement} element
+     * List item.
+     */
     selectElement(element)
     {
         element.classList.add('selected');
     }
 
+    /**
+     * Marks an element as no longer selected.
+     *
+     * @param {HTMLElement} element
+     * List item.
+     */
     deselectElement(element)
     {
         element.classList.remove('selected');
     }
 
+    /**
+     * Checks if an element is selected.
+     *
+     * @param {HTMLElement} element
+     * List item.
+     *
+     * @returns {Bool}
+     * Returns true if it is selected.
+     */
     isElementSelected(element)
     {
         return element.classList.contains('selected');
     }
 
+    /**
+     * Selects a list element by its index.
+     *
+     * @param {Integer} index
+     * The index of the element.
+     */
     select(index)
     {
         var n = index + 1;
         this.selectElement(this.querySelector(`li:nth-child(${n})`));
     }
 
+    /**
+     * Selects a range of items.
+     *
+     * @param {Integer} indexStart
+     * Beggining.
+     * @param {Integer} indexEnd
+     * End.
+     */
     selectRange(indexStart, indexEnd)
     {
         var begin, end;
@@ -213,6 +353,9 @@ class ListOfItems extends CustomElement
         }
     }
 
+    /**
+     * Deselects all elements.
+     */
     deselectAllElements()
     {
         this.querySelectorAll('li.selected').forEach((el) =>
@@ -221,26 +364,59 @@ class ListOfItems extends CustomElement
         });
     }
 
-    getSelectedItems()
-    {
-        return this.extractItems(this.getSelectedElements());
-    }
-
+    /**
+     * Returns the selected elements.
+     *
+     * @returns {NodeList}
+     * List of selected elements.
+     */
     getSelectedElements()
     {
         return this.querySelectorAll('li.selected');
     }
 
+    /**
+     * Returns a list of the selected playlist items.
+     *
+     * @returns {Array}
+     * Array of playlist item objects.
+     */
+    getSelectedItems()
+    {
+        return this.extractItems(this.getSelectedElements());
+    }
+
+    /**
+     * Returns all the playlist items.
+     *
+     * @returns {Array}
+     * Array of playlist item objects.
+     */
     getItems()
     {
         return this.extractItems(this.getElements());
     }
 
+    /**
+     * Returns all the <li> elements.
+     *
+     * @returns {NodeList}
+     * List of <li> elements.
+     */
     getElements()
     {
         return this.querySelectorAll('li');
     }
 
+    /**
+     * Extracts playlist items from html elements.
+     *
+     * @param {NodeList} nodeList
+     * List of nodes.
+     *
+     * @returns {Array}
+     * List of playlist items
+     */
     extractItems(nodeList)
     {
         var items = [];
@@ -252,6 +428,15 @@ class ListOfItems extends CustomElement
         return items;
     }
 
+    /**
+     * Extracts the node index of node list.
+     *
+     * @param {NodeList} nodeList
+     * List of nodes.
+     *
+     * @returns {Array}
+     * List of integers.
+     */
     extractIndexes(nodeList)
     {
         var indexes = [];
@@ -263,9 +448,15 @@ class ListOfItems extends CustomElement
         return indexes;
     }
 
-    setItems(items)
+    /**
+     * Sets the playlist items to be displayed.
+     *
+     * @param {Array} descriptions
+     * Playlist items.
+     */
+    setItems(descriptions)
     {
-        this.items = items;
+        this.descriptions = descriptions;
         if (!this.attached) {
             return;
         }

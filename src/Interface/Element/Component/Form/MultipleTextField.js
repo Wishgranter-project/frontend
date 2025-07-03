@@ -6,6 +6,7 @@ class MultipleTextField extends CustomElement
 
     __construct(name, label, value, placeholder = '', addButton = 'Add +') 
     {
+        super.__construct();
         this.name        = name;
         this.label       = label;
         this.value       = value;

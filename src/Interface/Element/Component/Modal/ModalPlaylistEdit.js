@@ -1,21 +1,43 @@
 import ModalPlaylistAdd from './ModalPlaylistAdd';
 
+/**
+ * Form to edit existing playlist.
+ *
+ * @class
+ */
 class ModalPlaylistEdit extends ModalPlaylistAdd 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-edit-playlist';
 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end.
+     * @param {String} playlistId
+     * The id of the playlist to edit.
+     */
     __construct(api, playlistId) 
     {
-        this.api = api;
+        super.__construct(api);
         this.playlistId = playlistId;
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderHeader() 
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit playlist';
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         super.subRenderModal();
@@ -29,6 +51,9 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderForm(response) 
     {
         super.subRenderForm();
@@ -38,6 +63,9 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         .setValue('description', response.data.description || '');
     }
 
+    /**
+     * @inheritdoc
+     */
     subRenderSubmitListener() 
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -50,6 +78,9 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     onResponse(response) 
     {
         this.$refs.messages.messages(response);

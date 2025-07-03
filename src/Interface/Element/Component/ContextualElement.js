@@ -2,17 +2,20 @@ import CustomElement from '../CustomElement';
 import FloatMenu from './FloatMenu/FloatMenu';
 
 /**
- * Abstract class, describes an element with a contextual menu.
+ * Describes an element that makes use of a contextual menu.
+ *
+ * @abstract
  */
 class ContextualElement extends CustomElement 
 {
-    // static elementName = 'contextual-element';
+    /**
+     * @inheritdoc
+     */
+    static elementName = 'contextual-element';
 
-    __construct() 
-    {
-        // something something.
-    }
-
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});       
@@ -24,7 +27,13 @@ class ContextualElement extends CustomElement
         });
     }
 
-    getContextActions() 
+    /**
+     * Returns the actions available by default.
+     *
+     * @returns {Object}
+     * Object describing the default options for the context menu.
+     */
+    getDefaultContextActions() 
     {
         var actions = {
             helloWorld: {
@@ -42,16 +51,29 @@ class ContextualElement extends CustomElement
     }
 
     /**
+     * Returns the actions available.
+     *
+     * @returns {Object}
+     * Object describing the options for the context menu.
+     */
+    getContextActions() 
+    {
+        var actions = this.getDefaultContextActions();
+        this.fireEvent('context-menu:actions:invite-alter', {actions});
+        return actions;
+    }
+
+    /**
      * Opens the context menu.
      *
      * Before rendering the menu, invites the parent elements to alter it.
      *
-     * @param {Event} contextMenuEvent 
+     * @param {Event} contextMenuEvent
+     * The context menu event.
      */
     openContextMenu(contextMenuEvent) 
     {
         this.actions = this.getContextActions();
-        this.fireEvent('context-menu:actions:invite-alter', {actions: this.actions});
         var menu = FloatMenu.instantiate(this.actions);
         this.append(menu);
         menu.open(contextMenuEvent, contextMenuEvent.clientX, contextMenuEvent.clientY);

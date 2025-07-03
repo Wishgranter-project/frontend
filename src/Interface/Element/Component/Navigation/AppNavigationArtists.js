@@ -3,13 +3,26 @@ import NavigationItemArtist from './NavigationItemArtist';
 
 class AppNavigationArtists extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'app-navigation-artists';
 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end.
+     */
     __construct(api) 
     {
+        super.__construct();
         this.api = api;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.clear();
@@ -23,10 +36,19 @@ class AppNavigationArtists extends CustomElement
         });
     }
 
+    /**
+     * Adds an artist navigation item.
+     *
+     * @protected
+     *
+     * @param {String} artistName
+     * Name of the artist.
+     * @param {Integer} count
+     * Number of items in the collection.
+     */
     addArtistNavItem(artistName, count) 
     {
-        var i = NavigationItemArtist.instantiate(artistName, null, '#search?artist=' + artistName, count);
-        this.attach(i);
+        NavigationItemArtist.instantiate(artistName, null, '#search?artist=' + artistName, count).attachTo(this);
     }
 
 }

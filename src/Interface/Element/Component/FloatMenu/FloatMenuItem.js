@@ -6,6 +6,7 @@ class FloatMenuItem extends CustomElement
 
     __construct(title, helpText, icon, onClick) 
     {
+        super.__construct();
         this.title      = title;
         this.helpText   = helpText;
         this.icon       = icon;

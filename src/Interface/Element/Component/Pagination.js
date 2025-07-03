@@ -1,12 +1,28 @@
 import CustomElement from '../CustomElement';
 
+/**
+ * Item to paginate results.
+ *
+ * @class
+ */
 class Pagination extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'view-pagination';
 
-    __construct(api, request, response) 
+    /**
+     * Constructor.
+     *
+     * @param {HashRequest} request
+     * The request object.
+     * @param {Object} response
+     * The response from the back-end.
+     */
+    __construct(request, response) 
     {
-        this.api = api;
+        super.__construct();
         this.request = request;
         this.response = response;
 
@@ -37,6 +53,9 @@ class Pagination extends CustomElement
         this.between = this.last - this.first + 1;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.classList.add('button-group');
@@ -53,6 +72,9 @@ class Pagination extends CustomElement
         this.subRenderAnchorToLast();
     }
 
+    /**
+     * Renders the button to return to the beginning.
+     */
     subRenderAnchorToBeginning() 
     {
         if (this.first == 1) {
@@ -64,6 +86,9 @@ class Pagination extends CustomElement
         this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': 1, class: 'btn view-nav-first', title: this.request.meta.title}, ['first']);
     }
 
+    /**
+     * Renders the button to return to the previous page.
+     */
     subRenderAnchorToPreviousPage() 
     {
         if (this.response.meta.page == 1 || this.between <= 3) {
@@ -75,6 +100,9 @@ class Pagination extends CustomElement
         this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.response.meta.page - 1), class: 'btn view-nav-previous', title: this.request.meta.title}, ['prev']);
     }
 
+    /**
+     * Renders the buttons between extremes.
+     */
     subRenderAnchorBetweenExtremes() 
     {
         if (this.response.meta.pages <= 1) {
@@ -89,6 +117,9 @@ class Pagination extends CustomElement
         }
     }
 
+    /**
+     * Renders the button to move to the next page.
+     */
     subRenderAnchorToNextPage()
     {
         if (this.response.meta.page == this.response.meta.pages || this.between <= 3) {
@@ -100,6 +131,9 @@ class Pagination extends CustomElement
         this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.response.meta.page + 1), class: 'btn view-nav-next', title: this.request.meta.title}, ['next']);
     }
 
+    /**
+     * Renders the button to go to the last page.
+     */
     subRenderAnchorToLast() 
     {
         if (this.last == this.response.meta.pages) {

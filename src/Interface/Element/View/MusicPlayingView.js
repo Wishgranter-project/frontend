@@ -9,10 +9,10 @@ class MusicPlayingView extends BaseView
      * Return the playable items displayed in this view.
      *
      * @param {Object} beginningWith
-     *   Beginning with this one.
+     * Beginning with this one.
      *
      * @returns {Array}
-     *   Of playable items.
+     * Of playable items.
      */
     getPlayableItems(beginningWith = null)
     {

@@ -1,19 +1,41 @@
 import CustomElement from '../../CustomElement';
 
+/**
+ * A modal window.
+ *
+ * @class
+ * @abstract
+ */
 class Modal extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-window';
 
-    __construct(api) 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end.
+     */
+    __construct(api)
     {
+        super.__construct();
         this.api = api;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.subRenderModal();
     }
 
+    /**
+     * Renders the structure of the modal window.
+     */
     subRenderModal() 
     {
         this.classList.add('modal');

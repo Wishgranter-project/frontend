@@ -1,27 +1,103 @@
 
 /**
+ * @class
  * @abstract
  */
-class CustomElement extends HTMLElement 
+class CustomElement extends HTMLElement
 {
     /**
+     * Custom constructor method.
+     *
      * HTML elements do not receive parameters to their constructors.
      * So we are going to use this method to inject dependencies.
+     *
+     * Use the static instantiate() method to instantiate new elements.
+     *
      * The parameters are implementation specific.
+     *
+     * @param {mixed} dependencies
+     * Dependency.
+     * @param {mixed} goHere
+     * Go here.
      */
     __construct(dependencies = null, goHere = null)
     {
         // Implementation specific.
+
+        /**
+         * Wether the element is attached to the DOM or not.
+         *
+         * @type {Boolean}
+         */
+        this.attached = false;
+
+        /**
+         * A list of HTML elements that constitute the interface.
+         *
+         * For ease of access.
+         *
+         * @type {Object}
+         */
+        this.$refs = {};
     }
 
+    /**
+     * Part of the web components API.
+     *
+     * Called each time the element is added to the document.
+     */
     connectedCallback()
     {
-        if (!this.attached) {
-            this.attached = true;
-            this.renderLifeCycle();
+        if (this.attached) {
+            return;
         }
+        
+        this.attached = true;
+        this.renderLifeCycle();
     }
 
+    /**
+     * Causes the element to render again.
+     */
+    refresh()
+    {
+        this.clear();
+        this.renderLifeCycle();
+    }
+
+    /**
+     * Called before the rendering.
+     *
+     * @protected
+     */
+    beforeRender()
+    {
+    }
+
+    /**
+     * This method must not receive parameters.
+     *
+     * @protected
+     */
+    render()
+    {
+        this.innerHTML = 'inner html';
+    }
+
+    /**
+     * Called after the rendering.
+     *
+     * @protected
+     */
+    afterRender()
+    {
+    }
+
+    /**
+     * The render life-cycle.
+     *
+     * @private
+     */
     renderLifeCycle()
     {
         this.beforeRender();
@@ -29,50 +105,21 @@ class CustomElement extends HTMLElement
         this.afterRender();
     }
 
-    refresh()
-    {
-        this.clear();
-        this.renderLifeCycle();
-    }
-
-    beforeRender()
-    {
-
-    }
-
     /**
-     * This method must not receive parameters.
+     * Name of the custom element.
+     *
+     * @var {string}
      */
-    render()
-    {
-        this.innerHTML = 'inner html';
-    }
-
-    afterRender()
-    {
-        
-    }
-
-    once(name, event, listener)
-    {
-        var attributeName = 'data-once-' + name;
-
-        if (this.hasAttribute(attributeName)) {
-            return;
-        }
-
-        this.setAttribute(attributeName, '1');
-
-        this.addEventListener(event, listener);
-    }
-
     static elementName = 'base-element';
 
+    /**
+     * Registers the element.
+     */
     static register()
     {
-        // Already registered ?
+        // Already registered ? do nothing.
         if (customElements.get(this.elementName)) {
-            return; // do nothing.
+            return;
         }
 
         // Register it.
@@ -80,8 +127,13 @@ class CustomElement extends HTMLElement
     }
 
     /**
-     * Method to instantiate a new object, parameters will be
-     * passed to __construct().
+     * Instantiates a new instance of the custom element.
+     *
+     * @param {mixed} args
+     * Will be passed to __construct()
+     *
+     * @returns {CustomElement}
+     * New instance.
      */
     static instantiate(...args)
     {
@@ -95,6 +147,22 @@ class CustomElement extends HTMLElement
         return el;
     }
 
+    /**
+     * Dispatches an event.
+     *
+     * Basically a shorthand for the vanilla dispatchEvent().
+     *
+     * @param {String} eventName
+     * The name of the event.
+     * @param {mixed} detail
+     * Data to be added to the event.
+     * @param {Boolean} bubbles
+     * Wether the event bubles up the DOM tree.
+     *
+     * @returns {Boolean}
+     * False if event is cancelable, and at least one of the event handlers
+     * which received event called Event.preventDefault(). Otherwise true.
+     */
     fireEvent(eventName, detail = null, bubbles = true)
     {
         var options = {
@@ -110,11 +178,12 @@ class CustomElement extends HTMLElement
         return this.dispatchEvent(event);
     }
 
+    /**
+     * Constructor.
+     */
     constructor()
     {
         super();
-        this.$refs = {};
-        this.attached = false;
     }
 }
 

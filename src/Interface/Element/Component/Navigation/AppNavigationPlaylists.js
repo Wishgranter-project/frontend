@@ -1,15 +1,33 @@
 import CustomElement from '../../CustomElement';
 import NavigationItemPlaylist from './NavigationItemPlaylist';
 
+/**
+ * List all playlists.
+ *
+ * @class
+ */
 class AppNavigationPlaylists extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'app-navigation-playlist';
 
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * API to communicate with the back-end
+     */
     __construct(api) 
     {
+        super.__construct();
         this.api = api;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.clear();
@@ -22,14 +40,27 @@ class AppNavigationPlaylists extends CustomElement
         });
     }
 
+    /**
+     * Renders the playlists.
+     *
+     * @protected
+     *
+     * @param {Object} response
+     * Response from the back-end.
+     */
     subRenderPlaylists(response)
     {
         var data = response.data || [];
         for (var playlist of data) {
-            this.attach(NavigationItemPlaylist.instantiate(playlist.title, null, `#playlist:${playlist.id}`, playlist.id, this.api));
+            NavigationItemPlaylist.instantiate(playlist.title, null, `#playlist:${playlist.id}`, playlist.id, this.api).attachTo(this);
         }
     }
 
+    /**
+     * Renders the buttons.
+     *
+     * Create new playlist and download the existing ones.
+     */
     subRenderCreateAndDownload()
     {
         this.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [

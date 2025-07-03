@@ -3,14 +3,21 @@ import PopupMenu from './PopupMenu';
 
 class PopupButton extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'popup-button';
 
     __construct(menuItems = []) 
     {
+        super.__construct();
         this.menuItems = menuItems;
         this.menu      = null;
     }
 
+    /**
+     * @inheritdoc
+     */
     render() 
     {
         this.classList.add('popup-button');
@@ -28,9 +35,9 @@ class PopupButton extends CustomElement
 
         this.$refs.button = this.createAndAttach('button', null, this.create('span', { title, class: cssClass }));
 
-        this.once('click', 'click', this.onClick.bind(this));
+        this.addEventListenerOnce('click', 'click', this.onClick.bind(this));
 
-        this.once('popup-closed', 'popup-closed', () => 
+        this.addEventListenerOnce('popup-closed', 'popup-closed', () => 
         {
             this.$refs.popupMenu.remove();
             this.$refs.popupMenu = null;

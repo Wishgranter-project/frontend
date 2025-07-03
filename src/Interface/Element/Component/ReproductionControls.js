@@ -7,12 +7,33 @@ import State           from '../../../State/State';
 customElements.define('player-youtube', PlayableYouTube);
 customElements.define('player-audio', PlayableAudio);
 
+/**
+ * A bar with elements to controll the reproduction of music.
+ */
 class ReproductionControls extends CustomElement
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'reproduction-controls';
 
-    __construct(api, item = null, resources = null, autoPlay = true, shuffleOn)
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * The object to communicate with the back-end.
+     * @param {Object} item
+     * Object describing the music to play.
+     * @param {Array|Null} resources
+     * List of playable media that match the music description's.
+     * @param {Boolean} autoPlay
+     * Wether it should reproduction imediately.
+     * @param {Boolean} shuffleOn
+     * Indicates wether shuffle is on or off.
+     */
+    __construct(api, item = null, resources = null, autoPlay = true, shuffleOn = false)
     {
+        super.__construct();
         this.api       = api;
         this.item      = item;
         this.resources = resources;
@@ -23,6 +44,9 @@ class ReproductionControls extends CustomElement
         this.shuffleOn = shuffleOn;
     }
 
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('reproduction-controls');

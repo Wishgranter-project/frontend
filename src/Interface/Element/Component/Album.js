@@ -2,22 +2,41 @@ import CustomElement from '../CustomElement';
 import ListOfItems   from './ListOfItems';
 
 /**
- * Displays the contents of a single album.
+ * Element to list the contents of a single album.
+ *
+ * @class
  */
 class Album extends CustomElement 
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'album-container';
 
+    /**
+     * Constructor.
+     *
+     * @param {String} artist
+     * The name of the artist.
+     * @param {String} title
+     * The title of the album.
+     * @param {Api} api
+     * Object to communicate with the back-end.
+     */
     __construct(artist, title, api) 
     {
+        super.__construct();
         this.artist = artist;
         this.title = title;
         this.api = api;
     }
 
+    /**
+     * @inheritdoc
+     */
     async render()
     {
-        this.classList.add(this.elementName);
+        this.classList.add(Album.elementName);
 
         this.api.discover.albums.get(this.artist, this.title).read().then((response) =>
         {
@@ -30,17 +49,11 @@ class Album extends CustomElement
 
     subRenderHeader(response)
     {
-        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
-            this.$refs.headerH = this.create('div', { class: 'header__header' }),
-            this.$refs.headerB = this.create('div', { class: 'header__body' }),
-            this.$refs.headerF = this.create('div', { class: 'header__footer' })
-        ]);
+        this.$refs.header = this.createAndAttach('header', null, this.create('h2', null, response.data.title));
 
-        this.$refs.headerB.createAndAttach('h2', null, response.data.title);
-
-        this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, [ 
+        this.$refs.buttons = this.$refs.header.createAndAttach('div', { class: 'input-group input-group-horizontal' }, [ 
             this.$refs.playButton = this.create('button', { title: 'Play album' }, this.create('span', { class: 'fa fa-play' })),
-            this.$refs.addButton = this.create('button', { title: 'Add all tracks to playlist' }, this.create('span', { class: 'fa fa-plus' }))
+            this.$refs.addButton = this.create('button', { title: 'Add all tracks to your collection' }, this.create('span', { class: 'fa fa-plus' }))
         ]);
 
         this.$refs.playButton.addEventListener('click', this.playEntireAlbum.bind(this));
@@ -85,13 +98,13 @@ class Album extends CustomElement
     }
 
     /**
-     * Return the playable items displayed in this view.
+     * Return the list of playable items displayed by the element.
      *
      * @param {Object} beginningWith
      * Beginning with this one.
      *
      * @returns {Array}
-     * Of playable items.
+     * List of playable items.
      */
     getPlayableItems(beginningWith = null)
     {

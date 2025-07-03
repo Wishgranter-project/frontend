@@ -45,6 +45,7 @@ class App extends CustomElement
 
     __construct(api) 
     {
+        super.__construct();
         this.api                 = api;
         this.routeCollection     = this.instantiateRouteCollection(api);
         this.state               = new State('showrunner.state');
