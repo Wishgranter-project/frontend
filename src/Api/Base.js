@@ -2,13 +2,18 @@ class Base
 {
     /**
      * Constructor.
+     * 
+     * @abstract
      *
      * @param {Http} httpClient
      * A client to make http requests.
+     * @param {State} state
+     * State object.
      */
-    constructor(httpClient)
+    constructor(httpClient, state)
     {
         this.httpClient = httpClient;
+        this.state      = state;
     }
 
     /**
@@ -90,11 +95,14 @@ class Base
      */
     request(method, endpoint, body = undefined, queryParams = undefined, otherOptions = undefined)
     {
-        var request;
         var options = { method, body, queryParams };
 
         if (otherOptions) {
             options = { ...options, ...otherOptions };
+        }
+
+        if (options.headers) {
+            options.headers = { ...this.httpClient.defaultOptions.headers, ...options.headers };
         }
 
         var promise = this.httpClient.request(endpoint, options);

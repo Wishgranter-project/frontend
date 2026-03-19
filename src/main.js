@@ -1,6 +1,8 @@
 import Api from './Api/Api';
 import App from './Interface/Element/App.js';
 import CreateElement from './Helper/CreateElement';
+import State from './State/State';
+import ModalLoginForm from './Interface/Element/Component/Modal/ModalLoginForm';
 
 //----------------------------------------
 
@@ -22,7 +24,7 @@ HTMLElement.prototype.index = function() {
 
 //----------------------------------------
 
-const api  = new Api(window.playerSettings.backEndBaseUrl);
+const api  = new Api(window.playerSettings.backEndBaseUrl, new State('api'));
 window.api = api;
 window.app = App.instantiate(api);
 
@@ -30,5 +32,13 @@ window.app = App.instantiate(api);
 
 document.addEventListener('DOMContentLoaded', () =>
 {
-    document.body.append(window.app);
+    api.user.getSession().then((e) => {
+        console.log('XXX', e);
+        document.body.append(window.app);
+    }).catch((e) => {
+        const modal = ModalLoginForm.instantiate(api);
+        document.body.append(modal);
+    });
+
+    
 });

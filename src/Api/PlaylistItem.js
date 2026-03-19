@@ -7,12 +7,14 @@ class PlaylistItem extends Base
      *
      * @param {Http} httpClient
      * A client to make http requests.
+     * @param {State} state
+     * State object.
      * @param {string} uuid
      * The uuid of the playlist item.
      */
-    constructor(httpClient, uuid)
+    constructor(httpClient, state, uuid)
     {
-        super(httpClient);
+        super(httpClient, state);
         this.uuid = uuid;
     }
 

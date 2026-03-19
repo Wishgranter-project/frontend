@@ -2,7 +2,7 @@
 
 function isLocalEnvironment(): bool
 {
-    return isset($_SERVER['HTTP_X_LANDO']);
+    return getenv('IS_DDEV_PROJECT') == 'true';
 }
 
 function getHost(): string
@@ -37,13 +37,13 @@ function baseHref(string $protocol, string $host, string $path, string $port): s
 //------------------------------------------------------------------------
 
 if (isLocalEnvironment()) {
-    $selfProtocol    = 'http';
-    $selfHost        = getHost() ?? 'player-frontend.lndo.site';
+    $selfProtocol    = 'https';
+    $selfHost        = getHost() ?? 'wishgranter-frontend.ddev.site';
     $selfPath        = '/';
     $selfPort        = getPort();
 
-    $backendProtocol = 'http';
-    $backendHost     = 'player-backend.lndo.site';
+    $backendProtocol = 'https';
+    $backendHost     = 'wishgranter-backend.ddev.site';
     $backendPath     = '/';
     $backendPort     = '80';
 } else {

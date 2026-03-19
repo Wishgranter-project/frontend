@@ -1,5 +1,6 @@
 import CustomElement     from '../../CustomElement';
 import TextField         from './TextField';
+import PasswordField     from './PasswordField';
 import TextArea          from './TextArea';
 import MultipleTextField from './MultipleTextField';
 
@@ -75,6 +76,26 @@ class FormElent extends CustomElement
     addTextField(name, label, value, placeholder = '')
     {
         return this.$refs[name] = this.$refs.form.attach(TextField.instantiate(name, label, value, placeholder));
+    }
+
+    /**
+     * Adds a password input to the form.
+     *
+     * @param {String} name
+     * The name of the input.
+     * @param {String} label
+     * Human readable label.
+     * @param {String|Integer} value
+     * The value for the input.
+     * @param {String} placeholder
+     * Placeholder for the input.
+     *
+     * @returns {HTMLElement}
+     * The new input.
+     */
+    addPasswordField(name, label, value, placeholder = '')
+    {
+        return this.$refs[name] = this.$refs.form.attach(PasswordField.instantiate(name, label, value, placeholder));
     }
 
     /**

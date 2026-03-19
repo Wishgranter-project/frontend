@@ -9,7 +9,7 @@ class PlaylistsItems extends Base
      * @param {object} params
      * Parameters to filter and paginate. Playlist, artist, genre, etc.
      * 
-     @returns {Promise}
+     * @returns {Promise}
      * To be resolved when the back-end responds.
      */
     search(params)
@@ -90,7 +90,7 @@ class PlaylistsItems extends Base
      */
     get(uuid)
     {
-        return new PlaylistItem(this.httpClient, uuid);
+        return new PlaylistItem(this.httpClient, this.state, uuid);
     }
 }
 

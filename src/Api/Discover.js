@@ -12,12 +12,14 @@ class Discover extends Base
      *
      * @param {Http} httpClient
      * A client to make http requests.
+     * @param {State} state
+     * State object.
      */
-    constructor(httpClient)
+    constructor(httpClient, state)
     {
-        super(httpClient);
-        this.albums  = new DiscoverAlbums(httpClient);
-        this.artists = new DiscoverArtists(httpClient);
+        super(httpClient, state);
+        this.albums  = new DiscoverAlbums(httpClient, state);
+        this.artists = new DiscoverArtists(httpClient, state);
     }
 
     /**

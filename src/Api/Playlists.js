@@ -53,7 +53,7 @@ class Playlists extends Base
      */
     get(playlistId)
     {
-        return new Playlist(this.httpClient, playlistId);
+        return new Playlist(this.httpClient, this.state, playlistId);
     }
 }
 

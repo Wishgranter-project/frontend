@@ -8,10 +8,12 @@
 class State
 {
     /**
+     * Constructor.
+     *
      * @param {string} name
-     *   Name of the collection.
+     * Name of the collection.
      * @param {Object} data
-     *   Default data in case there's nothing in storage.
+     * Default data in case there's nothing in storage.
      */
     constructor(name, data = null)
     {
@@ -23,12 +25,12 @@ class State
      * Retrieves data from the state.
      *
      * @param {string} variable
-     *   Variable name.
+     * Variable name.
      * @param {*} defaultValue
-     *   Default value in case there's nothing there.
+     * Default value in case there's nothing there.
      *
      * @returns {*}
-     *   Data stored or the defaultValue.
+     * Data stored or the defaultValue.
      */
     get(variable, defaultValue = null)
     {
@@ -43,12 +45,12 @@ class State
      * Retrieves int from the state.
      *
      * @param {string} variable
-     *   Variable name.
+     * Variable name.
      * @param {integer} defaultValue
-     *   Default value in case there's nothing there.
+     * Default value in case there's nothing there.
      *
      * @returns {integer}
-     *   Data stored or the defaultValue.
+     * Data stored or the defaultValue.
      */
     getInt(variable, defaultValue = 0)
     {
@@ -59,9 +61,9 @@ class State
      * Set a new value into the storage.
      *
      * @param {string} variable
-     *   Variable name.
+     * Variable name.
      * @param {mixed} value
-     *   The value to be introduced.
+     * The value to be introduced.
      */
     set(variable, value)
     {
@@ -87,7 +89,8 @@ class State
      *
      * @private
      *
-     * @return {Object}
+     * @returns {Object}
+     * The data from localstorage.
      */
     retrieve()
     {

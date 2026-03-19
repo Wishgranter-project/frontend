@@ -7,12 +7,14 @@ class Playlist extends Base
      *
      * @param {Http} httpClient
      * A client to make http requests.
+     * @param {State} state
+     * State object.
      * @param {string} playlistId
      * The playlist id.
      */
-    constructor(httpClient, playlistId)
+    constructor(httpClient, state, playlistId)
     {
-        super(httpClient);
+        super(httpClient, state);
         this.playlistId = playlistId;
     }
 

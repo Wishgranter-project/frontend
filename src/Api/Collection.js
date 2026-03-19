@@ -12,12 +12,14 @@ class Collection
      *
      * @param {Http} httpClient
      * A client to make http requests.
+     * @param {State} state
+     * State object.
      */
-    constructor(httpClient)
+    constructor(httpClient, state)
     {
-        this.artists       = new Artists(httpClient);
-        this.playlists     = new Playlists(httpClient);
-        this.playlistItems = new PlaylistsItems(httpClient);
+        this.artists       = new Artists(httpClient, state);
+        this.playlists     = new Playlists(httpClient, state);
+        this.playlistItems = new PlaylistsItems(httpClient, state);
     }
 }
 
