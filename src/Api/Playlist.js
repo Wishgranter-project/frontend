@@ -39,7 +39,7 @@ class Playlist extends Base
      */
     download()
     {   
-        this.download('api/v1/collection/playlists/' + this.playlistId, undefined, 'application/jsonl');
+        this.downloadFile('api/v1/collection/playlists/' + this.playlistId, undefined, 'application/jsonl', this.playlistId + '.dpls');
     }
 
     /**

@@ -76,6 +76,7 @@ class ViewPlaylist extends MusicPlayingView
         this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, [
             this.$refs.buttonAdd = this.create('button', { title: 'Add new item to playlist' }, this.create('span', { class: 'fa fa-plus' })),
             this.$refs.buttonEdit = this.create('button', { title: 'Edit playlist' }, this.create('span', { class: 'fa fa-pencil' })),
+            this.$refs.buttonDownload = this.create('button', { title: 'Download playlist' }, this.create('span', { class: 'fa fa-download' })),
             this.$refs.buttonDelete = this.create('button', { title: 'Delete entire playlist', class: 'btn-danger' }, this.create('span', { class: 'fa fa-close' }))
         ]);
 
@@ -87,6 +88,11 @@ class ViewPlaylist extends MusicPlayingView
         this.$refs.buttonEdit.addEventListener('click', () => 
         {
             this.fireEvent('playlist:intention:edit', { playlistId: this.hashRequest.attributes.playlistId });
+        });
+
+        this.$refs.buttonDownload.addEventListener('click', () =>
+        {
+            this.fireEvent('playlist:intention:download', { playlistId: this.hashRequest.attributes.playlistId });
         });
 
         this.$refs.buttonDelete.addEventListener('click', () => 

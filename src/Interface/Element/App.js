@@ -23,6 +23,8 @@ import State                from '../../State/State';
 import Serialization        from '../../Helper/Serialization';
 import Instantiator         from '../../Helper/Instantiator';
 //=============================================================================
+import PlaylistItem         from './Component/PlaylistItem';
+//=============================================================================
 import TabManager, { 
     TabPanel,
     TabButton,
@@ -164,6 +166,7 @@ class App extends CustomElement
         this.addEventListener('queue:intention:jump',              this.onJumpLine.bind(this));
         this.addEventListener('queue:intention:play-it-next',      this.onPlayNext.bind(this));
         this.addEventListener('tabbed-router:tab-updated',         this.onNavigationUpdate.bind(this));
+        this.addEventListener('item:updated',                      this.onItemUpdated.bind(this));
 
         this.addEventListener('playlist:added', () =>
         {
@@ -231,6 +234,11 @@ class App extends CustomElement
             });
 
             window.location.hash = '#home';
+        });
+
+        this.addEventListener('playlist:intention:download', (evt) => 
+        {
+            this.api.collection.playlists.get(evt.detail.playlistId).download();
         });
 
         this.addEventListener('gui:summon-queue', () => 
@@ -544,6 +552,37 @@ class App extends CustomElement
     onNavigationUpdate(evt)
     {
         this.saveTabs();
+    }
+
+    onItemUpdated(evt)
+    {
+        for (var item of evt.detail.items) {
+            this.updateItem(item.uuid, null, item);
+
+            if (item.xxxOriginal) {
+                this.updateItem(null, item.xxxOriginal, item);
+            }
+        }
+    }
+
+    updateItem(uuid, original, item)
+    {
+        var query = uuid
+            ? `${PlaylistItem.elementName}[data-uuid='${uuid}']`
+            : `${PlaylistItem.elementName}[data-original='${original}']`
+
+        PlaylistItem.sanitizeItem(item);
+
+        document.querySelectorAll(query).forEach((el) => {
+            for (var prp in item) {
+                if (['uuid', 'xxxOriginal'].includes(prp)) {
+                    continue;
+                }
+
+                el.item[prp] = item[prp];
+                el.refresh();
+            }
+        });
     }
 
     saveTabs()

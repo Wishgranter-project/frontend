@@ -65,7 +65,7 @@ class AppNavigationPlaylists extends CustomElement
     {
         this.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [
             this.$refs.createPlaylist    = this.create('button', {title: 'Create playlist'}, this.create('span', {class: 'fa fa-plus-circle'})),
-            this.$refs.downloadPlaylists = this.create('button', {title: 'Download playlist'}, this.create('span', {class: 'fa fa-download'}))
+            this.$refs.downloadPlaylists = this.create('button', {title: 'Download entire collection'}, this.create('span', {class: 'fa fa-download'}))
         ]);
 
         this.$refs.createPlaylist.addEventListener('click', () =>

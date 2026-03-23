@@ -39,6 +39,14 @@ class PlaylistItem extends ContextualElement
         this.innerHTML = ``;
         this.classList.add('playlist-item');
 
+        if (this.item.uuid) {
+            this.setAttribute('data-uuid', this.item.uuid);
+        }
+
+        if (this.item.xxxOriginal) {
+            this.setAttribute('data-original', this.item.xxxOriginal);
+        }
+
         this.subRenderHeader();
         this.subRenderBody();
         this.subRenderFooter();        

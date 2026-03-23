@@ -22,7 +22,7 @@ class Playlists extends Base
      */
     downloadAll()
     {
-        this.download('api/v1/collection/playlists', undefined, 'application/zip');
+        this.downloadFile('api/v1/collection/playlists', undefined, 'application/zip', 'my-collection.zip');
     }
 
     /**

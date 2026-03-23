@@ -60,17 +60,26 @@ class Base
      * Params to be added to the query string.
      * @param {string} accept
      * Value for the Accept header.
+     * @param {string} filename
+     * Filename.
      *
      * @returns {Promise}
      * To be resolved when the back-end responds.
      */
-    async download(endpoint, queryParams, accept)
+    async downloadFile(endpoint, queryParams, accept, filename)
     {
         return this.request('get', endpoint, undefined, queryParams, { headers: { 'Accept': accept } } )
         .then(response => response.blob())
         .then(blob => {
-            const file = URL.createObjectURL(blob);
-            window.location.assign(file);
+            const fileURL = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = fileURL;
+            link.download = filename;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(fileURL);
         });
     }
 

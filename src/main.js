@@ -33,7 +33,6 @@ window.app = App.instantiate(api);
 document.addEventListener('DOMContentLoaded', () =>
 {
     api.user.getSession().then((e) => {
-        console.log('XXX', e);
         document.body.append(window.app);
     }).catch((e) => {
         const modal = ModalLoginForm.instantiate(api);

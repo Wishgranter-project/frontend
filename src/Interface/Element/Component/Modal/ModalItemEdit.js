@@ -92,7 +92,7 @@ class ModalItemEdit extends ModalItemAdd
 
         if (response.successes && response.successes.length) {
             alert('Edited!');
-            this.fireEvent('item:updated');
+            this.fireEvent('item:updated', { items: [response.data] } );
             this.remove();
         }
     }
