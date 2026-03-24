@@ -73,9 +73,16 @@ class NavigationItemPlaylist extends NavigationItem
         var json = evt.dataTransfer.getData('text');
         var data = JSON.parse(json);
 
-        this.api.collection.playlistItems.addMultiple(data, this.playlistId).then(() =>
+        this.api.collection.playlistItems.addMultiple(data, this.playlistId).then((res) =>
         {
             alert('Item(s) added!!');
+            
+            var items = [];
+            for (var r of res) {
+                items.push(r.data);
+            }
+            
+            this.fireEvent('item:added', { items, playlist: this.playlistId });
         });
     }
 }

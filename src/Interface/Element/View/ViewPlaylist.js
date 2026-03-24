@@ -17,6 +17,8 @@ class ViewPlaylist extends MusicPlayingView
     {
         this.classList.add(ViewPlaylist.elementName);
 
+        this.setAttribute('data-playlist', this.hashRequest.attributes.playlistId);
+
         await this.fetchPlaylist().then((response) =>
         {
             return this.subRenderHeader(response);
@@ -41,7 +43,10 @@ class ViewPlaylist extends MusicPlayingView
     }
 
     /**
-     * Gets name and description for the playlist. 
+     * Gets name and description for the playlist.
+     *
+     * @returns {Promise}
+     * To be resolved when the server responds.
      */
     fetchPlaylist()
     {
@@ -52,6 +57,9 @@ class ViewPlaylist extends MusicPlayingView
 
     /**
      * Gets the items in the playlist ( for the current page, that is ).
+     *
+     * @returns {Promise}
+     * To be resolved when the server responds.
      */
     fetchItems()
     {
@@ -201,6 +209,13 @@ class ViewPlaylist extends MusicPlayingView
         {
             console.log('playlist: reordered items');
         });
+    }
+
+    itemsAdded(items)
+    {
+        if (this.$refs.pagination.onlyOnePage || this.$refs.pagination.inTheLastPage) {
+            this.refresh();
+        }
     }
 }
 

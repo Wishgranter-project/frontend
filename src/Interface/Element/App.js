@@ -167,6 +167,7 @@ class App extends CustomElement
         this.addEventListener('queue:intention:play-it-next',      this.onPlayNext.bind(this));
         this.addEventListener('tabbed-router:tab-updated',         this.onNavigationUpdate.bind(this));
         this.addEventListener('item:updated',                      this.onItemUpdated.bind(this));
+        this.addEventListener('item:added',                        this.onItemAdded.bind(this));
 
         this.addEventListener('playlist:added', () =>
         {
@@ -518,10 +519,11 @@ class App extends CustomElement
     /**
      * Finds resources for item to be played
      *
-     * @param object item
-     *   The item describing the song.
+     * @param {object} item
+     * The item describing the song.
      *
-     * @return Promise 
+     * @returns {Promise}
+     * To be resolved when the server responds.
      */
     async findResourcesForMusicalItem(item)
     {
@@ -583,6 +585,14 @@ class App extends CustomElement
                 el.refresh();
             }
         });
+    }
+
+    onItemAdded(evt)
+    {
+        var playlistView = document.querySelector(`${ViewPlaylist.elementName}[data-playlist="${evt.detail.playlist}"]`);
+        if (playlistView) {
+            playlistView.itemsAdded(evt.detail.items);
+        }
     }
 
     saveTabs()

@@ -78,7 +78,7 @@ class ModalItemAdd extends ModalForm
 
         if (response.successes && response.successes.length) {
             alert('Added!');
-            this.fireEvent('item:added');
+            this.fireEvent('item:added', { items: [response.data], playlist: this.playlistId });
             this.remove();
         }
     }

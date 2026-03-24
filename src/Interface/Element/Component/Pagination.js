@@ -53,6 +53,26 @@ class Pagination extends CustomElement
         this.between = this.last - this.first + 1;
     }
 
+    get currentPage()
+    {
+        return this.response.meta.page;
+    }
+
+    get pages()
+    {
+        return this.response.meta.pages;
+    }
+
+    get onlyOnePage()
+    {
+        return this.pages == 1;
+    }
+
+    get inTheLastPage()
+    {
+        return this.currentPage == this.pages;
+    }
+
     /**
      * @inheritdoc
      */
