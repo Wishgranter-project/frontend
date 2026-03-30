@@ -35,8 +35,8 @@ class AppNavigationPlaylists extends CustomElement
 
         this.api.collection.playlists.list().then((response) => 
         {
-            this.subRenderPlaylists(response);
             this.subRenderCreateAndDownload();
+            this.subRenderPlaylists(response);
         });
     }
 

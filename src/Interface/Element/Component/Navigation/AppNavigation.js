@@ -36,7 +36,6 @@ class AppNavigation extends CustomElement
         this.classList.add('app-navigation');
 
         this.$refs.main      = AppNavigationMain.instantiate().attachTo(this);
-        this.createAndAttach('hr');
         this.$refs.playlists = AppNavigationPlaylists.instantiate(this.api).attachTo(this);
         this.createAndAttach('hr');
         this.$refs.artists   = AppNavigationArtists.instantiate(this.api).attachTo(this);
