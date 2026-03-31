@@ -28,7 +28,7 @@ class NavigationItemPlaylist extends NavigationItem
      */
     __construct(label, icon, href, playlistId, api)
     {
-        super.__construct(label, icon, href);
+        super.__construct(label, icon, href, null);
         this.playlistId = playlistId;
         this.api        = api;
     }

@@ -21,13 +21,16 @@ class NavigationItem extends CustomElement
      * Icon to accompany the label.
      * @param {String} href
      * URI.
+     * @param {String} tittleAttr
+     * Tooltip to apper when hovering, optional.
      */
-    __construct(label, icon, href)
+    __construct(label, icon, href, tittleAttr = null)
     {
         super.__construct();
-        this.label = label;
-        this.icon  = icon;
-        this.href  = href;
+        this.label       = label;
+        this.icon        = icon;
+        this.href        = href;
+        this.tittleAttr  = tittleAttr;
     }
 
     /**
@@ -37,9 +40,9 @@ class NavigationItem extends CustomElement
     {
         this.classList.add('app-navigation__item');
 
-        var attrs = {
-            title: this.label
-        };
+        var attrs = this.tittleAttr == null || this.tittleAttr == 'null'
+            ? {}
+            : { title: this.tittleAttr };
 
         if (this.href) {
             attrs.href = this.href;

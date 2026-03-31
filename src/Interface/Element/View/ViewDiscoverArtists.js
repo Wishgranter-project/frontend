@@ -33,7 +33,7 @@ class ViewDiscoverArtists extends BaseView
             this.$refs.headerF = this.create('div', { class: 'header__footer' })
         ]);
 
-        this.$refs.headerH.createAndAttach('h1', null, 'Discover artist');
+        this.$refs.headerH.createAndAttach('h1', null, 'Discover new artists');
 
         this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, 'Discover artist', [
             {type: 'search', name: 'name', placeholder: 'Artist', title: 'Artist', class: 'main'},
