@@ -110,7 +110,7 @@ class ListOfItems extends CustomElement
      */    
     onAddToCollection(evt)
     {
-        evt.detail.items = evt.detail.items.concat(this.getSelectedItems());
+        evt.detail.items = this.getSelectedItems();
     }
 
     /**
