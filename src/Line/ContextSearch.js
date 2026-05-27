@@ -5,16 +5,17 @@ class ContextSearch extends ContextBase
     /**
      * Constructor.
      *
-     * @param {Api} api
-     *   Interface with the back end.
+     * @param {Collection} collection
+     * The user's collection.
      * @param {bool} noMore
-     *   Flag, indicates there is nothing more to load, no more pages.
-     * @param {URLSearchParams|string} queryString
-     *   Query string to use in the search.
+     * Flag, indicates there is nothing more to load, no more pages.
+     * @param {URLSearchParams|string} queryParams
+     * Query string to use in the search.
      */
-    constructor(api, noMore = false, queryParams)
+    constructor(collection, noMore = false, queryParams)
     {
-        super(api, noMore);
+        super(noMore);
+        this.collection = collection;
         this.queryParams = typeof queryParams == 'string'
             ? new URLSearchParams(queryParams)
             : queryParams;
@@ -44,7 +45,7 @@ class ContextSearch extends ContextBase
 
     async request(queue)
     {
-        return this.api.collection.playlistItems.search(this.queryParams);
+        return this.collection.fetchPlaylistItems(this.queryParams);
     }
 }
 

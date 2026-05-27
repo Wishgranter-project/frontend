@@ -16,43 +16,28 @@ class Messages extends CustomElement
     render()
     {
         this.classList.add('messages');
-        this.successes = this.createAndAttach('ul', {class: 'successes hidden'});
-        this.warnings = this.createAndAttach('ul', {class: 'warnings hidden'});
-        this.errors = this.createAndAttach('ul', {class: 'errors hidden'});
+        this.success = this.createAndAttach('ul', {class: 'successes hidden'});
+        this.warning = this.createAndAttach('ul', {class: 'warnings hidden'});
+        this.error = this.createAndAttach('ul', {class: 'errors hidden'});
     }
 
     /**
      * Set messages to be displayed.
      *
-     * @param {Object} messages
+     * @param {Array} messages
      * List of messages.
      */
     messages(messages)
     {
-        this.successes.clear().classList.add('hidden');
-        this.warnings.clear().classList.add('hidden');
-        this.errors.clear().classList.add('hidden');
+        this.success.clear().classList.add('hidden');
+        this.warning.clear().classList.add('hidden');
+        this.error.clear().classList.add('hidden');
 
-        if (messages.successes) {
-            this.successes.classList.remove('hidden');
-            for (var m of messages.successes) {
-                this.successes.createAndAttach('li', null, m.title);
-            }
+        for (var message of messages) {
+            this[message.type].classList.remove('hidden');
+            this[message.type].createAndAttach('li', null, message.title);
         }
 
-        if (messages.errors) {
-            this.errors.classList.remove('hidden');
-            for (var m of messages.errors) {
-                this.errors.createAndAttach('li', null, m.title);
-            }
-        }
-
-        if (messages.warnings) {
-            this.warnings.classList.remove('hidden');
-            for (var m of messages.warnings) {
-                this.warnings.createAndAttach('li', null, m.title);
-            }
-        }
     }
 }
 

@@ -9,14 +9,11 @@ class ContextBase
     /**
      * Constructor.
      *
-     * @param {Api} api
-     * Interface with the back end.
      * @param {bool} noMore
      * Flag to indicate if there is nothing more to load, no more pages.
      */
-    constructor(api, noMore = false)
+    constructor(noMore = false)
     {
-        this.api = api;
         this.noMore = noMore;
     }
 
@@ -106,7 +103,7 @@ class ContextBase
      */
     async request(queue)
     {
-        // return this.api.getItems(this.page);
+        // return this.getItemsFromSomeWHere(this.page);
     }
 }
 

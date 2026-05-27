@@ -15,14 +15,15 @@ class ModalAddToPlaylist extends Modal
     /**
      * Constructor.
      *
-     * @param {Api} api
-     * API to communicate with the back-end.
+     * @param {Collection} collection
+     * The user's collection.
      * @param {Array} items
      * List of items to add to the collection.
      */
-    __construct(api, items)
+    __construct(collection, items)
     {
-        super.__construct(api);
+        super.__construct();
+        this.collection = collection;
         this.items = items;
     }
 
@@ -34,7 +35,7 @@ class ModalAddToPlaylist extends Modal
         super.render();
         this.$refs.header.innerHTML = 'Add to playlist';
 
-        this.api.collection.playlists.list().then((response) => 
+        this.collection.fetchPlaylists().then((response) => 
         {
             if (!response.data) {
                 return;
@@ -61,8 +62,8 @@ class ModalAddToPlaylist extends Modal
      */
     onPlaylistChoosen(evt)
     {
-        var playlist = evt.target.getAttribute('data-playlist');
-        this.api.collection.playlistItems.addMultiple(this.items, playlist).then(() =>
+        var playlistId = evt.target.getAttribute('data-playlist');
+        this.collection.addMultiplePlaylistItems(this.items, playlistId).then(() =>
         {
             alert('Item(s) added!!');
             this.remove();

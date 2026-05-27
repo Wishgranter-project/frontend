@@ -15,14 +15,10 @@ class Modal extends CustomElement
 
     /**
      * Constructor.
-     *
-     * @param {Api} api
-     * API to communicate with the back-end.
      */
-    __construct(api)
+    __construct()
     {
         super.__construct();
-        this.api = api;
     }
 
     /**

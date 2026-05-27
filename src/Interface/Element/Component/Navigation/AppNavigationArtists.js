@@ -11,13 +11,13 @@ class AppNavigationArtists extends CustomElement
     /**
      * Constructor.
      *
-     * @param {Api} api
-     * API to communicate with the back-end.
+     * @param {Collection} collection
+     * The user's collection.
      */
-    __construct(api)
+    __construct(collection)
     {
         super.__construct();
-        this.api = api;
+        this.collection = collection;
     }
 
     /**
@@ -28,7 +28,7 @@ class AppNavigationArtists extends CustomElement
         this.clear();
         this.classList.add('app-navigation__artists');
 
-        this.api.collection.artists.list().then((response) => 
+        this.collection.artists.fetch().then((response) => 
         {
             for (var artist in response.data) {
                 this.addArtistNavItem(artist, response.data[artist]);

@@ -1,7 +1,7 @@
 import BaseView        from './BaseView';
 
 /**
- * Abstract view.
+ * @abstract
  */
 class MusicPlayingView extends BaseView
 {

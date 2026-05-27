@@ -21,7 +21,8 @@ class ModalLoginForm extends ModalForm
      */
     __construct(api)
     {
-        super.__construct(api);
+        super.__construct();
+        this.api = api;
     }
 
     /**
@@ -58,9 +59,9 @@ class ModalLoginForm extends ModalForm
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.api.user
+            this.api.session
                 .login(this.$refs.username.getValue(), this.$refs.password.getValue())
-                .then(this.onResponse.bind(this), this.onResponse.bind(this));
+                .then(this.onResponse.bind(this));
         });
     }
 
@@ -69,9 +70,9 @@ class ModalLoginForm extends ModalForm
      */
     onResponse(response)
     {
-        this.$refs.messages.messages(response);
+        this.$refs.messages.messages(response.messages);
 
-        if (response.successes && response.successes.length) {
+        if (response.meta.statusCode == 200) {
             alert('Welcome back!');
             window.location.reload();
             this.remove();

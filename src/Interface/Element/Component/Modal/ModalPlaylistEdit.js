@@ -15,14 +15,14 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * Constructor.
      *
-     * @param {Api} api
-     * API to communicate with the back-end.
+     * @param {Collection} collection
+     * The user's collection.
      * @param {String} playlistId
      * The id of the playlist to edit.
      */
-    __construct(api, playlistId)
+    __construct(collection, playlistId)
     {
-        super.__construct(api);
+        super.__construct(collection);
         this.playlistId = playlistId;
     }
 
@@ -42,7 +42,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     {
         super.subRenderModal();
 
-        this.api.collection.playlists.get(this.playlistId).read()
+        this.collection.managePlaylist(this.playlistId).fetch()
         .then((response) =>
         {
             this.subRenderHeader();
@@ -71,8 +71,8 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.api.collection.playlists
-                .get(this.playlistId)
+            this.collection
+                .managePlaylist(this.playlistId)
                 .update(this.$refs.form.getForm())
                 .then(this.onResponse.bind(this), this.onResponse.bind(this));
         });
@@ -83,9 +83,9 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
      */
     onResponse(response)
     {
-        this.$refs.messages.messages(response);
+        this.$refs.messages.messages(response.messages);
 
-        if (response.successes && response.successes.length) {
+        if (response.meta.statusCode == 200) {
             alert('Edited!');
             this.fireEvent('playlist:updated');
             this.remove();

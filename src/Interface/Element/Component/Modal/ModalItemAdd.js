@@ -16,14 +16,15 @@ class ModalItemAdd extends ModalForm
     /**
      * Constructor.
      *
-     * @param {Api} api
-     * API to communicate with the back-end.
+     * @param {Collection} collection
+     * The user's collection.
      * @param {String} playlistId
      * The id of the playlist to add the item to.
      */
-    __construct(api, playlistId)
+    __construct(collection, playlistId)
     {
-        super.__construct(api);
+        super.__construct();
+        this.collection = collection;
         this.playlistId = playlistId;
     }
 
@@ -63,7 +64,8 @@ class ModalItemAdd extends ModalForm
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.api.collection.playlistItems
+            this.collection
+                .manageItem(null)
                 .create(this.$refs.form.getForm())
                 .then(this.onResponse.bind(this), this.onResponse.bind(this));
         });
@@ -74,9 +76,9 @@ class ModalItemAdd extends ModalForm
      */
     onResponse(response)
     {
-        this.$refs.messages.messages(response);
+        this.$refs.messages.messages(response.messages);
 
-        if (response.successes && response.successes.length) {
+        if (response.meta.statusCode == 200) {
             alert('Added!');
             this.fireEvent('item:added', { items: [response.data], playlist: this.playlistId });
             this.remove();

@@ -42,7 +42,7 @@ class State
     }
 
     /**
-     * Retrieves int from the state.
+     * Retrieves an integer from the state.
      *
      * @param {string} variable
      * Variable name.

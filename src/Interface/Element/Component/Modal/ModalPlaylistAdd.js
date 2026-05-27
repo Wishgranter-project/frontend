@@ -38,7 +38,8 @@ class ModalPlaylistAdd extends ModalItemAdd
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.api.collection.playlists
+            this.collection
+                .managePlaylist(null)
                 .create(this.$refs.form.getForm())
                 .then(this.onResponse.bind(this), this.onResponse.bind(this));
         });
@@ -49,9 +50,9 @@ class ModalPlaylistAdd extends ModalItemAdd
      */
     onResponse(response)
     {
-        this.$refs.messages.messages(response);
+        this.$refs.messages.messages(response.messages);
 
-        if (response.successes && response.successes.length) {
+        if (response.meta.statusCode == 200) {
             alert('Added!');
             this.fireEvent('playlist:added');
             this.remove();

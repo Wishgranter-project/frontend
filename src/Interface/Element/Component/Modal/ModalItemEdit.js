@@ -15,14 +15,14 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * Constructor.
      *
-     * @param {Api} api
-     * API to communicate with the back-end.
+     * @param {Collection} collection
+     * The user's collection.
      * @param {String} uuid
      * The uuid of the playlist item to edit.
      */
-    __construct(api, uuid)
+    __construct(collection, uuid)
     {
-        super.__construct(api);
+        super.__construct(collection);
         this.uuid = uuid;
     }
 
@@ -33,7 +33,7 @@ class ModalItemEdit extends ModalItemAdd
     {
         super.subRenderModal();
 
-        this.api.collection.playlistItems.get(this.uuid).read()
+        this.collection.manageItem(this.uuid).fetch()
         .then((response) =>
         {
             this.subRenderHeader();
@@ -76,8 +76,8 @@ class ModalItemEdit extends ModalItemAdd
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.api.collection.playlistItems
-                .get(this.uuid)
+            this.collection
+                .manageItem(this.uuid)
                 .update(this.$refs.form.getForm())
                 .then(this.onResponse.bind(this), this.onResponse.bind(this));
         });
@@ -88,9 +88,9 @@ class ModalItemEdit extends ModalItemAdd
      */
     onResponse(response)
     {
-        this.$refs.messages.messages(response);
+        this.$refs.messages.messages(response.messages);
 
-        if (response.successes && response.successes.length) {
+        if (response.meta.statusCode == 200) {
             alert('Edited!');
             this.fireEvent('item:updated', { items: [response.data] } );
             this.remove();

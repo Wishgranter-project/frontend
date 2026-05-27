@@ -34,7 +34,7 @@ class ViewSearch extends ViewPlaylist
     {
         return this.hashRequest.queryParams.isEmpty()
             ? new Promise((r,f)=>{return r({})})
-            : this.api.collection.playlistItems.search(this.hashRequest.queryParams);
+            : this.collection.fetchPlaylistItems(this.hashRequest.queryParams);
     }
 
     subRenderHeader(response)

@@ -18,6 +18,7 @@
         "http": "git+ssh://git@github.com:adinan-cenci/http.git",
         "playable-html-wrapper": "git+ssh://git@github.com:wishgranter-project/playable-html-wrapper.git",
         "playable-youtube-wrapper": "git+ssh://git@github.com:wishgranter-project/playable-youtube-wrapper.git",
+        "wishgranter-sdk": "git+ssh://git@github.com:wishgranter-project/wishgranter-sdk.git",
         "sass": "^1.69.4",
         "tabbed-router": "git+ssh://git@github.com:adinan-cenci/tabbed-router.git",
         "webpack-stream": "^7.0.0",

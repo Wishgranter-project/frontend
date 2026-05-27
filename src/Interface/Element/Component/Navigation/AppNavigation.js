@@ -18,13 +18,13 @@ class AppNavigation extends CustomElement
     /**
      * Constructor.
      *
-     * @param {Api} api
-     * API to communicate with the back-end.
+     * @param {Collection} collection
+     * The user's collection.
      */
-    __construct(api)
+    __construct(collection)
     {
         super.__construct();
-        this.api = api;
+        this.collection = collection;
     }
 
     /**
@@ -36,9 +36,9 @@ class AppNavigation extends CustomElement
         this.classList.add('app-navigation');
 
         this.$refs.main      = AppNavigationMain.instantiate().attachTo(this);
-        this.$refs.playlists = AppNavigationPlaylists.instantiate(this.api).attachTo(this);
+        this.$refs.playlists = AppNavigationPlaylists.instantiate(this.collection).attachTo(this);
         this.createAndAttach('hr');
-        this.$refs.artists   = AppNavigationArtists.instantiate(this.api).attachTo(this);
+        this.$refs.artists   = AppNavigationArtists.instantiate(this.collection).attachTo(this);
     }
 
 }

@@ -50,9 +50,9 @@ class ViewPlaylist extends MusicPlayingView
      */
     fetchPlaylist()
     {
-        return this.api.collection.playlists
-            .get(this.hashRequest.attributes.playlistId)
-            .read();
+        return this.collection
+            .managePlaylist(this.hashRequest.attributes.playlistId)
+            .fetch();
     }
 
     /**
@@ -63,9 +63,8 @@ class ViewPlaylist extends MusicPlayingView
      */
     fetchItems()
     {
-        return this.api.collection.playlists
-            .get(this.hashRequest.attributes.playlistId)
-            .getItems(this.hashRequest.queryParams);    
+        return api.manageUser('adinan').collection
+            .fetchPlaylistItems({playlist: this.hashRequest.attributes.playlistId}, this.hashRequest.queryParams);
     }
 
     subRenderHeader(response)
@@ -168,7 +167,7 @@ class ViewPlaylist extends MusicPlayingView
                 var promises = [];
                 for (var item of data) {
                     item.position = n + offset;
-                    promises.push(this.api.collection.playlistItems.get(item.uuid).update(item));
+                    promises.push(this.collection.manageItem(item.uuid).update(item));
                     n++;
                 }
 
@@ -184,7 +183,7 @@ class ViewPlaylist extends MusicPlayingView
 
     onItemSelected(evt)
     {
-        var context      = new ContextPlaylist(this.api, false, this.hashRequest.queryParams, this.hashRequest.attributes.playlistId);
+        var context      = new ContextPlaylist(this.collection, false, this.hashRequest.queryParams, this.hashRequest.attributes.playlistId);
         var initialBatch = this.getPlayableItems(evt.detail.item);
         var queue        = Queue.instantiate(initialBatch, context)
         
@@ -194,7 +193,7 @@ class ViewPlaylist extends MusicPlayingView
     onItemsReordered(evt)
     {
         var changes = evt.detail.changes;
-        var offset = (this.response.meta.page - 1) * this.response.meta.itemsPerPage;
+        var offset = (this.response.meta.currentPage - 1) * this.response.meta.itemsPerPage;
         var promises = [];
 
         for (var c of changes) {
@@ -202,7 +201,7 @@ class ViewPlaylist extends MusicPlayingView
             c.to += offset;
 
             c.item.position = c.to;
-            promises.push(this.api.collection.playlistItems.get(c.item.uuid).update(c.item));
+            promises.push(this.collection.manageItem(c.item.uuid).update(c.item));
         }
 
         Promise.all(promises).then(() =>

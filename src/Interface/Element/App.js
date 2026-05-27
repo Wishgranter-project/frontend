@@ -45,14 +45,15 @@ class App extends CustomElement
 {
     static elementName = 'the-app';
 
-    __construct(api)
+    __construct(api, collection)
     {
         super.__construct();
         this.api                 = api;
-        this.routeCollection     = this.instantiateRouteCollection(api);
+        this.collection          = collection;
+        this.routeCollection     = this.instantiateRouteCollection(this.api, this.collection);
         this.state               = new State('showrunner.state');
         this.navigationState     = new State('navigation.state');
-        this.contextFactory      = new ContextFactory(api);
+        this.contextFactory      = new ContextFactory(this.api);
 
         //--------------------------------------------------
 
@@ -143,7 +144,7 @@ class App extends CustomElement
         this.$refs.stage.setRouteCollection(this.routeCollection);
 
         this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
-            this.$refs.navMenu = AppNavigation.instantiate(this.api),
+            this.$refs.navMenu = AppNavigation.instantiate(this.collection),
             this.$refs.stage,
             this.$refs.queueDisplay = QueueDisplay.instantiate()
         ]);
@@ -181,45 +182,46 @@ class App extends CustomElement
 
         this.addEventListener('item:intention:add-to-collection', (evt) => 
         {
-            var modal = ModalAddToPlaylist.instantiate(this.api, evt.detail.items);
+            var modal = ModalAddToPlaylist.instantiate(this.collection, evt.detail.items);
             this.append(modal);
         });
 
         this.addEventListener('playlist:intention:compose-new-item', (evt) => 
         {
-            var modal = ModalItemAdd.instantiate(this.api, evt.detail.playlistId);
+            var modal = ModalItemAdd.instantiate(this.collection, evt.detail.playlistId);
             this.append(modal);
         });
 
         this.addEventListener('item:intention:edit', (evt) => 
         {
-            var modal = ModalItemEdit.instantiate(this.api, evt.detail.uuid);
+            var modal = ModalItemEdit.instantiate(this.collection, evt.detail.uuid);
             this.append(modal);
         });
 
         this.addEventListener('item:intention:delete', (evt) => 
         {
-            var doRemove = confirm('Are you sure you want to remove it from your collection ?');
-            if (doRemove) {
-                this.api.collection.playlistItems.get(evt.detail.uuid).delete();
-                evt.target.remove();
+            if (!confirm('Are you sure you want to remove it from your collection ?')) {
+                return;
             }
+
+            this.collection.manageItem(evt.detail.uuid).delete();
+            evt.target.remove();
         });
 
         this.addEventListener('collection:intention:download', (evt) => 
         {
-            this.api.collection.playlists.downloadAll();
+            this.collection.downloadAll();
         });
 
         this.addEventListener('collection:intention:compose-new-playlist', (evt) => 
         {
-            var modal = ModalPlaylistAdd.instantiate(this.api);
+            var modal = ModalPlaylistAdd.instantiate(this.collection);
             this.append(modal);
         });
 
         this.addEventListener('playlist:intention:edit', (evt) => 
         {
-            var modal = ModalPlaylistEdit.instantiate(this.api, evt.detail.playlistId);
+            var modal = ModalPlaylistEdit.instantiate(this.collection, evt.detail.playlistId);
             this.append(modal);
         });
 
@@ -229,9 +231,9 @@ class App extends CustomElement
                 return;
             }
 
-            this.api.collection.playlists.get(evt.detail.playlistId).delete().then(() =>
+            this.collection.managePlaylist(evt.detail.playlistId).delete().then(() =>
             {
-                this.$refs.navMenu.render();
+                this.$refs.navMenu.refresh();
             });
 
             window.location.hash = '#home';
@@ -239,7 +241,7 @@ class App extends CustomElement
 
         this.addEventListener('playlist:intention:download', (evt) => 
         {
-            this.api.collection.playlists.get(evt.detail.playlistId).download();
+            this.collection.managePlaylist(evt.detail.playlistId).download();
         });
 
         this.addEventListener('gui:summon-queue', () => 
@@ -254,22 +256,22 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    instantiateRouteCollection(api)
+    instantiateRouteCollection(api, collection)
     {
-        var collection = new RouteCollection();
+        var routeCollection = new RouteCollection();
 
-        collection
+        routeCollection
         .createRoute([/^$/, /home$/], function(request)
         {
             return ViewWelcome.instantiate(request, api);
         })
         .createRoute(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
         {
-            return ViewPlaylist.instantiate(request, api);
+            return ViewPlaylist.instantiate(request, collection);
         })
         .createRoute(/search/, function(request) 
         {
-            return ViewSearch.instantiate(request, api);
+            return ViewSearch.instantiate(request, collection);
         })
         .createRoute(/discover:artist/, function(request) 
         {
@@ -287,7 +289,7 @@ class App extends CustomElement
         };
         */
 
-        return collection;
+        return routeCollection;
     }
 
     async onJumpLine(evt)
@@ -483,12 +485,12 @@ class App extends CustomElement
             var artist = Array.isArray(item.artist) ? item.artist[0] : item.artist;
             var album = item.album;
 
-            var tracks = await this.api.discover.albums.get(artist, album).fetchItems();
+            var response = await this.api.discover.getAlbum(album, artist).fetch();
 
             // Remove the album from the queue...
             this.queue.dequeue();
             // and drop in its tracks.
-            this.queue.dropIn(tracks);
+            this.queue.dropIn(response.data.tracks);
             return this.setupItem(this.queue.front, true);
         } else {
             return this.setupItem(item, true);
@@ -548,7 +550,7 @@ class App extends CustomElement
                 : item.genre;
         }
 
-        return this.api.discover.resources(params);
+        return this.api.wish.forMusic(params);
     }
 
     onNavigationUpdate(evt)

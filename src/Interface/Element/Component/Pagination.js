@@ -26,24 +26,24 @@ class Pagination extends CustomElement
         this.request = request;
         this.response = response;
 
-        if (!this.response.meta || !this.response.meta.pages) {
+        if (!this.response.meta || !this.response.meta.pagesCount) {
             return;
         }
 
         this.max = 10;
         this.halfMax = this.max / 2;
 
-        if (this.response.meta.pages <= this.max) {
+        if (this.pagesCount <= this.max) {
             this.first = 1;
-            this.last = this.response.meta.pages;
+            this.last = this.pagesCount;
 
-        } else if (this.response.meta.page + this.halfMax > this.response.meta.pages) {
-            this.last = this.response.meta.pages;
+        } else if (this.currentPage + this.halfMax > this.pagesCount) {
+            this.last = this.pagesCount;
             this.first = this.last - this.max;
     
-        } else if (this.response.meta.page > this.halfMax) {
-            this.first = this.response.meta.page - this.halfMax;
-            this.last  = this.response.meta.page + this.halfMax;
+        } else if (this.currentPage > this.halfMax) {
+            this.first = this.currentPage - this.halfMax;
+            this.last  = this.currentPage + this.halfMax;
     
         } else {
             this.first = 1;
@@ -55,12 +55,12 @@ class Pagination extends CustomElement
 
     get currentPage()
     {
-        return this.response.meta.page;
+        return this.response.meta.currentPage;
     }
 
-    get pages()
+    get pagesCount()
     {
-        return this.response.meta.pages;
+        return this.response.meta.pagesCount;
     }
 
     get onlyOnePage()
@@ -81,7 +81,7 @@ class Pagination extends CustomElement
         this.classList.add('button-group');
         this.classList.add('view-nav');
 
-        if (!this.response.meta || !this.response.meta.pages) {
+        if (!this.response.meta || !this.pagesCount) {
             return;
         }
 
@@ -111,13 +111,13 @@ class Pagination extends CustomElement
      */
     subRenderAnchorToPreviousPage()
     {
-        if (this.response.meta.page == 1 || this.between <= 3) {
+        if (this.currentPage == 1 || this.between <= 3) {
             return;
         }
 
         var queryParams = this.request.queryParams.without('page');
-        queryParams.set('page', this.response.meta.page - 1);
-        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.response.meta.page - 1), class: 'btn view-nav-previous', title: this.request.meta.title}, ['prev']);
+        queryParams.set('page', this.currentPage - 1);
+        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.currentPage - 1), class: 'btn view-nav-previous', title: this.request.meta.title}, ['prev']);
     }
 
     /**
@@ -125,14 +125,14 @@ class Pagination extends CustomElement
      */
     subRenderAnchorBetweenExtremes()
     {
-        if (this.response.meta.pages <= 1) {
+        if (this.pagesCount <= 1) {
             return;
         }
 
         for (var p = this.first; p <= this.last; p++) {
             var queryParams = this.request.queryParams.without('page');
             queryParams.set('page', p);
-            var current = this.response.meta.page == p;
+            var current = this.currentPage == p;
             this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': p, class: current ? 'btn view-nav-current' : 'btn', title: this.request.meta.title}, [p]);
         }
     }
@@ -142,13 +142,13 @@ class Pagination extends CustomElement
      */
     subRenderAnchorToNextPage()
     {
-        if (this.response.meta.page == this.response.meta.pages || this.between <= 3) {
+        if (this.currentPage == this.pagesCount || this.between <= 3) {
             return;
         }
 
         var queryParams = this.request.queryParams.without('page');
-        queryParams.set('page', this.response.meta.page + 1);
-        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.response.meta.page + 1), class: 'btn view-nav-next', title: this.request.meta.title}, ['next']);
+        queryParams.set('page', this.currentPage + 1);
+        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.currentPage + 1), class: 'btn view-nav-next', title: this.request.meta.title}, ['next']);
     }
 
     /**
@@ -156,13 +156,13 @@ class Pagination extends CustomElement
      */
     subRenderAnchorToLast()
     {
-        if (this.last == this.response.meta.pages) {
+        if (this.last == this.pagesCount) {
             return
         }
 
         var queryParams = this.request.queryParams.without('page');
-        queryParams.set('page', this.response.meta.pages);
-        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': this.response.meta.pages, class: 'btn view-nav-last', title: this.request.meta.title}, ['last']);
+        queryParams.set('page', this.pagesCount);
+        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': this.pagesCount, class: 'btn view-nav-last', title: this.request.meta.title}, ['last']);
     }
 }
 

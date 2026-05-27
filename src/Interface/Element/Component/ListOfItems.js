@@ -24,7 +24,7 @@ class ListOfItems extends CustomElement
     __construct(descriptions = [])
     {
         super.__construct();
-        this.descriptions = descriptions;
+        this.descriptions = Array.isArray(descriptions) ? descriptions : [];
         this.selectionStart = null;
         this.draggingElement = null;
     }

@@ -14,6 +14,13 @@ class ViewDiscoverAlbums extends BaseView
      */
     static elementName = 'view-discography';
 
+    __construct(hashRequest, api)
+    {
+        super.__construct();
+        this.hashRequest = hashRequest;
+        this.api = api;
+    }
+
     /**
      * @inheritdoc
      */
@@ -24,7 +31,7 @@ class ViewDiscoverAlbums extends BaseView
         var artist = this.hashRequest.queryParams.get('artist');
         var title  = this.hashRequest.queryParams.get('title');
 
-        this.api.discover.albums.search(this.hashRequest.queryParams).then((response) =>
+        this.api.discover.albums(this.hashRequest.queryParams).then((response) =>
         {
             this.subRenderHeader();
             this.subRenderBody(title);

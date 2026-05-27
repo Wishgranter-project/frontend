@@ -38,7 +38,7 @@ class Album extends CustomElement
     {
         this.classList.add(Album.elementName);
 
-        this.api.discover.albums.get(this.artist, this.title).read().then((response) =>
+        this.api.discover.getAlbum(this.title, this.artist).fetch().then((response) =>
         {
             this.subRenderHeader(response);
             this.subRenderTracks(response);

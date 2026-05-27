@@ -1,7 +1,6 @@
-import Api from './Api/Api';
+import Api from 'wishgranter-sdk';
 import App from './Interface/Element/App.js';
 import CreateElement from './Helper/CreateElement';
-import State from './State/State';
 import ModalLoginForm from './Interface/Element/Component/Modal/ModalLoginForm';
 
 //----------------------------------------
@@ -17,27 +16,24 @@ HTMLElement.prototype.addEventListenerOnce = function(key, eventName, callback) 
 URLSearchParams.prototype.without = function(name) { var newSearch = new URLSearchParams(this.toString()); newSearch.delete(name); return newSearch; }
 URLSearchParams.prototype.withAdded = function(name, value) { var newSearch = new URLSearchParams(this.toString()); newSearch.append(name, value); return newSearch; }
 URLSearchParams.prototype.isEmpty = function() { return this.toString().length == 0; }
-HTMLElement.prototype.index = function() {
-    var ar = Array.from(this.parentElement.childNodes);
-    return ar.indexOf(this);
-}
+HTMLElement.prototype.index = function() { var array = Array.from(this.parentElement.childNodes); return array.indexOf(this); }
 
 //----------------------------------------
 
-const api  = new Api(window.playerSettings.backEndBaseUrl, new State('api'));
+const api  = new Api({ baseHref: window.playerSettings.backEndBaseUrl });
 window.api = api;
-window.app = App.instantiate(api);
 
 //----------------------------------------
 
 document.addEventListener('DOMContentLoaded', () =>
 {
-    api.user.getSession().then((e) => {
-        document.body.append(window.app);
-    }).catch((e) => {
-        const modal = ModalLoginForm.instantiate(api);
-        document.body.append(modal);
-    });
-
-    
+    api.session.fetch().then((response) => {
+        if (response.meta.statusCode == 200) {
+            window.app = App.instantiate(api, api.manageUser(response.data.username).collection);
+            document.body.append(window.app);
+        } else {
+            const modal = ModalLoginForm.instantiate(api);
+            document.body.append(modal);
+        }
+    });    
 });

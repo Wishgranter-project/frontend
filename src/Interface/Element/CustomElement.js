@@ -42,6 +42,14 @@ class CustomElement extends HTMLElement
     }
 
     /**
+     * Constructor.
+     */
+    constructor()
+    {
+        super();
+    }
+
+    /**
      * Part of the web components API.
      *
      * Called each time the element is added to the document.
@@ -63,6 +71,18 @@ class CustomElement extends HTMLElement
     {
         this.clear();
         this.renderLifeCycle();
+    }
+
+    /**
+     * The render life-cycle.
+     *
+     * @private
+     */
+    renderLifeCycle()
+    {
+        this.beforeRender();
+        this.render();
+        this.afterRender();
     }
 
     /**
@@ -94,15 +114,34 @@ class CustomElement extends HTMLElement
     }
 
     /**
-     * The render life-cycle.
+     * Dispatches an event.
      *
-     * @private
+     * Basically a shorthand for the vanilla dispatchEvent().
+     *
+     * @param {String} eventName
+     * The name of the event.
+     * @param {mixed} detail
+     * Data to be added to the event.
+     * @param {Boolean} bubbles
+     * Wether the event bubles up the DOM tree.
+     *
+     * @returns {Boolean}
+     * False if event is cancelable, and at least one of the event handlers
+     * which received event called Event.preventDefault(). Otherwise true.
      */
-    renderLifeCycle()
+    fireEvent(eventName, detail = null, bubbles = true)
     {
-        this.beforeRender();
-        this.render();
-        this.afterRender();
+        var options = {
+            bubbles
+        };
+
+        if (detail != null) {
+            options.detail = detail;
+        }
+
+        var event = new CustomEvent(eventName, options);
+
+        return this.dispatchEvent(event);
     }
 
     /**
@@ -142,48 +181,9 @@ class CustomElement extends HTMLElement
             throw `Register this garbage <${this.elementName}> damn you, you forgot to register it! Call .register() !!`;
         }
 
-        var el = document.createElement(this.elementName);
-        el.__construct(...args);
-        return el;
-    }
-
-    /**
-     * Dispatches an event.
-     *
-     * Basically a shorthand for the vanilla dispatchEvent().
-     *
-     * @param {String} eventName
-     * The name of the event.
-     * @param {mixed} detail
-     * Data to be added to the event.
-     * @param {Boolean} bubbles
-     * Wether the event bubles up the DOM tree.
-     *
-     * @returns {Boolean}
-     * False if event is cancelable, and at least one of the event handlers
-     * which received event called Event.preventDefault(). Otherwise true.
-     */
-    fireEvent(eventName, detail = null, bubbles = true)
-    {
-        var options = {
-            bubbles
-        };
-
-        if (detail != null) {
-            options.detail = detail;
-        }
-
-        var event = new CustomEvent(eventName, options);
-
-        return this.dispatchEvent(event);
-    }
-
-    /**
-     * Constructor.
-     */
-    constructor()
-    {
-        super();
+        var element = document.createElement(this.elementName);
+        element.__construct(...args);
+        return element;
     }
 }
 
