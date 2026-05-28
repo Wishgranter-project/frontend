@@ -11,7 +11,7 @@ import AppNavigationArtists   from './AppNavigationArtists';
 class AppNavigation extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'app-navigation';
 
@@ -28,7 +28,7 @@ class AppNavigation extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

@@ -8,19 +8,19 @@ class Serialization
     /**
      * Serializes data.
      *
-     * @param {*} arbitraryData
+     * @param {*} data
      * Arbitrary data.
      *
      * @returns {object}
      * Flat representation.
      */
-    static serialize(arbitraryData)
+    static serialize(data)
     {
-        // Checks if the data already has a serialize() method.
-        // Otherwises uses serializeWhateverThisIs().
-        return typeof arbitraryData.serialize == 'function'
-            ? arbitraryData.serialize()
-            : Serialization.serializeWhateverThisIs(arbitraryData);
+        const implementsSerelizationMethod = typeof data.serialize == 'function';
+
+        return implementsSerelizationMethod
+            ? data.serialize()
+            : Serialization.serializeFallback(data);
     }
 
     /**
@@ -28,26 +28,25 @@ class Serialization
      *
      * @protected
      * 
-     * @param {*} arbitraryData
+     * @param {*} data
      * Arbitrary data.
      *
      * @returns {object}
      * Flat representation.
      */
-    static serializeWhateverThisIs(arbitraryData)
+    static serializeFallback(data)
     {
-        switch(arbitraryData.constructor.name) {
-            case HashRequest.name:
-                return {
-                    path:         arbitraryData.path,
-                    queryParams: (arbitraryData.queryParams ? arbitraryData.queryParams.toString() : ''),
-                    attributes:   arbitraryData.attributes,
-                    meta:         arbitraryData.meta
-                }
+        if (data.constructor.name == HashRequest.name) {
+            return {
+                path:         data.path,
+                queryParams: (data.queryParams ? data.queryParams.toString() : ''),
+                attributes:   data.attributes,
+                meta:         data.meta
+            }
         }
 
-        if (typeof arbitraryData == 'object') {
-            return arbitraryData;
+        if (typeof data == 'object') {
+            return data;
         }
 
         return null;

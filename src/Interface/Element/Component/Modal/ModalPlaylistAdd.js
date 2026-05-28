@@ -11,7 +11,7 @@ class ModalPlaylistAdd extends ModalItemAdd
     static elementName = 'modal-add-playlist';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderHeader()
     {
@@ -20,7 +20,7 @@ class ModalPlaylistAdd extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderForm()
     {
@@ -31,7 +31,7 @@ class ModalPlaylistAdd extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderSubmitListener()
     {
@@ -46,7 +46,7 @@ class ModalPlaylistAdd extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     onResponse(response)
     {

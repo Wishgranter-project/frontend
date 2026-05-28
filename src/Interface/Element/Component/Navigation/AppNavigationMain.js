@@ -9,12 +9,12 @@ import NavigationItem from './NavigationItem';
 class AppNavigationMain extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'app-navigation-main';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

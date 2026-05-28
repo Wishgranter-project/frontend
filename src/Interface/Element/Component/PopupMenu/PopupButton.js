@@ -4,7 +4,7 @@ import PopupMenu from './PopupMenu';
 class PopupButton extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'popup-button';
 
@@ -16,7 +16,7 @@ class PopupButton extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

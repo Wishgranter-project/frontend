@@ -3,7 +3,7 @@ import CustomElement from '../../CustomElement';
 class FloatMenuItem extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'float-menu-item';
 
@@ -29,7 +29,7 @@ class FloatMenuItem extends CustomElement
     }
     
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

@@ -8,7 +8,7 @@ import CustomElement from '../../CustomElement';
 class TextField extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'text-field';
 
@@ -34,7 +34,7 @@ class TextField extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

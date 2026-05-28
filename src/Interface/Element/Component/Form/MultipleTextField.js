@@ -8,7 +8,7 @@ import CustomElement from '../../CustomElement';
 class MultipleTextField extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'multiple-text-field';
 
@@ -37,7 +37,7 @@ class MultipleTextField extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

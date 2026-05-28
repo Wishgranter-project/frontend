@@ -7,12 +7,12 @@ import MultipleTextField from './MultipleTextField';
 class FormElent extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'form-element';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

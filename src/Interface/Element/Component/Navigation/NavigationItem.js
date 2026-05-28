@@ -8,7 +8,7 @@ import CustomElement from '../../CustomElement';
 class NavigationItem extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'navigation-item';
 
@@ -34,7 +34,7 @@ class NavigationItem extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

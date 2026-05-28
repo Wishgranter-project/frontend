@@ -6,7 +6,7 @@ import CustomElement from '../CustomElement';
 class ViewElement extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'view-base';
 

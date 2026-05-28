@@ -9,7 +9,7 @@ import FormElent from '../Form/FormElent';
 class ModalItemAdd extends ModalForm
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'modal-add-item';
 
@@ -29,7 +29,7 @@ class ModalItemAdd extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderHeader()
     {
@@ -38,7 +38,7 @@ class ModalItemAdd extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderForm()
     {
@@ -57,7 +57,7 @@ class ModalItemAdd extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderSubmitListener()
     {
@@ -72,7 +72,7 @@ class ModalItemAdd extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     onResponse(response)
     {

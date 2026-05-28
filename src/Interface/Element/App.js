@@ -43,17 +43,32 @@ customElements.define('tab-controls', TabControls);
 
 class App extends CustomElement
 {
+    /**
+     * {@inheritdoc}
+     */
     static elementName = 'the-app';
 
-    __construct(api, collection)
+    /**
+     * Constructor.
+     *
+     * @param {Api} api
+     * To communicate with the backend.
+     * @param {String} userId
+     * The authenticated user's id.
+     */
+    __construct(api, userId)
     {
         super.__construct();
         this.api                 = api;
-        this.collection          = collection;
-        this.routeCollection     = this.instantiateRouteCollection(this.api, this.collection);
-        this.state               = new State('showrunner.state');
-        this.navigationState     = new State('navigation.state');
-        this.contextFactory      = new ContextFactory(this.api);
+        this.userId              = userId;
+        this.collection          = api.manageUser(userId).collection;
+        this.instantiateRouteCollection();
+        this.state               = {
+            queue:      new State('state.queue'),
+            history:    new State('state.history'),
+            navigation: new State('state.navigation'),
+        }
+        this.contextFactory      = new ContextFactory(this.api, this.collection);
 
         //--------------------------------------------------
 
@@ -68,24 +83,64 @@ class App extends CustomElement
 
         this.setQueue(this.loadQueue());
         this.updateReproductionTray();
+    }
 
-        //--------------------------------------------------
+    /**
+     * Instantiates our router.
+     *
+     * @protected
+     */
+    instantiateRouteCollection()
+    {
+        this.routeCollection = new RouteCollection();
+
+        var api = this.api;
+        var collection = this.collection;
+
+        this.routeCollection
+        .createRoute([/^$/, /home$/], function(request)
+        {
+            return ViewWelcome.instantiate(request, api);
+        })
+        .createRoute(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
+        {
+            return ViewPlaylist.instantiate(request, collection);
+        })
+        .createRoute(/search/, function(request) 
+        {
+            return ViewSearch.instantiate(request, collection);
+        })
+        .createRoute(/discover:artist/, function(request) 
+        {
+            return ViewDiscover.instantiate(request, api);
+        })
+        .createRoute(/discover:albums$/, function(request) 
+        {
+            return ViewAlbums.instantiate(request, api);
+        })
+
+        /*
+        .notFoundCallback = function(route, request) 
+        {
+            return ViewNotFound.instantiate(request, api);
+        };
+        */
     }
 
     saveHistory(history)
     {
-        this.state.set('history', history);
+        this.state.history.set('history', history);
     }
 
     loadHistory()
     {
         var history = new History();
 
-        if (!this.state.get('history')) {
+        if (!this.state.history.get('history')) {
             return history;
         }
 
-        var items = this.state.get('history');
+        var items = this.state.history.get('history');
         if (items == null || items.length == 0) {
             return history;
         }
@@ -100,18 +155,18 @@ class App extends CustomElement
             this.saveQueueContext(queue.context);
         }
 
-        this.state.set('queue', queue);
+        this.state.queue.set('queue', queue);
     }
 
     loadQueue()
     {
-        if (!this.state.get('queue')) {
+        if (!this.state.queue.get('queue')) {
             return Queue.instantiate([], null);
         }
 
         var context = this.loadQueueContext();
 
-        var items = this.state.get('queue');
+        var items = this.state.queue.get('queue');
 
         var queue = Queue.instantiate(items, context);
 
@@ -120,16 +175,16 @@ class App extends CustomElement
 
     saveQueueContext(context)
     {
-        this.state.set('queueContext', context.serialize());
+        this.state.queue.set('queueContext', context.serialize());
     }
 
     loadQueueContext()
     {
-        if (!this.state.get('queueContext')) {
+        if (!this.state.queue.get('queueContext')) {
             return null;
         }
 
-        var c = this.state.get('queueContext');
+        var c = this.state.queue.get('queueContext');
 
         return this.contextFactory.instantiate(c);
     }
@@ -256,42 +311,6 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    instantiateRouteCollection(api, collection)
-    {
-        var routeCollection = new RouteCollection();
-
-        routeCollection
-        .createRoute([/^$/, /home$/], function(request)
-        {
-            return ViewWelcome.instantiate(request, api);
-        })
-        .createRoute(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
-        {
-            return ViewPlaylist.instantiate(request, collection);
-        })
-        .createRoute(/search/, function(request) 
-        {
-            return ViewSearch.instantiate(request, collection);
-        })
-        .createRoute(/discover:artist/, function(request) 
-        {
-            return ViewDiscover.instantiate(request, api);
-        })
-        .createRoute(/discover:albums$/, function(request) 
-        {
-            return ViewAlbums.instantiate(request, api);
-        })
-
-        /*
-        .notFoundCallback = function(route, request) 
-        {
-            return ViewNotFound.instantiate(request, api);
-        };
-        */
-
-        return routeCollection;
-    }
-
     async onJumpLine(evt)
     {
         var { from, to } = evt.detail;
@@ -311,7 +330,7 @@ class App extends CustomElement
 
     isShuffleOn()
     {
-        return this.state.get('shuffle') == 1;
+        return this.state.queue.get('shuffle') == 1;
     }
 
     toggleShuffle(evt)
@@ -323,7 +342,7 @@ class App extends CustomElement
 
     turnShuffleOff()
     {
-        this.state.set('shuffle', 0);
+        this.state.queue.set('shuffle', 0);
         this.$refs.controls.turnShuffleOff();
 
         if (!this.queue) {
@@ -336,7 +355,7 @@ class App extends CustomElement
 
     turnShuffleOn()
     {
-        this.state.set('shuffle', 1);
+        this.state.queue.set('shuffle', 1);
         this.$refs.controls.turnShuffleOn();
 
         if (!this.queue) {
@@ -611,7 +630,7 @@ class App extends CustomElement
             }
         }
         
-        this.navigationState.set('requests', requests);
+        this.state.navigation.set('requests', requests);
     }
 
     restoreTabs()
@@ -636,7 +655,7 @@ class App extends CustomElement
 
     loadTabs()
     {
-        var serializedRequests = this.navigationState.get('requests', []);
+        var serializedRequests = this.state.navigation.get('requests', []);
         var requests = [];
         var ins;
 

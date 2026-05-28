@@ -8,7 +8,7 @@ import ModalItemAdd from './ModalItemAdd';
 class ModalItemEdit extends ModalItemAdd
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'modal-edit-item';
 
@@ -27,7 +27,7 @@ class ModalItemEdit extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {
@@ -43,7 +43,7 @@ class ModalItemEdit extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderHeader()
     {
@@ -52,7 +52,7 @@ class ModalItemEdit extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderForm(response)
     {
@@ -69,7 +69,7 @@ class ModalItemEdit extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderSubmitListener()
     {
@@ -84,7 +84,7 @@ class ModalItemEdit extends ModalItemAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     onResponse(response)
     {

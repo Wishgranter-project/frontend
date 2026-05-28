@@ -10,7 +10,7 @@ import Queue           from '../../../Line/Queue';
 class ViewDiscoverAlbums extends BaseView
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'view-discography';
 
@@ -22,7 +22,7 @@ class ViewDiscoverAlbums extends BaseView
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     async render()
     {

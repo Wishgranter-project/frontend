@@ -8,7 +8,7 @@ import NavigationItem from './NavigationItem';
 class NavigationItemPlaylist extends NavigationItem
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'navigation-item-playlist';
 
@@ -34,7 +34,7 @@ class NavigationItemPlaylist extends NavigationItem
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

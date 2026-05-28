@@ -9,7 +9,7 @@ import FormElent from '../Form/FormElent';
 class ModalLoginForm extends ModalForm
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'modal-login-form';
 
@@ -26,7 +26,7 @@ class ModalLoginForm extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderHeader()
     {
@@ -35,7 +35,7 @@ class ModalLoginForm extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderForm()
     {
@@ -52,7 +52,7 @@ class ModalLoginForm extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderSubmitListener()
     {
@@ -66,7 +66,7 @@ class ModalLoginForm extends ModalForm
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     onResponse(response)
     {

@@ -9,7 +9,7 @@ import NavigationItemPlaylist from './NavigationItemPlaylist';
 class AppNavigationPlaylists extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'app-navigation-playlist';
 
@@ -26,7 +26,7 @@ class AppNavigationPlaylists extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

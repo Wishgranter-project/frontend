@@ -3,7 +3,7 @@ import CustomElement from '../../CustomElement';
 class TextArea extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'text-area-field';
 
@@ -29,7 +29,7 @@ class TextArea extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

@@ -52,7 +52,7 @@ class Instantiator
             } else if (!parameter.noDefault) {
                 var value = parameter.default;
             } else {
-                // console.log(parameter);
+                console.log(parameter);
                 throw `Could not instantiate ${this.classe.name}`;
             }
 

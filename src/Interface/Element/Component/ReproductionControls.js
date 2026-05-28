@@ -13,7 +13,7 @@ customElements.define('player-audio', PlayableAudio);
 class ReproductionControls extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'reproduction-controls';
 
@@ -45,7 +45,7 @@ class ReproductionControls extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

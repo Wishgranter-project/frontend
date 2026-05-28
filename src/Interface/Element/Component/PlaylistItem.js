@@ -10,7 +10,7 @@ import ContextualElement from './ContextualElement';
 class PlaylistItem extends ContextualElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'playlist-item';
 
@@ -31,7 +31,7 @@ class PlaylistItem extends ContextualElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {
@@ -115,7 +115,7 @@ class PlaylistItem extends ContextualElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     getDefaultContextActions()
     {

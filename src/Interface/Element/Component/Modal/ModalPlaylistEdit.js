@@ -8,7 +8,7 @@ import ModalPlaylistAdd from './ModalPlaylistAdd';
 class ModalPlaylistEdit extends ModalPlaylistAdd
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'modal-edit-playlist';
 
@@ -27,7 +27,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderHeader()
     {
@@ -36,7 +36,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {
@@ -52,7 +52,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderForm(response)
     {
@@ -64,7 +64,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     subRenderSubmitListener()
     {
@@ -79,7 +79,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     onResponse(response)
     {

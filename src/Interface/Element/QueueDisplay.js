@@ -9,7 +9,7 @@ import ListOfItems from './Component/ListOfItems';
 class QueueDisplay extends CustomElement
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'queue-display';
 
@@ -36,7 +36,7 @@ class QueueDisplay extends CustomElement
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {

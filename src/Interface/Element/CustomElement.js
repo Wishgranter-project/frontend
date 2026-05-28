@@ -153,6 +153,8 @@ class CustomElement extends HTMLElement
 
     /**
      * Registers the element.
+     *
+     * @private
      */
     static register()
     {
@@ -166,15 +168,15 @@ class CustomElement extends HTMLElement
     }
 
     /**
-     * Instantiates a new instance of the custom element.
+     * Creates a new instance of the custom element.
      *
-     * @param {mixed} args
+     * @param {mixed} parameters
      * Will be passed to __construct()
      *
      * @returns {CustomElement}
      * New instance.
      */
-    static instantiate(...args)
+    static instantiate(...parameters)
     {
         // Friendly reminder to register the element before creating an instance.
         if (! customElements.get(this.elementName)) {
@@ -182,7 +184,7 @@ class CustomElement extends HTMLElement
         }
 
         var element = document.createElement(this.elementName);
-        element.__construct(...args);
+        element.__construct(...parameters);
         return element;
     }
 }

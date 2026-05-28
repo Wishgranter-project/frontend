@@ -8,7 +8,7 @@ import Modal from './Modal';
 class ModalAddToPlaylist extends Modal
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     static elementName = 'modal-window-add-to-playlist';
 
@@ -28,7 +28,7 @@ class ModalAddToPlaylist extends Modal
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     render()
     {
