@@ -127,37 +127,60 @@ class App extends CustomElement
         */
     }
 
+    /**
+     * Set the user's active's reproduction history.
+     *
+     * @param {History} history
+     * History object.
+     */
+    setHistory(history)
+    {
+        this.history = history;
+
+        this.history.updatedCallback = () =>
+        {
+            var resume = this.history.slice(0, 30);
+            this.saveHistory(resume);
+            this.updateReproductionTray();
+        }
+        this.updateReproductionTray();
+    }
+
+    /**
+     * Commits the reproduction history to memory.
+     * 
+     * @param {History} history
+     * History object.
+     */
     saveHistory(history)
     {
         this.state.history.set('history', history);
     }
 
+    /**
+     * Loads the reproduction history from memory.
+     *
+     * @returns {History}
+     * History object.
+     */
     loadHistory()
     {
         var history = new History();
 
-        if (!this.state.history.get('history')) {
-            return history;
-        }
-
         var items = this.state.history.get('history');
-        if (items == null || items.length == 0) {
-            return history;
+        if (items && items.length) {
+            history.add(items);
         }
 
-        history.add(items);
         return history;
     }
 
-    saveQueue(queue)
-    {
-        if (queue.context) {
-            this.saveQueueContext(queue.context);
-        }
-
-        this.state.queue.set('queue', queue);
-    }
-
+    /**
+     * Loads the reproduction queue from memory.
+     *
+     * @returns {Queue}
+     * Queue object.
+     */
     loadQueue()
     {
         if (!this.state.queue.get('queue')) {
@@ -173,11 +196,38 @@ class App extends CustomElement
         return queue;
     }
 
+    /**
+     * Commits the reproduction queue to memory.
+     * 
+     * @param {Queue} queue
+     * Queue object.
+     */
+    saveQueue(queue)
+    {
+        if (queue.context) {
+            this.saveQueueContext(queue.context);
+        }
+
+        this.state.queue.set('queue', queue);
+    }
+
+    /**
+     * Commits the queue context to memory.
+     * 
+     * @param {ContextBase} context
+     * Context object.
+     */
     saveQueueContext(context)
     {
         this.state.queue.set('queueContext', context.serialize());
     }
 
+    /**
+     * Loads the queue context from memory.
+     *
+     * @returns {ContextBase}
+     * Context object.
+     */
     loadQueueContext()
     {
         if (!this.state.queue.get('queueContext')) {
@@ -189,6 +239,9 @@ class App extends CustomElement
         return this.contextFactory.instantiate(c);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     render()
     {
         this.classList.add('app');
@@ -221,7 +274,9 @@ class App extends CustomElement
         this.addEventListener('queue:intention:backward',          this.rewindTheQueue.bind(this));
         this.addEventListener('queue:intention:jump',              this.onJumpLine.bind(this));
         this.addEventListener('queue:intention:play-it-next',      this.onPlayNext.bind(this));
-        this.addEventListener('tabbed-router:tab-updated',         this.onNavigationUpdate.bind(this));
+        this.addEventListener('tabbed-router:tab-panel-updated',   this.onNavigationUpdate.bind(this));
+        this.addEventListener('tabbed-router:tab-panel-reordered', this.onNavigationUpdate.bind(this));
+        this.addEventListener('tabbed-router:tab-panel-closed',    this.onNavigationUpdate.bind(this));
         this.addEventListener('item:updated',                      this.onItemUpdated.bind(this));
         this.addEventListener('item:added',                        this.onItemAdded.bind(this));
 
@@ -394,19 +449,6 @@ class App extends CustomElement
         this.saveQueue(queue);
 
         return this.playItem(this.queue.front);
-    }
-
-    setHistory(history)
-    {
-        this.history = history;
-
-        this.history.updatedCallback = () =>
-        {
-            var resume = this.history.slice(0, 30);
-            this.saveHistory(resume);
-            this.updateReproductionTray();
-        }
-        this.updateReproductionTray();
     }
 
     setQueue(queue)
@@ -620,7 +662,7 @@ class App extends CustomElement
     {
         var requests = [];
 
-        for (var tab of this.$refs.stage.getTabs()) {
+        for (var tab of this.$refs.stage.$refs.tabPanelsWrapper.children) {
             var request = tab.childNodes[0] && tab.childNodes[0].request
                 ? tab.childNodes[0].request
                 : null;
@@ -640,7 +682,7 @@ class App extends CustomElement
         var n = 0;
         for (var r of requests) {
             focus = n == requests.length -1;
-            this.$refs.stage.openInNewTab(r, focus);
+            this.$refs.stage.openInNewTabPanel(r, focus);
             n++;
         }
 
@@ -649,7 +691,7 @@ class App extends CustomElement
 
     openHomePage()
     {
-        var mainTab = this.$refs.stage.createTab('main-tab', true);
+        var mainTab = this.$refs.stage.addNewTabPanel('main-tab', true);
         mainTab.access('#home');
     }
 

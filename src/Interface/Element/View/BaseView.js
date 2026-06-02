@@ -25,6 +25,9 @@ class ViewElement extends CustomElement
         this.collection = collection;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     afterRender()
     {
         this.classList.add('view');
