@@ -10,14 +10,10 @@ import FormElent from '../Form/FormElent';
  */
 class ModalForm extends Modal
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'modal-form';
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         super.subRenderModal();

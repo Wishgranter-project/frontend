@@ -9,9 +9,7 @@ import ContextualElement from './ContextualElement';
  */
 class PlaylistItem extends ContextualElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'playlist-item';
 
     /**
@@ -30,9 +28,7 @@ class PlaylistItem extends ContextualElement
         this.options = options;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         super.render();
@@ -114,9 +110,7 @@ class PlaylistItem extends ContextualElement
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     getDefaultContextActions()
     {
         var actions = {

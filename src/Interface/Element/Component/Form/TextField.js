@@ -7,9 +7,7 @@ import CustomElement from '../../CustomElement';
  */
 class TextField extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'text-field';
 
     /**
@@ -33,9 +31,7 @@ class TextField extends CustomElement
         this.placeholder = placeholder;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         var id = Math.floor(Math.random() * 10000);

@@ -7,9 +7,7 @@ import NavigationItem from './NavigationItem';
  */
 class NavigationItemArtist extends NavigationItem
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'navigation-item-artist';
 
     /**
@@ -30,9 +28,7 @@ class NavigationItemArtist extends NavigationItem
         this.count = count;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         super.render();

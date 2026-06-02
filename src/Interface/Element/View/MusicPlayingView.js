@@ -5,9 +5,7 @@ import BaseView        from './BaseView';
  */
 class MusicPlayingView extends BaseView
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     __construct(hashRequest, api)
     {
         super.__construct(hashRequest, api);

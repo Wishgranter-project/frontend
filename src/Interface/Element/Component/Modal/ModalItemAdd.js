@@ -8,9 +8,7 @@ import FormElent from '../Form/FormElent';
  */
 class ModalItemAdd extends ModalForm
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'modal-add-item';
 
     /**
@@ -28,18 +26,14 @@ class ModalItemAdd extends ModalForm
         this.playlistId = playlistId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Add item';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     subRenderForm()
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
@@ -56,9 +50,7 @@ class ModalItemAdd extends ModalForm
         this.$refs.form.addSubmitButton('save', 'Save');
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -71,9 +63,7 @@ class ModalItemAdd extends ModalForm
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     onResponse(response)
     {
         this.$refs.messages.messages(response.messages);

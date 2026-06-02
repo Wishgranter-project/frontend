@@ -43,9 +43,7 @@ customElements.define('tab-controls', TabControls);
 
 class App extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'the-app';
 
     /**
@@ -238,9 +236,7 @@ class App extends CustomElement
         return this.contextFactory.instantiate(c);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.classList.add('app');

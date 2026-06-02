@@ -8,14 +8,10 @@ import FloatMenu from './FloatMenu/FloatMenu';
  */
 class ContextualElement extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'contextual-element';
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});       

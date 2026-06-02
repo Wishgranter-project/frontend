@@ -3,9 +3,7 @@ import PopupMenu from './PopupMenu';
 
 class PopupButton extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'popup-button';
 
     __construct(menuItems = [])
@@ -15,9 +13,7 @@ class PopupButton extends CustomElement
         this.menu      = null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.classList.add('popup-button');

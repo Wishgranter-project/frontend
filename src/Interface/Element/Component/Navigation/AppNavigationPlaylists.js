@@ -8,9 +8,7 @@ import NavigationItemPlaylist from './NavigationItemPlaylist';
  */
 class AppNavigationPlaylists extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'app-navigation-playlist';
 
     /**
@@ -28,9 +26,7 @@ class AppNavigationPlaylists extends CustomElement
         this.userId = userId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.classList.add('app-navigation__playlists');

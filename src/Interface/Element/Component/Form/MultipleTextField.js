@@ -7,9 +7,7 @@ import CustomElement from '../../CustomElement';
  */
 class MultipleTextField extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'multiple-text-field';
 
     /**
@@ -36,9 +34,7 @@ class MultipleTextField extends CustomElement
         this.addButtonLabel = addButtonLabel;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.classList.add('form-group');

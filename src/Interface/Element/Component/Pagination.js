@@ -7,9 +7,7 @@ import CustomElement from '../CustomElement';
  */
 class Pagination extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'view-pagination';
 
     /**
@@ -73,9 +71,7 @@ class Pagination extends CustomElement
         return this.currentPage == this.pages;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.classList.add('button-group');

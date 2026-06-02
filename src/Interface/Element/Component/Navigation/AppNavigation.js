@@ -10,9 +10,7 @@ import AppNavigationArtists   from './AppNavigationArtists';
  */
 class AppNavigation extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'app-navigation';
 
     /**
@@ -30,9 +28,7 @@ class AppNavigation extends CustomElement
         this.userId = userId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.classList.add('app-navigation');

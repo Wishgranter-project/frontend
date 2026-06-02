@@ -8,9 +8,7 @@ import ListOfItems   from './ListOfItems';
  */
 class Album extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'album-container';
 
     /**
@@ -31,9 +29,7 @@ class Album extends CustomElement
         this.api = api;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     async render()
     {
         this.classList.add(Album.elementName);

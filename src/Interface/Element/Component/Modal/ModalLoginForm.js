@@ -8,9 +8,7 @@ import FormElent from '../Form/FormElent';
  */
 class ModalLoginForm extends ModalForm
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'modal-login-form';
 
     /**
@@ -25,18 +23,14 @@ class ModalLoginForm extends ModalForm
         this.api = api;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Login';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     subRenderForm()
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
@@ -51,9 +45,7 @@ class ModalLoginForm extends ModalForm
         this.$refs.closeButton.remove();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -65,9 +57,7 @@ class ModalLoginForm extends ModalForm
         });
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     onResponse(response)
     {
         this.$refs.messages.messages(response.messages);

@@ -8,9 +8,7 @@ import NavigationItem from './NavigationItem';
  */
 class AppNavigationMain extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'app-navigation-main';
 
     /**
@@ -25,9 +23,7 @@ class AppNavigationMain extends CustomElement
         this.userId = userId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.attach([

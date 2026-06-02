@@ -9,9 +9,7 @@ import ContextualElement from './ContextualElement';
  */
 class DiscographyItem extends ContextualElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'discography-item';
 
     /**
@@ -26,9 +24,7 @@ class DiscographyItem extends ContextualElement
         this.album = album;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         super.render();
@@ -132,9 +128,7 @@ class DiscographyItem extends ContextualElement
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     getDefaultContextActions()
     {
         var item = {

@@ -5,9 +5,7 @@ import CustomElement from '../CustomElement';
  */
 class ViewElement extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'view-base';
 
     /**
@@ -25,9 +23,7 @@ class ViewElement extends CustomElement
         this.api = api;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     afterRender()
     {
         this.classList.add('view');

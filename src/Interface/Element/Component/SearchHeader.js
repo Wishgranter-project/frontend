@@ -7,9 +7,7 @@ import CustomElement from '../CustomElement';
  */
 class SearchHeader extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'view-search-header';
 
     /**
@@ -30,9 +28,7 @@ class SearchHeader extends CustomElement
         this.fields  = fields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.classList.add('search-header');

@@ -7,14 +7,10 @@ import TextField from './TextField';
  */
 class PasswordField extends TextField
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'password-field';
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         super.render();

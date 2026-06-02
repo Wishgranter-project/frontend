@@ -8,9 +8,7 @@ import CustomElement from '../../CustomElement';
  */
 class Modal extends CustomElement
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     static elementName = 'modal-window';
 
     /**
@@ -21,9 +19,7 @@ class Modal extends CustomElement
         super.__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @inheritdoc */
     render()
     {
         this.subRenderModal();
