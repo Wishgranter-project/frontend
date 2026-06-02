@@ -121,7 +121,7 @@ class ViewPlaylist extends MusicPlayingView
             return;
         }
 
-        this.$refs.playlist = ListOfItems.instantiate(response.data);
+        this.$refs.playlist = ListOfItems.instantiate(response.data, this.collection.parent.userId);
         this.$refs.playlist.classList.add('playlist');
         if (!this.filtering()) {
             this.$refs.playlist.setAttribute('reordable', 'true');

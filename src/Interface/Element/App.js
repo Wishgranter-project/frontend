@@ -95,20 +95,19 @@ class App extends CustomElement
         this.routeCollection = new RouteCollection();
 
         var api = this.api;
-        var collection = this.collection;
 
         this.routeCollection
         .createRoute([/^$/, /home$/], function(request)
         {
             return ViewWelcome.instantiate(request, api);
         })
-        .createRoute(/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
+        .createRoute(/user:(?<userId>[\w\d\-]+)\/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
         {
-            return ViewPlaylist.instantiate(request, collection);
+            return ViewPlaylist.instantiate(request, api);
         })
-        .createRoute(/search/, function(request) 
+        .createRoute(/user:(?<userId>[\w\d\-]+)\/search/, function(request) 
         {
-            return ViewSearch.instantiate(request, collection);
+            return ViewSearch.instantiate(request, api);
         })
         .createRoute(/discover:artist/, function(request) 
         {
@@ -252,13 +251,13 @@ class App extends CustomElement
         this.$refs.stage.setRouteCollection(this.routeCollection);
 
         this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
-            this.$refs.navMenu = AppNavigation.instantiate(this.collection),
+            this.$refs.navMenu = AppNavigation.instantiate(this.api, this.userId),
             this.$refs.stage,
-            this.$refs.queueDisplay = QueueDisplay.instantiate()
+            this.$refs.queueDisplay = QueueDisplay.instantiate(this.userId)
         ]);
 
         this.$refs.footer = this.createAndAttach('div', {class: 'app__footer'}, [
-            this.$refs.controls = ReproductionControls.instantiate(this.api, null, null, null, this.isShuffleOn())
+            this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, null, null, null, this.isShuffleOn())
         ]);      
 
         if (!this.restoreTabs()) {
@@ -282,12 +281,12 @@ class App extends CustomElement
 
         this.addEventListener('playlist:added', () =>
         {
-            this.$refs.navMenu.render();
+            this.$refs.navMenu.refresh();
         });
 
         this.addEventListener('playlist:updated', () =>
         {
-            this.$refs.navMenu.render();
+            this.$refs.navMenu.refresh();
         });
 
         this.addEventListener('item:intention:add-to-collection', (evt) => 
@@ -575,7 +574,7 @@ class App extends CustomElement
     setupResources(item, resources, autoPlay = true)
     {
         this.$refs.controls.remove();
-        this.$refs.controls = ReproductionControls.instantiate(this.api, item, resources, autoPlay, this.isShuffleOn());
+        this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, item, resources, autoPlay, this.isShuffleOn());
         this.$refs.footer.append(this.$refs.controls);
     }
 

@@ -15,14 +15,14 @@ class ViewElement extends CustomElement
      *
      * @param {HashRequest} hashRequest
      * The request.
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Collection} api
+     * The user's api.
      */
-    __construct(hashRequest, collection)
+    __construct(hashRequest, api)
     {
         super.__construct();
         this.hashRequest = hashRequest;
-        this.collection = collection;
+        this.api = api;
     }
 
     /**

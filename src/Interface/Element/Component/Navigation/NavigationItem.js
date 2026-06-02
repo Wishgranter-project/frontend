@@ -1,7 +1,7 @@
 import CustomElement from '../../CustomElement';
 
 /**
- * A navigation item.
+ * An item for the navigation menu.
  *
  * @class
  */
@@ -16,21 +16,24 @@ class NavigationItem extends CustomElement
      * Constructor.
      *
      * @param {String} label
-     * Human-readable string.
+     * Human-readable label.
      * @param {String} icon
-     * Icon to accompany the label.
+     * Icon to accompany the label, optional.
      * @param {String} href
-     * URI.
+     * URI for the item.
      * @param {String} tittleAttr
-     * Tooltip to apper when hovering, optional.
+     * To be used in the tab.
+     * @param {String} toolTip
+     * Text to apper when hovering, optional.
      */
-    __construct(label, icon, href, tittleAttr = null)
+    __construct(label, icon, href, tittleAttr = null, toolTip = null)
     {
         super.__construct();
         this.label       = label;
         this.icon        = icon;
         this.href        = href;
         this.tittleAttr  = tittleAttr;
+        this.toolTip     = toolTip;
     }
 
     /**
@@ -40,9 +43,15 @@ class NavigationItem extends CustomElement
     {
         this.classList.add('app-navigation__item');
 
-        var attrs = this.tittleAttr == null || this.tittleAttr == 'null'
-            ? {}
-            : { title: this.tittleAttr };
+        var attrs = {};
+
+        if (this.tittleAttr) {
+            attrs['data-tabbed-router-title'] = this.tittleAttr;
+        }
+        
+        if (this.toolTip != null && this.toolTip != 'null') {
+            attrs.title = this.toolTip;
+        }
 
         if (this.href) {
             attrs.href = this.href;
@@ -50,13 +59,10 @@ class NavigationItem extends CustomElement
 
         this.$refs.a = this.createAndAttach('a', attrs);
 
-        var icon = this.icon
-            ? this.create('span', {class: 'fa ' + this.icon})
-            : null;
-
-        var label = this.create('span', {class: 'label ellipsis'}, this.label);
-
-        this.$refs.a.attach([icon, label]);
+        this.$refs.a.attach([
+            (this.icon ? this.create('span', {class: 'fa ' + this.icon}) : null),
+            this.create('span', {class: 'label ellipsis'}, this.label)
+        ]);
     }
 }
 

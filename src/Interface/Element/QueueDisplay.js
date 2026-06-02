@@ -13,6 +13,12 @@ class QueueDisplay extends CustomElement
      */
     static elementName = 'queue-display';
 
+    __construct(userId)
+    {
+        super.__construct();
+        this.userId = userId;
+    }
+
     get isOpen()
     {
         return this.classList.contains('is-open')
@@ -57,13 +63,13 @@ class QueueDisplay extends CustomElement
 
     subRenderHistory()
     {
-        this.$refs.history = ListOfItems.instantiate([]);
+        this.$refs.history = ListOfItems.instantiate([], this.userId);
         this.$refs.hr.before(this.$refs.history);
     }
 
     subRenderQueue()
     {
-        this.$refs.queued = ListOfItems.instantiate([]);
+        this.$refs.queued = ListOfItems.instantiate([], this.userId);
         this.$refs.queued.setAttribute('reordable', true);
         this.$refs.queued.dropIsValid = function(dropEvt) {
             var draggingLocalElements = this.draggingElement;

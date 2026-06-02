@@ -16,13 +16,16 @@ class AppNavigationPlaylists extends CustomElement
     /**
      * Constructor.
      *
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Api} api
+     * Api to communicate with the backend.
+     * @param {String} userId
+     * The current user's id.
      */
-    __construct(collection)
+    __construct(api, userId)
     {
         super.__construct();
-        this.collection = collection;
+        this.api = api;
+        this.userId = userId;
     }
 
     /**
@@ -30,10 +33,9 @@ class AppNavigationPlaylists extends CustomElement
      */
     render()
     {
-        this.clear();
         this.classList.add('app-navigation__playlists');
 
-        this.collection.fetchPlaylists().then((response) => 
+        this.api.manageUser(this.userId).collection.fetchPlaylists().then((response) => 
         {
             this.subRenderCreateAndDownload();
             this.subRenderPlaylists(response);
@@ -52,7 +54,7 @@ class AppNavigationPlaylists extends CustomElement
     {
         var data = response.data || [];
         for (var playlist of data) {
-            NavigationItemPlaylist.instantiate(playlist.title, null, `#playlist:${playlist.id}`, playlist.id, this.collection).attachTo(this);
+            NavigationItemPlaylist.instantiate(playlist.title, null, `#user:${this.userId}/playlist:${playlist.id}`, playlist.id, this.collection).attachTo(this);
         }
     }
 

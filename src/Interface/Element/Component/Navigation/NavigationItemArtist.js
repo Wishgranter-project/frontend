@@ -15,7 +15,7 @@ class NavigationItemArtist extends NavigationItem
     /**
      * Constructor.
      *
-     * @param {String} label
+     * @param {String} artistName
      * Human-readable string.
      * @param {String} icon
      * Icon to accompany the label.
@@ -24,9 +24,9 @@ class NavigationItemArtist extends NavigationItem
      * @param {Integer} count
      * The number of playlist items the artist has in the collection.
      */
-    __construct(label, icon, href, count)
+    __construct(artistName, icon, href, count)
     {
-        super.__construct(label, icon, href);
+        super.__construct(artistName, icon, href, 'Songs by ' + artistName);
         this.count = count;
     }
 

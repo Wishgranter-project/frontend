@@ -62,6 +62,9 @@ class NavigationItemPlaylist extends NavigationItem
      *
      * Adds dragged items to the playlist.
      *
+     * @todo
+     * WTF was I thinking ? Fucking remove this at first chance.
+     *
      * @protected
      * @listens drop
      *

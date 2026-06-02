@@ -18,13 +18,16 @@ class AppNavigation extends CustomElement
     /**
      * Constructor.
      *
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Api} api
+     * Api to communicate with the backend.
+     * @param {String} userId
+     * The current user's id.
      */
-    __construct(collection)
+    __construct(api, userId)
     {
         super.__construct();
-        this.collection = collection;
+        this.api = api;
+        this.userId = userId;
     }
 
     /**
@@ -32,13 +35,14 @@ class AppNavigation extends CustomElement
      */
     render()
     {
-        this.clear();
         this.classList.add('app-navigation');
 
-        this.$refs.main      = AppNavigationMain.instantiate().attachTo(this);
-        this.$refs.playlists = AppNavigationPlaylists.instantiate(this.collection).attachTo(this);
-        this.createAndAttach('hr');
-        this.$refs.artists   = AppNavigationArtists.instantiate(this.collection).attachTo(this);
+        this.attach([
+            AppNavigationMain.instantiate(this.userId),
+            AppNavigationPlaylists.instantiate(this.api, this.userId),
+            this.create('hr'),
+            AppNavigationArtists.instantiate(this.api, this.userId),
+        ]);
     }
 
 }

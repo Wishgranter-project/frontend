@@ -20,13 +20,16 @@ class ListOfItems extends CustomElement
      *
      * @param {Array} descriptions
      * List of playlist items.
+     * @param {String} userId
+     * The user id.
      */
-    __construct(descriptions = [])
+    __construct(descriptions = [], userId)
     {
         super.__construct();
         this.descriptions = Array.isArray(descriptions) ? descriptions : [];
         this.selectionStart = null;
         this.draggingElement = null;
+        this.userId = userId;
     }
 
     /**
@@ -68,7 +71,7 @@ class ListOfItems extends CustomElement
      */
     addElement(item)
     {
-        var li = this.$refs.list.createAndAttach('li', {draggable: 'true'}, PlaylistItem.instantiate(item));
+        var li = this.$refs.list.createAndAttach('li', {draggable: 'true'}, PlaylistItem.instantiate(item, { userId: this.userId }));
         return li;
     }
 

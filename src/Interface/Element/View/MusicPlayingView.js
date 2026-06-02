@@ -6,6 +6,15 @@ import BaseView        from './BaseView';
 class MusicPlayingView extends BaseView
 {
     /**
+     * {@inheritdoc}
+     */
+    __construct(hashRequest, api)
+    {
+        super.__construct(hashRequest, api);
+        this.collection = api.manageUser(hashRequest.attributes.userId).collection;
+    }
+
+    /**
      * Return the playable items displayed in this view.
      *
      * @param {Object} beginningWith
