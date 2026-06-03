@@ -119,7 +119,7 @@ class ReproductionControls extends CustomElement
 
         this.$refs.buttonBackward.addEventListener('click', () => 
         {
-            this.fireEvent('queue:intention:backward');
+            this.fireEvent('queue:intention:rewind');
         });
 
         this.$refs.buttonNext.addEventListener('click', () => 

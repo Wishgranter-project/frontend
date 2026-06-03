@@ -262,96 +262,35 @@ class App extends CustomElement
 
         //------------------------------
 
-        this.addEventListener('queue:item-selected',               this.onItemSelected.bind(this));
-        this.addEventListener('playable:ended',                    this.onPlayerEnded.bind(this));
-        this.addEventListener('player:intention:toggle-shuffle',   this.toggleShuffle.bind(this));
-        this.addEventListener('queue:intention:forward',           this.forwardTheQueue.bind(this));
-        this.addEventListener('queue:intention:backward',          this.rewindTheQueue.bind(this));
-        this.addEventListener('queue:intention:jump',              this.onJumpLine.bind(this));
-        this.addEventListener('queue:intention:play-it-next',      this.onPlayNext.bind(this));
-        this.addEventListener('tabbed-router:tab-panel-updated',   this.onNavigationUpdate.bind(this));
-        this.addEventListener('tabbed-router:tab-panel-reordered', this.onNavigationUpdate.bind(this));
-        this.addEventListener('tabbed-router:tab-panel-closed',    this.onNavigationUpdate.bind(this));
-        this.addEventListener('item:updated',                      this.onItemUpdated.bind(this));
-        this.addEventListener('item:added',                        this.onItemAdded.bind(this));
+        this.addEventListeners({
+            'tabbed-router:tab-panel-updated':   this.onNavigationUpdate.bind(this),
+            'tabbed-router:tab-panel-reordered': this.onNavigationUpdate.bind(this),
+            'tabbed-router:tab-panel-closed':    this.onNavigationUpdate.bind(this),
 
-        this.addEventListener('playlist:added', () =>
-        {
-            this.$refs.navMenu.refresh();
-        });
+            'playable:ended':                    this.onTrackHasFinished.bind(this),
+            'player:intention:toggle-shuffle':   this.onRequestToToggleShuffle.bind(this),
 
-        this.addEventListener('playlist:updated', () =>
-        {
-            this.$refs.navMenu.refresh();
-        });
+            'queue:intention:play-this-now':     this.onRequestToPlayNewItem.bind(this),
+            'queue:intention:forward':           this.onRequestToForwardQueue.bind(this),
+            'queue:intention:rewind':            this.onRequestToRewindQueue.bind(this),
+            'queue:intention:play-it-next':      this.onRequestToPlayItemNext.bind(this),
 
-        this.addEventListener('item:intention:add-to-collection', (evt) => 
-        {
-            var modal = ModalAddToPlaylist.instantiate(this.collection, evt.detail.items);
-            this.append(modal);
-        });
+            'collection:intention:download':     this.onRequestToDownloadCollection.bind(this),
 
-        this.addEventListener('playlist:intention:compose-new-item', (evt) => 
-        {
-            var modal = ModalItemAdd.instantiate(this.collection, evt.detail.playlistId);
-            this.append(modal);
-        });
+            'item:newly-created':                this.onNewItemCreated.bind(this),
+            'item:updated':                      this.onItemUpdated.bind(this),
+            'item:intention:compose-new':        this.onRequestToComposeNewItem.bind(this),
+            'item:intention:edit':               this.onRequestToEditItem.bind(this),
+            'item:intention:delete':             this.onRequestToDeleteItem.bind(this),
+            'item:intention:add-to-collection':  this.onRequestToAddItemToCollection.bind(this),
 
-        this.addEventListener('item:intention:edit', (evt) => 
-        {
-            var modal = ModalItemEdit.instantiate(this.collection, evt.detail.uuid);
-            this.append(modal);
-        });
-
-        this.addEventListener('item:intention:delete', (evt) => 
-        {
-            if (!confirm('Are you sure you want to remove it from your collection ?')) {
-                return;
-            }
-
-            this.collection.manageItem(evt.detail.uuid).delete();
-            evt.target.remove();
-        });
-
-        this.addEventListener('collection:intention:download', (evt) => 
-        {
-            this.collection.downloadAll();
-        });
-
-        this.addEventListener('collection:intention:compose-new-playlist', (evt) => 
-        {
-            var modal = ModalPlaylistAdd.instantiate(this.collection);
-            this.append(modal);
-        });
-
-        this.addEventListener('playlist:intention:edit', (evt) => 
-        {
-            var modal = ModalPlaylistEdit.instantiate(this.collection, evt.detail.playlistId);
-            this.append(modal);
-        });
-
-        this.addEventListener('playlist:intention:delete', (evt) => 
-        {
-            if (!confirm('Are you sure you want to delete the playlist ?')) {
-                return;
-            }
-
-            this.collection.managePlaylist(evt.detail.playlistId).delete().then(() =>
-            {
-                this.$refs.navMenu.refresh();
-            });
-
-            window.location.hash = '#home';
-        });
-
-        this.addEventListener('playlist:intention:download', (evt) => 
-        {
-            this.collection.managePlaylist(evt.detail.playlistId).download();
-        });
-
-        this.addEventListener('gui:summon-queue', () => 
-        {
-            this.$refs.queueDisplay.toggle();
+            'playlist:newly-created':            this.onNewPlaylistCreated.bind(this),
+            'playlist:updated':                  this.onNewPlaylistUpdated.bind(this),
+            'playlist:intention:compose-new':    this.onRequestToComposeNewPlaylist.bind(this),
+            'playlist:intention:edit':           this.onRequestEditPlaylist.bind(this),
+            'playlist:intention:delete':         this.onRequestDeletePlaylist.bind(this),
+            'playlist:intention:download':       this.onRequestDownloadPlaylist.bind(this),
+            'gui:summon-queue':                  this.onSummonQueue.bind(this)
         });
 
         if (this.queue.length) {
@@ -361,34 +300,10 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    async onJumpLine(evt)
-    {
-        var { from, to } = evt.detail;
-        var target = this.queue.move(from, to);
-
-        if (to == 0) {
-            this.playItem(target);
-        }
-    }
-
-    async onPlayerEnded(evt)
-    {
-        console.log('-------------------------------');
-        console.log('Show runner: song ended, next.');
-        return this.advanceTheQueue();
-    }
-
     isShuffleOn()
     {
         return this.state.queue.get('shuffle') == 1;
-    }
-
-    toggleShuffle(evt)
-    {
-        this.isShuffleOn()
-            ? this.turnShuffleOff()
-            : this.turnShuffleOn();
-    }
+    }  
 
     turnShuffleOff()
     {
@@ -416,17 +331,14 @@ class App extends CustomElement
         this.saveQueue(this.queue);
     }
 
-    onPlayNext(evt)
-    {
-        var { item } = evt.detail;
-
-        this.queue.length == 0
-            ? this.playItem(item)
-            : this.queue.jump(item, 1);
-    }
-
     /**
      * Clears old queue, set this new one up.
+     *
+     * @param {Queue} queue
+     * The new queue.
+     *
+     * @returns {Promise}
+     * To be solved once we have media to play.
      */
     async stopAndBeginThisNewQueue(queue)
     {
@@ -469,28 +381,6 @@ class App extends CustomElement
         }
     }
 
-    async rewindTheQueue(evt)
-    {
-        if (! this.history.length) {
-            return;
-        }
-
-        console.log('-------------------------------');
-        console.log('Show runner: rewinding queue.');
-
-        var previous = this.history.rewind(1)[0];
-        this.queue.dropIn(previous);
-
-        return this.playItem(previous);
-    }
-
-    async forwardTheQueue(evt)
-    {
-        console.log('-------------------------------');
-        console.log('Show runner: song skipped, next.');
-        return this.advanceTheQueue();
-    }
-
     async advanceTheQueue()
     {
         return this.queue.getNextInLine().then( (next) => 
@@ -506,33 +396,7 @@ class App extends CustomElement
             return this.playItem(next);
         });
     }
-
-    async onItemSelected(evt)
-    {
-        var { item, queue } = evt.detail;
-
-        console.log('-------------------------------');
-        console.log('Show runner: New item selected');
-
-        // Has a queue attached to it ?
-        if (queue && queue.length) {
-            return this.stopAndBeginThisNewQueue(queue);
-        } else {
-            var current = this.queue.dequeue();
-            if (current) {
-                // Add the one in front to the history.
-                this.history.add(current);
-            }
-
-            // Add item to the beginning of the queue.
-            this.queue.dropIn(item);
-            // add previous to history etc
-            return Array.isArray(item)
-                ? this.playItem(item[0])
-                : this.playItem(item);
-        }
-    }
-
+ 
     async playItem(item)
     {
         //return this.setupItem(item, true);
@@ -609,22 +473,6 @@ class App extends CustomElement
         return this.api.wish.forMusic(params);
     }
 
-    onNavigationUpdate(evt)
-    {
-        this.saveTabs();
-    }
-
-    onItemUpdated(evt)
-    {
-        for (var item of evt.detail.items) {
-            this.updateItem(item.uuid, null, item);
-
-            if (item.xxxOriginal) {
-                this.updateItem(null, item.xxxOriginal, item);
-            }
-        }
-    }
-
     updateItem(uuid, original, item)
     {
         var query = uuid
@@ -643,14 +491,6 @@ class App extends CustomElement
                 el.refresh();
             }
         });
-    }
-
-    onItemAdded(evt)
-    {
-        var playlistView = document.querySelector(`${ViewPlaylist.elementName}[data-playlist="${evt.detail.playlist}"]`);
-        if (playlistView) {
-            playlistView.itemsAdded(evt.detail.items);
-        }
     }
 
     saveTabs()
@@ -703,6 +543,349 @@ class App extends CustomElement
         }
 
         return requests;
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onNavigationUpdate(evt)
+    {
+        this.saveTabs();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onTrackHasFinished(evt)
+    {
+        console.log('-------------------------------');
+        console.log('Show runner: song ended, next.');
+        this.advanceTheQueue();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToToggleShuffle(evt)
+    {
+        this.isShuffleOn()
+            ? this.turnShuffleOff()
+            : this.turnShuffleOn();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToPlayNewItem(evt)
+    {
+        var { item, queue } = evt.detail;
+
+        console.log('-------------------------------');
+        console.log('Show runner: New item selected');
+
+        // Has a queue attached to it ?
+        if (queue && queue.length) {
+            this.stopAndBeginThisNewQueue(queue);
+            return;
+        }
+
+        var current = this.queue.dequeue();
+        if (current) {
+            // Add the one in front to the history.
+            this.history.add(current);
+        }
+
+        // Add item to the beginning of the queue.
+        this.queue.dropIn(item);
+        // add previous to history etc
+        Array.isArray(item)
+            ? this.playItem(item[0])
+            : this.playItem(item);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToForwardQueue(evt)
+    {
+        console.log('-------------------------------');
+        console.log('Show runner: song skipped, next.');
+        this.advanceTheQueue();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToRewindQueue(evt)
+    {
+        if (! this.history.length) {
+            return;
+        }
+
+        console.log('-------------------------------');
+        console.log('Show runner: rewinding queue.');
+
+        var previous = this.history.rewind(1)[0];
+        this.queue.dropIn(previous);
+
+        this.playItem(previous);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToPlayItemNext(evt)
+    {
+        var { item } = evt.detail;
+
+        this.queue.length == 0
+            ? this.playItem(item)
+            : this.queue.jump(item, 1);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToDownloadCollection(evt)
+    {
+        this.collection.downloadAll();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onNewItemCreated(evt)
+    {
+        var playlistView = document.querySelector(`${ViewPlaylist.elementName}[data-playlist="${evt.detail.playlist}"]`);
+        if (playlistView) {
+            playlistView.itemsAdded(evt.detail.items);
+        }
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onItemUpdated(evt)
+    {
+        for (var item of evt.detail.items) {
+            this.updateItem(item.uuid, null, item);
+
+            if (item.xxxOriginal) {
+                this.updateItem(null, item.xxxOriginal, item);
+            }
+        }
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToComposeNewItem(evt)
+    {
+        var modal = ModalItemAdd.instantiate(this.collection, evt.detail.playlistId);
+        this.append(modal);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToEditItem(evt)
+    {
+        var modal = ModalItemEdit.instantiate(this.collection, evt.detail.uuid);
+        this.append(modal);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToDeleteItem(evt)
+    {
+        if (!confirm('Are you sure you want to remove it from your collection ?')) {
+            return;
+        }
+
+        this.collection.manageItem(evt.detail.uuid).delete();
+        evt.target.remove();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToAddItemToCollection(evt)
+    {
+        var modal = ModalAddToPlaylist.instantiate(this.collection, evt.detail.items);
+        this.append(modal);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onNewPlaylistCreated(evt)
+    {
+        this.$refs.navMenu.refresh();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onNewPlaylistUpdated()
+    {
+        this.$refs.navMenu.refresh();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestToComposeNewPlaylist(evt)
+    {
+        var modal = ModalPlaylistAdd.instantiate(this.collection);
+        this.append(modal);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestEditPlaylist(evt)
+    {
+        var modal = ModalPlaylistEdit.instantiate(this.collection, evt.detail.playlistId);
+        this.append(modal);
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestDeletePlaylist(evt)
+    {
+        if (!confirm('Are you sure you want to delete the playlist ?')) {
+            return;
+        }
+
+        this.collection.managePlaylist(evt.detail.playlistId).delete().then(() =>
+        {
+            this.$refs.navMenu.refresh();
+        });
+
+        window.location.hash = '#home';
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onRequestDownloadPlaylist(evt)
+    {
+        this.collection.managePlaylist(evt.detail.playlistId).download();
+    }
+
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event to react to.
+     */
+    onSummonQueue()
+    {
+        this.$refs.queueDisplay.toggle();
     }
 }
 

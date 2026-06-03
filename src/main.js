@@ -18,6 +18,12 @@ URLSearchParams.prototype.withAdded = function(name, value) { var newSearch = ne
 URLSearchParams.prototype.isEmpty = function() { return this.toString().length == 0; }
 HTMLElement.prototype.index = function() { var array = Array.from(this.parentElement.childNodes); return array.indexOf(this); }
 
+HTMLElement.prototype.addEventListeners = function(listeners) {
+    for (var eventName of Object.keys(listeners)) {
+        this.addEventListener(eventName, listeners[eventName]);
+    }
+}
+
 //----------------------------------------
 
 const api  = new Api({ baseHref: window.playerSettings.backEndBaseUrl });

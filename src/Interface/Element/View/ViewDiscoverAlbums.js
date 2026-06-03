@@ -88,7 +88,7 @@ class ViewDiscoverAlbums extends BaseView
     {
         var items = this.getPlayableItems();
 
-        this.fireEvent('queue:item-selected', {
+        this.fireEvent('queue:intention:play-this-now', {
             item: items[0],
             queue: Queue.instantiate(items, null)
         });

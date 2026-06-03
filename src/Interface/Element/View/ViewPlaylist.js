@@ -33,7 +33,7 @@ class ViewPlaylist extends MusicPlayingView
 
         Events.enableBottomReached(this);
         this.addEventListener('scroll:bottom-reached', this.bottomReached.bind(this));
-        this.addEventListener('queue:item-selected', this.onItemSelected.bind(this));
+        this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
         this.addEventListener('list-of-items:reordered', this.onItemsReordered.bind(this));
     }
 
@@ -89,7 +89,7 @@ class ViewPlaylist extends MusicPlayingView
 
         this.$refs.buttonAdd.addEventListener('click', () => 
         {
-            this.fireEvent('playlist:intention:compose-new-item', { playlistId: this.hashRequest.attributes.playlistId });
+            this.fireEvent('item:intention:compose-new', { playlistId: this.hashRequest.attributes.playlistId });
         });
 
         this.$refs.buttonEdit.addEventListener('click', () => 

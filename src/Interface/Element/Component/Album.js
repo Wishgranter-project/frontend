@@ -40,7 +40,7 @@ class Album extends CustomElement
             this.subRenderTracks(response);
         });
 
-        this.addEventListener('queue:item-selected', this.onItemSelected.bind(this));
+        this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
     }
 
     subRenderHeader(response)
@@ -81,7 +81,7 @@ class Album extends CustomElement
     playEntireAlbum()
     {
         var items = this.getPlayableItems();
-        this.fireEvent('queue:item-selected', {
+        this.fireEvent('queue:intention:play-this-now', {
             item: items
         });
     }

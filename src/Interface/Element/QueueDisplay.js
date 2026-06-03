@@ -89,7 +89,7 @@ class QueueDisplay extends CustomElement
             return true;
         }
         this.$refs.queued.addEventListener('context-menu:actions:invite-alter', this.onContextMenuInviteAlter.bind(this));
-        this.$refs.queued.addEventListener('queue:item-selected', this.onQueueItemSelected.bind(this));
+        this.$refs.queued.addEventListener('queue:intention:play-this-now', this.onQueueItemSelected.bind(this));
         this.$refs.hr.after(this.$refs.queued);
     }
 

@@ -68,7 +68,7 @@ class AppNavigationPlaylists extends CustomElement
 
         this.$refs.createPlaylist.addEventListener('click', () =>
         {
-            this.fireEvent('collection:intention:compose-new-playlist');
+            this.fireEvent('playlist:intention:compose-new');
         });
 
         this.$refs.downloadPlaylists.addEventListener('click', () =>

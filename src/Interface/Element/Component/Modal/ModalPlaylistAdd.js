@@ -46,7 +46,7 @@ class ModalPlaylistAdd extends ModalItemAdd
 
         if (response.meta.statusCode == 200) {
             alert('Added!');
-            this.fireEvent('playlist:added');
+            this.fireEvent('playlist:newly-created');
             this.remove();
         }
     }

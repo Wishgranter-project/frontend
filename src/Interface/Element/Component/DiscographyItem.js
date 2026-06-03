@@ -55,7 +55,7 @@ class DiscographyItem extends ContextualElement
 
         this.subRenderPlayButton().addEventListener('click', () => 
         {
-            this.fireEvent('queue:item-selected', {
+            this.fireEvent('queue:intention:play-this-now', {
                 item: {
                     title: this.album.title,
                     artist: this.album.artist
@@ -79,7 +79,7 @@ class DiscographyItem extends ContextualElement
 
         this.subRenderPlayButton().addEventListener('click', () => 
         {
-            this.fireEvent('queue:item-selected', {
+            this.fireEvent('queue:intention:play-this-now', {
                 item: {
                     album: this.album.title,
                     artist: this.album.artist

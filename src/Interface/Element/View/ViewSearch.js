@@ -23,7 +23,7 @@ class ViewSearch extends ViewPlaylist
             this.subRenderNavigation(response);
         });
 
-        this.addEventListener('queue:item-selected', this.onItemSelected.bind(this));
+        this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
     }
 
     fetch()

@@ -81,7 +81,7 @@ class NavigationItemPlaylist extends NavigationItem
                 items.push(r.data);
             }
             
-            this.fireEvent('item:added', { items, playlist: this.playlistId });
+            this.fireEvent('item:newly-created', { items, playlist: this.playlistId });
         });
     }
 }

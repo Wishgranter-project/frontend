@@ -70,7 +70,7 @@ class ModalItemAdd extends ModalForm
 
         if (response.meta.statusCode == 200) {
             alert('Added!');
-            this.fireEvent('item:added', { items: [response.data], playlist: this.playlistId });
+            this.fireEvent('item:newly-created', { items: [response.data], playlist: this.playlistId });
             this.remove();
         }
     }

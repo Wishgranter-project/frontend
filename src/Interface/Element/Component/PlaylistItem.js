@@ -63,7 +63,7 @@ class PlaylistItem extends ContextualElement
 
         this.$refs.playButton.addEventListener('click', () => 
         {
-            this.fireEvent('queue:item-selected', {
+            this.fireEvent('queue:intention:play-this-now', {
                 item: this.item
             });
         });
