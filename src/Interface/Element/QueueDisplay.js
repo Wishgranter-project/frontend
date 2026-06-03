@@ -17,28 +17,6 @@ class QueueDisplay extends CustomElement
         this.userId = userId;
     }
 
-    get isOpen()
-    {
-        return this.classList.contains('is-open')
-    }
-
-    open()
-    {
-        this.classList.add('is-open');
-    }
-
-    close()
-    {
-        this.classList.remove('is-open');
-    }
-
-    toggle()
-    {
-        this.isOpen
-            ? this.close()
-            : this.open();
-    }
-
     /** @inheritdoc */
     render()
     {
@@ -91,6 +69,28 @@ class QueueDisplay extends CustomElement
         this.$refs.queued.addEventListener('context-menu:actions:invite-alter', this.onContextMenuInviteAlter.bind(this));
         this.$refs.queued.addEventListener('queue:intention:play-this-now', this.onQueueItemSelected.bind(this));
         this.$refs.hr.after(this.$refs.queued);
+    }
+
+    get isOpen()
+    {
+        return this.classList.contains('is-open')
+    }
+
+    open()
+    {
+        this.classList.add('is-open');
+    }
+
+    close()
+    {
+        this.classList.remove('is-open');
+    }
+
+    toggle()
+    {
+        this.isOpen
+            ? this.close()
+            : this.open();
     }
 
     onContextMenuInviteAlter(evt)

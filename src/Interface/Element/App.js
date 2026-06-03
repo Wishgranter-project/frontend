@@ -2,12 +2,8 @@ import CustomElement        from './CustomElement';
 import AppNavigation        from './Component/Navigation/AppNavigation';
 import ReproductionControls from './Component/ReproductionControls';
 //=============================================================================
-import ViewWelcome          from './View/ViewWelcome';
-import ViewPlaylist         from './View/ViewPlaylist';
-import ViewAlbums           from './View/ViewDiscoverAlbums';
-import ViewSearch           from './View/ViewSearch';
-import ViewDiscover         from './View/ViewDiscoverArtists';
 import QueueDisplay         from './QueueDisplay';
+import Stage                from './Stage';
 //=============================================================================
 import ModalAddToPlaylist   from './Component/Modal/ModalAddToPlaylist';
 import ModalItemAdd         from './Component/Modal/ModalItemAdd';
@@ -20,26 +16,7 @@ import History              from '../../Line/History';
 import ContextFactory       from '../../Line/ContextFactory';
 import State                from '../../State/State';
 //=============================================================================
-import Serialization        from '../../Helper/Serialization';
-import Instantiator         from '../../Helper/Instantiator';
-//=============================================================================
 import PlaylistItem         from './Component/PlaylistItem';
-//=============================================================================
-import TabManager, { 
-    TabPanel,
-    TabButton,
-    TabsBar,
-    TabControls,
-    RouteCollection,
-    HashRequest,
-} from 'tabbed-router';
-//=============================================================================
-
-customElements.define('tab-manager',  TabManager);
-customElements.define('tab-panel',    TabPanel);
-customElements.define('tab-link',     TabButton);
-customElements.define('tab-links',    TabsBar);
-customElements.define('tab-controls', TabControls);
 
 class App extends CustomElement
 {
@@ -60,11 +37,9 @@ class App extends CustomElement
         this.api                 = api;
         this.userId              = userId;
         this.collection          = api.manageUser(userId).collection;
-        this.instantiateRouteCollection();
         this.state               = {
             queue:      new State('state.queue'),
             history:    new State('state.history'),
-            navigation: new State('state.navigation'),
         }
         this.contextFactory      = new ContextFactory(this.api, this.collection);
 
@@ -88,10 +63,8 @@ class App extends CustomElement
     {
         this.classList.add('app');
 
-        this.$refs.stage = new TabManager();
-        this.$refs.stage.classList.add('app__stage');
-        this.$refs.stage.setAttribute('id', 'stage');
-        this.$refs.stage.setRouteCollection(this.routeCollection);
+        this.$refs.stage = new Stage();
+        this.$refs.stage.instantiateRouteCollection(this.api);
 
         this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
             this.$refs.navMenu = AppNavigation.instantiate(this.api, this.userId),
@@ -103,17 +76,13 @@ class App extends CustomElement
             this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, null, null, null, this.isShuffleOn)
         ]);      
 
-        if (!this.restoreTabs()) {
-            this.openHomePage();
+        if (!this.$refs.stage.restoreTabs()) {
+            this.$refs.stage.openHomePage();
         }
 
         //------------------------------
 
         this.addEventListeners({
-            'tabbed-router:tab-panel-updated':   this.onNavigationUpdate.bind(this),
-            'tabbed-router:tab-panel-reordered': this.onNavigationUpdate.bind(this),
-            'tabbed-router:tab-panel-closed':    this.onNavigationUpdate.bind(this),
-
             'playable:ended':                    this.onTrackHasFinished.bind(this),
             'player:intention:toggle-shuffle':   this.onRequestToToggleShuffle.bind(this),
 
@@ -145,159 +114,6 @@ class App extends CustomElement
         }
 
         this.updateReproductionTray();
-    }
-
-    /**
-     * Instantiates our router.
-     *
-     * @protected
-     */
-    instantiateRouteCollection()
-    {
-        this.routeCollection = new RouteCollection();
-
-        var api = this.api;
-
-        this.routeCollection
-        .createRoute([/^$/, /home$/], function(request)
-        {
-            return ViewWelcome.instantiate(request, api);
-        })
-        .createRoute(/user:(?<userId>[\w\d\-]+)\/playlist:(?<playlistId>[\w\d\-]+)$/, function(request) 
-        {
-            return ViewPlaylist.instantiate(request, api);
-        })
-        .createRoute(/user:(?<userId>[\w\d\-]+)\/search/, function(request) 
-        {
-            return ViewSearch.instantiate(request, api);
-        })
-        .createRoute(/discover:artist/, function(request) 
-        {
-            return ViewDiscover.instantiate(request, api);
-        })
-        .createRoute(/discover:albums$/, function(request) 
-        {
-            return ViewAlbums.instantiate(request, api);
-        })
-
-        /*
-        .notFoundCallback = function(route, request) 
-        {
-            return ViewNotFound.instantiate(request, api);
-        };
-        */
-    }
-
-    /**
-     * Set the user's active's reproduction history.
-     *
-     * @param {History} history
-     * History object.
-     */
-    setHistory(history)
-    {
-        this.history = history;
-
-        this.history.updatedCallback = () =>
-        {
-            var resume = this.history.slice(0, 30);
-            this.saveHistory(resume);
-            this.updateReproductionTray();
-        }
-        this.updateReproductionTray();
-    }
-
-    /**
-     * Commits the reproduction history to memory.
-     * 
-     * @param {History} history
-     * History object.
-     */
-    saveHistory(history)
-    {
-        this.state.history.set('history', history);
-    }
-
-    /**
-     * Loads the reproduction history from memory.
-     *
-     * @returns {History}
-     * History object.
-     */
-    loadHistory()
-    {
-        var history = new History();
-
-        var items = this.state.history.get('history');
-        if (items && items.length) {
-            history.add(items);
-        }
-
-        return history;
-    }
-
-    /**
-     * Loads the reproduction queue from memory.
-     *
-     * @returns {Queue}
-     * Queue object.
-     */
-    loadQueue()
-    {
-        if (!this.state.queue.get('queue')) {
-            return Queue.instantiate([], null);
-        }
-
-        var context = this.loadQueueContext();
-
-        var items = this.state.queue.get('queue');
-
-        var queue = Queue.instantiate(items, context);
-
-        return queue;
-    }
-
-    /**
-     * Commits the reproduction queue to memory.
-     * 
-     * @param {Queue} queue
-     * Queue object.
-     */
-    saveQueue(queue)
-    {
-        if (queue.context) {
-            this.saveQueueContext(queue.context);
-        }
-
-        this.state.queue.set('queue', queue);
-    }
-
-    /**
-     * Commits the queue context to memory.
-     * 
-     * @param {ContextBase} context
-     * Context object.
-     */
-    saveQueueContext(context)
-    {
-        this.state.queue.set('queueContext', context.serialize());
-    }
-
-    /**
-     * Loads the queue context from memory.
-     *
-     * @returns {ContextBase}
-     * Context object.
-     */
-    loadQueueContext()
-    {
-        if (!this.state.queue.get('queueContext')) {
-            return null;
-        }
-
-        var c = this.state.queue.get('queueContext');
-
-        return this.contextFactory.instantiate(c);
     }
 
     get isShuffleOn()
@@ -332,15 +148,135 @@ class App extends CustomElement
     }
 
     /**
-     * Clears old queue, set this new one up.
+     * Commits the reproduction history to memory.
+     *
+     * @protected
+     *
+     * @param {History} history
+     * History object.
+     */
+    saveHistory(history)
+    {
+        this.state.history.set('items', history);
+    }
+
+    /**
+     * Loads the reproduction history from memory.
+     *
+     * @protected
+     *
+     * @returns {History}
+     * History object.
+     */
+    loadHistory()
+    {
+        const history = new History();
+        const items = this.state.history.get('items');
+
+        if (items && items.length) {
+            history.add(items);
+        }
+
+        return history;
+    }
+
+    /**
+     * Set the active reproduction history.
+     *
+     * @protected
+     *
+     * @param {History} history
+     * History object.
+     */
+    setHistory(history)
+    {
+        this.history = history;
+
+        this.history.updatedCallback = () =>
+        {
+            var resume = this.history.slice(0, 30);
+            this.saveHistory(resume);
+            this.updateReproductionTray();
+        }
+        this.updateReproductionTray();
+    }
+
+    /**
+     * Loads the reproduction queue from memory.
+     *
+     * @protected
+     *
+     * @returns {Queue}
+     * Queue object.
+     */
+    loadQueue()
+    {
+        if (!this.state.queue.get('items')) {
+            return Queue.instantiate([], null);
+        }
+
+        const context = this.loadQueueContext();
+        const items = this.state.queue.get('items');
+
+        return Queue.instantiate(items, context);
+    }
+
+    /**
+     * Commits the reproduction queue to memory.
+     *
+     * @protected
      *
      * @param {Queue} queue
+     * Queue object.
+     */
+    saveQueue(queue)
+    {
+        if (queue.context) {
+            this.saveQueueContext(queue.context);
+        }
+
+        this.state.queue.set('items', queue);
+    }
+
+    /**
+     * Commits the queue context to memory.
+     * 
+     * @param {ContextBase} context
+     * Context object.
+     */
+    saveQueueContext(context)
+    {
+        this.state.queue.set('context', context.serialize());
+    }
+
+    /**
+     * Loads the queue context from memory.
+     *
+     * @protected
+     *
+     * @returns {ContextBase}
+     * Context object.
+     */
+    loadQueueContext()
+    {
+        if (!this.state.queue.get('context')) {
+            return null;
+        }
+
+        const serialized = this.state.queue.get('context');
+        return this.contextFactory.instantiate(serialized);
+    }
+
+    /**
+     * Clears the current queue, sets up a new one.
+     *
+     * @param {Queue} newQueue
      * The new queue.
      *
      * @returns {Promise}
      * To be solved once we have media to play.
      */
-    async stopAndBeginThisNewQueue(queue)
+    async stopAndBeginThisNewQueue(newQueue)
     {
         var oldQueue = this.queue;
 
@@ -349,11 +285,11 @@ class App extends CustomElement
         }
 
         if (this.isShuffleOn) {
-            queue.shuffle(true);
+            newQueue.shuffle(true);
         }
 
-        this.setQueue(queue);
-        this.saveQueue(queue);
+        this.setQueue(newQueue);
+        this.saveQueue(newQueue);
 
         return this.playItem(this.queue.front);
     }
@@ -479,71 +415,6 @@ class App extends CustomElement
                 el.refresh();
             }
         });
-    }
-
-    saveTabs()
-    {
-        var requests = [];
-
-        for (var tab of this.$refs.stage.$refs.tabPanelsWrapper.children) {
-            var request = tab.childNodes[0] && tab.childNodes[0].request
-                ? tab.childNodes[0].request
-                : null;
-
-            if (request) {
-                requests.push(Serialization.serialize(request));
-            }
-        }
-        
-        this.state.navigation.set('requests', requests);
-    }
-
-    restoreTabs()
-    {
-        var requests = this.loadTabs();
-        var focus = false;
-        var n = 0;
-        for (var r of requests) {
-            focus = n == requests.length -1;
-            this.$refs.stage.openInNewTabPanel(r, focus);
-            n++;
-        }
-
-        return requests.length;
-    }
-
-    openHomePage()
-    {
-        var mainTab = this.$refs.stage.addNewTabPanel('main-tab', true);
-        mainTab.access('#home');
-    }
-
-    loadTabs()
-    {
-        var serializedRequests = this.state.navigation.get('requests', []);
-        var requests = [];
-        var ins;
-
-        for (var s of serializedRequests) {
-            var instantiator = new Instantiator(HashRequest, s);
-            var ins = instantiator.instantiate();
-            requests.push(ins);
-        }
-
-        return requests;
-    }
-
-    /**
-     * Event listener.
-     *
-     * @protected
-     *
-     * @param {Event} evt
-     * Event to react to.
-     */
-    onNavigationUpdate(evt)
-    {
-        this.saveTabs();
     }
 
     /**
@@ -690,9 +561,11 @@ class App extends CustomElement
     onNewItemCreated(evt)
     {
         var playlistView = document.querySelector(`${ViewPlaylist.elementName}[data-playlist="${evt.detail.playlist}"]`);
-        if (playlistView) {
-            playlistView.itemsAdded(evt.detail.items);
+        if (!playlistView) {
+            return;
         }
+
+        playlistView.itemsAdded(evt.detail.items);
     }
 
     /**
