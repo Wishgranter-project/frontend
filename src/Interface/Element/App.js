@@ -73,13 +73,77 @@ class App extends CustomElement
         this.setHistory(this.loadHistory());
 
         var queue = this.loadQueue();
-        if (this.isShuffleOn() && !queue.isShuffled()) {
+        if (this.isShuffleOn && !queue.isShuffled()) {
             queue.shuffle();
-        } else if (!this.isShuffleOn() && queue.isShuffled()) {
+        } else if (!this.isShuffleOn && queue.isShuffled()) {
             queue.unshuffle();
         }
 
         this.setQueue(this.loadQueue());
+        this.updateReproductionTray();
+    }
+
+    /** @inheritdoc */
+    render()
+    {
+        this.classList.add('app');
+
+        this.$refs.stage = new TabManager();
+        this.$refs.stage.classList.add('app__stage');
+        this.$refs.stage.setAttribute('id', 'stage');
+        this.$refs.stage.setRouteCollection(this.routeCollection);
+
+        this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
+            this.$refs.navMenu = AppNavigation.instantiate(this.api, this.userId),
+            this.$refs.stage,
+            this.$refs.queueDisplay = QueueDisplay.instantiate(this.userId)
+        ]);
+
+        this.$refs.footer = this.createAndAttach('div', {class: 'app__footer'}, [
+            this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, null, null, null, this.isShuffleOn)
+        ]);      
+
+        if (!this.restoreTabs()) {
+            this.openHomePage();
+        }
+
+        //------------------------------
+
+        this.addEventListeners({
+            'tabbed-router:tab-panel-updated':   this.onNavigationUpdate.bind(this),
+            'tabbed-router:tab-panel-reordered': this.onNavigationUpdate.bind(this),
+            'tabbed-router:tab-panel-closed':    this.onNavigationUpdate.bind(this),
+
+            'playable:ended':                    this.onTrackHasFinished.bind(this),
+            'player:intention:toggle-shuffle':   this.onRequestToToggleShuffle.bind(this),
+
+            'queue:intention:play-this-now':     this.onRequestToPlayNewItem.bind(this),
+            'queue:intention:forward':           this.onRequestToForwardQueue.bind(this),
+            'queue:intention:rewind':            this.onRequestToRewindQueue.bind(this),
+            'queue:intention:play-it-next':      this.onRequestToPlayItemNext.bind(this),
+
+            'collection:intention:download':     this.onRequestToDownloadCollection.bind(this),
+
+            'item:newly-created':                this.onNewItemCreated.bind(this),
+            'item:updated':                      this.onItemUpdated.bind(this),
+            'item:intention:compose-new':        this.onRequestToComposeNewItem.bind(this),
+            'item:intention:edit':               this.onRequestToEditItem.bind(this),
+            'item:intention:delete':             this.onRequestToDeleteItem.bind(this),
+            'item:intention:add-to-collection':  this.onRequestToAddItemToCollection.bind(this),
+
+            'playlist:newly-created':            this.onNewPlaylistCreated.bind(this),
+            'playlist:updated':                  this.onNewPlaylistUpdated.bind(this),
+            'playlist:intention:compose-new':    this.onRequestToComposeNewPlaylist.bind(this),
+            'playlist:intention:edit':           this.onRequestEditPlaylist.bind(this),
+            'playlist:intention:delete':         this.onRequestDeletePlaylist.bind(this),
+            'playlist:intention:download':       this.onRequestDownloadPlaylist.bind(this),
+            'gui:summon-queue':                  this.onSummonQueue.bind(this)
+        });
+
+        if (this.queue.length) {
+            this.setupItem(this.queue[0], false);
+        }
+
         this.updateReproductionTray();
     }
 
@@ -236,74 +300,10 @@ class App extends CustomElement
         return this.contextFactory.instantiate(c);
     }
 
-    /** @inheritdoc */
-    render()
-    {
-        this.classList.add('app');
-
-        this.$refs.stage = new TabManager();
-        this.$refs.stage.classList.add('app__stage');
-        this.$refs.stage.setAttribute('id', 'stage');
-        this.$refs.stage.setRouteCollection(this.routeCollection);
-
-        this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
-            this.$refs.navMenu = AppNavigation.instantiate(this.api, this.userId),
-            this.$refs.stage,
-            this.$refs.queueDisplay = QueueDisplay.instantiate(this.userId)
-        ]);
-
-        this.$refs.footer = this.createAndAttach('div', {class: 'app__footer'}, [
-            this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, null, null, null, this.isShuffleOn())
-        ]);      
-
-        if (!this.restoreTabs()) {
-            this.openHomePage();
-        }
-
-        //------------------------------
-
-        this.addEventListeners({
-            'tabbed-router:tab-panel-updated':   this.onNavigationUpdate.bind(this),
-            'tabbed-router:tab-panel-reordered': this.onNavigationUpdate.bind(this),
-            'tabbed-router:tab-panel-closed':    this.onNavigationUpdate.bind(this),
-
-            'playable:ended':                    this.onTrackHasFinished.bind(this),
-            'player:intention:toggle-shuffle':   this.onRequestToToggleShuffle.bind(this),
-
-            'queue:intention:play-this-now':     this.onRequestToPlayNewItem.bind(this),
-            'queue:intention:forward':           this.onRequestToForwardQueue.bind(this),
-            'queue:intention:rewind':            this.onRequestToRewindQueue.bind(this),
-            'queue:intention:play-it-next':      this.onRequestToPlayItemNext.bind(this),
-
-            'collection:intention:download':     this.onRequestToDownloadCollection.bind(this),
-
-            'item:newly-created':                this.onNewItemCreated.bind(this),
-            'item:updated':                      this.onItemUpdated.bind(this),
-            'item:intention:compose-new':        this.onRequestToComposeNewItem.bind(this),
-            'item:intention:edit':               this.onRequestToEditItem.bind(this),
-            'item:intention:delete':             this.onRequestToDeleteItem.bind(this),
-            'item:intention:add-to-collection':  this.onRequestToAddItemToCollection.bind(this),
-
-            'playlist:newly-created':            this.onNewPlaylistCreated.bind(this),
-            'playlist:updated':                  this.onNewPlaylistUpdated.bind(this),
-            'playlist:intention:compose-new':    this.onRequestToComposeNewPlaylist.bind(this),
-            'playlist:intention:edit':           this.onRequestEditPlaylist.bind(this),
-            'playlist:intention:delete':         this.onRequestDeletePlaylist.bind(this),
-            'playlist:intention:download':       this.onRequestDownloadPlaylist.bind(this),
-            'gui:summon-queue':                  this.onSummonQueue.bind(this)
-        });
-
-        if (this.queue.length) {
-            this.setupItem(this.queue[0], false);
-        }
-
-        this.updateReproductionTray();
-    }
-
-    isShuffleOn()
+    get isShuffleOn()
     {
         return this.state.queue.get('shuffle') == 1;
-    }  
+    }
 
     turnShuffleOff()
     {
@@ -348,7 +348,7 @@ class App extends CustomElement
             this.history.add(oldQueue.front);
         }
 
-        if (this.isShuffleOn()) {
+        if (this.isShuffleOn) {
             queue.shuffle(true);
         }
 
@@ -376,9 +376,11 @@ class App extends CustomElement
 
     updateReproductionTray()
     {
-        if (this.$refs.queueDisplay) {
-            this.$refs.queueDisplay.refresh(this.queue, this.history);
+        if (!this.$refs.queueDisplay) {
+            return;
         }
+
+        this.$refs.queueDisplay.refresh(this.queue, this.history);
     }
 
     async advanceTheQueue()
@@ -401,23 +403,23 @@ class App extends CustomElement
     {
         //return this.setupItem(item, true);
         var isAlbum = item.hasOwnProperty('album') && !item.hasOwnProperty('title');
-        if (isAlbum) {
-            var artist = Array.isArray(item.artist) ? item.artist[0] : item.artist;
-            var album = item.album;
-
-            var response = await this.api.discover.getAlbum(album, artist).fetch();
-
-            // Remove the album from the queue...
-            this.queue.dequeue();
-            // and drop in its tracks.
-            this.queue.dropIn(response.data.tracks);
-            return this.setupItem(this.queue.front, true);
-        } else {
+        if (!isAlbum) {
             return this.setupItem(item, true);
         }
+
+        var artist = Array.isArray(item.artist) ? item.artist[0] : item.artist;
+        var album = item.album;
+
+        var response = await this.api.discover.getAlbum(album, artist).fetch();
+
+        // Remove the album from the queue...
+        this.queue.dequeue();
+        // and drop in its tracks.
+        this.queue.dropIn(response.data.tracks);
+        return this.setupItem(this.queue.front, true);
     }
 
-    async setupItem(item, play = true)
+    async setupItem(item, autoPlay = true)
     {
         return this.findResourcesForMusicalItem(item).then( (response) =>
         {
@@ -426,16 +428,12 @@ class App extends CustomElement
                 return;
             }
 
-            this.setupResources(item, response.data, play);
+            this.$refs.controls.remove();
+            this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, item, response.data, autoPlay, this.isShuffleOn);
+            this.$refs.footer.append(this.$refs.controls);
+
             return response;
         });
-    }
-
-    setupResources(item, resources, autoPlay = true)
-    {
-        this.$refs.controls.remove();
-        this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, item, resources, autoPlay, this.isShuffleOn());
-        this.$refs.footer.append(this.$refs.controls);
     }
 
     /**
@@ -452,22 +450,12 @@ class App extends CustomElement
         console.log('Show runner: searching for source to play');
 
         var params = {}
+        for (var prp of Object.keys(item)) {
+            if (['uuid', 'xxxOriginal'].includes(prp)) {
+                continue;
+            }
 
-        if (item.title) {
-            params.title = item.title;
-        }
-
-        // Give preference for soundtracks.
-        if (item.soundtrack && item.soundtrack.length) {
-            params.soundtrack = item.soundtrack;
-        } else if (item.artist && item.artist.length) {
-            params.artist = item.artist;
-        }
-
-        if (item.genre) {
-            params.genre = Array.isArray(item.genre)
-                ? item.genre[0]
-                : item.genre;
+            params[prp] = item[prp];
         }
 
         return this.api.wish.forMusic(params);
@@ -583,7 +571,7 @@ class App extends CustomElement
      */
     onRequestToToggleShuffle(evt)
     {
-        this.isShuffleOn()
+        this.isShuffleOn
             ? this.turnShuffleOff()
             : this.turnShuffleOn();
     }
