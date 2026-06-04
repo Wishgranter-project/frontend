@@ -1,6 +1,10 @@
 import CustomElement from '../CustomElement';
 
 /**
+ * Views are analogous to backend controllers.
+ *
+ * Deciding what to render based on requests.
+ *
  * @abstract
  */
 class ViewElement extends CustomElement

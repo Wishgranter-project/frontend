@@ -351,7 +351,7 @@ class App extends CustomElement
         // Remove the album from the queue...
         this.queue.dequeue();
         // and drop in its tracks.
-        this.queue.dropIn(response.data.tracks);
+        this.queue.cutToTheFrontOfTheLine(response.data.tracks);
         return this.setupItem(this.queue.front, true);
     }
 
@@ -475,7 +475,7 @@ class App extends CustomElement
         }
 
         // Add item to the beginning of the queue.
-        this.queue.dropIn(item);
+        this.queue.cutToTheFrontOfTheLine(item);
         // add previous to history etc
         Array.isArray(item)
             ? this.playItem(item[0])
@@ -515,7 +515,7 @@ class App extends CustomElement
         console.log('Show runner: rewinding queue.');
 
         var previous = this.history.rewind(1)[0];
-        this.queue.dropIn(previous);
+        this.queue.cutToTheFrontOfTheLine(previous);
 
         this.playItem(previous);
     }
@@ -534,7 +534,7 @@ class App extends CustomElement
 
         this.queue.length == 0
             ? this.playItem(item)
-            : this.queue.jump(item, 1);
+            : this.queue.cutTheLine(item, 1);
     }
 
     /**

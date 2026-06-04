@@ -28,10 +28,39 @@ class Queue extends Array
     }
 
     /**
+     * Returns the first item in the queue.
+     *
+     * @returns {Object}
+     * Queue item.
+     */
+    get front()
+    {
+        if (this[0]) {
+            return this[0];
+        }
+        
+        console.log('Queue: end reached');
+        return null;
+    }
+
+    /**
+     * Returns the last item in the queue.
+     *
+     * @returns {object}
+     * Queue item.
+     */
+    get back()
+    {
+        return this.length
+            ? this[this.length - 1]
+            : null;
+    }
+
+    /**
      * Adds item(s) to the end of the queue.
      *
      * @param {object|array} item
-     * Item(s) to add to the queue.
+     * The items to be added.
      */
     enqueue(item)
     {
@@ -74,9 +103,9 @@ class Queue extends Array
      * @param {object} item 
      * Item to be added.
      */
-    dropIn(item)
+    cutToTheFrontOfTheLine(item)
     {
-        this.jump(item, 0);
+        this.cutTheLine(item, 0);
     }
 
     /**
@@ -88,16 +117,18 @@ class Queue extends Array
      * @param {int} index
      * The index we are aiming for.
      */
-    jump(item, index = 1)
+    cutTheLine(item, index = 1)
     {
-        if (Array.isArray(item)) {
-            // var params = [index, 0].concat(item);
-            // this.splice([...params]);
-            for (var i = 0; i < item.length; i++) {
-                this.jump(item[i], i);
-            }
-        } else {
+        if (!Array.isArray(item)) {
             this.splice(index, 0, item);
+            this.updatedCallback();
+            return;
+        }
+
+        // var params = [index, 0].concat(item);
+        // this.splice([...params]);
+        for (var i = 0; i < item.length; i++) {
+            this.cutTheLine(item[i], i);
         }
 
         this.updatedCallback();
@@ -112,7 +143,7 @@ class Queue extends Array
      * To this position.
      * 
      * @returns {object}
-     * The moved queue item.
+     * The moved item.
      */
     move(fromIndex, intoIndex = 0)
     {
@@ -127,9 +158,10 @@ class Queue extends Array
      * Gets the position a specific item finds itself in.
      *
      * @param {object} item
+     * Item we are looking for.
      *
-     * @return {int}
-     *   The position.
+     * @returns {Int}
+     * The position where the item is located..
      */
     getPosition(item)
     {
@@ -155,41 +187,12 @@ class Queue extends Array
     }
 
     /**
-     * Returns the first item in the queue.
-     *
-     * @return {object}
-     *   Queue item.
-     */
-    get front()
-    {
-        if (this[0]) {
-            return this[0];
-        }
-        
-        console.log('Queue: end reached');
-        return null;
-    }
-
-    /**
-     * Returns the last item in the queue.
-     *
-     * @return {object}
-     *   Queue item.
-     */
-    get back()
-    {
-        return this.length
-            ? this[this.length - 1]
-            : null;
-    }
-
-    /**
      * Returns the next item in the queue.
      *
      * Fetches it from the server if necessary.
      * 
      * @returns {Promise}
-     *   To be resolved when the back-end responds.
+     * To be resolved when the back-end responds.
      */
     async getNextInLine()
     {
@@ -210,7 +213,7 @@ class Queue extends Array
      * Requests more items to be added to the queue.
      *
      * @returns {Promise}
-     *   To be resolved when the back-end responds.
+     * To be resolved when the back-end responds.
      */
     async fetchMore()
     {
@@ -248,7 +251,7 @@ class Queue extends Array
      * Checks if the queue is shuffled.
      *
      * @returns {bool}
-     *   True if it is shuffled.
+     * True if it is shuffled.
      */
     isShuffled()
     {
@@ -267,7 +270,7 @@ class Queue extends Array
      * Shuffles the queue.
      *
      * @param {bool} reset
-     *   If true, removes all but the first item of the queue.
+     * If true, removes all but the first item of the queue.
      */
     shuffle(reset = false)
     {
@@ -312,10 +315,10 @@ class Queue extends Array
     }
 
     /**
-     * Generates a random seet to order the queue.
+     * Generates a random seed to order the queue.
      *
      * @returns {string}
-     *   A random seed.
+     * A random seed.
      */
     generateRandomSeed()
     {
@@ -325,14 +328,23 @@ class Queue extends Array
         );
     }
 
-    // protected
+    /**
+     * Callback invoked when the queue's contents are updated.
+     */
+    updatedCallback()
+    {
+        console.log('queue updated');
+    }
+
     //-------------------
 
     /**
      * Adds multiple item to the queue.
      *
+     * @protected
+     *
      * @param {Array} items
-     *   Queue items.
+     * Items.
      */
     enqueueMultiple(items)
     {
@@ -344,22 +356,16 @@ class Queue extends Array
     /**
      * Adds an item to the queue.
      *
+     * @protected
+     *
      * @param {object} item 
-     *   Queue item.
+     * Item.
      */
     enqueueSingle(item)
     {
         this.push(item);
         console.log('Queue: single item added');
         this.updatedCallback();
-    }
-
-    /**
-     * For debugging.
-     */
-    updatedCallback()
-    {
-        console.log('queue updated');
     }
 }
 

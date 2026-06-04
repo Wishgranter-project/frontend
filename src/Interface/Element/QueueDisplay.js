@@ -23,16 +23,13 @@ class QueueDisplay extends CustomElement
         this.classList.add(QueueDisplay.elementName);
 
         this.createAndAttach('div', {class: 'queue-display__drawer'}, 
-            this.$refs.content = this.create('div', {class: 'queue-display__content'}, [
-                    this.$refs.hr = this.create('hr'),
-                ]
-            )
+            this.$refs.content = this.create('div', {class: 'queue-display__content'}, this.$refs.hr = this.create('hr') )
         );
-
-        this.addEventListener('list-of-items:reordered', this.onEqueueReordered.bind(this));
 
         this.subRenderHistory();
         this.subRenderQueue();
+
+        this.addEventListener('list-of-items:reordered', this.onEqueueReordered.bind(this));
     }
 
     subRenderHistory()
@@ -108,21 +105,22 @@ class QueueDisplay extends CustomElement
             }
         };
 
-        if (index > 1) {
-            // Overwrites default action.
-            evt.detail.actions.playNext = {
-                title: 'Play next',
-                helpText: 'Play once current song is finished',
-                icon: 'fa-minus',
-                onClick: () =>
-                {
-                    this.queue.move(index, 1);
-                }
-            };
-        } else {
+        if (index == 0) {
             // Deletes default action.
             delete evt.detail.actions.playNext;
+            return;
         }
+
+        // Overwrites default action.
+        evt.detail.actions.playNext = {
+            title: 'Play next',
+            helpText: 'Play once current song is finished',
+            icon: 'fa-minus',
+            onClick: () =>
+            {
+                this.queue.move(index, 1);
+            }
+        };
     }
 
     refresh(queue, history)

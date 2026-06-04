@@ -16,6 +16,11 @@ import Serialization  from '../../Helper/Serialization';
 import Instantiator   from '../../Helper/Instantiator';
 import State          from '../../State/State';
 
+/**
+ * The stage to display content.
+ *
+ * Basically a router that supports tabs.
+ */
 class Stage extends TabManager
 {
     /**
@@ -41,6 +46,12 @@ class Stage extends TabManager
         });
     }
 
+    /**
+     * Instantiates the collection of routes.
+     *
+     * @param {Api} api
+     * To communicate with the backend.
+     */
     instantiateRouteCollection(api)
     {
         this.routeCollection = new RouteCollection();

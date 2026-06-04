@@ -1,13 +1,25 @@
 
 class History extends Array
 {
-    add(item)
+    /**
+     * Add item(s) to the history.
+     *
+     * @param {Object|Array} items
+     * Items to be added.
+     */
+    add(items)
     {
-        Array.isArray(item)
-            ? this.addMultiple(item)
-            : this.addSingle(item);
+        Array.isArray(items)
+            ? this.addMultiple(items)
+            : this.addSingle(items);
     }
 
+    /**
+     * Returns the most recent item added to the history.
+     *
+     * @returns {Object|null}
+     * The most recent item, or null if the history is empty.
+     */
     get theMostRecent()
     {
         return this.length
@@ -15,6 +27,12 @@ class History extends Array
             : null;
     }
 
+    /**
+     * Returns the oldest item in the history.
+     *
+     * @returns {Object|null}
+     * The most oldest item, or null if the history is empty.
+     */
     get theOldest()
     {
         return this.length
@@ -22,15 +40,49 @@ class History extends Array
             : null;
     }
 
+    /**
+     * Rewinds the history by removing items from the history.
+     *
+     * @param {Int} length
+     * How many items should be removed.
+     *
+     * @returns {Array}
+     * The removed items.
+     */
     rewind(length = 1)
     {
-        var first = this.splice(0, length);
+        var items = this.splice(0, length);
         this.updatedCallback();
-        return first;
+        return items;
+    }
+
+    /**
+     * Clears the history by emptying it.
+     */
+    clear()
+    {
+        this.splice(0, this.length);
+        this.updatedCallback();
+    }
+
+    /**
+     * Callback invoked when the history's contents are updated.
+     */
+    updatedCallback()
+    {
+        console.log('history updated');
     }
 
     //-------------------
 
+    /**
+     * Add multiple items to the history.
+     *
+     * @protected
+     *
+     * @param {Array} items
+     * Items to be added.
+     */
     addMultiple(items)
     {
         this.splice(0, 0, ...items);
@@ -38,22 +90,19 @@ class History extends Array
         this.updatedCallback();
     }
 
+    /**
+     * Adds a single item to the history.
+     *
+     * @protected
+     *
+     * @param {Object} item
+     * The item to be added.
+     */
     addSingle(item)
     {
         this.splice(0, 0, item);
         console.log('History: single item added');
         this.updatedCallback();
-    }
-
-    clear()
-    {
-        this.splice(0, this.length);
-        this.updatedCallback();
-    }
-
-    updatedCallback()
-    {
-        console.log('history updated');
     }
 }
 
