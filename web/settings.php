@@ -49,12 +49,12 @@ if (isLocalEnvironment()) {
 } else {
     $selfProtocol    = 'https';
     $selfHost        = 'adinancenci.com.br';
-    $selfPath        = '/player/';
+    $selfPath        = '/player-frontend/';
     $selfPort        = '80';
 
     $backendProtocol = 'https';
     $backendHost     = 'adinancenci.com.br';
-    $backendPath     = '/player/backend/web/';
+    $backendPath     = '/player-backend/web/';
     $backendPort     = '80';
 }
 
