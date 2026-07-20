@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () =>
 {
     api.session.fetch().then((response) => {
         if (response.meta.statusCode == 200) {
-            window.app = App.instantiate(api, response.data.username);
+            window.app = App.instantiate(api, response.data.id);
             document.body.append(window.app);
         } else {
             const modal = ModalLoginForm.instantiate(api);

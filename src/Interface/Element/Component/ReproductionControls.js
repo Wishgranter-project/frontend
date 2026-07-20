@@ -244,7 +244,7 @@ class ReproductionControls extends CustomElement
 
     createPlayer(resource)
     {
-        switch (resource.source) {
+        switch (resource.sourceId) {
             case 'youtube':
             case 'youtubeLax':
                 return this.createPlayerYouTube(resource);
