@@ -7,7 +7,9 @@ import CustomElement from '../../CustomElement';
  */
 class NavigationItem extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'navigation-item';
 
     /**
@@ -34,7 +36,9 @@ class NavigationItem extends CustomElement
         this.toolTip     = toolTip;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('app-navigation__item');

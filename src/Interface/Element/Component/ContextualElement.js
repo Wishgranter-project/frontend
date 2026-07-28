@@ -8,14 +8,20 @@ import FloatMenu from './FloatMenu/FloatMenu';
  */
 class ContextualElement extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'contextual-element';
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});       
 
+        // Do not open the native context menu,
+        // but ours instead.
         this.addEventListener('contextmenu', (evt) => 
         {
             evt.preventDefault();
@@ -31,15 +37,15 @@ class ContextualElement extends CustomElement
      */
     getDefaultContextActions()
     {
-        var actions = {
-            helloWorld: {
-                title: 'Hello world',
-                helpText: 'says hello',
-                icon: 'fa-plus',
-                onClick: () => 
-                {
-                    alert('Hello World');
-                }
+        var actions = {};
+        
+        actions.helloWorld = {
+            title: 'Hello world',
+            helpText: 'says hello',
+            icon: 'fa-plus',
+            onClick: () => 
+            {
+                alert('Hello World');
             }
         }
 
@@ -72,7 +78,7 @@ class ContextualElement extends CustomElement
         this.actions = this.getContextActions();
         var menu = FloatMenu.instantiate(this.actions);
         this.append(menu);
-        menu.open(contextMenuEvent, contextMenuEvent.clientX, contextMenuEvent.clientY);
+        menu.eventOpen(contextMenuEvent, contextMenuEvent.clientX, contextMenuEvent.clientY);
     }
 }
 

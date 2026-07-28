@@ -7,7 +7,9 @@ import ModalPlaylistAdd from './ModalPlaylistAdd';
  */
 class ModalPlaylistEdit extends ModalPlaylistAdd
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-edit-playlist';
 
     /**
@@ -24,14 +26,18 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         this.playlistId = playlistId;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit playlist';
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         super.subRenderModal();
@@ -45,7 +51,9 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         });
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderForm(response)
     {
         super.subRenderForm();
@@ -55,7 +63,9 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         .setValue('description', response.data.description || '');
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -68,7 +78,9 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         });
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     onResponse(response)
     {
         this.$refs.messages.messages(response.messages);

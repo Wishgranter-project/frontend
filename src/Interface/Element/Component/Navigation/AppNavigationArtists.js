@@ -3,7 +3,9 @@ import NavigationItemArtist from './NavigationItemArtist';
 
 class AppNavigationArtists extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'app-navigation-artists';
 
     /**
@@ -21,7 +23,9 @@ class AppNavigationArtists extends CustomElement
         this.userId = userId;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.clear();

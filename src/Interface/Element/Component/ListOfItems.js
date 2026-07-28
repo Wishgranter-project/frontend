@@ -10,7 +10,9 @@ import PlaylistItem  from './PlaylistItem';
  */
 class ListOfItems extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'list-of-items';
 
     /**
@@ -30,7 +32,9 @@ class ListOfItems extends CustomElement
         this.userId = userId;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.$refs.list = this.createAndAttach('ol');

@@ -8,7 +8,9 @@ import ListOfItems from './Component/ListOfItems';
  */
 class QueueDisplay extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'queue-display';
 
     __construct(userId)
@@ -17,7 +19,9 @@ class QueueDisplay extends CustomElement
         this.userId = userId;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add(QueueDisplay.elementName);

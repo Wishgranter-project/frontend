@@ -2,7 +2,9 @@ import CustomElement from '../../CustomElement';
 
 class TextArea extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'text-area-field';
 
     /**
@@ -26,7 +28,9 @@ class TextArea extends CustomElement
         this.placeholder = placeholder;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         var id = Math.floor(Math.random() * 10000);

@@ -5,10 +5,14 @@ import CustomElement from '../CustomElement';
  */
 class Messages extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'messages-container';
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('messages');

@@ -2,7 +2,9 @@ import CustomElement from '../../CustomElement';
 
 class FloatMenuItem extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'float-menu-item';
 
     /**
@@ -26,7 +28,9 @@ class FloatMenuItem extends CustomElement
         this.onClick    = onClick;
     }
     
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('float-menu__item');

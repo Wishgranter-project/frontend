@@ -32,7 +32,9 @@ class Stage extends TabManager
         this.state = new State('state.navigation');
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         super.render();

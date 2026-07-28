@@ -7,7 +7,9 @@ import ModalItemAdd from './ModalItemAdd';
  */
 class ModalItemEdit extends ModalItemAdd
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-edit-item';
 
     /**
@@ -24,7 +26,9 @@ class ModalItemEdit extends ModalItemAdd
         this.uuid = uuid;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         super.subRenderModal();
@@ -38,14 +42,18 @@ class ModalItemEdit extends ModalItemAdd
         });
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit item';
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderForm(response)
     {
         super.subRenderForm();
@@ -60,7 +68,9 @@ class ModalItemEdit extends ModalItemAdd
         .setValue('genre[]', response.data.genre || ['']);
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -73,7 +83,9 @@ class ModalItemEdit extends ModalItemAdd
         });
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     onResponse(response)
     {
         this.$refs.messages.messages(response.messages);

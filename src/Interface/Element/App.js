@@ -20,7 +20,9 @@ import PlaylistItem         from './Component/PlaylistItem';
 
 class App extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'the-app';
 
     /**
@@ -58,7 +60,9 @@ class App extends CustomElement
         this.updateReproductionTray();
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('app');

@@ -10,14 +10,18 @@ class ModalPlaylistAdd extends ModalItemAdd
 {
     static elementName = 'modal-add-playlist';
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderHeader()
     {
         super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit playlist';
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderForm()
     {
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
@@ -26,7 +30,9 @@ class ModalPlaylistAdd extends ModalItemAdd
         this.$refs.form.addSubmitButton('save', 'Save');
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     subRenderSubmitListener()
     {
         this.$refs.form.addEventListener('submit', (evt) => 
@@ -39,7 +45,9 @@ class ModalPlaylistAdd extends ModalItemAdd
         });
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     onResponse(response)
     {
         this.$refs.messages.messages(response.messages);

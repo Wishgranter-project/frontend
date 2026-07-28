@@ -9,7 +9,9 @@ import Queue           from '../../../Line/Queue';
  */
 class ViewDiscoverAlbums extends BaseView
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'view-discography';
 
     __construct(hashRequest, api)
@@ -19,7 +21,9 @@ class ViewDiscoverAlbums extends BaseView
         this.api = api;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     async render()
     {
         this.classList.add('view-discography');

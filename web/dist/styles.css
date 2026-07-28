@@ -376,8 +376,7 @@ div {
 .list-of-items .playlist-item__body {
   padding: 10px 0px;
 }
-.list-of-items .playlist-item button,
-.list-of-items .playlist-item .popup-button {
+.list-of-items .playlist-item button {
   height: 100%;
 }
 .list-of-items li.selected .playlist-item button:hover {

@@ -8,7 +8,9 @@ import FloatMenuItem from './FloatMenuItem';
  */
 class FloatMenu extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'float-menu';
 
     /**
@@ -28,7 +30,9 @@ class FloatMenu extends CustomElement
         window.document.addEventListener('click', this.closeAndRemove.bind(this));
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('float-menu');
@@ -60,6 +64,7 @@ class FloatMenu extends CustomElement
      */
     closeAndRemove(evt)
     {
+        // Exception to the rule.
         if (evt.detail.menu && evt.detail.menu == this) {
             return;
         }
@@ -69,7 +74,7 @@ class FloatMenu extends CustomElement
     }
 
     /**
-     * Open the menu.
+     * Reacts to an event by opening.
      *
      * @param {Event} evt
      * The event that opened the menu.
@@ -81,13 +86,28 @@ class FloatMenu extends CustomElement
      * @returns {FloatMenu}
      * Itself.
      */
-    open(evt, originX = 0, originY = 0)
+    eventOpen(evt, originX = 0, originY = 0)
     {
         evt.menuOpened = this;
+        return this.open(originX, originY);
+    }
 
+    /**
+     * Open the menu.
+     *
+     * @param {Integer} originX
+     * Where to display it.
+     * @param {Integer} originY
+     * Where to display it.
+     *
+     * @returns {FloatMenu}
+     * Itself.
+     */
+    open(originX = 0, originY = 0)
+    {
         this.opened = true;
-
         this.refresh();
+
         var x, y, thisWidth, thisHeight;
 
         thisWidth  = this.$refs.list.offsetWidth;
@@ -120,35 +140,6 @@ class FloatMenu extends CustomElement
         this.opened = true;
         this.clear();
         this.fireEvent('float-menu:closed');
-        return this;
-    }
-
-    /**
-     * Adds an item to the menu.
-     *
-     * @param {String} id
-     * The id of the menu item.
-     * @param {String} title
-     * Human readable label.
-     * @param {String} helpText
-     * Human readable text.
-     * @param {String} icon
-     * Icon to go with the label.
-     * @param {Function} onClick
-     * Callback.
-     *
-     * @returns {FloatMenu}
-     * Itself.
-     */
-    addMenuItem(id, title, helpText, icon, onClick)
-    {
-        this.menuItems[id] = {
-            title,
-            helpText,
-            icon,
-            onClick
-        };
-
         return this;
     }
 }

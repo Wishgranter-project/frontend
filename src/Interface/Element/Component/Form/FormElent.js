@@ -6,10 +6,14 @@ import MultipleTextField from './MultipleTextField';
 
 class FormElent extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'form-element';
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.$refs.form = this.createAndAttach('form', {class: 'vertical', method: 'post', enctype: 'multipart/form-data'});
