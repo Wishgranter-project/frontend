@@ -87,7 +87,7 @@ class ModalItemAdd extends ModalForm
     {
         this.$refs.messages.messages(response.messages);
 
-        if (response.meta.statusCode == 200) {
+        if (response.meta.statusCode == 201) {
             alert('Added!');
             this.fireEvent('item:newly-created', { items: [response.data], playlist: this.playlistId });
             this.remove();
