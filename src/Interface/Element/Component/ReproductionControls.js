@@ -12,7 +12,9 @@ customElements.define('player-audio', PlayableAudio);
  */
 class ReproductionControls extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'reproduction-controls';
 
     /**
@@ -45,7 +47,9 @@ class ReproductionControls extends CustomElement
         this.shuffleOn = shuffleOn;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('reproduction-controls');

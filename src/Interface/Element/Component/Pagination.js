@@ -7,7 +7,9 @@ import CustomElement from '../CustomElement';
  */
 class Pagination extends CustomElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'view-pagination';
 
     /**
@@ -51,27 +53,53 @@ class Pagination extends CustomElement
         this.between = this.last - this.first + 1;
     }
 
+    /**
+     * Returns the current page.
+     *
+     * @returns {Integer}
+     * The page.
+     */
     get currentPage()
     {
         return this.response.meta.currentPage;
     }
 
+    /**
+     * Returns how many pages are there.
+     *
+     * @returns {Integer}
+     * The number of pages.
+     */
     get pagesCount()
     {
         return this.response.meta.pagesCount;
     }
 
+    /**
+     * Check if there is a single page.
+     *
+     * @returns {Boolean}
+     * True if there is a single page.
+     */
     get onlyOnePage()
     {
         return this.pages == 1;
     }
 
+    /**
+     * Check if we are at the last page.
+     *
+     * @returns {Boolean}
+     * True if we are at the last page.
+     */
     get inTheLastPage()
     {
         return this.currentPage == this.pages;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         this.classList.add('button-group');
@@ -97,9 +125,7 @@ class Pagination extends CustomElement
             return;
         }
 
-        var queryParams = this.request.queryParams.without('page');
-        queryParams.set('page', 1);
-        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': 1, class: 'btn view-nav-first', title: this.request.meta.title}, ['first']);
+        this.addAnchor(1, 'first', 'btn view-nav-first');
     }
 
     /**
@@ -111,9 +137,7 @@ class Pagination extends CustomElement
             return;
         }
 
-        var queryParams = this.request.queryParams.without('page');
-        queryParams.set('page', this.currentPage - 1);
-        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.currentPage - 1), class: 'btn view-nav-previous', title: this.request.meta.title}, ['prev']);
+        this.addAnchor(this.currentPage - 1, 'prev', 'btn view-nav-previous');
     }
 
     /**
@@ -125,11 +149,10 @@ class Pagination extends CustomElement
             return;
         }
 
+        var current = false;
         for (var p = this.first; p <= this.last; p++) {
-            var queryParams = this.request.queryParams.without('page');
-            queryParams.set('page', p);
-            var current = this.currentPage == p;
-            this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': p, class: current ? 'btn view-nav-current' : 'btn', title: this.request.meta.title}, [p]);
+            current = this.currentPage == p;
+            this.addAnchor(p, p, (current ? 'btn view-nav-current' : 'btn'));
         }
     }
 
@@ -142,9 +165,7 @@ class Pagination extends CustomElement
             return;
         }
 
-        var queryParams = this.request.queryParams.without('page');
-        queryParams.set('page', this.currentPage + 1);
-        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': (this.currentPage + 1), class: 'btn view-nav-next', title: this.request.meta.title}, ['next']);
+        this.addAnchor(this.currentPage + 1, 'next', 'btn view-nav-next');
     }
 
     /**
@@ -156,9 +177,44 @@ class Pagination extends CustomElement
             return
         }
 
+        this.addAnchor(this.pagesCount, 'last', 'btn view-nav-last');
+    }
+
+    /**
+     * Adds a new anchor to the pagination.
+     *
+     * @protected
+     *
+     * @param {Integer} pageNumber
+     * Page number the anchor aims for.
+     * @param {String} label
+     * Human readable string.
+     * @param {String|null} className
+     * Css class name.
+     * @param {String|null} title
+     * Tittle attribute.
+     *
+     * @returns {HTMLElement}
+     * The anchor element.
+     */
+    addAnchor(pageNumber, label, className = null, title = null)
+    {
+        title = title || this.request.meta.title;
+        className = className || 'btn';
+
         var queryParams = this.request.queryParams.without('page');
-        queryParams.set('page', this.pagesCount);
-        this.createAndAttach('a', {href: this.request.path.replace('/', '#') + '?' + queryParams.toString(), 'data-page': this.pagesCount, class: 'btn view-nav-last', title: this.request.meta.title}, ['last']);
+        queryParams.set('page', pageNumber);
+
+        return this.createAndAttach(
+            'a', 
+            {
+                href: this.request.path.replace('/', '#') + '?' + queryParams.toString(),
+                'data-page': pageNumber,
+                class: className,
+                title
+            }, 
+            [ label ]
+        );
     }
 }
 

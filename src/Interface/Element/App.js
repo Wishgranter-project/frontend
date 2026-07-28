@@ -403,7 +403,7 @@ class App extends CustomElement
             ? `${PlaylistItem.elementName}[data-uuid='${uuid}']`
             : `${PlaylistItem.elementName}[data-original='${original}']`
 
-        PlaylistItem.sanitizeItem(item);
+        PlaylistItem.normalizeItem(item);
 
         document.querySelectorAll(query).forEach((el) => {
             for (var prp in item) {

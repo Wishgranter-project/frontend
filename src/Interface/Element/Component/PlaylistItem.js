@@ -3,13 +3,15 @@ import ContextualElement from './ContextualElement';
 /**
  * Represents a playlist item.
  *
- * A playlist or an album.
+ * A playlist item or an album.
  *
  * @class
  */
 class PlaylistItem extends ContextualElement
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     static elementName = 'playlist-item';
 
     /**
@@ -23,12 +25,14 @@ class PlaylistItem extends ContextualElement
     __construct(item = {}, options = {})
     {
         super.__construct();
-        PlaylistItem.sanitizeItem(item);
+        PlaylistItem.normalizeItem(item);
         this.item    = item;
         this.options = options;
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     render()
     {
         super.render();
@@ -101,8 +105,8 @@ class PlaylistItem extends ContextualElement
     subRenderFooter()
     {
         this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});
-
         this.$refs.popupButton = this.$refs.footer.createAndAttach('button', null, this.create('span', { class: 'fa fa-ellipsis-v' }));
+
         this.$refs.popupButton.addEventListener('click', (evt) => 
         {
             evt.stopPropagation();
@@ -110,22 +114,24 @@ class PlaylistItem extends ContextualElement
         });
     }
 
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     getDefaultContextActions()
     {
-        var actions = {
-            addToPlaylist: {
-                title: 'Save to collection',
-                helpText: 'Add item to a playlist',
-                icon: 'fa-plus',
-                onClick: () => 
-                {
-                    this.fireEvent('item:intention:add-to-collection', {
-                        items: [ this.item ]
-                    });
-                }
+        var actions = {};
+
+        actions.addToPlaylist = {
+            title: 'Save to collection',
+            helpText: 'Add item to a playlist',
+            icon: 'fa-plus',
+            onClick: () => 
+            {
+                this.fireEvent('item:intention:add-to-collection', {
+                    items: [ this.item ]
+                });
             }
-        }
+        };
 
         actions.playNext = {
             title: 'Play next',
@@ -168,9 +174,9 @@ class PlaylistItem extends ContextualElement
      * Normalizes an item.
      *
      * @param {Object} item
-     * item of a playlist item.
+     * Playlist item.
      */
-    static sanitizeItem(item) {
+    static normalizeItem(item) {
         if (!item.artist) {
             item.artist = [];
         } else {

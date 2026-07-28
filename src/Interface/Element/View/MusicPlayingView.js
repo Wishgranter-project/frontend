@@ -1,11 +1,13 @@
-import BaseView        from './BaseView';
+import BaseView from './BaseView';
 
 /**
  * @abstract
  */
 class MusicPlayingView extends BaseView
 {
-    /** @inheritdoc */
+    /**
+     * @inheritdoc
+     */
     __construct(hashRequest, api)
     {
         super.__construct(hashRequest, api);

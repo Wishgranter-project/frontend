@@ -3,7 +3,7 @@ import CustomElement from '../CustomElement';
 /**
  * Views are analogous to backend controllers.
  *
- * Deciding what to render based on requests.
+ * Deciding what to render based on request objects.
  *
  * @abstract
  */
