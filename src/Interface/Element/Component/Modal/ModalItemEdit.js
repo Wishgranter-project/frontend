@@ -29,35 +29,33 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    render()
+    subRenderModalHead()
     {
-        super.subRenderModal();
-
-        this.collection.manageItem(this.uuid).fetch()
-        .then((response) =>
-        {
-            this.subRenderHeader();
-            this.subRenderForm(response);
-            this.subRenderSubmitListener();
-        });
-    }
-
-    /**
-     * @inheritdoc
-     */
-    subRenderHeader()
-    {
-        super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit item';
     }
 
     /**
      * @inheritdoc
      */
-    subRenderForm(response)
+    subRenderForm()
     {
         super.subRenderForm();
 
+        this.collection.manageItem(this.uuid).fetch()
+        .then((response) =>
+        {
+            this.populateForm(response);
+        });
+    }
+
+    /**
+     * Populates the form with data.
+     *
+     * @param {Object} response
+     * Fetched from the back-end.
+     */
+    populateForm(response)
+    {
         this.$refs.form
         .setValue('title', response.data.title || '')
         .setValue('artist[]', response.data.artist || [''])

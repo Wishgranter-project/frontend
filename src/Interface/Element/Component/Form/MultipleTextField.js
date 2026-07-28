@@ -1,7 +1,7 @@
 import CustomElement from '../../CustomElement';
 
 /**
- * Multi text form element.
+ * Text element with multiple values.
  *
  * @class
  */

@@ -29,35 +29,30 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * @inheritdoc
      */
-    subRenderHeader()
+    subRenderModalHead()
     {
-        super.subRenderHeader();
         this.$refs.header.innerHTML = 'Edit playlist';
     }
 
     /**
      * @inheritdoc
      */
-    render()
+    subRenderForm()
     {
-        super.subRenderModal();
+        super.subRenderForm();
 
         this.collection.managePlaylist(this.playlistId).fetch()
         .then((response) =>
         {
-            this.subRenderHeader();
-            this.subRenderForm(response);
-            this.subRenderSubmitListener();
+            this.populateForm(response);
         });
     }
 
     /**
      * @inheritdoc
      */
-    subRenderForm(response)
+    populateForm(response)
     {
-        super.subRenderForm();
-
         this.$refs.form
         .setValue('title', response.data.title || '')
         .setValue('description', response.data.description || '');

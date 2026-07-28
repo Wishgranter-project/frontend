@@ -18,9 +18,8 @@ class ModalForm extends Modal
     /**
      * @inheritdoc
      */
-    render()
+    subRenderModalBody()
     {
-        super.subRenderModal();
         this.subRenderHeader();
         this.subRenderForm();
         this.subRenderSubmitListener();
@@ -51,9 +50,9 @@ class ModalForm extends Modal
     /**
      * Adds an event listener to the form.
      *
-     * @protected
-     *
      * Exists only to be overridden by child classes.
+     *
+     * @protected
      */
     subRenderSubmitListener()
     {

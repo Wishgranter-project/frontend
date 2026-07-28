@@ -13,10 +13,9 @@ class ModalPlaylistAdd extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    subRenderHeader()
+    subRenderModalHead()
     {
-        super.subRenderHeader();
-        this.$refs.header.innerHTML = 'Edit playlist';
+        this.$refs.header.innerHTML = 'Add playlist';
     }
 
     /**
@@ -27,7 +26,13 @@ class ModalPlaylistAdd extends ModalItemAdd
         this.$refs.form = this.$refs.body.attach(FormElent.instantiate());
         this.$refs.form.addTextField('title', 'Title', '');
         this.$refs.form.addTextArea('description', 'Descrição', '');
-        this.$refs.form.addSubmitButton('save', 'Save');
+        
+        this.$refs.form.addSubmitAndCancel();
+
+        this.$refs.form.addEventListener('form:cancel', () => 
+        {
+            this.remove();
+        });
     }
 
     /**

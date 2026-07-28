@@ -4,6 +4,9 @@ import PasswordField     from './PasswordField';
 import TextArea          from './TextArea';
 import MultipleTextField from './MultipleTextField';
 
+/**
+ * Represents a form.
+ */
 class FormElent extends CustomElement
 {
     /**
@@ -19,11 +22,21 @@ class FormElent extends CustomElement
         this.$refs.form = this.createAndAttach('form', {class: 'vertical', method: 'post', enctype: 'multipart/form-data'});
     }
 
-
+    /**
+     * Sets the value to a field.
+     *
+     * @param {String} name
+     * Name of the field.
+     * @param {Mixed} value
+     * The value
+     *
+     * @returns {FormElent}
+     * Itself.
+     */
     setValue(name, value)
     {
         if (!this.$refs[name]) {
-            console.error('No input named ' + name)
+            console.error(`No input named "${name}"`);
         }
 
         this.$refs[name].setValue(value);
@@ -156,6 +169,19 @@ class FormElent extends CustomElement
         return this.$refs[name] = this.$refs.form.createAndAttach('div', {class: 'form-group'}, [
             this.create('input', {type: 'submit', name, value: label, class: 'col-12 btn-main'})
         ]);
+    }
+
+    addSubmitAndCancel(cancelLabel = 'Cancel', submitLabel = 'Save')
+    {
+        this.$refs.form.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [
+            this.$refs.cancelButton = this.create('button', {type: 'button', class: 'btn-danger'}, ` ${cancelLabel} `),
+            this.$refs.submitButton = this.create('input', {type: 'submit', name: 'save', value: submitLabel, class: 'main btn-main'}),
+        ]);
+
+        this.$refs.cancelButton.addEventListener('click', () => 
+        {
+            this.fireEvent('form:cancel');
+        });
     }
 
 }

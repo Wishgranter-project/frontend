@@ -31,9 +31,8 @@ class ModalItemAdd extends ModalForm
     /**
      * @inheritdoc
      */
-    subRenderHeader()
+    subRenderModalHead()
     {
-        super.subRenderHeader();
         this.$refs.header.innerHTML = 'Add item';
     }
 
@@ -53,7 +52,17 @@ class ModalItemAdd extends ModalForm
         if (this.playlistId) {
             this.$refs.form.addHidden('playlist', this.playlistId || '');
         }
-        this.$refs.form.addSubmitButton('save', 'Save');
+
+        this.$refs.form.addSubmitAndCancel();
+
+        this.$refs.form.addEventListener('form:cancel', () => 
+        {
+            this.remove();
+        });
+    }
+
+    subRenderModalFooter()
+    {
     }
 
     /**

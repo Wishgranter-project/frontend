@@ -55,6 +55,12 @@ class TextField extends CustomElement
         this.$refs.input.value = value;
     }
 
+    /**
+     * Returns the value of the field.
+     *
+     * @returns {String}
+     * The value of the input.
+     */
     getValue()
     {
         return this.$refs.input.value;
