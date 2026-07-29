@@ -31,7 +31,7 @@ class ModalItemAdd extends ModalForm
     /**
      * @inheritdoc
      */
-    subRenderModalHead()
+    subRenderHead()
     {
         this.$refs.header.innerHTML = 'Add item';
     }
@@ -61,7 +61,10 @@ class ModalItemAdd extends ModalForm
         });
     }
 
-    subRenderModalFooter()
+    /**
+     * @inheritdoc
+     */
+    subRenderFooter()
     {
     }
 

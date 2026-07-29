@@ -8,12 +8,15 @@ import FormElent from '../Form/FormElent';
  */
 class ModalPlaylistAdd extends ModalItemAdd
 {
+    /**
+     * @inheritdoc
+     */
     static elementName = 'modal-add-playlist';
 
     /**
      * @inheritdoc
      */
-    subRenderModalHead()
+    subRenderHead()
     {
         this.$refs.header.innerHTML = 'Add playlist';
     }

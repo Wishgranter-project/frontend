@@ -35,32 +35,30 @@ class Modal extends CustomElement
             ])
         ]);
 
-        this.subRenderModalHead();
-        this.subRenderModalBody();
-        this.subRenderModalFooter();
-        this.subRenderModalTidyUp();
+        this.subRenderHead();
+        this.subRenderBody();
+        this.subRenderFooter();
+        this.subRenderTidyUp();
     }
 
     /**
      * Renders the modal's head.
      */
-    subRenderModalHead()
+    subRenderHead()
     {
-
     }
 
     /**
      * Renders the modal's body.
      */
-    subRenderModalBody()
+    subRenderBody()
     {
-        
     }
 
     /**
      * Renders the modal's footer.
      */
-    subRenderModalFooter()
+    subRenderFooter()
     {
         this.$refs.closeButton = this.create('button', {class: 'btn-danger'}, 'Cancel').attachTo(this.$refs.footer);
         this.$refs.closeButton.addEventListener('click', () => 
@@ -74,7 +72,7 @@ class Modal extends CustomElement
      *
      * @protected
      */
-    subRenderModalTidyUp()
+    subRenderTidyUp()
     {
         if (!this.$refs.header.childNodes.length) {
             this.$refs.header.remove();

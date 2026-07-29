@@ -29,7 +29,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * @inheritdoc
      */
-    subRenderModalHead()
+    subRenderHead()
     {
         this.$refs.header.innerHTML = 'Edit playlist';
     }

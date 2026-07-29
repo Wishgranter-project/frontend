@@ -30,12 +30,12 @@ class ModalAddToPlaylist extends Modal
     /**
      * @inheritdoc
      */
-    subRenderModalHead()
+    subRenderHead()
     {
         this.$refs.header.innerHTML = 'Add to playlist';
     }
 
-    subRenderModalBody()
+    subRenderBody()
     {
         this.collection.fetchPlaylists().then((response) => 
         {

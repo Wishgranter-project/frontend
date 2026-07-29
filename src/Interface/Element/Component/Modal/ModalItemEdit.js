@@ -29,7 +29,7 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * @inheritdoc
      */
-    subRenderModalHead()
+    subRenderHead()
     {
         this.$refs.header.innerHTML = 'Edit item';
     }
@@ -94,7 +94,6 @@ class ModalItemEdit extends ModalItemAdd
             this.remove();
         }
     }
-
 }
 
 ModalItemEdit.register();

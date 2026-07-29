@@ -28,10 +28,9 @@ class ModalLoginForm extends ModalForm
     /**
      * @inheritdoc
      */
-    subRenderHeader()
+    subRenderHead()
     {
-        super.subRenderHeader();
-        this.$refs.header.innerHTML = 'Login';
+        this.$refs.header.innerHTML = 'Add item';
     }
 
     /**
@@ -45,10 +44,11 @@ class ModalLoginForm extends ModalForm
         this.$refs.form.addSubmitButton('submit', 'Submit');
     }
 
-    subRenderModal()
+    /**
+     * @inheritdoc
+     */
+    subRenderFooter()
     {
-        super.subRenderModal();
-        this.$refs.closeButton.remove();
     }
 
     /**

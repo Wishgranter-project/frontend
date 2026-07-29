@@ -18,21 +18,11 @@ class ModalForm extends Modal
     /**
      * @inheritdoc
      */
-    subRenderModalBody()
-    {
-        this.subRenderHeader();
-        this.subRenderForm();
-        this.subRenderSubmitListener();
-    }
-
-    /**
-     * Renders the header.
-     *
-     * @protected
-     */
-    subRenderHeader()
+    subRenderBody()
     {
         this.$refs.messages = this.$refs.body.attach(Messages.instantiate());
+        this.subRenderForm();
+        this.subRenderSubmitListener();
     }
 
     /**
