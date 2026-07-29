@@ -35,11 +35,16 @@ class AppNavigationPlaylists extends CustomElement
     {
         this.classList.add('app-navigation__playlists');
 
-        this.api.manageUser(this.userId).collection.fetchPlaylists().then((response) => 
+        this.getCollection().fetchPlaylists().then((response) => 
         {
             this.subRenderCreateAndDownload();
             this.subRenderPlaylists(response);
         });
+    }
+
+    getCollection()
+    {
+        return this.api.manageUser(this.userId).collection;
     }
 
     /**
@@ -54,7 +59,7 @@ class AppNavigationPlaylists extends CustomElement
     {
         var data = response.data || [];
         for (var playlist of data) {
-            NavigationItemPlaylist.instantiate(playlist.title, null, `#user:${this.userId}/playlist:${playlist.id}`, playlist.id, this.collection).attachTo(this);
+            NavigationItemPlaylist.instantiate(playlist.title, null, `#user:${this.userId}/playlist:${playlist.id}`, playlist.id, this.getCollection()).attachTo(this);
         }
     }
 

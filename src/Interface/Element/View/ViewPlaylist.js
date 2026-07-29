@@ -15,6 +15,7 @@ class ViewPlaylist extends MusicPlayingView
 
     async render()
     {
+        super.render();
         this.classList.add(ViewPlaylist.elementName);
 
         this.setAttribute('data-playlist', this.hashRequest.attributes.playlistId);
@@ -32,12 +33,17 @@ class ViewPlaylist extends MusicPlayingView
         });
 
         Events.enableBottomReached(this);
-        this.addEventListener('scroll:bottom-reached', this.bottomReached.bind(this));
+        this.addEventListener('scroll:bottom-reached', this.onBottomReached.bind(this));
         this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
         this.addEventListener('list-of-items:reordered', this.onItemsReordered.bind(this));
     }
 
-    bottomReached(evt)
+    /**
+     * @inheritdoc
+     *
+     * @todo I don't remember why this exists. Remove it.
+     */
+    onBottomReached(evt)
     {
         console.log('Bottom of the page reached');
     }
@@ -123,14 +129,14 @@ class ViewPlaylist extends MusicPlayingView
 
         this.$refs.playlist = ListOfItems.instantiate(response.data, this.collection.parent.userId);
         this.$refs.playlist.classList.add('playlist');
-        if (!this.filtering()) {
+        if (!this.areFiltersApplied()) {
             this.$refs.playlist.setAttribute('reordable', 'true');
         }
 
         this.append(this.$refs.playlist);
     }
 
-    filtering()
+    areFiltersApplied()
     {
         return !this.hashRequest.queryParams.without('page').isEmpty();
     }
@@ -140,7 +146,7 @@ class ViewPlaylist extends MusicPlayingView
         this.$refs.pagination = Pagination.instantiate(this.hashRequest, response);
         this.append(this.$refs.pagination);
 
-        if (this.filtering()) {
+        if (this.areFiltersApplied()) {
             return;
         }
 

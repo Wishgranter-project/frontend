@@ -18,8 +18,6 @@ class ContextualElement extends CustomElement
      */
     render()
     {
-        this.$refs.footer = this.createAndAttach('div', {class: 'playlist-item__footer'});       
-
         // Do not open the native context menu,
         // but ours instead.
         this.addEventListener('contextmenu', (evt) => 

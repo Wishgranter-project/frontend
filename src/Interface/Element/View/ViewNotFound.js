@@ -9,6 +9,7 @@ class ViewNotFound extends BaseView
 
     async render()
     {
+        super.render();
         this.createAndAttach('h1', null, 'Not found');
         this.createAndAttach('p', null, `Nothing found related to ${this.hashRequest.path}`);
     }  

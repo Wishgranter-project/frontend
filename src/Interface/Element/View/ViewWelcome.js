@@ -9,9 +9,9 @@ class ViewWelcome extends BaseView
 
     render()
     {
-        var p = document.createElement('p');
-        p.innerHTML = 'Welcome back';
-        this.append(p);
+        super.render();
+
+        this.createAndAttach('p', null, 'Wellcome back');
     }
 }
 

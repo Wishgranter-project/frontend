@@ -38,7 +38,7 @@ class ListOfItems extends CustomElement
     render()
     {
         this.$refs.list = this.createAndAttach('ol');
-        this.classList.add(ListOfItems.elementName);
+        this.classList.add('list-of-items');
 
         for (var item of this.descriptions) {
             if (!item) {
@@ -100,7 +100,7 @@ class ListOfItems extends CustomElement
      */
     onDragEnd(evt)
     {
-        //this.draggingElement = null;
+        this.draggingElement = null;
     }
 
     /**
@@ -220,27 +220,15 @@ class ListOfItems extends CustomElement
             return;
         }
 
-        this.draggingElement
-            ? this.onDropLocal(evt)
-            : this.onDropForeign(evt);
-    }
+        var droppedOnLi, selectedElements, oldIndexes, newIndexes, changes;
 
-    /**
-     * Reacts to the user dropping a child element.
-     *
-     * @param {Event} evt
-     * Drop event.
-     */
-    onDropLocal(evt)
-    {
-        var droppedOnLi      = evt.target.getAncestor('li');
-        var selectedElements = this.getSelectedElements();
-
-        var oldIndexes = this.extractIndexes(selectedElements);
+        droppedOnLi      = evt.target.getAncestor('li');
+        selectedElements = this.getSelectedElements();
+        oldIndexes       = this.extractIndexes(selectedElements);
         droppedOnLi.before(...selectedElements);
         selectedElements = this.getSelectedElements();
-        var newIndexes = this.extractIndexes(selectedElements);
-        var changes = [];
+        newIndexes = this.extractIndexes(selectedElements);
+        changes = [];
 
         for (var n in newIndexes) {
             if (oldIndexes[n] == newIndexes[n]) {
@@ -269,17 +257,6 @@ class ListOfItems extends CustomElement
     dropIsValid(dropEvt)
     {
         return true;
-    }
-
-    /**
-     * Reacts to the user dropping an element from outside.
-     *
-     * @param {Event} evt
-     * Drop event.
-     */
-    onDropForeign(evt)
-    {
-        // to be implemented
     }
 
     //---------------------------------------------

@@ -32,7 +32,7 @@ class ViewElement extends CustomElement
     /**
      * @inheritdoc
      */
-    afterRender()
+    render()
     {
         this.classList.add('view');
     }

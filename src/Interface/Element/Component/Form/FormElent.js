@@ -171,6 +171,16 @@ class FormElent extends CustomElement
         ]);
     }
 
+    /**
+     * Adds a pre-made button group.
+     *
+     * A submit and cancel buttons duo.
+     *
+     * @param {String} cancelLabel
+     * Label for the cancel button.
+     * @param {String} submitLabel
+     * Label for the submit button.
+     */
     addSubmitAndCancel(cancelLabel = 'Cancel', submitLabel = 'Save')
     {
         this.$refs.form.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [

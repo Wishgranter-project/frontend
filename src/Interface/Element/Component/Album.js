@@ -47,6 +47,14 @@ class Album extends CustomElement
         this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
     }
 
+    /**
+     * Renders the header.
+     *
+     * @protected
+     *
+     * @param {Object} response
+     * The data from the back-end.
+     */
     subRenderHeader(response)
     {
         this.$refs.header = this.createAndAttach('header', null, this.create('h2', null, response.data.title));
@@ -56,10 +64,18 @@ class Album extends CustomElement
             this.$refs.addButton = this.create('button', { title: 'Add all tracks to your collection' }, this.create('span', { class: 'fa fa-plus' }))
         ]);
 
-        this.$refs.playButton.addEventListener('click', this.playEntireAlbum.bind(this));
-        this.$refs.addButton.addEventListener('click', this.addEntireAlbumToCollection.bind(this));
+        this.$refs.playButton.addEventListener('click', this.onPlayButtonClicked.bind(this));
+        this.$refs.addButton.addEventListener('click', this.onAddButtonClicked.bind(this));
     }
 
+    /**
+     * Renders the tracks.
+     *
+     * @protected
+     *
+     * @param {Object} response
+     * The data from the back-end.
+     */
     subRenderTracks(response)
     {
         if (!response.data.tracks) {
@@ -76,13 +92,23 @@ class Album extends CustomElement
         this.append(this.$refs.playlist);
     }
 
-    addEntireAlbumToCollection()
+    /**
+     * Event listener.
+     *
+     * Add the entire album to the collection.
+     */
+    onAddButtonClicked()
     {
         var items = this.getPlayableItems();
         this.fireEvent('item:intention:add-to-collection', { items });
     }
 
-    playEntireAlbum()
+    /**
+     * Event listener.
+     *
+     * Play the entire album.
+     */
+    onPlayButtonClicked()
     {
         var items = this.getPlayableItems();
         this.fireEvent('queue:intention:play-this-now', {
@@ -90,7 +116,14 @@ class Album extends CustomElement
         });
     }
 
-    // Play the item selected and subsequent ones, leave the ones before it.
+    /**
+     * Event listener.
+     *
+     * Play the item selected and subsequent ones, leave the ones before it.
+     *
+     * @param {Event} evt
+     * Event.
+     */
     onItemSelected(evt)
     {
         var items = this.getPlayableItems(evt.detail.item);

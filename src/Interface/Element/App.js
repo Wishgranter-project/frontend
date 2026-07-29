@@ -17,6 +17,7 @@ import ContextFactory       from '../../Line/ContextFactory';
 import State                from '../../State/State';
 //=============================================================================
 import PlaylistItem         from './Component/PlaylistItem';
+import ViewPlaylist         from './View/ViewPlaylist';
 
 class App extends CustomElement
 {

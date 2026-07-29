@@ -36,7 +36,6 @@ class PlaylistItem extends ContextualElement
     render()
     {
         super.render();
-        this.innerHTML = ``;
         this.classList.add('playlist-item');
 
         if (this.item.uuid) {
@@ -54,6 +53,8 @@ class PlaylistItem extends ContextualElement
 
     /**
      * Renders the play button.
+     *
+     * @protected
      */
     subRenderHeader()
     {
@@ -75,14 +76,14 @@ class PlaylistItem extends ContextualElement
 
     /**
      * Renders the title, artist name and links.
+     *
+     * @protected
      */
     subRenderBody()
     {
+        var title = this.item.title || this.item.album;
         this.$refs.body = this.createAndAttach('div', {class: 'playlist-item__body'});
-
-        if (this.item.title || this.item.album) {
-            this.$refs.title = this.$refs.body.createAndAttach('span', {class: 'playlist-item__title'}, [ (this.item.title || this.item.album) ]);
-        }
+        this.$refs.title = this.$refs.body.createAndAttach('span', {class: 'playlist-item__title'}, [ title ]);
 
         for (var artist of this.item.artist) {
             this.$refs.body.createAndAttach('span', {class: 'playlist-item__artist playlist-item__info'}, [ 
@@ -101,6 +102,8 @@ class PlaylistItem extends ContextualElement
 
     /**
      * Renders the button to open the context menu.
+     *
+     * @protected
      */
     subRenderFooter()
     {

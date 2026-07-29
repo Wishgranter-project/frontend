@@ -26,6 +26,7 @@ class ViewDiscoverAlbums extends BaseView
      */
     async render()
     {
+        super.render();
         this.classList.add('view-discography');
 
         var artist = this.hashRequest.queryParams.get('artist');

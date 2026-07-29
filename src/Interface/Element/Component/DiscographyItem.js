@@ -142,27 +142,27 @@ class DiscographyItem extends ContextualElement
             album: this.album.title
         };
 
-        var actions = {
-            addToPlaylist: {
-                title: 'Add to playlist',
-                helpText: 'choose a playlist',
-                icon: 'fa-plus',
-                onClick: () => 
-                {
-                    this.fireEvent('item:intention:add-to-collection', {
-                        items: [ item ]
-                    });
-                }
-            },
+        var actions = {};
 
-            playNext: {
-                title: 'Play next',
-                helpText: 'play next',
-                icon: 'fa-minus',
-                onClick: () =>
-                {
-                    this.fireEvent('queue:intention:play-it-next', {item: item});
-                }
+        actions.addToPlaylist = {
+            title: 'Add to playlist',
+            helpText: 'choose a playlist',
+            icon: 'fa-plus',
+            onClick: () => 
+            {
+                this.fireEvent('item:intention:add-to-collection', {
+                    items: [ item ]
+                });
+            }
+        };
+
+        actions.playNext = {
+            title: 'Play next',
+            helpText: 'play next',
+            icon: 'fa-minus',
+            onClick: () =>
+            {
+                this.fireEvent('queue:intention:play-it-next', {item: item});
             }
         };
 
