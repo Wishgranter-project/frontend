@@ -17,23 +17,23 @@ class NavigationItem extends CustomElement
      *
      * @param {String} label
      * Human-readable label.
-     * @param {String} icon
-     * Icon to accompany the label, optional.
      * @param {String} href
      * URI for the item.
      * @param {String} tittleAttr
      * To be used in the tab.
      * @param {String} toolTip
      * Text to apper when hovering, optional.
+     * @param {String} icon
+     * Icon to accompany the label, optional.
      */
-    __construct(label, icon, href, tittleAttr = null, toolTip = null)
+    __construct(label, href, tittleAttr = null, toolTip = null, icon = null)
     {
         super.__construct();
         this.label       = label;
-        this.icon        = icon;
         this.href        = href;
         this.tittleAttr  = tittleAttr;
         this.toolTip     = toolTip;
+        this.icon        = icon;
     }
 
     /**

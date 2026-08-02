@@ -17,18 +17,16 @@ class NavigationItemPlaylist extends NavigationItem
      *
      * @param {String} label
      * Human-readable string.
-     * @param {String} icon
-     * Icon to accompany the label.
      * @param {String} href
      * URI.
      * @param {String} playlistId
      * The id of the paylist.
      * @param {Api} api
-     * The API.
+     * Api to communicate with the backend.
      */
-    __construct(label, icon, href, playlistId, api)
+    __construct(label, href, playlistId, api)
     {
-        super.__construct(label, icon, href, label);
+        super.__construct(label, href, label);
         this.playlistId = playlistId;
         this.api = api;
     }

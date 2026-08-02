@@ -31,7 +31,7 @@ class AppNavigationArtists extends CustomElement
         this.api.manageUser().collection.artists.fetch().then((response) => 
         {
             for (var artist in response.data) {
-                NavigationItemArtist.instantiate(artist, null, `#user:${this.defaultUserId}/search?artist=${artist}`, response.data[artist]).attachTo(this);
+                NavigationItemArtist.instantiate(artist, `#user:${this.defaultUserId}/search?artist=${artist}`, response.data[artist]).attachTo(this);
             }
         });
     }

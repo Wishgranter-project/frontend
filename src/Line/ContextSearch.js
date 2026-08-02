@@ -6,7 +6,7 @@ class ContextSearch extends ContextBase
      * Constructor.
      *
      * @param {Api} api
-     * The API.
+     * Api to communicate with the backend.
      * @param {bool} noMore
      * Flag, indicates there is nothing more to load, no more pages.
      * @param {URLSearchParams|string} queryParams

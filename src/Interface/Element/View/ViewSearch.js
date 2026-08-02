@@ -18,7 +18,6 @@ class ViewSearch extends ViewPlaylist
      */
     async render()
     {
-        super.render();
         this.classList.add(ViewSearch.elementName);
 
         this.fetch().then((response) =>

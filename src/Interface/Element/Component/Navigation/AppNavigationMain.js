@@ -17,7 +17,7 @@ class AppNavigationMain extends CustomElement
      * Constructor.
      *
      * @param {Api} api
-     * The API.
+     * Api to communicate with the backend.
      */
     __construct(api)
     {
@@ -31,9 +31,9 @@ class AppNavigationMain extends CustomElement
     render()
     {
         this.attach([
-            NavigationItem.instantiate('Home', 'fa-home', '#home', 'Homepage'),
-            NavigationItem.instantiate('Search', 'fa-search', `#user:${this.api.defaultUserId}/search`, 'Search within your collection'),
-            NavigationItem.instantiate('Discover', 'fa fa-search-plus', '#discover:artist', 'Discover new artists'),
+            NavigationItem.instantiate('Home', '#home', 'Homepage', null, 'fa-home'),
+            NavigationItem.instantiate('Search', `#user:${this.api.defaultUserId}/search`, 'Search within your collection', null, 'fa-search'),
+            NavigationItem.instantiate('Discover', '#discover:artist', 'Discover new artists', null, 'fa fa-search-plus'),
         ]);
     }
 }

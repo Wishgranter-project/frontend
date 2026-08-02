@@ -16,7 +16,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
      * Constructor.
      *
      * @param {Api} api
-     * The API.
+     * Api to communicate with the backend.
      * @param {String} playlistId
      * The id of the playlist to edit.
      */

@@ -16,7 +16,7 @@ class ModalAddToPlaylist extends Modal
      * Constructor.
      *
      * @param {Api} api
-     * The API.
+     * Api to communicate with the backend.
      * @param {Array} items
      * List of items to add to the collection.
      */

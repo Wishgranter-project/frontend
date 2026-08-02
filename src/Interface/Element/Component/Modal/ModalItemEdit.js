@@ -16,7 +16,7 @@ class ModalItemEdit extends ModalItemAdd
      * Constructor.
      *
      * @param {Api} api
-     * The API.
+     * Api to communicate with the backend.
      * @param {String} uuid
      * The uuid of the playlist item to edit.
      */
