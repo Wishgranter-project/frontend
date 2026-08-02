@@ -241,7 +241,9 @@ class App extends CustomElement
 
     /**
      * Commits the queue context to memory.
-     * 
+     *
+     * @protected
+     *
      * @param {ContextBase} context
      * Context object.
      */
@@ -344,9 +346,11 @@ class App extends CustomElement
             return this.setupItem(item, true);
         }
 
-        var artist = Array.isArray(item.artist) ? item.artist[0] : item.artist;
-        var album = item.album;
+        var artist = Array.isArray(item.artist)
+            ? item.artist[0]
+            : item.artist;
 
+        var album = item.album;
         var response = await this.api.discover.getAlbum(album, artist).fetch();
 
         // Remove the album from the queue...

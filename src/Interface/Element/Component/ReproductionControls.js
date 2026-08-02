@@ -24,24 +24,24 @@ class ReproductionControls extends CustomElement
      * The object to communicate with the back-end.
      * @param {Object} item
      * Object describing the music to play.
-     * @param {Array|Null} resources
-     * List of playable media that match the music description's.
+     * @param {Array|Null} playableResources
+     * List of playable resources that match the music description's.
      * @param {Boolean} autoPlay
      * Wether it should reproduction imediately.
      * @param {Boolean} shuffleOn
      * Indicates wether shuffle is on or off.
      */
-    __construct(api, item = null, resources = null, autoPlay = true, shuffleOn = false)
+    __construct(api, item = null, playableResources = null, autoPlay = true, shuffleOn = false)
     {
         super.__construct();
-        this.api       = api;
-        this.item      = item;
-        this.resources = resources;
-        this.index     = 0;
-        this.player    = null;
-        this.state     = new State('controls.state');
-        this.autoPlay  = autoPlay;
-        this.shuffleOn = shuffleOn;
+        this.api               = api;
+        this.item              = item;
+        this.playableResources = playableResources;
+        this.index             = 0;
+        this.player            = null;
+        this.state             = new State('controls.state');
+        this.autoPlay          = autoPlay;
+        this.shuffleOn         = shuffleOn;
     }
 
     /**
@@ -62,7 +62,7 @@ class ReproductionControls extends CustomElement
             ? this.turnShuffleOn()
             : this.turnShuffleOff();
 
-        if (! this.resources) {
+        if (! this.playableResources) {
             return;
         }
         
@@ -87,13 +87,19 @@ class ReproductionControls extends CustomElement
         this.setupResource(0, this.autoPlay);
     }
 
+    /**
+     * Renders the music currently playing.
+     *
+     * @protected
+     */
     subRenderItem()
     {        
         if (this.item) {
-            this.$refs.playlistItem = this.attach(PlaylistItem.instantiate(this.item, {disablePlayButton: true, userId: this.api.defaultUserId}));
+            const playItem = PlaylistItem.instantiate(this.item, {disablePlayButton: true, userId: this.api.defaultUserId});
+            this.$refs.playlistItem = this.attach(playItem);
         }
 
-        if (!this.resources || !this.resources.length) {
+        if (!this.playableResources || !this.playableResources.length) {
             return;
         }
 
@@ -101,11 +107,23 @@ class ReproductionControls extends CustomElement
         this.$refs.buttonNotIt.addEventListener('click', this.notIt.bind(this));
     }
 
+    /**
+     * Renders the timer.
+     *
+     * @protected
+     */
     subRenderClock()
     {
         this.$refs.timer = this.createAndAttach('span', {class: 'reproduction-controls__timer'}, '--:--');
     }
 
+    /**
+     * Renders the reproduction controls.
+     *
+     * Play/pause, previous and next music.
+     *
+     * @protected
+     */
     subRenderButtons()
     {
         this.createAndAttach('div', {class: 'reproduction-controls__buttons button-group'}, [
@@ -134,13 +152,23 @@ class ReproductionControls extends CustomElement
         })
     }
 
+    /**
+     * Renders the volume slider.
+     *
+     * @protected
+     */
     subRenderVolume()
     {
         this.$refs.volumeControl = this.createAndAttach('input', {type: 'range', min: 0, max: 100, step: 1, class: 'reproduction-controls__volume'});
         this.$refs.volumeControl.value = this.state.getInt('volume', 15);
-        this.$refs.volumeControl.addEventListener('change', this.dialVolume.bind(this));
+        this.$refs.volumeControl.addEventListener('change', this.onDialVolume.bind(this));
     }
 
+    /**
+     * Renders the button to summon the queue.
+     *
+     * @protected
+     */
     subRenderQueueButton()
     {
         this.$refs.buttonQueue = this.createAndAttach('button', {class: 'reproduction-controls__button-queue', title: 'Queue'}, this.create('span', {class: 'fa fa-list'}));
@@ -150,10 +178,15 @@ class ReproductionControls extends CustomElement
         });
     }
 
+    /**
+     * Renders the progress bar.
+     *
+     * @protected
+     */
     subRenderProgressBar()
     {
         this.$refs.progress = this.createAndAttach('progress', {max: 100, class: 'reproduction-controls__progress'});
-        this.$refs.progress.addEventListener('click', this.seek.bind(this));
+        this.$refs.progress.addEventListener('click', this.onSeek.bind(this));
     }
 
     remove()
@@ -162,9 +195,24 @@ class ReproductionControls extends CustomElement
         return super.remove();
     }
 
+    turnShuffleOff()
+    {
+        this.$refs.buttonShuffle.setAttribute('title', 'turn shuffle on');
+    }
+
+    turnShuffleOn()
+    {
+        this.$refs.buttonShuffle.setAttribute('title', 'turn shuffle off');
+    }
+
+    /**
+     * Cycles to the next available playable resource.
+     *
+     * @protected
+     */
     notIt()
     {
-        if (!this.resources[this.index + 1]) {
+        if (!this.playableResources[this.index + 1]) {
             alert('no more alternatives');
             return;
         }
@@ -186,7 +234,7 @@ class ReproductionControls extends CustomElement
         console.log('Reproduction: booting player');
 
         window.player = 
-        this.player = this.createPlayer(this.resources[index]);
+        this.player = this.createPlayer(this.playableResources[index]);
 
         if (!this.player) {
             console.error('Could not instantiate a player');
@@ -195,7 +243,7 @@ class ReproductionControls extends CustomElement
         
         this.player.appendTo(this.$refs.playerFrame).then(() => 
         {
-            this.setMediaSession(this.resources[index]);
+            this.setMediaSession(this.playableResources[index]);
             if (play) {
                 this.player.play();
             }
@@ -212,7 +260,9 @@ class ReproductionControls extends CustomElement
 
         var { title, artist, album } = this.item;
 
-        artist = Array.isArray(artist) ? artist.join(', ') : artist;
+        artist = Array.isArray(artist)
+            ? artist.join(', ')
+            : artist;
 
         var mediaMetadata = new MediaMetadata({
             title,
@@ -233,6 +283,14 @@ class ReproductionControls extends CustomElement
         navigator.mediaSession.metadata = mediaMetadata;
     }
 
+    /**
+     * Destroys the player.
+     *
+     * @protected
+     *
+     * @returns {ReproductionControls}
+     * Itself.
+     */
     destroyPlayer()
     {
         if (this.player) {
@@ -243,20 +301,39 @@ class ReproductionControls extends CustomElement
         return this;
     }
 
+    /**
+     * Instantiates the player.
+     *
+     * @protected
+     *
+     * @param {Object} resource
+     * Playable resource.
+     *
+     * @returns {Playable}
+     * HTML element to control the playback.
+     */
     createPlayer(resource)
     {
         switch (resource.sourceId) {
             case 'youtube':
-            case 'youtubeLax':
                 return this.createPlayerYouTube(resource);
                 break;
             case 'sliderkz':
             case 'localFiles':
-                return this.createPlayerSliderKz(resource);
+                return this.createGenericPlayer(resource);
                 break;
         }
     }
 
+    /**
+     * Instantiates an youtube player.
+     *
+     * @param {Object} resource
+     * Playable resource.
+     *
+     * @returns {Playable}
+     * HTML element to control the playback.
+     */
     createPlayerYouTube(resource)
     {
         var player     = document.createElement('player-youtube');
@@ -266,7 +343,16 @@ class ReproductionControls extends CustomElement
         return player;
     }
 
-    createPlayerSliderKz(resource)
+    /**
+     * Instantiates an generic player.
+     *
+     * @param {Object} resource
+     * Playable resource.
+     *
+     * @returns {Playable}
+     * HTML element to control the playback.
+     */
+    createGenericPlayer(resource)
     {
         var player = document.createElement('player-audio');
         player.src = resource.src;
@@ -276,34 +362,63 @@ class ReproductionControls extends CustomElement
 
     //--------
 
+    /**
+     * Plays/pauses the reproduction.
+     */
     toggle()
     {
-        if (!this.player) {
-            return;
+        if (this.player) {
+            this.player.toggle();
         }
-
-        this.player.toggle();
     }
 
+    /**
+     * Event listener.
+     *
+     * @protected
+     *
+     * Reacts on the progress of the music being reproduced and updates the
+     * clock and the progress bar.
+     */
     onTimeUpdate()
     {
         this.$refs.timer.innerHTML = this.player.currentTimeFormatted;
         this.$refs.progress.value  = this.player.currentTimePercentage;
     }
 
-    dialVolume(evt)
+    /**
+     * Event listener.
+     *
+     * Reacts on the volume control being interacted with and updates the
+     * volume.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event.
+     */
+    onDialVolume(evt)
     {
         var volume = evt.target.value;
         this.state.set('volume', volume);
 
-        if (!this.player) {
-            return;
+        if (this.player) {
+            this.player.setVolume(volume);
         }
-
-        this.player.setVolume(volume);
     }
 
-    seek(evt)
+    /**
+     * Event listener.
+     *
+     * Reacts on the progress bar being interacted with seeks the music new
+     * time stamp.
+     *
+     * @protected
+     *
+     * @param {Event} evt
+     * Event.
+     */
+    onSeek(evt)
     {
         if (!this.player) {
             return;
@@ -315,16 +430,6 @@ class ReproductionControls extends CustomElement
         perc  = Math.ceil((x / width) * 100) + '%';
 
         this.player.seek(perc);
-    }
-
-    turnShuffleOff()
-    {
-        this.$refs.buttonShuffle.setAttribute('title', 'turn shuffle on');
-    }
-
-    turnShuffleOn()
-    {
-        this.$refs.buttonShuffle.setAttribute('title', 'turn shuffle off');
     }
 }
 
