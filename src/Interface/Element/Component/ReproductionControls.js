@@ -22,8 +22,6 @@ class ReproductionControls extends CustomElement
      *
      * @param {Api} api
      * The object to communicate with the back-end.
-     * @param {String} userId
-     * The user id.
      * @param {Object} item
      * Object describing the music to play.
      * @param {Array|Null} resources
@@ -33,11 +31,10 @@ class ReproductionControls extends CustomElement
      * @param {Boolean} shuffleOn
      * Indicates wether shuffle is on or off.
      */
-    __construct(api, userId, item = null, resources = null, autoPlay = true, shuffleOn = false)
+    __construct(api, item = null, resources = null, autoPlay = true, shuffleOn = false)
     {
         super.__construct();
         this.api       = api;
-        this.userId    = userId;
         this.item      = item;
         this.resources = resources;
         this.index     = 0;
@@ -93,7 +90,7 @@ class ReproductionControls extends CustomElement
     subRenderItem()
     {        
         if (this.item) {
-            this.$refs.playlistItem = this.attach(PlaylistItem.instantiate(this.item, {disablePlayButton: true, userId: this.userId}));
+            this.$refs.playlistItem = this.attach(PlaylistItem.instantiate(this.item, {disablePlayButton: true, userId: this.api.defaultUserId}));
         }
 
         if (!this.resources || !this.resources.length) {

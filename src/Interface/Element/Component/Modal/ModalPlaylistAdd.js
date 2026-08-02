@@ -46,7 +46,7 @@ class ModalPlaylistAdd extends ModalItemAdd
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.collection
+            this.api.manageUser().collection
                 .managePlaylist(null)
                 .create(this.$refs.form.getForm())
                 .then(this.onResponse.bind(this), this.onResponse.bind(this));

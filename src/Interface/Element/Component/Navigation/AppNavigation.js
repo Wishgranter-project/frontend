@@ -20,14 +20,11 @@ class AppNavigation extends CustomElement
      *
      * @param {Api} api
      * Api to communicate with the backend.
-     * @param {String} userId
-     * The current user's id.
      */
-    __construct(api, userId)
+    __construct(api)
     {
         super.__construct();
         this.api = api;
-        this.userId = userId;
     }
 
     /**
@@ -38,10 +35,10 @@ class AppNavigation extends CustomElement
         this.classList.add('app-navigation');
 
         this.attach([
-            AppNavigationMain.instantiate(this.userId),
-            AppNavigationPlaylists.instantiate(this.api, this.userId),
+            AppNavigationMain.instantiate(this.api),
+            AppNavigationPlaylists.instantiate(this.api),
             this.create('hr'),
-            AppNavigationArtists.instantiate(this.api, this.userId),
+            AppNavigationArtists.instantiate(this.api),
         ]);
     }
 

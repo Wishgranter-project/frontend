@@ -23,14 +23,14 @@ class NavigationItemPlaylist extends NavigationItem
      * URI.
      * @param {String} playlistId
      * The id of the paylist.
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Api} api
+     * The API.
      */
-    __construct(label, icon, href, playlistId, collection)
+    __construct(label, icon, href, playlistId, api)
     {
         super.__construct(label, icon, href, label);
         this.playlistId = playlistId;
-        this.collection = collection;
+        this.api = api;
     }
 
     /**
@@ -76,7 +76,7 @@ class NavigationItemPlaylist extends NavigationItem
         var json = evt.dataTransfer.getData('text');
         var data = JSON.parse(json);
 
-        this.collection.addMultiplePlaylistItems(data, this.playlistId).then((res) =>
+        this.api.manageUser().collection.addMultiplePlaylistItems(data, this.playlistId).then((res) =>
         {
             alert('Item(s) added!!');
             

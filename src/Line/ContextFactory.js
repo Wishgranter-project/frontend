@@ -10,10 +10,9 @@ class ContextFactory
      * @param {Api} api
      * To interface with the back-end.
      */
-    constructor(api, collection)
+    constructor(api)
     {
         this.api = api;
-        this.collection = collection;
     }
 
     /**
@@ -32,7 +31,6 @@ class ContextFactory
         }
 
         dependencies.api = this.api;
-        dependencies.collection = this.collection;
         var classe = null;
 
         switch (dependencies.id) {

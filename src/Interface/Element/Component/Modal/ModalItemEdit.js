@@ -15,14 +15,14 @@ class ModalItemEdit extends ModalItemAdd
     /**
      * Constructor.
      *
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Api} api
+     * The API.
      * @param {String} uuid
      * The uuid of the playlist item to edit.
      */
-    __construct(collection, uuid)
+    __construct(api, uuid)
     {
-        super.__construct(collection);
+        super.__construct(api);
         this.uuid = uuid;
     }
 
@@ -41,7 +41,7 @@ class ModalItemEdit extends ModalItemAdd
     {
         super.subRenderForm();
 
-        this.collection.manageItem(this.uuid).fetch()
+        this.api.manageUser().collection.manageItem(this.uuid).fetch()
         .then((response) =>
         {
             this.populateForm(response);
@@ -74,7 +74,7 @@ class ModalItemEdit extends ModalItemAdd
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.collection
+            this.api.manageUser().collection
                 .manageItem(this.uuid)
                 .update(this.$refs.form.getForm())
                 .then(this.onResponse.bind(this), this.onResponse.bind(this));

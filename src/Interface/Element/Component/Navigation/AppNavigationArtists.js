@@ -13,14 +13,11 @@ class AppNavigationArtists extends CustomElement
      *
      * @param {Api} api
      * Api to communicate with the backend.
-     * @param {String} userId
-     * The current user's id.
      */
-    __construct(api, userId)
+    __construct(api)
     {
         super.__construct();
         this.api = api;
-        this.userId = userId;
     }
 
     /**
@@ -31,10 +28,10 @@ class AppNavigationArtists extends CustomElement
         this.clear();
         this.classList.add('app-navigation__artists');
 
-        this.api.manageUser(this.userId).collection.artists.fetch().then((response) => 
+        this.api.manageUser().collection.artists.fetch().then((response) => 
         {
             for (var artist in response.data) {
-                NavigationItemArtist.instantiate(artist, null, `#user:${this.userId}/search?artist=${artist}`, response.data[artist]).attachTo(this);
+                NavigationItemArtist.instantiate(artist, null, `#user:${this.defaultUserId}/search?artist=${artist}`, response.data[artist]).attachTo(this);
             }
         });
     }

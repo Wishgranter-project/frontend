@@ -15,15 +15,15 @@ class ModalAddToPlaylist extends Modal
     /**
      * Constructor.
      *
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Api} api
+     * The API.
      * @param {Array} items
      * List of items to add to the collection.
      */
-    __construct(collection, items)
+    __construct(api, items)
     {
         super.__construct();
-        this.collection = collection;
+        this.api = api;
         this.items = items;
     }
 
@@ -37,7 +37,7 @@ class ModalAddToPlaylist extends Modal
 
     subRenderBody()
     {
-        this.collection.fetchPlaylists().then((response) => 
+        this.api.manageUser().collection.fetchPlaylists().then((response) => 
         {
             if (!response.data) {
                 return;
@@ -65,7 +65,7 @@ class ModalAddToPlaylist extends Modal
     onPlaylistChoosen(evt)
     {
         var playlistId = evt.target.getAttribute('data-playlist');
-        this.collection.addMultiplePlaylistItems(this.items, playlistId).then(() =>
+        this.api.manageUser().collection.addMultiplePlaylistItems(this.items, playlistId).then(() =>
         {
             alert('Item(s) added!!');
             this.remove();

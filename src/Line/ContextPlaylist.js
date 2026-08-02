@@ -5,8 +5,8 @@ class ContextPlaylist extends ContextSearch
     /**
      * Constructor.
      *
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Api} api
+     * The API.
      * @param {bool} noMore
      * Flag, indicates there is nothing more to load, no more pages.
      * @param {URLSearchParams|string} queryParams
@@ -14,9 +14,9 @@ class ContextPlaylist extends ContextSearch
      * @param {string} playlistId
      * The playlist we are aiming for.
      */
-    constructor(collection, noMore = false, queryParams, playlistId)
+    constructor(api, noMore = false, queryParams, playlistId)
     {
-        super(collection, noMore, queryParams);
+        super(api, noMore, queryParams);
         this.playlistId = playlistId;
     }
 
@@ -39,7 +39,7 @@ class ContextPlaylist extends ContextSearch
     //-------------------
     async request(queue)
     {
-        return this.collection.fetchPlaylistItems(this.queryParams, { playlist: this.playlistId });
+        return this.api.manageUser().collection.fetchPlaylistItems(this.queryParams, { playlist: this.playlistId });
     }
 }
 

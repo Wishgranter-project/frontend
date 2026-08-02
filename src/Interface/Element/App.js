@@ -31,20 +31,16 @@ class App extends CustomElement
      *
      * @param {Api} api
      * To communicate with the backend.
-     * @param {String} userId
-     * The authenticated user's id.
      */
-    __construct(api, userId)
+    __construct(api)
     {
         super.__construct();
         this.api                 = api;
-        this.userId              = userId;
-        this.collection          = api.manageUser(userId).collection;
         this.state               = {
             queue:      new State('state.queue'),
             history:    new State('state.history'),
         }
-        this.contextFactory      = new ContextFactory(this.api, this.collection);
+        this.contextFactory      = new ContextFactory(this.api);
 
         //--------------------------------------------------
 
@@ -72,13 +68,13 @@ class App extends CustomElement
         this.$refs.stage.instantiateRouteCollection(this.api);
 
         this.$refs.middle = this.createAndAttach('div', {class: 'app__middle'}, [
-            this.$refs.navMenu = AppNavigation.instantiate(this.api, this.userId),
+            this.$refs.navMenu = AppNavigation.instantiate(this.api),
             this.$refs.stage,
-            this.$refs.queueDisplay = QueueDisplay.instantiate(this.userId)
+            this.$refs.queueDisplay = QueueDisplay.instantiate(this.api.defaultUserId)
         ]);
 
         this.$refs.footer = this.createAndAttach('div', {class: 'app__footer'}, [
-            this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, null, null, null, this.isShuffleOn)
+            this.$refs.controls = ReproductionControls.instantiate(this.api, null, null, null, this.isShuffleOn)
         ]);      
 
         if (!this.$refs.stage.restoreTabs()) {
@@ -370,7 +366,7 @@ class App extends CustomElement
             }
 
             this.$refs.controls.remove();
-            this.$refs.controls = ReproductionControls.instantiate(this.api, this.userId, item, response.data, autoPlay, this.isShuffleOn);
+            this.$refs.controls = ReproductionControls.instantiate(this.api, item, response.data, autoPlay, this.isShuffleOn);
             this.$refs.footer.append(this.$refs.controls);
 
             return response;
@@ -552,7 +548,7 @@ class App extends CustomElement
      */
     onRequestToDownloadCollection(evt)
     {
-        this.collection.downloadAll();
+        this.api.manageUser().collection.downloadAll();
     }
 
     /**
@@ -602,7 +598,7 @@ class App extends CustomElement
      */
     onRequestToComposeNewItem(evt)
     {
-        var modal = ModalItemAdd.instantiate(this.collection, evt.detail.playlistId);
+        var modal = ModalItemAdd.instantiate(this.api, evt.detail.playlistId);
         this.append(modal);
     }
 
@@ -616,7 +612,7 @@ class App extends CustomElement
      */
     onRequestToEditItem(evt)
     {
-        var modal = ModalItemEdit.instantiate(this.collection, evt.detail.uuid);
+        var modal = ModalItemEdit.instantiate(this.api, evt.detail.uuid);
         this.append(modal);
     }
 
@@ -634,7 +630,7 @@ class App extends CustomElement
             return;
         }
 
-        this.collection.manageItem(evt.detail.uuid).delete();
+        this.api.manageUser().collection.manageItem(evt.detail.uuid).delete();
         evt.target.remove();
     }
 
@@ -648,7 +644,7 @@ class App extends CustomElement
      */
     onRequestToAddItemToCollection(evt)
     {
-        var modal = ModalAddToPlaylist.instantiate(this.collection, evt.detail.items);
+        var modal = ModalAddToPlaylist.instantiate(this.api, evt.detail.items);
         this.append(modal);
     }
 
@@ -688,7 +684,7 @@ class App extends CustomElement
      */
     onRequestToComposeNewPlaylist(evt)
     {
-        var modal = ModalPlaylistAdd.instantiate(this.collection);
+        var modal = ModalPlaylistAdd.instantiate(this.api);
         this.append(modal);
     }
 
@@ -702,7 +698,7 @@ class App extends CustomElement
      */
     onRequestEditPlaylist(evt)
     {
-        var modal = ModalPlaylistEdit.instantiate(this.collection, evt.detail.playlistId);
+        var modal = ModalPlaylistEdit.instantiate(this.api, evt.detail.playlistId);
         this.append(modal);
     }
 
@@ -720,7 +716,7 @@ class App extends CustomElement
             return;
         }
 
-        this.collection.managePlaylist(evt.detail.playlistId).delete().then(() =>
+        this.api.manageUser().collection.managePlaylist(evt.detail.playlistId).delete().then(() =>
         {
             this.$refs.navMenu.refresh();
         });
@@ -738,7 +734,7 @@ class App extends CustomElement
      */
     onRequestDownloadPlaylist(evt)
     {
-        this.collection.managePlaylist(evt.detail.playlistId).download();
+        this.api.manageUser().collection.managePlaylist(evt.detail.playlistId).download();
     }
 
     /**

@@ -1,4 +1,4 @@
-import Api from 'wishgranter-sdk';
+import Api from './Api';
 import App from './Interface/Element/App.js';
 import CreateElement from './Helper/CreateElement';
 import ModalLoginForm from './Interface/Element/Component/Modal/ModalLoginForm';
@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () =>
 {
     api.session.fetch().then((response) => {
         if (response.meta.statusCode == 200) {
-            window.app = App.instantiate(api, response.data.userId);
+            api.setDefaultUserId(response.data.userId);
+            window.app = App.instantiate(api);
             document.body.append(window.app);
         } else {
             const modal = ModalLoginForm.instantiate(api);

@@ -16,13 +16,13 @@ class AppNavigationMain extends CustomElement
     /**
      * Constructor.
      *
-     * @param {String} userId
-     * The current user's id.
+     * @param {Api} api
+     * The API.
      */
-    __construct(userId)
+    __construct(api)
     {
         super.__construct();
-        this.userId = userId;
+        this.api = api;
     }
 
     /**
@@ -32,7 +32,7 @@ class AppNavigationMain extends CustomElement
     {
         this.attach([
             NavigationItem.instantiate('Home', 'fa-home', '#home', 'Homepage'),
-            NavigationItem.instantiate('Search', 'fa-search', `#user:${this.userId}/search`, 'Search within your collection'),
+            NavigationItem.instantiate('Search', 'fa-search', `#user:${this.api.defaultUserId}/search`, 'Search within your collection'),
             NavigationItem.instantiate('Discover', 'fa fa-search-plus', '#discover:artist', 'Discover new artists'),
         ]);
     }

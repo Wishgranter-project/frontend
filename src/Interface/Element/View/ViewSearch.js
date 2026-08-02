@@ -31,6 +31,11 @@ class ViewSearch extends ViewPlaylist
         this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
     }
 
+    async fetchPlaylist()
+    {
+        return {};
+    }
+
     fetch()
     {
         return this.hashRequest.queryParams.isEmpty()

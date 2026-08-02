@@ -15,14 +15,14 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     /**
      * Constructor.
      *
-     * @param {Collection} collection
-     * The user's collection.
+     * @param {Api} api
+     * The API.
      * @param {String} playlistId
      * The id of the playlist to edit.
      */
-    __construct(collection, playlistId)
+    __construct(api, playlistId)
     {
-        super.__construct(collection);
+        super.__construct(api);
         this.playlistId = playlistId;
     }
 
@@ -41,7 +41,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
     {
         super.subRenderForm();
 
-        this.collection.managePlaylist(this.playlistId).fetch()
+        this.api.manageUser().collection.managePlaylist(this.playlistId).fetch()
         .then((response) =>
         {
             this.populateForm(response);
@@ -66,7 +66,7 @@ class ModalPlaylistEdit extends ModalPlaylistAdd
         this.$refs.form.addEventListener('submit', (evt) => 
         {
             evt.preventDefault();
-            this.collection
+            this.api.manageUser().collection
                 .managePlaylist(this.playlistId)
                 .update(this.$refs.form.getForm())
                 .then(this.onResponse.bind(this), this.onResponse.bind(this));
