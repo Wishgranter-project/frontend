@@ -340,22 +340,40 @@ class App extends CustomElement
  
     async playItem(item)
     {
-        var isAlbum = item.hasOwnProperty('album') && !item.hasOwnProperty('title');
-        if (!isAlbum) {
-            return this.setupItem(item, true);
-        }
+        const isAlbum = item.hasOwnProperty('album') && !item.hasOwnProperty('title');
 
+        return isAlbum
+            ? this.playAlbum(item)
+            : this.playMusic(item);
+    }
+
+    async playMusic(item)
+    {
+        return this.setupItem(item, true);
+    }
+
+    async playAlbum(item)
+    {
         var artist = Array.isArray(item.artist)
             ? item.artist[0]
             : item.artist;
 
-        var album = item.album;
-        var response = await this.api.discover.getAlbum(album, artist).fetch();
+        var response = await this.api.discover.getAlbum(item.album, artist).fetch();
 
         // Remove the album from the queue...
         this.queue.dequeue();
-        // and drop in its tracks.
-        this.queue.cutToTheFrontOfTheLine(response.data.tracks);
+        // and drop in its tracks
+
+        var tracks = [];
+        for (var t of response.data.tracks) {
+            tracks.push({
+                title: t,
+                artist,
+                album: item.album
+            })
+        }
+
+        this.queue.cutToTheFrontOfTheLine(tracks);
         return this.setupItem(this.queue.front, true);
     }
 
