@@ -1,6 +1,7 @@
 import BaseView        from './BaseView';
 import SearchHeader    from '../Component/SearchHeader';
-import DiscographyItem from '../Component/DiscographyItem';
+import AlbumCard       from '../Component/AlbumCard';
+import SingleCard      from '../Component/SingleCard';
 import Album           from '../Component/Album';
 import Queue           from '../../../Line/Queue';
 
@@ -36,7 +37,7 @@ class ViewDiscoverAlbums extends BaseView
         {
             this.subRenderHeader();
             this.subRenderBody(title);
-            this.subRenderDiscographyItems(response, title);
+            this.subRenderAlbumCards(response, title);
         }).then(() =>
         {
             if (!this.$refs.album) {
@@ -75,14 +76,18 @@ class ViewDiscoverAlbums extends BaseView
         }
     }
 
-    subRenderDiscographyItems(response, title)
+    subRenderAlbumCards(response, title)
     {
         var cssClass = title
             ? 'col-12 col-sm-6 col-md-4 col-lg-3'
             : 'col-6 col-sm-4 col-md-3 col-lg-2';
 
         for (var album of response.data) {
-            this.$refs.grid.createAndAttach('div', {class: cssClass}, DiscographyItem.instantiate(album));
+            var card = album.single
+                ? SingleCard.instantiate(album)
+                : AlbumCard.instantiate(album);
+
+            this.$refs.grid.createAndAttach('div', {class: cssClass}, card);
         }
     }
 
@@ -103,7 +108,7 @@ class ViewDiscoverAlbums extends BaseView
     {
         var items = [];
 
-        for (var element of this.querySelectorAll(DiscographyItem.elementName)) {
+        for (var element of this.querySelectorAll(AlbumCard.elementName)) {
             items.push({
                 album: element.album.title,
                 artist: element.album.artist,

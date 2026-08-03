@@ -35,12 +35,12 @@ class App extends CustomElement
     __construct(api)
     {
         super.__construct();
-        this.api                 = api;
-        this.state               = {
+        this.api            = api;
+        this.state          = {
             queue:      new State('state.queue'),
             history:    new State('state.history'),
         }
-        this.contextFactory      = new ContextFactory(this.api);
+        this.contextFactory = new ContextFactory(this.api);
 
         //--------------------------------------------------
 
@@ -340,7 +340,6 @@ class App extends CustomElement
  
     async playItem(item)
     {
-        //return this.setupItem(item, true);
         var isAlbum = item.hasOwnProperty('album') && !item.hasOwnProperty('title');
         if (!isAlbum) {
             return this.setupItem(item, true);
@@ -470,6 +469,7 @@ class App extends CustomElement
         // Has a queue attached to it ?
         if (queue && queue.length) {
             this.stopAndBeginThisNewQueue(queue);
+
             return;
         }
 
