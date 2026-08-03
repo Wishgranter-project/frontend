@@ -584,6 +584,10 @@ div {
   padding: 0px 0px 0px 10px;
 }
 
+.simple .view-welcome .btn {
+  width: 100%;
+}
+
 .hidden {
   display: none;
 }
