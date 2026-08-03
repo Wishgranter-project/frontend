@@ -36,9 +36,11 @@ class AppNavigation extends CustomElement
 
         this.attach([
             AppNavigationMain.instantiate(this.api),
-            AppNavigationPlaylists.instantiate(this.api),
-            this.create('hr'),
-            AppNavigationArtists.instantiate(this.api),
+            this.create('div', {class: 'app-navigation__browser'}, [
+                AppNavigationPlaylists.instantiate(this.api),
+                this.create('hr'),
+                AppNavigationArtists.instantiate(this.api),
+            ]),
         ]);
     }
 

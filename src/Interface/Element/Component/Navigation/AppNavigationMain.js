@@ -30,11 +30,20 @@ class AppNavigationMain extends CustomElement
      */
     render()
     {
-        this.attach([
-            NavigationItem.instantiate('Home', '#home', 'Homepage', null, 'fa-home'),
-            NavigationItem.instantiate('Search', `#user:${this.api.defaultUserId}/search`, 'Search within your collection', null, 'fa-search'),
-            NavigationItem.instantiate('Discover', '#discover:artist', 'Discover new artists', null, 'fa fa-search-plus'),
-        ]);
+        this.classList.add('app-navigation__main');
+
+        this.createAndAttach('a', {href: '#home', title: 'Homepage', class: 'btn'}, this.create('span', {class: 'fa fa-home'}));
+        this.createAndAttach('a', {href: '#home', title: 'Search', class: 'btn'}, this.create('span', {class: 'fa fa-search'}));
+        this.createAndAttach('a', {href: '#home', title: 'Discover', class: 'btn'}, this.create('span', {class: 'fa fa-search-plus'}));
+
+        this.$refs.createPlaylist    = this.createAndAttach('button', {title: 'Create playlist'}, this.create('span', {class: 'fa fa-plus-circle'}));
+        this.$refs.downloadPlaylists = this.createAndAttach('button', {title: 'Download entire collection'}, this.create('span', {class: 'fa fa-download'}));
+
+        //this.attach([
+        //    NavigationItem.instantiate('Home', '#home', 'Homepage', null, 'fa-home'),
+        //    NavigationItem.instantiate('Search', `#user:${this.api.defaultUserId}/search`, 'Search within your collection', null, 'fa-search'),
+        //    NavigationItem.instantiate('Discover', '#discover:artist', 'Discover new artists', null, 'fa fa-search-plus'),
+        //]);
     }
 }
 

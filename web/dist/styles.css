@@ -192,17 +192,37 @@ div {
 }
 
 .app-navigation {
-  display: block;
+  display: flex;
+  flex-direction: column;
   padding: 0px;
   border-right: solid 1px #3a3a3a;
-  overflow: auto;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: visible;
   background-color: #272727;
 }
 .app-navigation hr {
   border-top: solid 2px #fdfdfd;
   margin: 0px;
+}
+.app-navigation__browser {
+  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.app-navigation__main {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.app-navigation__main button,
+.app-navigation__main .btn {
+  width: 50%;
+  flex-grow: 1;
+  border-radius: 0;
+  margin: 0;
+}
+.app-navigation__main button:nth-child(-n+3),
+.app-navigation__main .btn:nth-child(-n+3) {
+  width: 33%;
 }
 .app-navigation__item {
   display: block;

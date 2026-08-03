@@ -62,20 +62,14 @@ class AppNavigationPlaylists extends CustomElement
      */
     subRenderCreateAndDownload()
     {
-        this.createAndAttach('div', {class: 'input-group input-group-horizontal'}, [
-            this.$refs.createPlaylist    = this.create('button', {title: 'Create playlist'}, this.create('span', {class: 'fa fa-plus-circle'})),
-            this.$refs.downloadPlaylists = this.create('button', {title: 'Download entire collection'}, this.create('span', {class: 'fa fa-download'}))
-        ]);
-
-        this.$refs.createPlaylist.addEventListener('click', () =>
-        {
-            this.fireEvent('playlist:intention:compose-new');
-        });
-
-        this.$refs.downloadPlaylists.addEventListener('click', () =>
-        {
-            this.fireEvent('collection:intention:download');
-        });
+        //this.$refs.createPlaylist.addEventListener('click', () =>
+        //{
+        //    this.fireEvent('playlist:intention:compose-new');
+        //});
+        //this.$refs.downloadPlaylists.addEventListener('click', () =>
+        //{
+        //    this.fireEvent('collection:intention:download');
+        //});
     }
 }
 
