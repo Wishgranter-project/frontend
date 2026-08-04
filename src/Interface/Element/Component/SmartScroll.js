@@ -5,6 +5,11 @@ import CustomElement          from '../CustomElement';
  *
  * Provides a custom scroll bar that hides itself when not needed.
  *
+ * @todo
+ * Make scroll smoother. 
+ * Make scroll speed depend on the clientHeight and scrollHeight.
+ * Make thumb draggable.
+ * 
  * @class
  */
 class SmartScroll extends CustomElement
@@ -39,6 +44,7 @@ class SmartScroll extends CustomElement
     resized()
     {
         this.updateThumbSize();
+        this.updateThumbPosition();
     }
 
     updateThumbSize()
@@ -51,11 +57,15 @@ class SmartScroll extends CustomElement
         thumbHeight = thumbHeight < minThumbHeight
             ? minThumbHeight
             : thumbHeight;
+
+        this.$refs.thumb.style.height = thumbHeight + 'px';
     }
 
     updateThumbPosition()
     {
-        this.$refs.thumb.style.height = thumbHeight + 'px';
+        var space = this.clientHeight - this.$refs.thumb.clientHeight;
+        var mTop = Math.round((space / 100) * this.scrollPercentage);
+        this.$refs.thumb.style.marginTop = mTop + 'px';
     }
 
     onMouseOver(evt)
@@ -94,11 +104,13 @@ class SmartScroll extends CustomElement
 
         var newScrollTop, reachedBottom;
 
+        var progress = 20; // pixels
+
         // scrollHeight
         // clientHeight
         // scrollTop
         if (moveDown) {
-            newScrollTop = this.scrollTop + 20;
+            newScrollTop = this.scrollTop + progress;
             reachedBottom = newScrollTop >= this.maxScrollTop;
 
             newScrollTop = reachedBottom
@@ -106,13 +118,14 @@ class SmartScroll extends CustomElement
                 : newScrollTop;
 
         } else if (moveUp) {
-            newScrollTop = this.scrollTop - 20;
+            newScrollTop = this.scrollTop - progress;
             newScrollTop = newScrollTop < 0
                 ? 0
                 : newScrollTop;
         }
 
         this.scrollTo(0, newScrollTop);
+        this.updateThumbPosition();
     }
 
     scrollTo(x, y)
