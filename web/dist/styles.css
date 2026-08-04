@@ -231,14 +231,6 @@ div {
   display: inline-block;
   flex-grow: 1;
 }
-.app-navigation__item a .badge {
-  display: inline-block;
-  padding: 3px 5px;
-  border-radius: 50px;
-  font-size: 12px;
-  color: #fff;
-  background-color: #1e1e1e;
-}
 .app-navigation__item a .fa {
   margin: 0px 10px 0px 0px;
 }
@@ -610,6 +602,19 @@ div {
 
 .simple .view-welcome .btn {
   width: 100%;
+}
+.simple .view-welcome .badge {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  padding: 0px 5px;
+  border-radius: 50px;
+  margin-left: 10px;
+  margin: -0.25em 0px -0.25em 10px;
+  font-size: 1em;
+  line-height: 2em;
+  color: #fff;
+  background-color: #1e1e1e;
 }
 
 .hidden {
