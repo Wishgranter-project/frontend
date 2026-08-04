@@ -1,6 +1,7 @@
 import CustomElement          from '../../CustomElement';
 import AppNavigationMain      from './AppNavigationMain';
 import AppNavigationPlaylists from './AppNavigationPlaylists';
+import SmartScroll            from '../SmartScroll';
 
 /**
  * The app's main navigation.
@@ -33,11 +34,13 @@ class AppNavigation extends CustomElement
     {
         this.classList.add('app-navigation');
 
+        const browser = SmartScroll.instantiate();
+        browser.classList.add('app-navigation__browser');
+        browser.append(AppNavigationPlaylists.instantiate(this.api));
+
         this.attach([
             AppNavigationMain.instantiate(this.api),
-            this.create('div', {class: 'app-navigation__browser'}, 
-                AppNavigationPlaylists.instantiate(this.api)
-            ),
+            browser,
         ]);
     }
 

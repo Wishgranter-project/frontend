@@ -1,0 +1,35 @@
+
+.smart-scroll {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+
+    &__bar {
+        z-index: 1000;
+        display: block;
+        opacity: 0;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 5px;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.15);
+
+        transition-property: opacity;
+        transition-duration: 0.3s;
+    }
+
+    &__thumb {
+        height: 40px;
+        width: 100%;
+        border-radius: 5px;
+        background-color: #8e8e8e;
+    }
+
+    &:hover {
+        .smart-scroll__bar {
+            opacity: 1;
+        }
+    }
+}

@@ -203,11 +203,6 @@ div {
   border-top: solid 2px #fdfdfd;
   margin: 0px;
 }
-.app-navigation__browser {
-  overflow: auto;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
 .app-navigation__main {
   width: 100%;
   display: flex;
@@ -434,6 +429,35 @@ div {
   width: 500px;
   margin: 0px 0px 0px -500px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.smart-scroll {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.smart-scroll__bar {
+  z-index: 1000;
+  display: block;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 5px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition-property: opacity;
+  transition-duration: 0.3s;
+}
+.smart-scroll__thumb {
+  height: 40px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #8e8e8e;
+}
+.smart-scroll:hover .smart-scroll__bar {
+  opacity: 1;
 }
 
 .header {
