@@ -154,11 +154,8 @@ class SmartScroll extends CustomElement
             : deltaY;
         
         const notches = deltaY / notchLength;
-        const progress = 20 * notches; // pixels
+        const progress = 20 * notches; // pixels.
 
-        // scrollHeight
-        // clientHeight
-        // scrollTop
         if (moveDown) {
             newScrollTop = this.scrollTop + progress;
             reachedBottom = newScrollTop >= this.maxScrollTop;
