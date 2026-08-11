@@ -34,7 +34,6 @@ class AppNavigationPlaylists extends CustomElement
 
         this.api.manageUser().collection.fetchPlaylists().then((response) => 
         {
-            this.subRenderCreateAndDownload();
             this.subRenderPlaylists(response);
         });
     }
@@ -53,23 +52,6 @@ class AppNavigationPlaylists extends CustomElement
         for (var playlist of data) {
             NavigationItemPlaylist.instantiate(playlist.title, `#user:${this.api.defaultUserId}/playlist:${playlist.id}`, playlist.id, this.api).attachTo(this);
         }
-    }
-
-    /**
-     * Renders the buttons.
-     *
-     * Create new playlist and download the existing ones.
-     */
-    subRenderCreateAndDownload()
-    {
-        //this.$refs.createPlaylist.addEventListener('click', () =>
-        //{
-        //    this.fireEvent('playlist:intention:compose-new');
-        //});
-        //this.$refs.downloadPlaylists.addEventListener('click', () =>
-        //{
-        //    this.fireEvent('collection:intention:download');
-        //});
     }
 }
 

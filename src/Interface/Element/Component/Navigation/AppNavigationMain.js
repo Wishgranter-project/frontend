@@ -39,11 +39,15 @@ class AppNavigationMain extends CustomElement
         this.$refs.createPlaylist    = this.createAndAttach('button', {title: 'Create playlist'}, this.create('span', {class: 'fa fa-plus-circle'}));
         this.$refs.downloadPlaylists = this.createAndAttach('button', {title: 'Download entire collection'}, this.create('span', {class: 'fa fa-download'}));
 
-        //this.attach([
-        //    NavigationItem.instantiate('Home', '#home', 'Homepage', null, 'fa-home'),
-        //    NavigationItem.instantiate('Search', `#user:${this.api.defaultUserId}/search`, 'Search within your collection', null, 'fa-search'),
-        //    NavigationItem.instantiate('Discover', '#discover:artist', 'Discover new artists', null, 'fa fa-search-plus'),
-        //]);
+        this.$refs.createPlaylist.addEventListener('click', () =>
+        {
+            this.fireEvent('playlist:intention:compose-new');
+        });
+
+        this.$refs.downloadPlaylists.addEventListener('click', () =>
+        {
+            this.fireEvent('collection:intention:download');
+        });
     }
 }
 
