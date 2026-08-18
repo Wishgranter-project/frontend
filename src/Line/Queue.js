@@ -333,6 +333,13 @@ class Queue extends Array
      */
     updatedCallback()
     {
+        const options = {
+            detail: this,
+        };
+
+        const event = new CustomEvent('queue:updated', options);
+        window.document.dispatchEvent(event);
+
         console.log('queue updated');
     }
 

@@ -6,7 +6,7 @@ both queue and context.
 
 - [ ] App.js is really confusing, really hard to read. Its methods need to be 
 revised and most likely moved to a new class, responsabilities need to be
-reconsider.
+reconsidered.
 
 - [ ] NavigationItemPlaylist.js: Better to remove the api as a dependency of the
 element, perhaps it wold be best to cause the element to fire an event and let

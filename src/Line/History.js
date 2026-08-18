@@ -70,6 +70,13 @@ class History extends Array
      */
     updatedCallback()
     {
+        const options = {
+            detail: this,
+        };
+
+        const event = new CustomEvent('history:updated', options);
+        window.document.dispatchEvent(event);
+
         console.log('history updated');
     }
 

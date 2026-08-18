@@ -110,6 +110,9 @@ class App extends CustomElement
             'gui:summon-queue':                  this.onSummonQueue.bind(this)
         });
 
+        window.document.addEventListener('history:updated', this.onHistoryUpdated.bind(this));
+        window.document.addEventListener('queue:updated', this.onQueueUpdated.bind(this));
+
         if (this.queue.length) {
             this.setupItem(this.queue[0], false);
         }
@@ -192,13 +195,6 @@ class App extends CustomElement
     setHistory(history)
     {
         this.history = history;
-
-        this.history.updatedCallback = () =>
-        {
-            var resume = this.history.slice(0, 30);
-            this.saveHistory(resume);
-            this.updateReproductionTray();
-        }
         this.updateReproductionTray();
     }
 
@@ -302,12 +298,6 @@ class App extends CustomElement
         this.queue = queue;
         if (queue.length <= 1) {
             queue.fetchMore();
-        }
-
-        this.queue.updatedCallback = () =>
-        {
-            this.saveQueue(queue);
-            this.updateReproductionTray();
         }
 
         this.updateReproductionTray();
@@ -437,6 +427,20 @@ class App extends CustomElement
                 el.refresh();
             }
         });
+    }
+
+    onHistoryUpdated(evt)
+    {
+        const history = evt.detail;
+        const resume = history.slice(0, 30);
+        this.saveHistory(resume);
+        this.updateReproductionTray();
+    }
+
+    onQueueUpdated(evt)
+    {
+        this.saveQueue(evt.detail);
+        this.updateReproductionTray();
     }
 
     /**
