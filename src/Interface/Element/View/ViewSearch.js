@@ -20,7 +20,7 @@ class ViewSearch extends ViewPlaylist
     {
         this.classList.add(ViewSearch.elementName);
 
-        this.fetch().then((response) =>
+        this.fetchItems().then((response) =>
         {
             this.subRenderHeader(response);
             this.subRenderItems(response);
@@ -30,16 +30,66 @@ class ViewSearch extends ViewPlaylist
         this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
     }
 
-    async fetchPlaylist()
+    fetchItems()
     {
-        return {};
+        if (this.hashRequest.queryParams.isEmpty()) {
+            return new Promise((r,f)=>{return r({})});
+        }
+
+        const search = this.buildSearch(this.hashRequest.queryParams);        
+        return search.fetch();
     }
 
-    fetch()
+    buildSearch(queryParams)
     {
-        return this.hashRequest.queryParams.isEmpty()
-            ? new Promise((r,f)=>{return r({})})
-            : this.collection.fetchPlaylistItems(this.hashRequest.queryParams);
+        const search = this.collection.searchItems();
+
+        var operator;
+        var title = queryParams.get('title');
+        if (title) {
+            operator = this.getOperator(title);
+            title = this.stripQuotes(title);
+            search.condition('title', title, operator);
+        }
+
+        var artist = queryParams.get('artist');
+        if (artist) {
+            operator = this.getOperator(artist);
+            artist = this.stripQuotes(artist);
+            search.orConditionGroup()
+                .condition('artist', artist, operator)
+                .condition('featuring', artist, operator);
+        }
+
+        var genre = queryParams.get('genre');
+        if (genre) {
+            operator = this.getOperator(genre);
+            genre = this.stripQuotes(genre);
+            search.condition('genre', genre, operator);
+        }
+
+        var soundtrack = queryParams.get('soundtrack');
+        if (soundtrack) {
+            operator = this.getOperator(soundtrack);
+            soundtrack = this.stripQuotes(soundtrack);
+            search.condition('soundtrack', soundtrack, operator);
+        }
+
+        return search;
+    }
+
+    getOperator(string)
+    {
+        return string.match(/^ *".*" *$/)
+            ? '='
+            : 'LIKE';
+    }
+
+    stripQuotes(string)
+    {
+        return string
+            .replace(/^ *" */, '')
+            .replace(/ *" *$/, '');
     }
 
     subRenderHeader(response)

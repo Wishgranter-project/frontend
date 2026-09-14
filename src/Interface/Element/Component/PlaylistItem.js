@@ -86,11 +86,11 @@ class PlaylistItem extends ContextualElement
         this.$refs.title = this.$refs.body.createAndAttach('span', {class: 'playlist-item__title'}, [ title ]);
 
         for (var artist of this.item.artist) {
-            this.$refs.body.createAndAttach('span', {class: 'playlist-item__artist playlist-item__info'}, [ 
-                this.create('a', {href: `#user:${this.options.userId}/search?artist=${artist}`, title: artist }, artist), 
-                ' ',
-                this.create('a', {href: `#discover:albums?artist=${artist}`, title: `${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
-            ]);
+            this.addArtist(artist);
+        }
+
+        for (var artist of this.item.featuring) {
+            this.addArtist(artist);
         }
 
         for (var soundtrack of this.item.soundtrack) {
@@ -98,6 +98,15 @@ class PlaylistItem extends ContextualElement
                 this.create('a', {href: `#search?soundtrack=${soundtrack}`, title: soundtrack }, soundtrack)
             ]);
         }
+    }
+
+    addArtist(artist)
+    {
+        this.$refs.body.createAndAttach('span', {class: 'playlist-item__artist playlist-item__info'}, [ 
+            this.create('a', {href: `#user:${this.options.userId}/search?artist="${artist}"`, title: artist }, artist), 
+            ' ',
+            this.create('a', {href: `#discover:albums?artist=${artist}`, title: `${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
+        ]);
     }
 
     /**
@@ -186,6 +195,14 @@ class PlaylistItem extends ContextualElement
             item.artist = Array.isArray(item.artist)
                 ? item.artist
                 : [item.artist];
+        }
+
+        if (!item.featuring) {
+            item.featuring = [];
+        } else {
+            item.featuring = Array.isArray(item.featuring)
+                ? item.featuring
+                : [item.featuring];
         }
 
         if (!item.soundtrack) {

@@ -3572,7 +3572,7 @@ which@^2.0.1:
 
 "wishgranter-sdk@git+ssh://git@github.com:wishgranter-project/wishgranter-sdk.git":
   version "1.0.1-alpha"
-  resolved "git+ssh://git@github.com:wishgranter-project/wishgranter-sdk.git#0bada1ecefee2b1342359f16824d76cc9b718232"
+  resolved "git+ssh://git@github.com:wishgranter-project/wishgranter-sdk.git#b4879cc26fb6dcaf991320bea6939801075bc57b"
   dependencies:
     gulp "^4.0.2"
     gulp-rename "^2.0.0"

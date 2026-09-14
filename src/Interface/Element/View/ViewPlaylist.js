@@ -69,7 +69,7 @@ class ViewPlaylist extends MusicPlayingView
      */
     fetchItems()
     {
-        return api.manageUser('adinan').collection
+        return this.collection
             .fetchPlaylistItems({playlist: this.hashRequest.attributes.playlistId}, this.hashRequest.queryParams);
     }
 
@@ -93,6 +93,13 @@ class ViewPlaylist extends MusicPlayingView
             this.$refs.buttonDelete = this.create('button', { title: 'Delete entire playlist', class: 'btn-danger' }, this.create('span', { class: 'fa fa-close' }))
         ]);
 
+        this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, response.data.title, [
+            {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
+            {type: 'search', name: 'artist', placeholder: 'Artist', title: 'Artist'},
+            {type: 'search', name: 'genre', placeholder: 'Genre', title: 'Genre'},
+            {type: 'search', name: 'soundtrack', placeholder: 'Soundtrack', title: 'Soundtrack'}
+        ]));
+
         this.$refs.buttonAdd.addEventListener('click', () => 
         {
             this.fireEvent('item:intention:compose-new', { playlistId: this.hashRequest.attributes.playlistId });
@@ -112,13 +119,6 @@ class ViewPlaylist extends MusicPlayingView
         {
             this.fireEvent('playlist:intention:delete', { playlistId: this.hashRequest.attributes.playlistId });
         });
-
-        this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, response.data.title, [
-            {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
-            {type: 'search', name: 'artist', placeholder: 'Artist', title: 'Artist'},
-            {type: 'search', name: 'genre', placeholder: 'Genre', title: 'Genre'},
-            {type: 'search', name: 'soundtrack', placeholder: 'Soundtrack', title: 'Soundtrack'}
-        ]));
     }
 
     async subRenderItems(response)
