@@ -1,12 +1,14 @@
-import SearchHeader  from '../Component/SearchHeader';
-import ViewPlaylist  from './ViewPlaylist';
-import Queue         from '../../../Line/Queue';
-import ContextSearch from '../../../Line/ContextSearch';
+import SearchHeader     from '../Component/SearchHeader';
+import ListOfItems      from '../Component/ListOfItems';
+import Pagination       from '../Component/Pagination';
+import MusicPlayingView from './MusicPlayingView';
+import Queue            from '../../../Line/Queue';
+import ContextSearch    from '../../../Line/ContextSearch';
 
 /**
  * Displays search results within the collection.
  */
-class ViewSearch extends ViewPlaylist
+class ViewSearch extends MusicPlayingView
 {
     /**
      * @inheritdoc
@@ -30,6 +32,12 @@ class ViewSearch extends ViewPlaylist
         this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
     }
 
+    /**
+     * Gets the items in the playlist ( for the current page, that is ).
+     *
+     * @returns {Promise}
+     * To be resolved when the server responds.
+     */
     fetchItems()
     {
         if (this.hashRequest.queryParams.isEmpty()) {
@@ -81,7 +89,7 @@ class ViewSearch extends ViewPlaylist
     getOperator(string)
     {
         return string.match(/^ *".*" *$/)
-            ? '='
+            ? 'IN'
             : 'LIKE';
     }
 
@@ -122,6 +130,79 @@ class ViewSearch extends ViewPlaylist
         var queue        = Queue.instantiate(initialBatch, context)
         
         evt.detail.queue = queue;
+    }
+
+    async subRenderItems(response)
+    {
+        if (!response.data) {
+            return;
+        }
+
+        this.$refs.playlist = ListOfItems.instantiate(response.data, this.collection.parent.userId);
+        this.$refs.playlist.classList.add('playlist');
+        if (!this.areFiltersApplied()) {
+            this.$refs.playlist.setAttribute('reordable', 'true');
+        }
+
+        this.append(this.$refs.playlist);
+    }
+
+    areFiltersApplied()
+    {
+        return !this.hashRequest.queryParams.without('page').isEmpty();
+    }
+
+    subRenderNavigation(response)
+    {
+        this.$refs.pagination = Pagination.instantiate(this.hashRequest, response);
+        this.append(this.$refs.pagination);
+
+        if (this.areFiltersApplied()) {
+            return;
+        }
+
+        this.$refs.pagination.querySelectorAll('.btn').forEach((el) =>
+        {
+            el.addEventListener('dragover', (evt) => { evt.preventDefault(); });
+            el.addEventListener('drop', (evt) =>
+            {
+                var toPage = parseInt(el.getAttribute('data-page'));
+                if (isNaN(toPage)) {
+                    return;
+                }
+
+                if (this.hashRequest.queryParams.get('page') == toPage) {
+                    // Already here...
+                    return;
+                }
+
+                var json = evt.dataTransfer.getData('text');
+                var data = JSON.parse(json);
+                var offset = (toPage - 1) * this.response.meta.itemsPerPage;
+
+                var n = 0;
+                var promises = [];
+                for (var item of data) {
+                    item.position = n + offset;
+                    promises.push(this.collection.manageItem(item.uuid).update(item));
+                    n++;
+                }
+
+                Promise.all(promises).then(() =>
+                {
+                    console.log('playlist: reordered');
+                    this.refresh();
+                });
+
+            });
+        });
+    }
+
+    itemsAdded(items)
+    {
+        if (this.$refs.pagination.onlyOnePage || this.$refs.pagination.inTheLastPage) {
+            this.refresh();
+        }
     }
 }
 

@@ -1,7 +1,5 @@
-import MusicPlayingView  from './MusicPlayingView';
-import ListOfItems       from '../Component/ListOfItems';
+import ViewSearch        from './ViewSearch';
 import SearchHeader      from '../Component/SearchHeader';
-import Pagination        from '../Component/Pagination';
 import Events            from '../../../Helper/Events';
 import Queue             from '../../../Line/Queue';
 import ContextPlaylist   from '../../../Line/ContextPlaylist';
@@ -9,13 +7,13 @@ import ContextPlaylist   from '../../../Line/ContextPlaylist';
 /**
  * Displays the contents of a playlist.
  */
-class ViewPlaylist extends MusicPlayingView
+class ViewPlaylist extends ViewSearch
 {
     static elementName = 'view-playlist';
 
     async render()
     {
-        super.render();
+        this.classList.add('view');
         this.classList.add(ViewPlaylist.elementName);
 
         this.setAttribute('data-playlist', this.hashRequest.attributes.playlistId);
@@ -32,20 +30,17 @@ class ViewPlaylist extends MusicPlayingView
             this.subRenderNavigation(response);
         });
 
-        Events.enableBottomReached(this);
-        this.addEventListener('scroll:bottom-reached', this.onBottomReached.bind(this));
         this.addEventListener('queue:intention:play-this-now', this.onItemSelected.bind(this));
         this.addEventListener('list-of-items:reordered', this.onItemsReordered.bind(this));
     }
 
     /**
      * @inheritdoc
-     *
-     * @todo I don't remember why this exists. Remove it.
      */
-    onBottomReached(evt)
+    fetchItems()
     {
-        console.log('Bottom of the page reached');
+        const search = this.buildSearch(this.hashRequest.queryParams);        
+        return search.fetch();
     }
 
     /**
@@ -62,15 +57,13 @@ class ViewPlaylist extends MusicPlayingView
     }
 
     /**
-     * Gets the items in the playlist ( for the current page, that is ).
-     *
-     * @returns {Promise}
-     * To be resolved when the server responds.
+     * @inheritdoc
      */
-    fetchItems()
+    buildSearch(queryParams)
     {
-        return this.collection
-            .fetchPlaylistItems({playlist: this.hashRequest.attributes.playlistId}, this.hashRequest.queryParams);
+        const search = super.buildSearch(queryParams);
+        search.condition('playlistId', this.hashRequest.attributes.playlistId);
+        return search;
     }
 
     subRenderHeader(response)
@@ -121,72 +114,6 @@ class ViewPlaylist extends MusicPlayingView
         });
     }
 
-    async subRenderItems(response)
-    {
-        if (!response.data) {
-            return;
-        }
-
-        this.$refs.playlist = ListOfItems.instantiate(response.data, this.collection.parent.userId);
-        this.$refs.playlist.classList.add('playlist');
-        if (!this.areFiltersApplied()) {
-            this.$refs.playlist.setAttribute('reordable', 'true');
-        }
-
-        this.append(this.$refs.playlist);
-    }
-
-    areFiltersApplied()
-    {
-        return !this.hashRequest.queryParams.without('page').isEmpty();
-    }
-
-    subRenderNavigation(response)
-    {
-        this.$refs.pagination = Pagination.instantiate(this.hashRequest, response);
-        this.append(this.$refs.pagination);
-
-        if (this.areFiltersApplied()) {
-            return;
-        }
-
-        this.$refs.pagination.querySelectorAll('.btn').forEach((el) =>
-        {
-            el.addEventListener('dragover', (evt) => { evt.preventDefault(); });
-            el.addEventListener('drop', (evt) =>
-            {
-                var toPage = parseInt(el.getAttribute('data-page'));
-                if (isNaN(toPage)) {
-                    return;
-                }
-
-                if (this.hashRequest.queryParams.get('page') == toPage) {
-                    // Already here...
-                    return;
-                }
-
-                var json = evt.dataTransfer.getData('text');
-                var data = JSON.parse(json);
-                var offset = (toPage - 1) * this.response.meta.itemsPerPage;
-
-                var n = 0;
-                var promises = [];
-                for (var item of data) {
-                    item.position = n + offset;
-                    promises.push(this.collection.manageItem(item.uuid).update(item));
-                    n++;
-                }
-
-                Promise.all(promises).then(() =>
-                {
-                    console.log('playlist: reordered');
-                    this.refresh();
-                });
-
-            });
-        });
-    }
-
     onItemSelected(evt)
     {
         var context      = new ContextPlaylist(this.collection, false, this.hashRequest.queryParams, this.hashRequest.attributes.playlistId);
@@ -214,13 +141,6 @@ class ViewPlaylist extends MusicPlayingView
         {
             console.log('playlist: reordered items');
         });
-    }
-
-    itemsAdded(items)
-    {
-        if (this.$refs.pagination.onlyOnePage || this.$refs.pagination.inTheLastPage) {
-            this.refresh();
-        }
     }
 }
 
