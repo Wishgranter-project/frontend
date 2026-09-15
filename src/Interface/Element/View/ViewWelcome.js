@@ -29,7 +29,7 @@ class ViewWelcome extends BaseView
         {
             for (var artist in response.data) {
                 this.$refs.grid.createAndAttach('div', {class: 'col-2'}, 
-                    this.create('a', {href: `#user:${this.api.defaultUserId}/search?artist=${artist}`, 'data-tabbed-router-title': artist, target: '_blank', class: 'btn'}, [
+                    this.create('a', {href: `#user:${this.api.defaultUserId}/search?artist="${artist}"`, 'data-tabbed-router-title': artist, target: '_blank', class: 'btn'}, [
                         artist,
                         this.create('span', {class: 'badge'}, response.data[artist]),
                     ]),

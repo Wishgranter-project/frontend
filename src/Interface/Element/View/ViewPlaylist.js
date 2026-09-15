@@ -68,16 +68,7 @@ class ViewPlaylist extends ViewSearch
 
     subRenderHeader(response)
     {
-        this.$refs.header = this.createAndAttach('header', { class: 'header' }, [
-            this.$refs.headerH = this.create('div', { class: 'header__header' }),
-            this.$refs.headerB = this.create('div', { class: 'header__body' }),
-            this.$refs.headerF = this.create('div', { class: 'header__footer' })
-        ]);
-
-        this.$refs.headerH.createAndAttach('h1', null, response.data.title);
-        if (response.data.description) {
-            this.$refs.headerH.createAndAttach('h3', null, response.data.description);
-        }
+        super.subRenderHeader(response);
 
         this.$refs.buttons = this.$refs.headerF.createAndAttach('div', { class: 'button-group' }, [
             this.$refs.buttonAdd = this.create('button', { title: 'Add new item to playlist' }, this.create('span', { class: 'fa fa-plus' })),
@@ -86,12 +77,9 @@ class ViewPlaylist extends ViewSearch
             this.$refs.buttonDelete = this.create('button', { title: 'Delete entire playlist', class: 'btn-danger' }, this.create('span', { class: 'fa fa-close' }))
         ]);
 
-        this.$refs.headerB.append(SearchHeader.instantiate(this.hashRequest, response.data.title, [
-            {type: 'search', name: 'title', placeholder: 'Title', class: 'main'},
-            {type: 'search', name: 'artist', placeholder: 'Artist', title: 'Artist'},
-            {type: 'search', name: 'genre', placeholder: 'Genre', title: 'Genre'},
-            {type: 'search', name: 'soundtrack', placeholder: 'Soundtrack', title: 'Soundtrack'}
-        ]));
+        if (response.data.description) {
+            this.$refs.headerH.createAndAttach('h3', null, response.data.description);
+        }
 
         this.$refs.buttonAdd.addEventListener('click', () => 
         {

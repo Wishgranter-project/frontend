@@ -94,9 +94,7 @@ class PlaylistItem extends ContextualElement
         }
 
         for (var soundtrack of this.item.soundtrack) {
-            this.$refs.body.createAndAttach('span', {class: 'playlist-item__soundtrack playlist-item__info'}, [ 
-                this.create('a', {href: `#user:${this.options.userId}/search?soundtrack="${soundtrack}"`, title: soundtrack }, soundtrack)
-            ]);
+            this.addSoundtrack(soundtrack);
         }
     }
 
@@ -106,6 +104,13 @@ class PlaylistItem extends ContextualElement
             this.create('a', {href: `#user:${this.options.userId}/search?artist="${artist}"`, title: artist }, artist), 
             ' ',
             this.create('a', {href: `#discover:albums?artist=${artist}`, title: `${artist}`}, this.createAndAttach('span', {class: 'fa fa-search'}))
+        ]);
+    }
+
+    addSoundtrack(soundtrack)
+    {
+        this.$refs.body.createAndAttach('span', {class: 'playlist-item__soundtrack playlist-item__info'}, [ 
+            this.create('a', {href: `#user:${this.options.userId}/search?soundtrack="${soundtrack}"`, title: soundtrack }, soundtrack)
         ]);
     }
 

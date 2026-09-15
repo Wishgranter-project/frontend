@@ -83,6 +83,11 @@ class ViewSearch extends MusicPlayingView
             search.condition('soundtrack', soundtrack, operator);
         }
 
+        const page = queryParams.get('page');
+        if (page) {
+            search.page(page);
+        }
+
         return search;
     }
 
