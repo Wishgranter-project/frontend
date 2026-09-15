@@ -95,7 +95,7 @@ class PlaylistItem extends ContextualElement
 
         for (var soundtrack of this.item.soundtrack) {
             this.$refs.body.createAndAttach('span', {class: 'playlist-item__soundtrack playlist-item__info'}, [ 
-                this.create('a', {href: `#search?soundtrack=${soundtrack}`, title: soundtrack }, soundtrack)
+                this.create('a', {href: `#user:${this.options.userId}/search?soundtrack="${soundtrack}"`, title: soundtrack }, soundtrack)
             ]);
         }
     }
