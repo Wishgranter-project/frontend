@@ -45,7 +45,7 @@ class ModalItemAdd extends ModalForm
         this.$refs.form.addTextField('title', 'Title', '');
         this.$refs.form.addTextField('album', 'Album', '');
         this.$refs.form.addMultiTextField('artist[]', 'Artist', [''], 'Artist', 'Add artist');
-        this.$refs.form.addMultiTextField('featuring[]', 'Artist', [''], 'Featuring', 'Add featured artist');
+        this.$refs.form.addMultiTextField('featuring[]', 'Featuring', [''], 'Featuring', 'Add featured artist');
         this.$refs.form.addTextField('cover', 'Cover', '');
         this.$refs.form.addMultiTextField('soundtrack[]', 'Soundtrack', [''], 'Soundtrack', 'Add soundtrack');
         this.$refs.form.addMultiTextField('genre[]', 'Genre', [''], 'Genre', 'Add genre');
