@@ -4,6 +4,7 @@ import Pagination       from '../Component/Pagination';
 import MusicPlayingView from './MusicPlayingView';
 import Queue            from '../../../Line/Queue';
 import ContextSearch    from '../../../Line/ContextSearch';
+import SearchHelper     from '../../../Helper/SearchHelper';
 
 /**
  * Displays search results within the collection.
@@ -51,58 +52,8 @@ class ViewSearch extends MusicPlayingView
     buildSearch(queryParams)
     {
         const search = this.collection.searchItems();
-
-        var operator;
-        var title = queryParams.get('title');
-        if (title) {
-            operator = this.getOperator(title);
-            title = this.stripQuotes(title);
-            search.condition('title', title, operator);
-        }
-
-        var artist = queryParams.get('artist');
-        if (artist) {
-            operator = this.getOperator(artist);
-            artist = this.stripQuotes(artist);
-            search.orConditionGroup()
-                .condition('artist', artist, operator)
-                .condition('featuring', artist, operator);
-        }
-
-        var genre = queryParams.get('genre');
-        if (genre) {
-            operator = this.getOperator(genre);
-            genre = this.stripQuotes(genre);
-            search.condition('genre', genre, operator);
-        }
-
-        var soundtrack = queryParams.get('soundtrack');
-        if (soundtrack) {
-            operator = this.getOperator(soundtrack);
-            soundtrack = this.stripQuotes(soundtrack);
-            search.condition('soundtrack', soundtrack, operator);
-        }
-
-        const page = queryParams.get('page');
-        if (page) {
-            search.page(page);
-        }
-
+        SearchHelper.populateSearch(search, queryParams);
         return search;
-    }
-
-    getOperator(string)
-    {
-        return string.match(/^ *".*" *$/)
-            ? 'IN'
-            : 'LIKE';
-    }
-
-    stripQuotes(string)
-    {
-        return string
-            .replace(/^ *" */, '')
-            .replace(/ *" *$/, '');
     }
 
     subRenderHeader(response)

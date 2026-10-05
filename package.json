@@ -4,8 +4,8 @@
     "version": "0.0.0",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "compile": "./node_modules/gulp-cli/bin/gulp.js"
+        "compile": "./node_modules/gulp-cli/bin/gulp.js",
+        "build": "yarn compile"
     },
     "author": "Adinan Cenci",
     "license": "ISC",

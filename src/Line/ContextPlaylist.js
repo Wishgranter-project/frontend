@@ -1,4 +1,5 @@
 import ContextSearch from './ContextSearch';
+import SearchHelper from '../Helper/SearchHelper';
 
 class ContextPlaylist extends ContextSearch
 {
@@ -35,11 +36,12 @@ class ContextPlaylist extends ContextSearch
         };
     }
 
-    // protected
-    //-------------------
-    async request(queue)
+    buildSearch()
     {
-        return this.api.manageUser().collection.fetchPlaylistItems(this.queryParams, { playlist: this.playlistId });
+        const search = super.buildSearch();
+        search.condition('playlistId', this.playlistId);
+
+        return search;
     }
 }
 

@@ -1,4 +1,5 @@
 import ContextBase from './ContextBase';
+import SearchHelper from '../Helper/SearchHelper';
 
 class ContextSearch extends ContextBase
 {
@@ -45,7 +46,16 @@ class ContextSearch extends ContextBase
 
     async request(queue)
     {
-        return this.api.manageUser().collection.fetchPlaylistItems(this.queryParams);
+        const search = this.buildSearch();
+        return search.fetch();
+    }
+
+    buildSearch()
+    {
+        const search = this.api.manageUser().collection.searchItems();
+        SearchHelper.populateSearch(search, this.queryParams);
+
+        return search;
     }
 }
 

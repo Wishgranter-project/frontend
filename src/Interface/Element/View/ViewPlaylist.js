@@ -104,7 +104,7 @@ class ViewPlaylist extends ViewSearch
 
     onItemSelected(evt)
     {
-        var context      = new ContextPlaylist(this.collection, false, this.hashRequest.queryParams, this.hashRequest.attributes.playlistId);
+        var context      = new ContextPlaylist(this.collection.parent.parent, false, this.hashRequest.queryParams, this.hashRequest.attributes.playlistId);
         var initialBatch = this.getPlayableItems(evt.detail.item);
         var queue        = Queue.instantiate(initialBatch, context)
         
